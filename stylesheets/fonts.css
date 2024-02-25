@@ -3,14 +3,14 @@
   font-family: hkim;
   font-style: normal;
   font-weight: 400;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/osu-icons/hkim.eot?jswnsq);
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/osu-icons/hkim.eot?jswnsq#iefix)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/osu-icons/hkim.eot?jswnsq);
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/osu-icons/hkim.eot?jswnsq#iefix)
       format("embedded-opentype"),
-    url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/osu-icons/hkim.ttf?jswnsq)
+    url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/osu-icons/hkim.ttf?jswnsq)
       format("truetype"),
-    url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/osu-icons/hkim.woff?jswnsq)
+    url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/osu-icons/hkim.woff?jswnsq)
       format("woff"),
-    url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/osu-icons/hkim.svg?jswnsq#hkim)
+    url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/osu-icons/hkim.svg?jswnsq#hkim)
       format("svg");
 }
 .osu-icon {
@@ -41,7 +41,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 300;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/light.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/light.ttf)
     format("truetype");
   unicode-range: u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
     u+01af-01b0, u+1ea0-1ef9, u+20ab;
@@ -52,7 +52,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 300;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/light.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/light.ttf)
     format("truetype");
   unicode-range: u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf,
     u+2113, u+2c60-2c7f, u+a720-a7ff;
@@ -63,7 +63,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 300;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/light.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/light.ttf)
     format("truetype");
   unicode-range: u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da,
     u+02dc, u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215,
@@ -75,7 +75,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 400;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/regular.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/regular.ttf)
     format("truetype");
   unicode-range: u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
     u+01af-01b0, u+1ea0-1ef9, u+20ab;
@@ -86,7 +86,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 400;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/regular.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/regular.ttf)
     format("truetype");
   unicode-range: u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf,
     u+2113, u+2c60-2c7f, u+a720-a7ff;
@@ -97,7 +97,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 400;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/regular.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/regular.ttf)
     format("truetype");
   unicode-range: u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da,
     u+02dc, u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215,
@@ -109,7 +109,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 500;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/medium.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/medium.ttf)
     format("truetype");
   unicode-range: u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
     u+01af-01b0, u+1ea0-1ef9, u+20ab;
@@ -120,7 +120,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 500;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/medium.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/medium.ttf)
     format("truetype");
   unicode-range: u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf,
     u+2113, u+2c60-2c7f, u+a720-a7ff;
@@ -131,7 +131,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 500;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/medium.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/medium.ttf)
     format("truetype");
   unicode-range: u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da,
     u+02dc, u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215,
@@ -143,7 +143,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 600;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/semibold.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/semibold.ttf)
     format("truetype");
   unicode-range: u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
     u+01af-01b0, u+1ea0-1ef9, u+20ab;
@@ -154,7 +154,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 600;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/semibold.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/semibold.ttf)
     format("truetype");
   unicode-range: u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf,
     u+2113, u+2c60-2c7f, u+a720-a7ff;
@@ -165,7 +165,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 600;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/semibold.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/semibold.ttf)
     format("truetype");
   unicode-range: u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da,
     u+02dc, u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215,
@@ -177,7 +177,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 800;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/bold.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/bold.ttf)
     format("truetype");
   unicode-range: u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
     u+01af-01b0, u+1ea0-1ef9, u+20ab;
@@ -188,7 +188,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 800;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/bold.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/bold.ttf)
     format("truetype");
   unicode-range: u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf,
     u+2113, u+2c60-2c7f, u+a720-a7ff;
@@ -199,7 +199,7 @@
   font-family: Material;
   font-style: normal;
   font-weight: 800;
-  src: url(https://github.com/brudermusscode/heia.kim/raw/master/fonts/jakarta-sans/bold.ttf)
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim/master/fonts/jakarta-sans/bold.ttf)
     format("truetype");
   unicode-range: u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da,
     u+02dc, u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215,
