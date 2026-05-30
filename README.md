@@ -17,4 +17,4 @@ It's the web base for https://www.heia.kim. Just for transparency, you can view 
 <br>
 <br>
 
-<p align=center>Jesus loves you my friend ❤️</p>
+<p align=center><strong>Jesus loves you my friend ❤️</strong></p>
