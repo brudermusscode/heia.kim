@@ -1,0 +1,87 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+[hide-500] {
+  @media screen and (max-width: 500px) {
+    display: none !important;
+  }
+}
+
+[hide-600] {
+  @media screen and (max-width: 600px) {
+    display: none !important;
+  }
+}
+
+[hide-700] {
+  @media screen and (max-width: 700px) {
+    display: none !important;
+  }
+}
+
+[hide-800] {
+  @media screen and (max-width: 800px) {
+    display: none !important;
+  }
+}
+
+[hide-1000] {
+  @media screen and (max-width: 1000px) {
+    display: none !important;
+  }
+}
+
+[hide-1200] {
+  @media screen and (max-width: 1200px) {
+    display: none !important;
+  }
+}
+
+[hide-1330] {
+  @media screen and (max-width: 1330px) {
+    display: none !important;
+  }
+}
+
+[hide-1200] {
+  @media screen and (max-width: 1200px) {
+    display: none !important;
+  }
+}
+
+[show-800] {
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+
+    &[show-800="flex"] {
+      display: flex;
+    }
+  }
+}
+
+[flex-with-3] {
+  display: flex;
+  justify-content: stretch;
+  gap: $gap-smol;
+
+  [flex-with-3-item] {
+    flex: 1;
+    max-width: 720px;
+
+    @media screen and (max-width: 1300px) {
+      &:nth-child(3) {
+        display: none !important;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      max-width: initial;
+
+      &:nth-child(2) {
+        display: none !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+audio-player {
+  display: block;
+  margin-bottom: 1.2em;
+
+  .audio_player__play {
+    margin-bottom: 1.2em;
+
+    .audio_player__play_artist {
+      font-size: 1em;
+      opacity: 0.6;
+      margin-top: 0.2em;
+      gap: 0.4em;
+
+      .icon {
+        padding-top: 0.12em;
+      }
+    }
+  }
+
+  .audio_player__controls {
+    gap: 2.4em;
+
+    .audio_player__controls_option {
+      font-size: 1.6em;
+      opacity: 0.8;
+      border-radius: 50%;
+      height: 1.8em !important;
+      width: 1.8em !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &[control="pause"] {
+        @include themed() {
+          background: t(slight-hover);
+        }
+      }
+
+      &[active="true"] {
+        .play {
+          display: none;
+        }
+
+        .pause {
+          display: block;
+        }
+      }
+
+      &[active="false"] {
+        .play {
+          display: block;
+        }
+
+        .pause {
+          display: none;
+        }
+      }
+    }
+  }
+}

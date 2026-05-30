@@ -1,0 +1,113 @@
+networks:
+  default:
+    name: deploy-bridge
+    external: true
+    driver: overlay
+
+x-env: &x-env
+  environment:
+    MYSQL_DATABASE: ${MYSQL_DATABASE}
+    MYSQL_HOST: ${MYSQL_HOST}
+    MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+
+x-deploy: &x-deploy
+  <<: *x-env
+  deploy:
+    replicas: 2
+    update_config:
+      parallelism: 1
+      delay: 10s
+      order: stop-first
+    restart_policy:
+      condition: on-failure
+      max_attempts: 12
+    rollback_config:
+      parallelism: 1 # Rollback one container at a time.
+
+# Volumes that have to be shared between the x-web and the php
+# service, have to be specied per service. The x-web cannot be
+# included into the php service.
+
+x-web: &x-web
+  <<: *x-deploy
+  image: git.bruder.business/heia.kim/frontend/web:latest
+  volumes:
+    - .:/data
+  tty: true
+
+services:
+  php:
+    <<: *x-deploy
+    image: git.bruder.business/heia.kim/frontend/php:latest
+    volumes:
+      - .:/data
+    networks:
+      default:
+        aliases:
+          - heiakim-frontend-php
+
+  web:
+    <<: *x-web
+    ports:
+      - 8080:80
+    command: ["nginx"]
+    entrypoint:
+      [
+        "/wait-for-it.sh",
+        "heiakim-frontend-php:9000",
+        "--",
+        "/data/docker/deploy/entrypoint.sh",
+      ]
+    depends_on:
+      - php
+    networks:
+      default:
+        aliases:
+          - heiakim-frontend-web
+
+  api:
+    <<: *x-web
+    ports:
+      - 8081:80
+    command: ["api"]
+    entrypoint:
+      [
+        "/wait-for-it.sh",
+        "heiakim-frontend-web:80",
+        "--",
+        "/data/docker/deploy/entrypoint.sh",
+      ]
+    depends_on:
+      - php
+    networks:
+      default:
+        aliases:
+          - heiakim-frontend-api
+
+  jobs:
+    <<: *x-web
+    deploy:
+      replicas: 1
+    # volumes:
+    #   - ./docker/crontab:/etc/crontab
+    command: ["jobs"]
+    depends_on:
+      - php
+    networks:
+      default:
+        aliases:
+          - heiakim-frontend-jobs
+
+  # node:
+  #   image: node:latest
+  #   container_name: heiakim-frontend-node
+  #   restart: on-failure
+  #   volumes:
+  #     - ./package.json:/app/package.json
+  #     - ./discord-vote-reminder.js:/app/discord-vote-reminder.js
+  #   working_dir: /app
+  #   command: sh -c "npm install && npm update && npm run discord-vote-reminder"
+  #   environment:
+  #     - NODE_ENV=production
+# volumes:
+#   app-data:

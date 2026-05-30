@@ -1,0 +1,5 @@
+BEGIN;
+
+  ALTER TABLE api_discord MODIFY COLUMN discord_user_id VARCHAR(255) NOT NULL;
+
+COMMIT;

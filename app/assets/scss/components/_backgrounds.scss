@@ -1,0 +1,180 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+[background] {
+  &[background="transparent"] {
+    background: transparent;
+  }
+
+  @include themed() {
+    &[background="premium"] {
+      background: t(premium-box);
+    }
+
+    &[background="verified"] {
+      background: t(text-invert);
+    }
+
+    &[background="special"] {
+      background: t(special);
+    }
+
+    &[background="company"],
+    &[background="complement"] {
+      background: t(company-color);
+    }
+
+    &[background="bg"] {
+      background: t(bg);
+    }
+
+    &[background="dynamic-invert"],
+    &[background="invert"] {
+      background: t(box-invert);
+    }
+
+    &[background="dynamic"] {
+      background: t(box2);
+    }
+
+    &[background="hover"] {
+      background: t(hover);
+    }
+
+    &[background="hover-invert"] {
+      background: t(hover-invert);
+    }
+
+    &[background="slighter"] {
+      background: t(slighter-hover);
+    }
+
+    &[background="slight"] {
+      background: t(slight-hover);
+    }
+
+    &[background="slight-invert"] {
+      background: t(slight-hover-invert);
+    }
+
+    &[background="follow"] {
+      background: t(btn-follow);
+    }
+
+    &[background="refollow"] {
+      background: t(btn-refollow);
+    }
+
+    &[background="unfollow"] {
+      background: t(btn-unfollow);
+    }
+
+    &[background="besure"] {
+      background: t(btn-besure);
+    }
+  }
+
+  &[background="frozen"] {
+    background: #67c6e3;
+  }
+
+  &[background="light"] {
+    background: $light;
+  }
+
+  &[background="osu-pink"] {
+    background: #e3619b;
+  }
+
+  &[background="dark"] {
+    background: $dark;
+  }
+
+  &[background="pink"] {
+    background: $pink;
+  }
+
+  &[background="green"] {
+    background: $green;
+  }
+
+  &[background="light-grey"] {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  &[background="light-blue"] {
+    background: $light-blue;
+  }
+
+  &[background="blue"] {
+    background: $blue;
+  }
+
+  &[background="discord-blue"] {
+    background: $discord-blue;
+  }
+
+  &[background="paypal-blue"] {
+    background: #003087;
+  }
+
+  &[background="youtube-red"] {
+    background: $youtube-red;
+  }
+
+  &[background="red"] {
+    background: $red;
+  }
+
+  &[background="light-red"] {
+    background: $red6;
+  }
+
+  &[background="yellow"] {
+    background: $yellow;
+  }
+
+  &[background="orange"] {
+    background: $orange;
+  }
+
+  &[background="white"] {
+    background: white;
+  }
+
+  &[background="purple"] {
+    background: $purple;
+  }
+
+  &[background="purple2"] {
+    background: $purple2;
+  }
+
+  &[background="purple3"] {
+    background: $purple3;
+  }
+
+  &[background="purple4"] {
+    background: $purple4;
+  }
+
+  &[background="lilac"] {
+    background: #351a5c;
+  }
+
+  &[background="slight-red"] {
+    background: #ff8981;
+  }
+
+  &[background="slight-green"] {
+    background: #d9e7cb;
+  }
+
+  &[background="slight-blue"] {
+    background: #7cb7ee;
+  }
+
+  &[background="slight-orange"] {
+    background: #ffe082;
+  }
+}

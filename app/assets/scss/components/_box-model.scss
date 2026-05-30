@@ -1,0 +1,383 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+box-model {
+  display: block;
+  border: none;
+  outline: none;
+  position: relative;
+  transition: $trans-cubic;
+
+  @include material-card(0);
+
+  @include themed() {
+    background: t(box3);
+  }
+
+  &[outlined] {
+    background: transparent;
+  }
+
+  &[image] {
+    picture {
+      z-index: 1;
+      position: absolute;
+    }
+
+    .box_model__image_inr {
+      position: relative;
+      z-index: 2;
+      padding: 3.2em;
+    }
+  }
+
+  bm-inr {
+    display: block;
+    padding: 1.6em 2em;
+
+    &[own] {
+      position: relative;
+      z-index: 1;
+      border-radius: 24px 24px 0 0;
+    }
+
+    &[size] {
+      &[size="smolest"] {
+        padding: 4px;
+      }
+
+      &[size="smoler"] {
+        padding: 12px;
+      }
+
+      &[size="smol"] {
+        padding: 18px;
+      }
+
+      &[size="std"] {
+        padding: 24px;
+      }
+
+      &[size="midler"] {
+        padding: 28px;
+      }
+
+      &[size="mid"] {
+        padding: 32px;
+      }
+
+      &[size="wide"] {
+        padding: 42px;
+      }
+
+      &[size="wider"] {
+        padding: 54px;
+      }
+
+      &[size="widerer"] {
+        padding: 68px;
+      }
+
+      &[size="widerst"] {
+        padding: 82px;
+      }
+
+      @media screen and (max-width: 620px) {
+        padding: 24px !important;
+      }
+    }
+  }
+
+  &[background-invert] {
+    @include themed() {
+      background: t(box-invert);
+    }
+  }
+
+  &[background] {
+    &[background="slight"] {
+      @include themed() {
+        background: t(slighter-hover);
+      }
+    }
+  }
+
+  &[placeholder] {
+    opacity: 0.6;
+
+    .placeholder__line {
+      width: 100%;
+      opacity: 0.6;
+      // animation: placeholder-fade-light 2s linear infinite;
+      height: 1.4em;
+      border-radius: 8px;
+
+      @include themed() {
+        background: t(nav3);
+      }
+
+      &[red] {
+        background: $red;
+      }
+
+      &[blue] {
+        background: #87c7ec;
+      }
+
+      &[green] {
+        background: #89c935;
+      }
+
+      &[pink] {
+        background: #e54a99;
+      }
+
+      &[pinky] {
+        background: $pink;
+      }
+
+      &[purple] {
+        background: $purple;
+      }
+
+      &[round] {
+        height: 1.4em;
+        width: 1.4em;
+        border-radius: 50%;
+      }
+
+      &[tagger] {
+        height: 1.4em;
+        max-width: 4.2em;
+        width: 100%;
+        border-radius: 18px;
+
+        &[tagger="mid"] {
+          max-width: 8.2em;
+        }
+      }
+
+      &[rounded-more] {
+        border-radius: 12px;
+      }
+    }
+  }
+
+  &[active] {
+    z-index: 201;
+  }
+}
+
+[prompt] {
+  z-index: $endless-z-index - 200;
+  padding: 24px;
+  transition: $trans-cubic;
+  // scale: 0.98;
+  opacity: 0;
+  height: 4.2em;
+  overflow: hidden;
+  margin-top: 1.8em;
+  transition: all 0.1s $cubic;
+
+  [prompt-header] {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    margin-bottom: 16px;
+
+    mi {
+      @extend [mid];
+
+      @include themed() {
+        color: t(special);
+      }
+    }
+
+    p[title] {
+      @extend [text], [mid], [bold];
+    }
+  }
+
+  [prompt-header] {
+    transition: $trans-cubic;
+    transition: opacity 0.2s linear;
+    opacity: 0;
+  }
+
+  [prompt-content] {
+    transition: $trans-cubic;
+    padding-top: 16px;
+    margin-bottom: 4.8em;
+  }
+
+  [prompt-inner-content] {
+    transition: $trans-cubic;
+    transition: opacity 0.2s linear;
+    opacity: 0;
+  }
+
+  [prompt-actions] {
+    transition: $trans-cubic;
+    transition: opacity 0.2s linear;
+    transition-delay: 0.42s;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  *[active] {
+    opacity: 1;
+  }
+
+  &[active] {
+    opacity: 1;
+    margin-top: 0;
+    transition: $trans-cubic;
+  }
+}
+
+[has-inner-prompt] {
+  position: relative;
+
+  [inner-prompt] {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    top: calc(100% + 4px);
+    min-width: 18em;
+    transition: all 0.1s $cubic;
+  }
+
+  &[has-inner-prompt="left"] {
+    [inner-prompt] {
+      top: 0;
+      right: calc(100% + 4px);
+    }
+  }
+
+  &[has-inner-prompt="top-left"] {
+    [inner-prompt] {
+      top: initial;
+      bottom: calc(100% + 4px);
+      left: 0;
+    }
+  }
+
+  &[has-inner-prompt="bottom-mid"] {
+    [inner-prompt] {
+      top: calc(100%);
+      bottom: initial;
+      left: 50%;
+      translate: -50% 0;
+    }
+  }
+
+  &[active] {
+    [inner-prompt] {
+      z-index: 200;
+      visibility: visible;
+      opacity: 1;
+      transition: $trans-cubic;
+    }
+  }
+}
+
+@keyframes placeholder-fade-light {
+  from {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  to {
+    opacity: 0.3;
+  }
+}
+
+[filled] {
+  @include themed() {
+    background: t(box2);
+
+    &[filled="lighter"] {
+      background: t(box3);
+    }
+
+    &[filled="darker"] {
+      background: t(box);
+    }
+
+    &[filled="invert"] {
+      background: t(box-invert);
+    }
+
+    &[filled="none"] {
+      background: transparent;
+    }
+  }
+}
+
+[outlined] {
+  @include themed() {
+    border: 1px solid t(box2);
+
+    &[outlined="lighter"] {
+      border: 1px solid t(box3);
+    }
+
+    &[outlined="darker"] {
+      border: 1px solid t(box);
+    }
+
+    &[outlined="invert"] {
+      border: 1px solid t(box-invert);
+    }
+  }
+}
+
+[object-actions] {
+  position: absolute;
+  top: 1.2em;
+  right: 1.2em;
+  z-index: 3;
+
+  mbutton {
+    opacity: 0;
+    transition: $trans-cubic;
+
+    &[active] {
+      margin-top: 0;
+      opacity: 1;
+    }
+  }
+}
+
+[comment] {
+  &[active] {
+    z-index: 100;
+  }
+
+  &:hover {
+    [object-actions] {
+      mbutton {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+[box-floating-actions] {
+  position: absolute;
+  top: 50%;
+  right: 1.2em;
+  translate: 0 -50%;
+}

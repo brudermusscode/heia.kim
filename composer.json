@@ -1,0 +1,39 @@
+{
+  "name": "heiakim/frontend",
+  "type": "project",
+  "authors": [
+    {
+      "name": "brudermusscode",
+      "email": "justin@heia.kim"
+    }
+  ],
+  "require": {
+    "phpmailer/phpmailer": "^7.1",
+    "paragonie/constant_time_encoding": "^3.1",
+    "foroco/php-browser-detection": "^2.8",
+    "byjg/migration": "^6.0",
+    "predis/predis": "^3.4",
+    "ethanhann/redisearch-php": "^3.1",
+    "jwilsson/spotify-web-api-php": "^7.1",
+    "google/apiclient": "^2.19",
+    "illuminate/database": "^13.12",
+    "geoip2/geoip2": "^3.3",
+    "intervention/image": "^4.1"
+  },
+  "autoload": {
+    "files": [
+      "app/build/functions.php"
+    ],
+    "psr-4": {
+      "Bruder\\": "app/build/",
+      "Bruder\\Heiakim\\Authorization\\": "app/authorization/",
+      "Bruder\\Heiakim\\APIGateway\\": "app/APIGateways/",
+      "Bruder\\Heiakim\\Controller\\": "app/controllers/",
+      "Bruder\\Heiakim\\Collection\\": "app/collections/",
+      "Bruder\\Heiakim\\Enum\\": "app/enums/",
+      "Bruder\\Heiakim\\Model\\": "app/models/",
+      "Bruder\\Heiakim\\Trait\\": "app/traits/",
+      "Bruder\\Bin\\Classes\\": "bin/classes/"
+    }
+  }
+}

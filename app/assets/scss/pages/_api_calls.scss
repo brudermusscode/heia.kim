@@ -1,0 +1,154 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+header {
+  &[api-calls] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+
+    .api-calls__inr {
+      padding: 2.4em $main-distance;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 2.4em;
+    }
+
+    .main__logo {
+      padding: 0;
+    }
+
+    .api_logo {
+      picture {
+        width: 10em;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .api-calls__inr {
+        gap: 1.2em;
+      }
+
+      .main__logo {
+        picture {
+          height: 2.4em !important;
+          width: 2.4em !important;
+        }
+      }
+
+      .api_logo {
+        picture {
+          width: 6em;
+        }
+      }
+    }
+  }
+}
+
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 100vw;
+  max-width: 520px;
+  border-radius: 32px;
+  padding-inline: $main-distance;
+  padding-block: 3.2em;
+
+  .profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2em;
+    margin-bottom: 1.2em;
+
+    picture.app {
+      height: 6.2em;
+      width: 6.2em;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+  }
+}
+
+.playlists {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100svh;
+  width: 100vw;
+  z-index: -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  align-items: center;
+
+  .options {
+    color: white;
+    overflow: hidden;
+    flex: 1;
+    height: 50%;
+    position: relative;
+
+    &:hover {
+      opacity: 0.6;
+    }
+
+    p {
+      position: relative;
+      z-index: 4;
+    }
+
+    picture {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+    }
+
+    &:before {
+      content: "";
+      display: block;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.52);
+    }
+  }
+}
+
+@keyframes full-rotation {
+  from {
+    rotate: 0deg;
+    scale: 1;
+  }
+
+  8% {
+    scale: 1.12;
+  }
+
+  20% {
+    rotate: -360deg;
+    scale: 1;
+  }
+
+  to {
+    rotate: -360deg;
+    scale: 1;
+  }
+}
+
+.icon-lock-rotate {
+  animation: full-rotation 4s ease infinite;
+}

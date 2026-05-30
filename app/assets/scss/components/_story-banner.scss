@@ -1,0 +1,27 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+story-banner {
+  display: block;
+  content: "";
+  padding-inline: 12px 42px;
+  padding-block: 24px;
+  gap: $gap-mid;
+  position: relative;
+
+  picture {
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  [close] {
+    position: absolute;
+    z-index: 2;
+    top: 1.2em;
+    right: 1.2em;
+  }
+}

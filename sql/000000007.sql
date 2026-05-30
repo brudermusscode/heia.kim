@@ -1,0 +1,9 @@
+CREATE TABLE map_searches(
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NULL,
+  search_string TEXT NULL,
+  counter INT NULL default 1,
+  updated_at TIMESTAMP NULL,
+  created_at TIMESTAMP NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

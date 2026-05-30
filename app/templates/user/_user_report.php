@@ -1,0 +1,49 @@
+<?php
+
+use Bruder\Time\Time;
+use Bruder\Heiakim\Model\User;
+
+/**
+ * @var User $CurrentUser
+ * @var User $User
+ */
+?>
+
+<a href="/u/<?= $User->id; ?>">
+  <box-model outlined=darker rounded=mid clickable>
+    <bm-inr size=std>
+      <div fl alic jucsb>
+        <div fl alic gap=smol+>
+          <picture size=midler circled>
+            <?php $User->image(); ?>
+          </picture>
+
+          <div fl fldircol gap=smoler>
+            <div fl alic gap=smol>
+              <?php if ($User->squad) { ?>
+                <div filled=darker rounded="wide" pinline8 pblock4 ttup>
+                  <p text smol bold color="dynamic"><?= $User->squad->tag; ?></p>
+                </div>
+              <?php } ?>
+              <picture size="smoler" icon-only circled has-tooltip="bottom" fl alic jucc>
+                <?php $User->country_icon(); ?>
+                <div ttooltip>
+                  <p text bold><?= $User->country_string(); ?></p>
+                </div>
+              </picture>
+              <p text std bold><?= $User->name(); ?></p>
+            </div>
+            <div fl alic gap=smoler>
+              <p text smol>Last active</p>
+              &middot;
+              <p text smol color=company><?= Time::ago($User->latest_activity); ?></p>
+            </div>
+          </div>
+        </div>
+        <mbutton material tag filled=lighter icon-only arrow-further=right style=right:1.2em;>
+          <mi midler>east</mi>
+        </mbutton>
+      </div>
+    </bm-inr>
+  </box-model>
+</a>

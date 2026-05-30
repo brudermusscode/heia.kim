@@ -1,0 +1,48 @@
+vendor/
+bin/
+node_modules/
+docker/deploy
+storage/
+
+# config files
+.env
+.prettierignore
+composer.lock
+package-lock.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+xbundler.*
+compose.deploy.yaml
+discord-vote-reminder.js
+
+# uploaded files
+public/Apps/
+public/data/*
+
+public/assets/images/users/
+
+# config
+config/oauth*
+config/keys/
+config/security/
+
+# sql
+sql/last_migration
+
+# exclude .empty files within directories
+!public/assets/**/vendor
+!**/.empty
+
+# ! [public/data] Structure should look like this:
+# public/data/squads/headline-images/default.jpg
+# public/data/squads/logo-images/default.jpg
+# public/data/users/liveplay-videos
+# public/data/users/profile-images/0.jpg
+# public/data/users/profile-images/tmp
+# public/data/users/profile-images-history
+# public/data/users/profile-images-history/thumbs
+
+# ! Missing directories
+# storage/logs
+# config/keys
+# config/security

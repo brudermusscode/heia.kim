@@ -1,0 +1,6 @@
+BEGIN;
+
+  ALTER TABLE clan_requests
+    CHANGE done done_at TIMESTAMP NULL DEFAULT NULL;
+
+COMMIT;

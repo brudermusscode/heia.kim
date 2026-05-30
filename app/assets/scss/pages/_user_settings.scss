@@ -1,0 +1,62 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+setter {
+  &[mode="taiko"] {
+    [mod="autopilot"] {
+      display: none;
+    }
+  }
+
+  &[mode="ctb"] {
+    [mod="autopilot"] {
+      display: none;
+    }
+  }
+
+  &[mode="mania"] {
+    [mod="relax"],
+    [mod="autopilot"] {
+      display: none;
+    }
+  }
+}
+
+[list] {
+  [none] {
+    display: none;
+  }
+
+  [none]:only-child {
+    display: block;
+
+    &[fl] {
+      display: flex;
+    }
+  }
+}
+
+[info-tab] {
+  @include themed() {
+    border-top: 1px solid t(slight-hover);
+
+    padding-block: 1.2em;
+    padding-inline: 2.4em;
+
+    &[last] {
+      border-bottom: 1px solid t(slight-hover);
+    }
+  }
+}
+
+tipp-box {
+  content: "";
+  display: flex;
+  align-items: flex-start;
+  gap: $gap-smol-plus;
+  padding: 24px;
+
+  mi:not([size]) {
+    font-size: $font-size-midler;
+  }
+}

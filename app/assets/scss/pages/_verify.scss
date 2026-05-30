@@ -1,0 +1,219 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+verify-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  margin: 0 auto;
+  width: 100vw;
+  height: 100svh;
+  padding-block: 6.2em;
+  padding-inline: 4.2em;
+
+  @media screen and (max-width: 800px) {
+    padding-block: 1.8em;
+    padding-inline: 1.8em;
+  }
+}
+
+.properties {
+  position: fixed;
+  z-index: 101;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 362px;
+  margin-top: 4.8em;
+  scale: 0.88;
+  opacity: 0;
+  visibility: hidden;
+
+  &[active] {
+    opacity: 1;
+    visibility: visible;
+    scale: 1;
+    margin-top: 0;
+  }
+}
+
+video[verify] {
+  position: fixed;
+  z-index: 99;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  height: 80em;
+
+  &[first] {
+    margin-left: 4.46em;
+  }
+
+  &[third] {
+    margin-left: -12em;
+  }
+
+  @media screen and (max-width: 1000px) {
+    height: auto;
+    width: 260vw;
+    margin: 0;
+  }
+
+  @media screen and (max-height: 980px) {
+    height: 140svh;
+    padding-top: 12em;
+    width: auto;
+    margin: 0;
+  }
+}
+
+[next],
+[previous] {
+  height: 4em;
+  width: 4em;
+  background: white;
+  border-radius: 50%;
+  position: fixed;
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 110;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $dark;
+  cursor: pointer;
+  transition: $trans-cubic;
+
+  &:hover {
+    height: 4.8em;
+    width: 4.8em;
+  }
+
+  &[next] {
+    right: 2.4em;
+
+    &:hover {
+      right: 1.8em;
+    }
+
+    @media screen and (max-width: 800px) {
+      right: 0;
+      border-radius: 42px 0 0 42px;
+
+      &:hover {
+        right: 0;
+      }
+    }
+
+    [verifying] {
+      opacity: 0;
+      visibility: hidden;
+
+      &[active] {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    [done] {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+
+      &[active] {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  &[previous] {
+    left: 2.4em;
+
+    &:hover {
+      left: 1.8em;
+    }
+
+    @media screen and (max-width: 800px) {
+      left: 0;
+      border-radius: 0 42px 42px 0;
+
+      &:hover {
+        left: 0;
+      }
+    }
+  }
+}
+
+.shortcut {
+  padding: 2.4em;
+  position: relative;
+
+  &:hover {
+    @include themed() {
+      background: t(slight-hover);
+    }
+  }
+
+  &:active {
+    @include themed() {
+      background: t(slighter-hover);
+    }
+  }
+
+  &[copy] {
+    opacity: 0;
+    visibility: hidden;
+
+    &[active] {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+// .jumper {
+//   position: absolute;
+//   z-index: 100;
+//   border-radius: 24px;
+//   background: white;
+//   min-width: 18em;
+//   opacity: 0;
+//   visibility: hidden;
+//   transition: top 0s, left 0s, opacity 0.08s linear !important;
+//   background: white;
+//   color: $dark;
+
+//   &[active] {
+//     opacity: 1;
+//     visibility: visible;
+//   }
+
+//   .j__option {
+//     position: relative;
+//     padding-inline: 2.4em;
+//     padding-block: 0.2em;
+//     cursor: pointer;
+
+//     &:hover {
+//       background: rgba(0, 0, 0, 0.12);
+//     }
+
+//     &[sub] {
+//       .jumper {
+//         top: 100%;
+//         left: 20%;
+//       }
+
+//       &:hover {
+//         .jumper {
+//           @extend [active];
+//         }
+//       }
+//     }
+//   }
+// }

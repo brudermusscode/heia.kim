@@ -1,0 +1,891 @@
+@use "sass:color";
+
+@use "../abstract" as *;
+@use "../base" as *;
+
+loader {
+  margin: 8em 0;
+  display: block;
+  height: 44px;
+
+  @media screen and (max-width: 500px) {
+    margin: 4em 0;
+  }
+
+  &[visible] {
+    &[visible="false"] {
+      opacity: 0;
+    }
+
+    &[visible="true"] {
+      opacity: 1;
+    }
+  }
+
+  &[floating] {
+    margin: 0;
+    position: absolute;
+
+    @include align-center-screen;
+  }
+
+  &[centered] {
+    position: relative;
+    z-index: 0 + 116;
+
+    @include align-center-h;
+  }
+
+  &[purple] {
+    .loader {
+      --dot: pink;
+    }
+  }
+
+  &[red] {
+    .loader {
+      --dot: pink;
+    }
+  }
+
+  &[dark] {
+    .loader {
+      --dot: pink;
+    }
+  }
+
+  &[light] {
+    .loader {
+      --dot: pink;
+    }
+  }
+
+  .loader {
+    --duration: 1.8s;
+    width: 44px;
+    height: 44px;
+    position: relative;
+
+    &:before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      position: absolute;
+      display: block;
+      background: var(--dot);
+      top: 37px;
+      left: 19px;
+      transform: translate(-18px, -18px);
+      -webkit-transform: translate(-18px, -18px);
+      -moz-transform: translate(-18px, -18px);
+      -ms-transform: translate(-18px, -18px);
+      -o-transform: translate(-18px, -18px);
+      animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
+        infinite;
+      -webkit-animation: dotRect var(--duration)
+        cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      rect,
+      polygon,
+      circle {
+        fill: none;
+        @include themed() {
+          stroke: t(text);
+        }
+        stroke-width: 10px;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+      }
+
+      polygon {
+        stroke-dasharray: 145 (221 - 145) 145 (221 - 145);
+        stroke-dashoffset: 0;
+        animation: pathTriangle var(--duration)
+          cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        -webkit-animation: pathTriangle var(--duration)
+          cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+      }
+
+      rect {
+        stroke-dasharray: calc(256 / 4 * 3) calc(256 / 4) calc(256 / 4 * 3)
+          calc(256 / 4);
+        stroke-dashoffset: 0;
+        animation: pathRect var(--duration)
+          cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        -webkit-animation: pathRect var(--duration)
+          cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+      }
+
+      circle {
+        stroke-dasharray: calc(200 / 4 * 3) calc(200 / 4) calc(200 / 4 * 3)
+          calc(200 / 4);
+        stroke-dashoffset: 75;
+        animation: pathCircle var(--duration)
+          cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        -webkit-animation: pathCircle var(--duration)
+          cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+      }
+    }
+
+    &.triangle {
+      width: 48px;
+      &:before {
+        left: 21px;
+        animation: dotTriangle var(--duration)
+          cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        -webkit-animation: dotTriangle var(--duration)
+          cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        transform: translate(-10px, -18px);
+        -webkit-transform: translate(-10px, -18px);
+        -moz-transform: translate(-10px, -18px);
+        -ms-transform: translate(-10px, -18px);
+        -o-transform: translate(-10px, -18px);
+      }
+    }
+  }
+}
+
+@keyframes pathTriangle {
+  33% {
+    stroke-dashoffset: 74;
+  }
+  66% {
+    stroke-dashoffset: 147;
+  }
+  100% {
+    stroke-dashoffset: 221;
+  }
+}
+
+@keyframes dotTriangle {
+  33% {
+    transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+  }
+  66% {
+    transform: translate(10px, -18px);
+    -webkit-transform: translate(10px, -18px);
+    -moz-transform: translate(10px, -18px);
+    -ms-transform: translate(10px, -18px);
+    -o-transform: translate(10px, -18px);
+  }
+  100% {
+    transform: translate(-10px, -18px);
+    -webkit-transform: translate(-10px, -18px);
+    -moz-transform: translate(-10px, -18px);
+    -ms-transform: translate(-10px, -18px);
+    -o-transform: translate(-10px, -18px);
+  }
+}
+
+@keyframes pathRect {
+  25% {
+    stroke-dashoffset: 64;
+  }
+  50% {
+    stroke-dashoffset: 128;
+  }
+  75% {
+    stroke-dashoffset: 192;
+  }
+  100% {
+    stroke-dashoffset: 256;
+  }
+}
+
+@keyframes dotRect {
+  25% {
+    transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(18px, -18px);
+    -webkit-transform: translate(18px, -18px);
+    -moz-transform: translate(18px, -18px);
+    -ms-transform: translate(18px, -18px);
+    -o-transform: translate(18px, -18px);
+  }
+  75% {
+    transform: translate(0, -36px);
+    -webkit-transform: translate(0, -36px);
+    -moz-transform: translate(0, -36px);
+    -ms-transform: translate(0, -36px);
+    -o-transform: translate(0, -36px);
+  }
+  100% {
+    transform: translate(-18px, -18px);
+    -webkit-transform: translate(-18px, -18px);
+    -moz-transform: translate(-18px, -18px);
+    -ms-transform: translate(-18px, -18px);
+    -o-transform: translate(-18px, -18px);
+  }
+}
+
+@keyframes pathCircle {
+  25% {
+    stroke-dashoffset: 125;
+  }
+  50% {
+    stroke-dashoffset: 175;
+  }
+  75% {
+    stroke-dashoffset: 225;
+  }
+  100% {
+    stroke-dashoffset: 275;
+  }
+}
+
+.loader {
+  display: inline-block;
+  margin: 0 16px;
+}
+
+no-spacing {
+  display: block;
+
+  loader {
+    margin: 0 0;
+  }
+}
+
+.animation-container {
+  display: block;
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
+
+  .lightning-container {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: flex;
+    transform: translateY(-50%);
+
+    .lightning {
+      position: absolute;
+      display: block;
+      height: 12px;
+      width: 12px;
+      border-radius: 12px;
+      transform-origin: 6px 6px;
+
+      animation-name: woosh;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+      animation-direction: alternate;
+
+      &.white {
+        background-color: white;
+        box-shadow: 0px 50px 50px 0px color.adjust(white, $alpha: -0.7);
+      }
+
+      &.red {
+        background-color: #fc7171;
+        box-shadow: 0px 50px 50px 0px color.adjust(#fc7171, $alpha: -0.7);
+        animation-delay: 0.2s;
+      }
+    }
+  }
+
+  .boom-container {
+    position: absolute;
+    display: flex;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    align-items: center;
+    transform: translateY(-50%);
+    left: 200px;
+    top: -145px;
+
+    .shape {
+      display: inline-block;
+      position: relative;
+      opacity: 0;
+      transform-origin: center center;
+
+      &.triangle {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        transform-origin: 50% 80%;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: infinite;
+        margin-left: -15px;
+        border-width: 0 2.5px 5px 2.5px;
+        border-color: transparent transparent #42e599 transparent;
+        animation-name: boom-triangle;
+
+        &.big {
+          margin-left: -25px;
+          border-width: 0 5px 10px 5px;
+          border-color: transparent transparent #fade28 transparent;
+          animation-name: boom-triangle-big;
+        }
+      }
+
+      &.disc {
+        width: 8px;
+        height: 8px;
+        border-radius: 100%;
+        background-color: #d15ff4;
+        animation-name: boom-disc;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: infinite;
+      }
+
+      &.circle {
+        width: 20px;
+        height: 20px;
+        animation-name: boom-circle;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: infinite;
+        border-radius: 100%;
+        margin-left: -30px;
+
+        &.white {
+          border: 1px solid white;
+        }
+
+        &.big {
+          width: 40px;
+          height: 40px;
+          margin-left: 0px;
+
+          &.white {
+            border: 2px solid white;
+          }
+        }
+      }
+
+      &:after {
+        background-color: rgba(178, 215, 232, 0.2);
+      }
+    }
+
+    .shape {
+      &.triangle,
+      &.circle,
+      &.circle.big,
+      &.disc {
+        animation-delay: 0.38s;
+        animation-duration: 3s;
+      }
+
+      &.circle {
+        animation-delay: 0.6s;
+      }
+    }
+
+    &.second {
+      left: 485px;
+      top: 155px;
+      .shape {
+        &.triangle,
+        &.circle,
+        &.circle.big,
+        &.disc {
+          animation-delay: 1.9s;
+        }
+        &.circle {
+          animation-delay: 2.15s;
+        }
+      }
+    }
+  }
+}
+
+@keyframes woosh {
+  0% {
+    width: 12px;
+    transform: translate(0px, 0px) rotate(-35deg);
+  }
+  15% {
+    width: 50px;
+  }
+  30% {
+    width: 12px;
+    transform: translate(214px, -150px) rotate(-35deg);
+  }
+  30.1% {
+    transform: translate(214px, -150px) rotate(46deg);
+  }
+  50% {
+    width: 110px;
+  }
+  70% {
+    width: 12px;
+    transform: translate(500px, 150px) rotate(46deg);
+  }
+  70.1% {
+    transform: translate(500px, 150px) rotate(-37deg);
+  }
+
+  85% {
+    width: 50px;
+  }
+  100% {
+    width: 12px;
+    transform: translate(700px, 0) rotate(-37deg);
+  }
+}
+
+@keyframes boom-circle {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0;
+    transform: scale(3);
+  }
+  100% {
+  }
+}
+
+@keyframes boom-triangle-big {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+
+  40% {
+    opacity: 0;
+    transform: scale(2.5) translate(50px, -50px) rotate(360deg);
+  }
+  100% {
+  }
+}
+
+@keyframes boom-triangle {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 0;
+    transform: scale(3) translate(20px, 40px) rotate(360deg);
+  }
+
+  100% {
+  }
+}
+
+@keyframes boom-disc {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+    transform: scale(2) translate(-70px, -30px);
+  }
+  100% {
+  }
+}
+
+[sub-menu-test] {
+  @include themed() {
+    background: t(nav2);
+    height: 28.2em;
+    width: 12.2em;
+    position: absolute;
+    left: 6.2em;
+    top: 30%;
+  }
+}
+
+/**
+* Loading page animation
+*/
+.path-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  opacity: 0;
+  visibility: hidden;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+
+  .circular {
+    -webkit-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
+    height: 100%;
+    -webkit-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    .path {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+      -webkit-animation: dash 1.5s ease-in-out infinite;
+      animation: dash 1.5s ease-in-out infinite;
+      stroke-linecap: round;
+
+      @include themed() {
+        stroke: t(loader);
+      }
+    }
+  }
+
+  &[dark] {
+    .circular {
+      .path {
+        stroke: $dark;
+      }
+    }
+  }
+
+  &[active] {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+// @-webkit-keyframes color {
+//   100%,
+//   0% {
+//     @include themed() {
+//       stroke: t(active);
+//     }
+//   }
+//   40% {
+//     @include themed() {
+//       stroke: t(active);
+//     }
+//   }
+//   66% {
+//     @include themed() {
+//       stroke: t(active);
+//     }
+//   }
+//   80%,
+//   90% {
+//     @include themed() {
+//       stroke: t(active);
+//     }
+//   }
+// }
+
+// @keyframes color {
+//   100%,
+//   0% {
+//     @include themed() {
+//       stroke: t(active);
+//     }
+//   }
+//   40% {
+//     @include themed() {
+//       stroke: t(active);
+//     }
+//   }
+//   66% {
+//     @include themed() {
+//       stroke: t(active);
+//     }
+//   }
+//   80%,
+//   90% {
+//     @include themed() {
+//       stroke: t(active);
+//     }
+//   }
+// }
+
+[data-react="scroll:reached-end"] {
+  .path-loader {
+    position: relative;
+    transform: none;
+    left: auto;
+    right: auto;
+    top: auto;
+  }
+
+  &[show-loader] {
+    .path-loader {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+/**
+*
+* Google dots loading animation
+*/
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .ball {
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 11px;
+    margin: 0 10px;
+
+    animation: 2s bounce ease infinite;
+
+    &.blue {
+      background-color: #fe6c3b;
+    }
+
+    &.red {
+      background-color: #facc52;
+      animation-delay: 0.25s;
+    }
+
+    &.yellow {
+      background-color: #1bb1bf;
+      animation-delay: 0.5s;
+    }
+
+    &.green {
+      background-color: #9b32f6;
+      animation-delay: 0.75s;
+    }
+  }
+}
+
+@keyframes bounce {
+  50% {
+    transform: translateY(25px);
+  }
+}
+
+/*************************
+* Pulsating circles
+************************/
+$loader-pulse-size: 1em;
+
+/* Loader 6 */
+.loader-pulse {
+  height: $loader-pulse-size;
+  width: $loader-pulse-size;
+
+  i {
+    display: block;
+    position: absolute;
+    translate: 0 -50%;
+    top: 50%;
+    margin-top: -0.2em;
+    height: $loader-pulse-size;
+    width: $loader-pulse-size;
+
+    @include themed() {
+      color: t(text);
+    }
+  }
+}
+
+.loader-pulse span {
+  display: block;
+  height: $loader-pulse-size;
+  width: $loader-pulse-size;
+}
+
+.loader-pulse span::before,
+.loader-pulse span::after {
+  content: "";
+  display: block;
+  height: $loader-pulse-size;
+  width: $loader-pulse-size;
+  border: 2px solid;
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+
+  @include themed() {
+    border-color: t(text);
+  }
+
+  border-radius: 50%;
+  opacity: 0;
+  -webkit-animation: loader-pulse-1 1.5s cubic-bezier(0.075, 0.82, 0.165, 1)
+    infinite;
+  animation: loader-pulse-1 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+}
+
+@-webkit-keyframes loader-pulse-1 {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes loader-pulse-1 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.loader-pulse span::after {
+  -webkit-animation: loader-pulse-2 1.5s cubic-bezier(0.075, 0.82, 0.165, 1)
+    0.25s infinite;
+  animation: loader-pulse-2 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s
+    infinite;
+}
+
+@-webkit-keyframes loader-pulse-2 {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0;
+  }
+}
+@keyframes loader-pulse-2 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0;
+  }
+}
+
+/*************************
+* Three pulsating dots
+************************/
+@keyframes pulsate {
+  0% {
+    scale: 0;
+  }
+  50% {
+    scale: 1;
+    opacity: 1;
+  }
+  100% {
+    scale: 0;
+  }
+}
+
+.dot-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot-pulse {
+  width: 0.8em;
+  height: 0.8em;
+  scale: 0;
+  background-color: #fff;
+  border-radius: 50%;
+  margin: 0 4px;
+  animation: pulsate 0.92s ease-in-out infinite;
+  opacity: 0;
+}
+
+.dot-pulse:nth-child(2) {
+  animation-delay: 0.125s;
+}
+
+.dot-pulse:nth-child(3) {
+  animation-delay: 0.25s;
+}
+
+.dot-container {
+  &[dynamic-color] {
+    .dot-pulse {
+      @include themed() {
+        background: t(box-invert);
+      }
+    }
+  }
+}

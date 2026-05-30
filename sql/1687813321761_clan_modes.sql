@@ -1,0 +1,6 @@
+BEGIN;
+
+  ALTER TABLE clan_modes
+  ADD active TINYINT DEFAULT 1 AFTER mode;
+
+COMMIT;

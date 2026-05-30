@@ -1,0 +1,160 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+responder {
+  display: block;
+  top: -100px;
+  left: 50%;
+  translate: -50% 0;
+  position: fixed;
+  z-index: $endless-z-index + 2001;
+  transition: $trans-cubic;
+  max-width: 48em;
+
+  responder-bg {
+    display: block;
+    height: 48px;
+    width: 48px;
+    box-shadow: var(--mio-theme-elevation-2);
+    border-radius: 24px;
+    transition: $trans-cubic;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+  }
+
+  responder-inr {
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    gap: $gap-smol-plus;
+    padding-inline: 28px 12px;
+    padding-block: 16px;
+  }
+
+  &[active] {
+    top: 16px;
+
+    responder-inr {
+      animation: opacity 0.1s linear forwards;
+      animation-delay: 0.46s;
+
+      @keyframes opacity {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &[deleted] {
+    top: -100px;
+  }
+
+  &[error] {
+    color: $light;
+
+    responder-bg {
+      background: #641b16;
+    }
+  }
+
+  &[feedback] {
+    color: $dark;
+
+    responder-bg {
+      background: #edc144;
+    }
+  }
+
+  &[premium] {
+    color: $light;
+
+    responder-bg {
+      background: #416754;
+    }
+  }
+
+  &[success] {
+    @include themed() {
+      color: t(text-invert);
+
+      responder-bg {
+        background: t(box-invert);
+      }
+    }
+  }
+
+  [close-responder] {
+    cursor: pointer;
+    margin-left: 24px;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  [message] {
+    a {
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin-inline: 2px;
+      text-wrap: nowrap;
+
+      &:not([disabled]) {
+        cursor: pointer;
+      }
+
+      @include themed() {
+        background: t(slight-hover-invert);
+      }
+
+      display: inline-flex;
+      align-items: center;
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+
+    [tag] {
+      @include themed() {
+        background: t(slight-hover-invert);
+      }
+
+      mi {
+        display: inline-block;
+        padding-top: 0px;
+      }
+
+      border-radius: 6px;
+      padding-inline: 6px;
+      padding-block: 2px;
+      align-items: center;
+      color: inherit;
+      text-wrap: nowrap;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    top: -100px;
+    bottom: initial !important;
+    left: 16px;
+    translate: 0 0;
+    width: calc(100% - 2 * 48px);
+
+    &[active] {
+      top: 16px;
+    }
+
+    &[deleted] {
+      top: -100px;
+    }
+  }
+}

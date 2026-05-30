@@ -1,0 +1,100 @@
+<?php
+
+use Bruder\Heiakim\Model\Gamemode;
+use Bruder\Heiakim\Model\User;
+use Bruder\Heiakim\Model\Score;
+
+/**
+ * @var int
+ */
+$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
+
+/**
+ * @var string
+ */
+$gumode = filter_input(INPUT_GET, "gumode", FILTER_VALIDATE_INT) ?? 0;
+
+/**
+ * @var int
+ */
+$fetch_limit = 7;
+
+/**
+ * Validate gumode.
+ */
+if (!in_array($gumode, Gamemode::$modes))
+  $gumode = 0;
+
+/**
+ * @var object
+ */
+$mode_mod = Gamemode::convert_gumode_to_mode_mod($gumode);
+
+/**
+ * @var ?User
+ */
+$User = User::find($id);
+
+/**
+ * User doesn't exist?
+ * ! Error
+ */
+if (!$User) :
+  include GET_CONTENT_NOTHING;
+else :
+
+  /**
+   * @var Score
+   */
+  $Scores = $User->first_place_scores(
+    gumode: $gumode,
+    order: "pp",
+    limit: $fetch_limit,
+  );
+
+  if (!$Scores->count()) {
+
+?>
+
+    <box-model rounded="wide" filled="lighter" p42 fl fldircol alic gap style="flex:1;">
+      <div style="height:3.2em;width:3.2em;" fl alic jucc circled filled>
+        <mi mid>emoji_events</mi>
+      </div>
+      <div tac>
+        <p text bold mid>First places</p>
+        <p text std>Scores that rank first in the leaderboard</p>
+      </div>
+    </box-model>
+
+  <?php } else { ?>
+
+    <div grid-repeat gap=smol>
+      <?php
+
+      foreach ($Scores as $key => $Score) {
+        if ($key == ($fetch_limit - 1)) break;
+
+        include TEMPLATE . "/score/_score.php";
+      }
+
+      ?>
+    </div>
+
+    <?php if ($Scores->count() > ($fetch_limit - 1)) { ?>
+      <div fl jucc mt=smol>
+        <a href="<?= "/u/$User->id/$mode_mod->mode/$mode_mod->mod/firsts"; ?>">
+          <mbutton material ripple-effect filled=lighter has-icon=right>
+            <p text smol bold ttup><?= __("Show more") ?></p>
+            <mi>east</mi>
+          </mbutton>
+        </a>
+      </div>
+    <?php } ?>
+
+<?php
+
+
+    unset($Scores);
+  }
+
+endif;

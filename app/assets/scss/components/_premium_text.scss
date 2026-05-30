@@ -1,0 +1,566 @@
+@use "sass:list";
+@use "sass:color";
+
+@use "../abstract" as *;
+@use "../base" as *;
+
+.premium-txt-peach {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: radial-gradient(
+    circle,
+    rgb(255, 229, 184) 10%,
+    rgb(255, 255, 255) 25%,
+    rgb(254, 139, 139) 35%,
+    rgb(254, 159, 200) 50%,
+    rgb(255, 56, 142) 75%,
+    rgb(255, 0, 111) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  filter: drop-shadow(rgb(255, 0, 123) 0px 0px 0px)
+    drop-shadow(rgb(255, 0, 123) 0px 0px 4px);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-fire {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(99, 13, 54) 0%,
+    rgb(212, 16, 66) 33%,
+    rgb(243, 24, 60) 51%,
+    rgb(254, 116, 107) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-kassadin {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgb(155, 1, 242) 0%,
+    rgb(155, 1, 242) 20%,
+    rgb(217, 90, 254) 20%,
+    rgb(217, 90, 254) 40%,
+    rgb(233, 182, 247) 40%,
+    rgb(233, 182, 247) 60%,
+    rgb(217, 90, 254) 60%,
+    rgb(217, 90, 254) 80%,
+    rgb(155, 1, 242) 80%,
+    rgb(155, 1, 242) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  filter: drop-shadow(rgb(155, 1, 242) 0px 0px 5px);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-smaragd {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    135deg,
+    rgb(0, 112, 69) 20%,
+    rgb(0, 209, 129) 35%,
+    rgb(122, 255, 204) 50%,
+    rgb(0, 209, 129) 65%,
+    rgb(0, 112, 69) 80%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-popel {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(176, 196, 0) 0%,
+    rgb(176, 196, 0) 16%,
+    rgb(213, 222, 46) 16%,
+    rgb(213, 222, 46) 33%,
+    rgb(160, 120, 59) 33%,
+    rgb(160, 120, 59) 49%,
+    rgb(124, 77, 29) 49%,
+    rgb(124, 77, 29) 66%,
+    rgb(195, 188, 149) 66%,
+    rgb(195, 188, 149) 84%,
+    rgb(211, 204, 165) 84%,
+    rgb(211, 204, 165) 84%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-valentine {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    270deg,
+    rgb(255, 128, 232) 50%,
+    rgb(255, 255, 255) 50%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-pinkus {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(247, 0, 102) 0%,
+    rgb(162, 0, 198) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  filter: drop-shadow(rgb(255, 0, 89) 0px 0px 5px);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-pastel {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(196, 240, 232) 0%,
+    rgb(196, 240, 232) 20%,
+    rgb(255, 193, 177) 20%,
+    rgb(255, 193, 177) 40%,
+    rgb(242, 235, 215) 40%,
+    rgb(242, 235, 215) 60%,
+    rgb(155, 201, 158) 60%,
+    rgb(155, 201, 158) 80%,
+    rgb(182, 145, 107) 80%,
+    rgb(182, 145, 107) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-incandescent {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(248, 140, 6) 0%,
+    rgb(242, 189, 71) 50%,
+    rgb(164, 127, 222) 50%,
+    rgb(142, 106, 193) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-try-my-luck {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: repeating-radial-gradient(
+    circle,
+    rgb(84, 219, 81) 43%,
+    rgb(255, 255, 255) 54%,
+    rgb(71, 205, 80) 67%,
+    rgb(255, 255, 255) 87%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-dagoberts-style {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    rgb(153, 85, 12) 8%,
+    rgb(243, 145, 30) 54%,
+    rgb(255, 230, 176) 59%,
+    rgb(253, 218, 96) 69%,
+    rgb(200, 86, 9) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-so-colorful {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(251, 177, 50) 0%,
+    rgb(251, 177, 50) 30%,
+    rgb(255, 77, 198) 30%,
+    rgb(255, 77, 198) 40%,
+    rgb(133, 84, 50) 40%,
+    rgb(133, 84, 50) 60%,
+    rgb(54, 170, 242) 60%,
+    rgb(54, 170, 242) 70%,
+    rgb(200, 255, 82) 70%,
+    rgb(200, 255, 82) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-vomit {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(167, 233, 43) 0%,
+    rgb(207, 242, 150) 25%,
+    rgb(90, 211, 137) 50%,
+    rgb(19, 128, 68) 75%,
+    rgb(41, 230, 72) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-skin {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: radial-gradient(
+    circle,
+    rgb(234, 155, 160) 19%,
+    rgb(251, 239, 153) 29%,
+    rgb(251, 239, 153) 63%,
+    rgb(255, 254, 250) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  filter: drop-shadow(rgb(0, 0, 0) 0.5px 0px 1px)
+    drop-shadow(rgb(234, 155, 160) 0px 0.5px 0.5px);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-first-my-coffee {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(243, 244, 239) 0%,
+    rgb(243, 244, 239) 20%,
+    rgb(230, 198, 154) 20%,
+    rgb(230, 198, 154) 40%,
+    rgb(189, 132, 75) 40%,
+    rgb(189, 132, 75) 60%,
+    rgb(173, 104, 47) 60%,
+    rgb(173, 104, 47) 80%,
+    rgb(155, 87, 52) 80%,
+    rgb(155, 87, 52) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-durstloescher {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(247, 89, 93) 0%,
+    rgb(254, 199, 88) 50%,
+    rgb(188, 245, 0) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  filter: drop-shadow(rgb(247, 89, 93) 0px 0px 4px);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-even-more-colorful {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(53, 226, 195) 0%,
+    rgb(53, 226, 195) 25%,
+    rgb(127, 115, 255) 25%,
+    rgb(127, 115, 255) 50%,
+    rgb(255, 131, 195) 50%,
+    rgb(255, 131, 195) 75%,
+    rgb(255, 229, 82) 75%,
+    rgb(255, 229, 82) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-the-winds {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: repeating-radial-gradient(
+    rgb(188, 241, 236) 7%,
+    rgb(51, 198, 247) 24%,
+    rgb(215, 243, 253) 52%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-looking-sick {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(201, 222, 221) 0%,
+    rgb(138, 204, 179) 16%,
+    rgb(112, 189, 156) 17%,
+    rgb(66, 179, 151) 31%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  filter: drop-shadow(rgb(0, 255, 213) 0px 0px 1px);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-color-chunks {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(226, 237, 243) 0%,
+    rgb(226, 237, 243) 20%,
+    rgb(237, 202, 36) 20%,
+    rgb(237, 202, 36) 40%,
+    rgb(123, 179, 210) 40%,
+    rgb(123, 179, 210) 60%,
+    rgb(120, 171, 79) 60%,
+    rgb(120, 171, 79) 80%,
+    rgb(69, 143, 180) 80%,
+    rgb(69, 143, 180) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-OMG-MORE-COLORS {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(249, 92, 123) 0%,
+    rgb(249, 92, 123) 16%,
+    rgb(249, 185, 81) 16%,
+    rgb(249, 185, 81) 33%,
+    rgb(245, 229, 85) 33%,
+    rgb(245, 229, 85) 49%,
+    rgb(177, 223, 95) 49%,
+    rgb(177, 223, 95) 65%,
+    rgb(99, 193, 226) 65%,
+    rgb(99, 193, 226) 82%,
+    rgb(162, 139, 233) 82%,
+    rgb(162, 139, 233) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-oranges {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: radial-gradient(
+    circle,
+    rgb(238, 233, 185) 0%,
+    rgb(238, 233, 185) 20%,
+    rgb(241, 231, 126) 20%,
+    rgb(238, 210, 90) 70%,
+    rgb(238, 233, 185) 70%,
+    rgb(238, 233, 185) 80%,
+    rgb(247, 187, 0) 80%,
+    rgb(247, 187, 0) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-i-want-colorful-drinks {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    90deg,
+    rgb(0, 255, 159) 0%,
+    rgb(0, 255, 159) 50%,
+    rgb(240, 255, 250) 50%,
+    rgb(240, 255, 250) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-kek {
+  background-clip: text;
+  background-color: rgb(230, 230, 230);
+  background-image: linear-gradient(
+    270deg,
+    rgb(2, 201, 248) 0%,
+    rgb(28, 100, 242) 100%
+  );
+  background-size: cover;
+  color: rgb(230, 230, 230);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+}
+
+.premium-txt-pleasant-glow {
+  $r: 24px; // glow radius
+  $o: 4px; // glow offset
+  $d: 4s; // duration
+  $bg: #111; // background color
+  $c: cyan yellow tomato;
+  color: white;
+
+  animation: glow $d ease-in-out both infinite;
+
+  @mixin glow($c1, $c2, $c3) {
+    text-shadow:
+      0 0 calc($r / 6) $dark,
+      0 (-$o) $r $c3,
+      (-$o) $o $r $c2,
+      $o $o $r $c3;
+  }
+
+  @keyframes glow {
+    0%,
+    100% {
+      @include glow(list.nth($c, 1), list.nth($c, 2), list.nth($c, 3));
+    }
+    33% {
+      @include glow(list.nth($c, 2), list.nth($c, 3), list.nth($c, 1));
+    }
+    66% {
+      @include glow(list.nth($c, 3), list.nth($c, 1), list.nth($c, 2));
+    }
+  }
+}
+
+.premium-txt-glitching {
+  outline: 0;
+  color: #fff;
+  text-align: center;
+  animation: text-glow 2s infinite alternate ease-in-out;
+
+  @include themed() {
+    text-shadow:
+      -1px 1px 0 #e123ff,
+      1px -1px 0 #4d7fff,
+      0 0 9px t(bg);
+  }
+
+  @keyframes bg-glitch {
+    0% {
+      background-position: 0 2px;
+    }
+    70% {
+      background-color: #1e2025;
+    }
+    98% {
+      background-position: 0 2px;
+    }
+    99% {
+      background-position: 0 1px;
+    }
+    100% {
+      background-position: 0 3px;
+      background-color: color.adjust(#1e2025, $lightness: 2%);
+    }
+  }
+
+  @include themed() {
+    @keyframes text-glow {
+      66% {
+        text-shadow:
+          -1px 1px 0 #e123ff,
+          1px -1px 0 #4d7fff,
+          0 0 9px t(bg);
+      }
+      68% {
+        text-shadow:
+          -2px 2px 0 #e123ff,
+          2px -2px 0 #4d7fff,
+          0 0 9px t(bg);
+      }
+      70% {
+        opacity: 1;
+        text-shadow:
+          -1px 1px 0 #e123ff,
+          1px -1px 0 #4d7fff,
+          0 0 9px t(bg);
+      }
+      71% {
+        opacity: 0.6;
+      }
+      72% {
+        opacity: 1;
+      }
+      79% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 0.6;
+      }
+      81% {
+        opacity: 1;
+      }
+      83% {
+        opacity: 1;
+      }
+      84% {
+        opacity: 0.6;
+      }
+      85% {
+        opacity: 1;
+        text-shadow:
+          -1px 1px 0 #e123ff,
+          1px -1px 0 #4d7fff,
+          0 0 9px t(bg);
+      }
+      100% {
+        text-shadow:
+          -1px 1px 0 #e123ff,
+          1px -1px 0 #4d7fff,
+          0 0 14px t(bg);
+      }
+    }
+  }
+}
+
+.premium_name__showcase {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+
+  .pns_option {
+    @include themed() {
+      background: t(slight-hover);
+    }
+
+    border-radius: 18px;
+    padding: 0.8em 1.2em;
+  }
+}
+
+.is-premium-name {
+  display: inline-block;
+  padding: 12px;
+  margin: -12px;
+}

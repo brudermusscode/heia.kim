@@ -1,0 +1,337 @@
+import * as Frontend from "./frontend";
+import * as Page from "./page";
+import * as Audio from "./audio";
+import Overlay from "./elements/Overlay";
+
+/**
+ *
+ * Create a new ajax request. This will push the request to the
+ * global active request array and make it available throughout
+ * the website.
+ */
+export const queue = (options) => {
+  const xhr = $.ajax(options);
+  __request.queue.push(xhr);
+
+  // Clean up finished request.
+  xhr.always(() => {
+    __request.queue = __request.queue.filter((req) => req !== xhr);
+  });
+};
+
+/**
+ *
+ * @param {string} href
+ * @param {Element} append_to
+ * @param {boolean} show_responder
+ * @param {boolean} overlay
+ * @returns {}
+ */
+const get_content = async (href, append_to, show_responder, overlay) => {
+  if (__page.is_loading) return;
+
+  Frontend.load();
+
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: href,
+      method: "GET",
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        Frontend.unload();
+
+        if (data.status) {
+          if (!data.data) return resolve(data);
+
+          if (show_responder !== undefined && show_responder === "success")
+            Frontend.create_responder(data.message, "succes");
+
+          if (overlay) {
+            let overlay = new Overlay();
+            overlay.append(data.data);
+            overlay.overlay.find("[autofocus]")?.focus();
+          } else if (append_to) {
+            append_to.insertAdjacentHTML("beforeend", data.data);
+            append_to.find("[autofocus]")?.focus();
+          } else {
+            __main.insertAdjacentHTML("beforeend", data.data);
+            __main.find("[autofocus]")?.focus();
+          }
+          Frontend.reload_images();
+        } else {
+          if (show_responder !== undefined && show_responder === "error")
+            Frontend.create_responder(data.message, "error");
+        }
+
+        if (show_responder !== undefined && show_responder === "always")
+          Frontend.create_responder(
+            data.message,
+            data.status ? "success" : "error"
+          );
+
+        resolve(data);
+      },
+      error: function (data) {
+        Frontend.ajax_error(data);
+        reject(data);
+      },
+    });
+  });
+};
+
+const construct_get_request_url = (
+  element,
+  baseUrl,
+  prefix = "request-get-attribute-"
+) => {
+  // Initialize query string
+  let queryString = "?";
+
+  // Iterate over attributes of the element
+  for (const attr of element.attributes) {
+    if (attr.name.startsWith(prefix)) {
+      // Extract the attribute name without the prefix
+      const queryParamName = attr.name
+        .slice(prefix.length)
+        .replace(/([A-Z])/g, "-$1")
+        .replace("-", "_")
+        .toLowerCase();
+      queryString += `${queryParamName}=${encodeURIComponent(attr.value)}&`;
+    }
+  }
+
+  // Remove trailing '&' if present
+  queryString = queryString.slice(0, -1);
+
+  // Construct full URL
+  const fullUrl = baseUrl + queryString;
+
+  return fullUrl;
+};
+
+$(function () {
+  $(document).on("submit", "[request], [request-do]", function (e) {
+    e.preventDefault();
+
+    let request_url =
+      this.getAttribute("request") || this.getAttribute("request-do");
+
+    if (!request_url) return;
+
+    let delay = this.getAttribute("delay") ?? 0;
+
+    setTimeout(() => {
+      let formdata = new FormData(this);
+      let buttons = this.find_all("[submit-closest]");
+      let method = this.getAttribute("method") ?? "POST";
+      let responder = this.getAttribute("responder");
+      let audio_success = this.getAttribute("audio-success");
+      let audio_error = this.getAttribute("audio-error");
+      let redirect = this.getAttribute("redirect");
+      let scroll_top = !this.hasAttribute("no-scroll-top");
+      let reload = this.getAttribute("reload");
+      let full_reload = this.getAttribute("full-reload");
+      let execute_success = this.getAttribute("on-success");
+      let close_overlays = this.getAttribute("close-overlays");
+      let update_user_references = this.hasAttribute("update-user-references");
+
+      /**
+       * Serialize request url.
+       */
+      request_url = request_url.replaceAll(":", "/");
+
+      buttons.forEach((button) => button.disable());
+
+      if (this.getAttribute("no-loader") == null) Frontend.load();
+
+      if (redirect) {
+        /**
+         * @var array
+         */
+        let split_redirect_url = redirect.split("/");
+
+        /**
+         * Build a new redirect url by substituting the colon
+         * parameter with actual values from the submitted form.
+         */
+        split_redirect_url.forEach((section, index) => {
+          if (section[0] === ":") {
+            let param = section.replace(":", "");
+            let value = formdata.get(param);
+
+            redirect = redirect.replace(section, value);
+          }
+        });
+      }
+
+      $.ajax({
+        url: "/" + request_url,
+        data: formdata,
+        method: method,
+        success: function (data) {
+          Frontend.unload();
+
+          if (data.status) {
+            /**
+             * Update anything that could have changed for the
+             * user in the ui through this request.
+             */
+            if (update_user_references) Frontend.update_user_menu();
+
+            /**
+             * Close all overlays requested.
+             */
+            if (close_overlays !== null) Frontend.close_overlays();
+
+            /**
+             * Play success audio.
+             */
+            if (audio_success !== null) Audio.play(`[${audio_success}]`);
+
+            /**
+             * Page reload requested.
+             */
+            if (reload !== null) {
+              Page.reload();
+            }
+
+            /**
+             * Redirect requested.
+             */
+            if (redirect !== null && full_reload === null) {
+              Page.get(redirect, false, null, scroll_top);
+
+              /**
+               * Full reload requested.
+               */
+            } else if (full_reload !== null)
+              window.location.replace(
+                redirect ?? window.location.pathname + window.location.search
+              );
+
+            /**
+             * Show responder only on success.
+             */
+            if (responder !== null && responder === "success")
+              Frontend.create_responder(data);
+
+            /**
+             * Execute on success functions.
+             */
+            if (execute_success) $.globalEval(execute_success);
+          } else {
+            /**
+             * Play audio on error.
+             */
+            if (audio_error !== null) Audio.play(`[${audio_error}]`);
+
+            /**
+             * Show responder only on error.
+             */
+            if (responder !== null && responder === "error")
+              Frontend.create_responder(data.message, "error");
+          }
+
+          /**
+           * Always show responder.
+           */
+          if (responder !== null && (responder === "always" || !responder))
+            Frontend.create_responder(data);
+
+          buttons.forEach((button) => button.enable());
+        },
+      });
+    }, delay);
+  });
+
+  /**
+   * Open popups dynamically.
+   */
+  $(document).on("click", "[request-get]", function (e) {
+    let href = this.getAttribute("request-get");
+    let url = "/" + href.replaceAll(":", "/");
+    let query = "?";
+    let dataset_count = Object.keys(this.dataset).length;
+
+    /**
+     * Construct the url query by iterating through all data
+     * elements on the clicked element.
+     */
+    if (dataset_count > 0) {
+      for (const key in this.dataset) {
+        query +=
+          key.replace(/[A-Z]/g, (letter) => "_" + letter.toLowerCase()) +
+          "=" +
+          this.dataset[key] +
+          "&";
+      }
+
+      query += "is_popup=kurwa";
+    } else query += "is_popup=kurwa";
+
+    Frontend.load(1000);
+
+    $.ajax({
+      url: url + query,
+      method: "GET",
+      success: function (data) {
+        Frontend.unload();
+
+        if (data.status) {
+          let overlay = new Overlay();
+          overlay.append(data.data);
+
+          setTimeout(() => {
+            overlay.overlay.find("[autofocus]")?.focus();
+          }, 400);
+        } else new Frontend.create_responder(data.message, "error");
+      },
+    });
+  });
+
+  /**
+   * Get content from some url and append it to the main container.
+   */
+  $(document).on("click", "[request-get-old]", async function (e) {
+    let append_to = eval(this.getAttribute("request-append-to"));
+    let show_responder = this.getAttribute("responder");
+    let url = "/" + this.getAttribute("request-get");
+    let overlay = this.hasAttribute("overlay");
+
+    if (append_to !== null && !(append_to instanceof Element)) return;
+
+    url = construct_get_request_url(this, url, "request-get-attribute-");
+
+    try {
+      let resolved = await get_content(url, append_to, show_responder, overlay);
+
+      if ((resolved.status && !resolved.data) || resolved.end === true) {
+        this.setAttribute("done", "");
+        this.disable();
+      }
+
+      if (!resolved.data) {
+        if (resolved.error || resolved.message)
+          create_responder(resolved.error || resolved.message);
+
+        return;
+      }
+    } catch (error) {
+      return create_responder(`An error occured: ${error}`, "error");
+    }
+
+    // If offset and limit are set as attributes, we want to
+    // increase the offset by the limit. It's probably always
+    // fetching new data.
+    let limit = this.getAttribute("request-get-attribute-limit");
+    let offset = this.getAttribute("request-get-attribute-offset");
+
+    if (limit && offset) {
+      this.setAttribute(
+        "request-get-attribute-offset",
+        parseInt(offset) + parseInt(limit)
+      );
+    }
+  });
+});

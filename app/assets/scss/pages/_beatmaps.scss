@@ -1,0 +1,315 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+$beatmap-content-width: 1620px;
+$beatmap-header-width: 1120px;
+
+.beatmaps {
+  transition: $trans-cubic;
+  padding-top: 32em;
+
+  @media screen and (max-width: 1080px) {
+    padding-top: 27.2em;
+  }
+
+  @media screen and (max-width: 800px) {
+    padding-top: 24em;
+  }
+
+  @media screen and (max-width: 600px) {
+    padding-top: 16.4em;
+  }
+
+  &[has-searches] {
+    padding-top: 36em;
+
+    @media screen and (max-width: 1080px) {
+      padding-top: 31em;
+    }
+
+    @media screen and (max-width: 800px) {
+      padding-top: 27.8em;
+    }
+
+    @media screen and (max-width: 600px) {
+      padding-top: 16.4em;
+    }
+  }
+}
+
+[title-inline] {
+  padding-inline: 1.2em;
+
+  &[title-inline="smolest"] {
+    padding-inline: 0.2em;
+  }
+
+  &[title-inline="smoler"] {
+    padding-inline: 0.4em;
+  }
+
+  &[title-inline="smol"] {
+    padding-inline: 0.8em;
+  }
+
+  &[title-inline="midler"] {
+    padding-inline: 1.6em;
+  }
+
+  &[title-inline="mid"] {
+    padding-inline: 1.8em;
+  }
+
+  &[title-inline="wide"] {
+    padding-inline: 2em;
+  }
+
+  &[title-inline="wider"] {
+    padding-inline: 2.4em;
+  }
+
+  &[title-inline="widest"] {
+    padding-inline: 3.2em;
+  }
+}
+
+.beatmaps_filter,
+.page_filter {
+  position: relative;
+  z-index: 20;
+
+  select-model[slight] {
+    .select_model__dropdown {
+      @include themed() {
+        background: t(box);
+      }
+    }
+  }
+
+  .option {
+    display: flex;
+    gap: 0.8em;
+    align-items: center;
+    z-index: 301;
+
+    .title {
+      opacity: 0.6;
+      text-transform: uppercase;
+      font-size: 1em;
+      font-weight: 800;
+    }
+  }
+
+  @media screen and (max-width: 1120px) {
+    gap: 1.2em;
+    padding-inline: 1.2em;
+
+    .option {
+      gap: 0.4em;
+      display: block;
+
+      .title {
+        font-size: 0.8em;
+        padding-inline: 1.2em;
+        margin-bottom: 0.4em;
+      }
+    }
+  }
+}
+
+.beatmaps_content {
+  max-width: $beatmap-content-width;
+  margin-inline: auto;
+
+  &[reset-width] {
+    max-width: initial;
+    width: auto;
+  }
+
+  &[clear-flex] {
+    margin: 0;
+  }
+}
+
+[beatmap-card] {
+  position: relative;
+
+  bm-inr {
+    position: relative;
+    z-index: 2;
+  }
+
+  .beatmap {
+    .beatmap__background_color {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0.24;
+
+      @extend [rd18];
+    }
+
+    .beatmap__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 24px;
+
+      picture {
+        height: 100%;
+      }
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+        background: $dark;
+        opacity: 0.62;
+      }
+    }
+  }
+
+  .beatmaps__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+
+    p,
+    p i {
+      color: white;
+      line-height: 1.4em;
+    }
+
+    .duration {
+      padding: 0.2em 0.8em;
+      border-radius: 22px;
+
+      @include themed() {
+        background: t(box);
+        color: t(text);
+      }
+    }
+  }
+
+  .beatmaps__extras {
+    margin-top: 1.8em;
+
+    .beatmaps__extras_status {
+      padding-inline: 12px 20px;
+      height: $mbutton-std-size;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .beatmaps__extras_diffs {
+      gap: 0.24em;
+
+      .beatmaps__extras_diffs__diff {
+        height: 0.8em;
+        width: 0.8em;
+        border-radius: 50%;
+        position: relative;
+
+        .beatmaps__extras_diffs__diff_hidden {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 0;
+          border-radius: 50%;
+        }
+
+        &:hover {
+          .beatmaps__extras_diffs__diff_hidden {
+            height: calc(100% + 0.4em);
+            top: -0.2em;
+            width: calc(100% + 0.4em);
+            left: -0.2em;
+
+            [tooltip] {
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+        }
+
+        &[more] {
+          margin-left: 0.2em;
+          padding: 0 1em;
+          height: 1.6em;
+          border-radius: 12px;
+
+          @include themed() {
+            background: t(nav2-invert);
+          }
+
+          p {
+            @include themed() {
+              color: t(text-invert);
+            }
+
+            font-size: 0.8em;
+            font-weight: 900;
+          }
+        }
+      }
+    }
+
+    .times-played {
+      @include themed() {
+        background: t(box);
+        color: t(text);
+      }
+
+      padding: 0.4em 0.8em;
+      border-radius: 18px;
+    }
+  }
+
+  &:hover {
+    z-index: 2;
+  }
+}
+
+radio {
+  display: block;
+  content: "";
+
+  .r__option {
+    border-radius: 24px;
+    cursor: pointer;
+
+    @include themed() {
+      border: 1px solid t(slight-hover);
+
+      &:hover {
+        background: t(slighter-hover);
+      }
+    }
+
+    &[active] {
+      cursor: default;
+      border-color: transparent;
+      font-weight: 900;
+
+      @include themed() {
+        background: t(slight-hover);
+      }
+    }
+  }
+
+  .r__option {
+    padding: 24px;
+  }
+}

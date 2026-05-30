@@ -1,0 +1,16 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+lottie-player {
+  opacity: 0;
+
+  // [visible] {
+  //   &[visible="false"] {
+  //     opacity: 0;
+  //   }
+
+  //   &[visible="true"] {
+  //     opacity: 1;
+  //   }
+  // }
+}

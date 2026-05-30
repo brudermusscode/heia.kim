@@ -1,0 +1,8 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+.floating-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}

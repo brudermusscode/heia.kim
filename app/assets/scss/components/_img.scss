@@ -1,0 +1,23 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+img {
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  object-fit: cover;
+
+  &[placeholder] {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+  }
+
+  position: relative;
+  z-index: 1;
+
+  &[loaded="true"] {
+    opacity: 1;
+  }
+}

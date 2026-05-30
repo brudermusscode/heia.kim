@@ -1,0 +1,147 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+[color] {
+  @include themed() {
+    color: t(text);
+
+    &[color="invert"],
+    &[color="dynamic-invert"] {
+      color: t(text-invert);
+    }
+
+    &[color="active"] {
+      color: t(active);
+    }
+
+    &[color="active-text"] {
+      color: t(active-text);
+    }
+
+    &[color="special"] {
+      color: t(special);
+    }
+
+    &[color="special-text"] {
+      color: t(special-text);
+    }
+
+    &[color="company"] {
+      color: t(company-color);
+    }
+
+    &[color="company-text"] {
+      color: t(company-text);
+    }
+
+    &[color="verified"] {
+      color: t(text);
+    }
+
+    &[color="premium"] {
+      color: t(premium-text);
+    }
+  }
+
+  &[color="white"] {
+    color: white;
+  }
+
+  &[color="pink"] {
+    color: $pink;
+  }
+
+  &[color="osu-pink"] {
+    color: #e3619b;
+  }
+
+  &[color="green"] {
+    color: #4d9429;
+  }
+
+  &[color="light-green"] {
+    color: #f3f6ea;
+  }
+
+  &[color="light-grey"] {
+    color: rgba(0, 0, 0, 0.24);
+  }
+
+  &[color="grey"] {
+    color: #999;
+  }
+
+  &[color="platin"] {
+    color: $platin;
+  }
+
+  &[color="red"] {
+    color: $red;
+  }
+
+  &[color="silver"] {
+    color: #d3d3d3;
+  }
+
+  &[color="purple"] {
+    color: $purple;
+  }
+
+  &[color="yellow"] {
+    color: $yellow;
+  }
+
+  &[color="orange"] {
+    color: $orange;
+  }
+
+  &[color="blue"] {
+    color: $blue;
+  }
+
+  &[color="google-blue"] {
+    color: #4285f4;
+  }
+
+  &[color="blue"] {
+    color: $blue;
+  }
+
+  &[color="dark-green"] {
+    color: rgb(67, 73, 62);
+  }
+
+  &[color="dark-red"] {
+    color: #4d3a39;
+  }
+
+  &[color="dark-orange"] {
+    color: #4d3a39;
+  }
+
+  &[color="dark-blue"] {
+    color: #143757;
+  }
+
+  &[color="discord-blue"] {
+    color: $discord-blue;
+  }
+
+  &[color="light"] {
+    color: $light;
+  }
+
+  &[color="dark"] {
+    color: $dark;
+  }
+
+  &[color="opacied"] {
+    &[dark] {
+      color: rgba(0, 0, 0, 0.12);
+    }
+
+    &[light] {
+      color: rgba(255, 255, 255, 0.12);
+    }
+  }
+}

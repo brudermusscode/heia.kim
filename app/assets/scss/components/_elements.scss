@@ -1,0 +1,109 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+top-notice {
+  display: block;
+  line-height: 1.2em;
+  position: absolute;
+  top: 0;
+  left: calc(0em + 14em);
+  width: calc(100% - 14em);
+  padding: 1.2em 2.4em;
+
+  p {
+    color: $light;
+    font-size: 0.8em;
+
+    &:first-of-type {
+      i {
+        display: block;
+        margin-top: -0.04em;
+        font-size: 1.2em;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    left: calc(0em + 5.2em);
+    width: calc(100% - 5.2em);
+  }
+}
+
+user-icon {
+  display: block;
+  height: 3em;
+  width: 3em;
+  line-height: 3em;
+  text-transform: uppercase;
+  font-weight: 600;
+
+  &[color] {
+    &[color^="purple"] {
+      background: $purple;
+      color: $light;
+
+      &[color$="1"] {
+        background: $purple1;
+        color: $light;
+      }
+
+      &[color$="2"] {
+        background: $purple2;
+        color: $light;
+      }
+
+      &[color$="3"] {
+        background: $purple3;
+        color: $light;
+      }
+
+      &[color$="4"] {
+        background: $purple4;
+        color: $dark;
+      }
+
+      &[color$="5"] {
+        background: $purple5;
+        color: $dark;
+      }
+
+      &[color$="6"] {
+        background: $purple6;
+        color: $dark;
+      }
+    }
+
+    &[color="orange"] {
+      background: $orange;
+      color: $dark;
+    }
+
+    &[color="orange1"] {
+      background: $orange1;
+      color: $dark;
+    }
+
+    &[color="orange2"] {
+      background: $orange2;
+      color: $dark;
+    }
+
+    &[color="orange3"] {
+      background: $orange3;
+      color: $dark;
+    }
+
+    &[color="orange4"] {
+      background: $orange4;
+      color: $dark;
+    }
+  }
+}
+
+inline-tag {
+  display: inline-block;
+  background: rgba(248, 179, 199, 0.48);
+  padding: 0.3em 0.6em;
+  line-height: 1;
+  border-radius: 6px;
+}

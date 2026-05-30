@@ -1,0 +1,168 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+[input] {
+  position: relative;
+
+  &[material] {
+    height: 57px;
+
+    @include themed() {
+      input {
+        border: none;
+        border-bottom: 4px solid t(box);
+        border-radius: 6px 6px 0 0;
+        outline: none;
+        padding-inline: 16px;
+        padding-block: 16px;
+        width: 100%;
+        color: t(text);
+        background: t(box2);
+
+        &[auto-height] {
+          resize: none;
+        }
+
+        &:not(:placeholder-shown) {
+          border-color: t(active-hover);
+        }
+
+        &::placeholder {
+          opacity: 0.8;
+        }
+
+        &:focus {
+          border-color: t(active-hover);
+        }
+      }
+
+      &[has-icon] {
+        input {
+          padding-left: 64px;
+        }
+
+        picture:first-child,
+        mi:first-child,
+        i:first-child {
+          position: absolute;
+          z-index: 1;
+          left: 16px;
+          top: calc(50% - 2px);
+          translate: 0 -50%;
+        }
+      }
+
+      &[appear] {
+        &[appear="lighter"] {
+          input {
+            background: t(box3);
+          }
+        }
+
+        &[appear="darker"] {
+          input {
+            background: t(box);
+          }
+        }
+      }
+    }
+  }
+
+  &[large] {
+    input {
+      line-height: 3.2em;
+    }
+
+    &[has-icon] {
+      input {
+        padding-left: 2.4em;
+      }
+    }
+  }
+}
+
+textarea[clean-wide] {
+  @include themed() {
+    color: t(text);
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    opacity: 1;
+    resize: none;
+
+    @extend [text], [midler];
+
+    &::-moz-placeholder,
+    &::-webkit-input-placeholder,
+    &::placeholder {
+      opacity: 0.6;
+    }
+  }
+}
+
+[textarea] {
+  @include themed() {
+    textarea {
+      &[material] {
+        border: none;
+        border-bottom: 4px solid t(box);
+        border-radius: 6px 6px 0 0;
+        outline: none;
+        padding-inline: 16px;
+        padding-block: 16px;
+        width: 100%;
+        color: t(text);
+
+        &[auto-resize] {
+          resize: none;
+          height: 72px;
+          overflow: hidden;
+        }
+
+        &:placeholder-shown {
+          opacity: 0.8;
+        }
+
+        &:not(:placeholder-shown) {
+          border-color: t(active);
+        }
+
+        &::placeholder {
+          opacity: 0.8;
+        }
+
+        &:focus {
+          border-color: t(active);
+          opacity: 1;
+        }
+
+        &[clean] {
+          border: none;
+          background: transparent;
+        }
+      }
+    }
+
+    &:not([appear]) {
+      textarea {
+        background: t(box2);
+      }
+    }
+
+    &[appear] {
+      &[appear="lighter"] {
+        textarea {
+          background: t(box3);
+        }
+      }
+
+      &[appear="darker"] {
+        textarea {
+          background: t(box);
+        }
+      }
+    }
+  }
+}

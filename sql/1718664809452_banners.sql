@@ -1,0 +1,14 @@
+CREATE TABLE banners (
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  image VARCHAR(124) NOT NULL,
+
+  deleted_at TIMESTAMP NULL,
+  updated_at TIMESTAMP NULL,
+  created_at TIMESTAMP NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX user_id (user_id)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- ALTER TABLE banners
+--   ADD is_default TINYINT DEFAULT 0 AFTER product_id;

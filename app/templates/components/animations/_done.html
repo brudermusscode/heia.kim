@@ -1,0 +1,41 @@
+<div style="overflow: hidden" align-center-screen>
+  <lottie-player
+    src="https://assets3.lottiefiles.com/packages/lf20_wMezg6.json"
+    background="transparent"
+    speed="2.2"
+    style="width: 500px; height: 500px"
+    autoplay
+    lottie-player-fade-in
+  ></lottie-player>
+
+  <a
+    id="verify"
+    href="/verify"
+    style="visibility: hidden; height: 0"
+    data-json='[{"title":"Verify your account", "template":"/register/verify", "params":null}]'
+  ></a>
+</div>
+
+<style>
+  [lottie-player-fade-in] {
+    animation: lottie-player-fade-in 1.2s linear;
+    -webkit-animation: lottie-player-fade-in 1.2s linear;
+    -moz-animation: lottie-player-fade-in 1.2s linear;
+    -ms-animation: lottie-player-fade-in 1.2s linear;
+    -o-animation: lottie-player-fade-in 1.2s linear;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -ms-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+  }
+
+  @keyframes lottie-player-fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+</style>

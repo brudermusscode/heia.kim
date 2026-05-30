@@ -1,0 +1,302 @@
+@use "../abstract" as *;
+
+.color-theme {
+  cursor: pointer;
+
+  &:hover,
+  &[active] {
+    @include themed() {
+      background: t(active);
+    }
+  }
+}
+
+.theme-accents {
+  display: flex;
+  gap: $gap-smol;
+
+  & > div {
+    height: 1.2em;
+    width: 1.2em;
+    border-radius: 50%;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.24);
+  }
+
+  // -----------------------
+
+  &.sangria-sunset {
+    .main {
+      background: #f1cecd;
+    }
+
+    .sub {
+      background: #f4dedd;
+    }
+
+    .bg {
+      background: #fcfcfc;
+    }
+
+    .text {
+      background: rgb(83, 67, 67);
+    }
+  }
+
+  &.sangria-sunset-dark {
+    .main {
+      background: #5c3f3f;
+    }
+
+    .sub {
+      background: #664949;
+    }
+
+    .bg {
+      background: #211a1a;
+    }
+
+    .text {
+      background: rgb(237, 224, 223);
+    }
+  }
+
+  // -----------------------
+
+  &.springtime-symphony {
+    .main {
+      background: #cddbc0;
+    }
+
+    .sub {
+      background: #d9e7cb;
+    }
+
+    .bg {
+      background: #fdfdf6;
+    }
+
+    .text {
+      background: rgb(26, 28, 24);
+    }
+  }
+
+  &.springtime-symphony-dark {
+    .main {
+      background: #3e4a36;
+    }
+
+    .sub {
+      background: #485441;
+    }
+
+    .bg {
+      background: #1a1c18;
+    }
+
+    .text {
+      background: rgb(196, 200, 187);
+    }
+  }
+
+  // -----------------------
+
+  &.lemon-zest {
+    .main {
+      background: #dad8b5;
+    }
+
+    .sub {
+      background: #e6e4bf;
+    }
+
+    .bg {
+      background: #fffcf3;
+    }
+
+    .text {
+      background: rgb(28, 28, 22);
+    }
+  }
+
+  &.lemon-zest-dark {
+    .main {
+      background: #48482d;
+    }
+
+    .sub {
+      background: #525237;
+    }
+
+    .bg {
+      background: #1c1c16;
+    }
+
+    .text {
+      background: rgb(229, 226, 217);
+    }
+  }
+
+  // -----------------------
+
+  &.azure-dreams {
+    .main {
+      background: #b8dbf0;
+    }
+
+    .sub {
+      background: #c2e7ff;
+    }
+
+    .bg {
+      background: #ffffff;
+    }
+
+    .text {
+      background: rgb(31, 31, 31);
+    }
+  }
+
+  &.azure-dreams-dark {
+    .main {
+      background: #004a77;
+    }
+
+    .sub {
+      background: #0f547d;
+    }
+
+    .bg {
+      background: #1f1f1f;
+    }
+
+    .text {
+      background: rgb(227, 227, 227);
+    }
+  }
+
+  // -----------------------
+
+  &.twilight-noir {
+    .main {
+      background: #d9c9f1;
+    }
+
+    .sub {
+      background: #e8def8;
+    }
+
+    .bg {
+      background: #f4f1f7;
+    }
+
+    .text {
+      background: #1d192b;
+    }
+  }
+
+  &.twilight-noir-dark {
+    .main {
+      background: #4a4458;
+    }
+
+    .sub {
+      background: #5d5179;
+    }
+
+    .bg {
+      background: #1d1a22;
+    }
+
+    .text {
+      background: #e7ddf7;
+    }
+  }
+
+  // -----------------------
+
+  &.nocturnal-nebula {
+    .main {
+      background: #834865;
+    }
+
+    .sub {
+      background: #e5383b;
+    }
+
+    .bg {
+      background: #2b3d4d;
+    }
+
+    .text {
+      background: #fdf5f9;
+    }
+  }
+
+  &.nocturnal-nebula-dark {
+    .main {
+      background: #75425d;
+    }
+
+    .sub {
+      background: #ba181b;
+    }
+
+    .bg {
+      background: #0b090a;
+    }
+
+    .text {
+      background: #fdf5f9;
+    }
+  }
+
+  &.discord {
+    .main {
+      background: #f2f3f5;
+    }
+
+    .sub {
+      background: #d8d9dc;
+    }
+
+    .bg {
+      background: #e4e5e8;
+    }
+
+    .text {
+      background: #060607;
+    }
+  }
+
+  &.discord-dark {
+    .main {
+      background: #2c2d31;
+    }
+
+    .sub {
+      background: #414249;
+    }
+
+    .bg {
+      background: #1e1f22;
+    }
+
+    .text {
+      background: #e4e5e7;
+    }
+  }
+}
+
+[show-active] {
+  display: none;
+}
+
+[active] {
+  [show-active] {
+    display: block;
+
+    &[active-flex] {
+      display: flex;
+    }
+  }
+}

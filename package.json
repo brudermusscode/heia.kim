@@ -1,0 +1,41 @@
+{
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "dev": "rspack serve --config xbundler.dev.js",
+    "prod": "rspack --config xbundler.prod.js",
+    "discord-vote-reminder": "node discord-vote-reminder.js"
+  },
+  "dependencies": {
+    "axios": "^1.16.1",
+    "copyfiles": "^2.4.1",
+    "discord.js": "^14.26.4",
+    "dotenv": "^16.6.1",
+    "expose-loader": "^5.0.1",
+    "js-cookie": "^3.0.8",
+    "material-symbols": "^0.31.9",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
+    "@prettier/plugin-php": "^0.22.4",
+    "@rspack/cli": "^1.7.11",
+    "@rspack/core": "^1.7.11",
+    "autoprefixer": "^10.5.0",
+    "babel-loader": "^10.1.1",
+    "css-loader": "^7.1.4",
+    "cssnano": "^7.1.9",
+    "postcss": "^8.5.15",
+    "postcss-cli": "^11.0.1",
+    "postcss-loader": "^8.2.1",
+    "postcss-nested": "^7.0.2",
+    "prettier": "^3.8.3",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.100.0",
+    "sass-embedded": "^1.100.0",
+    "sass-loader": "^16.0.8",
+    "style-loader": "^4.0.0"
+  },
+  "packageManager": "pnpm@11.5.0+sha512.dbfcc4f81cf48597afd4bc391ffdf12c11f1a9fb83a395bfa6b0a2d9cc2fd8ffebafdb1ccbd529632153f793904c2615b7f09fe1a345473fd1c35845172a8eb1"
+}

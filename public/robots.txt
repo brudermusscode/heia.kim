@@ -1,0 +1,35 @@
+# robots.txt for https://www.heia.kim
+
+User-Agent: *
+Allow: /$
+Allow: /sitemap.xml
+Allow: /favicon.ico
+Allow: /assets/images/logo
+Allow: /assets/images/verify-process
+Allow: /assets/images/pages
+Allow: /login
+Allow: /register
+Allow: /unlock
+Allow: /u
+Disallow: /my
+Allow: /home
+Allow: /squad
+Allow: /squads
+Disallow: /squads?
+Allow: /artist
+Allow: /artists
+Allow: /beatmaps
+Disallow: /beatmaps?
+Allow: /leaderboard
+Allow: /beatmapset
+Allow: /legal
+Disallow: /assets/data
+Disallow: /assets/fonts
+Disallow: /assets/icons
+Disallow: /assets/images
+Disallow: /get
+Disallow: /do
+Disallow: /clans
+Disallow: /analytics.heia.kim
+
+Sitemap: https://www.heia.kim/sitemap.xml

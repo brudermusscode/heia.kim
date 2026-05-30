@@ -1,0 +1,129 @@
+$lemon-zest-theme: (
+  lemon-zest: (
+    bg: #fffcf3,
+    bg-invert: #1c1c16,
+    someone-else-bg: #1c1c16,
+    // others
+    active: #ffed92,
+    active-hover: #ffe44c,
+    // extras
+    special: #633b48,
+    special-text: #f7e8ed,
+    loader: #575543,
+    // navigations
+    nav: #f0eddd,
+    nav2: #faf6ea,
+    nav2-invert: #48473a,
+    nav3: #ebe8d9,
+    nav3-invert: #575543,
+    // boxes
+    box: #e6e4c0,
+    box2: #f0efdc,
+    box3: #f7f6ea,
+    box-invert: #28281c,
+    box-invert-hover: #3d3d26,
+    // premium
+    premium-box: #e2ece8,
+    premium-text: #0f7660,
+    // buttons
+    btn-follow: #d9e7cb,
+    btn-refollow: #7cb7ee,
+    btn-unfollow: #ff8981,
+    btn-besure: #ffe082,
+    // text
+    text: rgb(28, 28, 22),
+    text-nav: rgb(28, 28, 22),
+    text-invert: rgb(229, 226, 217),
+    text-normal: #333,
+    text-normal-invert: #fff,
+    company-color: #9c8d3f,
+    company-text: #fff,
+    // user header
+    u-hdr-hover: rgba(255, 255, 255, 0.08),
+    u-hdr-hover2: rgba(255, 255, 255, 0.12),
+    u-hdr-hover3: rgba(255, 255, 255, 0.24),
+    u-hdr-mode: white,
+    u-hdr-mode-trans: rgba(255, 255, 255, 0.88),
+    u-hdr-mode-trans2: rgba(255, 255, 255, 0.5),
+    u-hdr-mode-hover: rgba(255, 255, 255, 0.08),
+    u-hdr-mode-hover2: rgba(255, 255, 255, 0.12),
+    u-hdr-mode-hover3: rgba(255, 255, 255, 0.24),
+    // other
+    slightest-hover: rgba(0, 0, 0, 0.02),
+    slighter-hover: rgba(0, 0, 0, 0.04),
+    slight-hover: rgba(0, 0, 0, 0.08),
+    hover: rgba(0, 0, 0, 0.24),
+    hover-invert: rgba(255, 255, 255, 0.42),
+    hover-dark: rgba(0, 0, 0, 0.68),
+    hover-dark-invert: rgba(255, 255, 255, 0.68),
+    slight-hover-invert: rgba(255, 255, 255, 0.08),
+    menu-text: rgba(0, 0, 0, 0.24),
+    menu-text2: rgba(0, 0, 0, 0.42),
+    // manager
+    mgr-nav: #090909,
+  ),
+
+  lemon-zest-dark: (
+    bg: #1c1c16,
+    bg-invert: #fffcf3,
+    someone-else-bg: #1c1c16,
+    // others
+    active: #837f00,
+    active-hover: #6d6b00,
+    // extras
+    special: #4e2b36,
+    special-text: #f7e8ed,
+    loader: #f5f4d5,
+    // navigations
+    nav: #2d2d1e,
+    nav2: #222217,
+    nav2-invert: #e6e3d1,
+    nav3: #575543,
+    nav3-invert: #d7dfc8,
+    // boxes
+    box: #4d4d36,
+    box2: #3b3b2b,
+    box3: #28281c,
+    box-invert: #ebe8d9,
+    box-invert-hover: #e2ddc0,
+    // premium
+    premium-box: #0f7660,
+    premium-text: #e2ece8,
+    // buttons
+    btn-follow: #d9e7cb,
+    btn-refollow: #7cb7ee,
+    btn-unfollow: #ff8981,
+    btn-besure: #ffe082,
+    // text
+    text: rgb(229, 226, 217),
+    text-nav: rgb(229, 226, 217),
+    text-invert: rgb(28, 28, 22),
+    text-normal: #fff,
+    text-normal-invert: #333,
+    company-color: #c2bd33,
+    company-text: #fff,
+    // user header
+    u-hdr-hover: rgba(255, 255, 255, 0.08),
+    u-hdr-hover2: rgba(255, 255, 255, 0.12),
+    u-hdr-hover3: rgba(255, 255, 255, 0.24),
+    u-hdr-mode: white,
+    u-hdr-mode-trans: rgba(255, 255, 255, 0.88),
+    u-hdr-mode-trans2: rgba(255, 255, 255, 0.5),
+    u-hdr-mode-hover: rgba(255, 255, 255, 0.08),
+    u-hdr-mode-hover2: rgba(255, 255, 255, 0.12),
+    u-hdr-mode-hover3: rgba(255, 255, 255, 0.24),
+    // other
+    slightest-hover: rgba(255, 255, 255, 0.03),
+    slighter-hover: rgba(255, 255, 255, 0.04),
+    slight-hover: rgba(255, 255, 255, 0.08),
+    slight-hover-invert: rgba(0, 0, 0, 0.08),
+    hover: rgba(255, 255, 255, 0.24),
+    hover-invert: rgba(0, 0, 0, 0.42),
+    hover-dark: rgba(255, 255, 255, 0.68),
+    hover-dark-invert: rgba(0, 0, 0, 0.68),
+    menu-text: rgba(255, 255, 255, 0.42),
+    menu-text2: rgba(255, 255, 255, 0.68),
+    // manager
+    mgr-nav: #090909,
+  ),
+);

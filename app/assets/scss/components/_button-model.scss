@@ -1,0 +1,617 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+button {
+  display: none;
+}
+
+mbutton {
+  display: block;
+  content: "";
+  outline: none;
+  border: none;
+  padding: none;
+  margin: none;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+
+  * {
+    @extend [no-word-wrap];
+  }
+
+  &[disabled] {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &[fetch-more] {
+    mi {
+      &::before {
+        content: "unfold_more";
+      }
+    }
+
+    p[text] {
+      &::before {
+        content: "Show more";
+      }
+    }
+
+    &[done] {
+      color: $green;
+
+      mi {
+        &::before {
+          content: "done_all";
+        }
+      }
+
+      p[text] {
+        &::before {
+          content: "That's all";
+        }
+      }
+    }
+  }
+
+  &[closed] {
+    opacity: 0;
+    scale: 0.92;
+  }
+
+  &[sureconfirm] {
+    *:before,
+    * {
+      color: white;
+    }
+
+    .text:before {
+      content: "Are you sure?" !important;
+    }
+  }
+
+  &[confirm-submit-button] {
+    [confirmation] {
+      display: none;
+    }
+
+    [action] {
+      display: block;
+    }
+
+    &[has-icon] {
+      [action] {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+
+    &[submit-closest] {
+      background: $red4 !important;
+      color: white !important;
+
+      [confirmation] {
+        display: block;
+      }
+
+      [action] {
+        display: none;
+      }
+    }
+  }
+
+  &[material] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &[placeholder] {
+      opacity: 0 !important;
+    }
+
+    @include themed() {
+      &[background] {
+        &[background="clean"] {
+          background: transparent;
+
+          &:hover {
+            background: t(slighter-hover);
+          }
+
+          &[active] {
+            background: t(slight-hover);
+          }
+        }
+
+        &[background="slight"] {
+          background: t(slight-hover);
+
+          &:hover {
+            background: t(slighter-hover);
+          }
+        }
+
+        &[background="slighter"] {
+          background: t(slighter-hover);
+
+          &:hover {
+            background: t(slight-hover);
+          }
+        }
+      }
+
+      &[filled] {
+        &:hover {
+          background: t(box);
+        }
+
+        &[filled="lighter"]:hover {
+          background: t(box2);
+        }
+
+        &[filled="darker"]:hover {
+          background: t(box2);
+        }
+
+        &[filled="invert"] {
+          &:hover {
+            background: t(box-invert-hover);
+          }
+        }
+      }
+
+      &[hoverable] {
+        background: transparent;
+        box-shadow: none;
+
+        &:hover {
+          background: t(slight-hover);
+          box-shadow: none;
+        }
+
+        &:active {
+          box-shadow: none;
+        }
+
+        &[hoverable="invert"] {
+          &:hover {
+            background: t(slight-hover-invert);
+          }
+        }
+
+        &[background="unfollow"] {
+          background: t(btn-unfollow);
+
+          &:hover {
+            background: t(btn-unfollow);
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+
+    &:not([rounded]) {
+      border-radius: 32px;
+    }
+
+    &[icon-only] {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:not([rounded]) {
+        border-radius: 50%;
+      }
+    }
+
+    /**
+     * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+     * ,,,,,,,,,,,,,,,,,,,,,,, SIZING ,,,,,,,,,,,,,,,,,,,,,,,,,
+     * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+     */
+    &[size="std"],
+    &:not([size]) {
+      height: $mbutton-std-size;
+      max-height: $mbutton-std-size;
+      min-height: $mbutton-std-size;
+
+      i:not([size]),
+      mi:not([size]) {
+        font-size: $font-size-midler;
+      }
+
+      &:not([icon-only]) {
+        padding-inline: 24px;
+      }
+
+      &[has-icon]:not([icon-only]) {
+        display: flex;
+        gap: 8px;
+
+        &[has-icon="left"] {
+          &[show-text-active] {
+            &:not([active]) {
+              padding-inline: 0;
+              width: $mbutton-std-size;
+              min-width: $mbutton-std-size;
+            }
+          }
+
+          padding-inline: 12px 24px;
+        }
+
+        &[has-icon="right"] {
+          &[show-text-active] {
+            &:not([active]) {
+              padding-inline: 0;
+              width: $mbutton-std-size;
+              min-width: $mbutton-std-size;
+            }
+          }
+
+          padding-inline: 24px 12px;
+        }
+      }
+
+      &[icon-only]:not([has-icon]) {
+        width: $mbutton-std-size;
+        max-width: $mbutton-std-size;
+        min-width: $mbutton-std-size;
+        padding: 0;
+      }
+    }
+
+    &[size] {
+      &[size="smol"] {
+        height: $mbutton-smol-size;
+        max-height: $mbutton-smol-size;
+        min-height: $mbutton-smol-size;
+
+        i,
+        mi {
+          font-size: $font-size-std;
+        }
+
+        &:not([icon-only]) {
+          padding-inline: 12px;
+        }
+
+        &[has-icon]:not([icon-only]) {
+          display: flex;
+          gap: 2px;
+
+          &[has-icon="left"] {
+            &[show-text-active] {
+              &:not([active]) {
+                padding-inline: 0;
+                width: $mbutton-smol-size;
+                min-width: $mbutton-smol-size;
+              }
+            }
+
+            padding-inline: 4px 12px;
+          }
+
+          &[has-icon="right"] {
+            &[show-text-active] {
+              &:not([active]) {
+                padding-inline: 0;
+                width: $mbutton-smol-size;
+                min-width: $mbutton-smol-size;
+              }
+            }
+
+            padding-inline: 12px 4px;
+          }
+        }
+
+        &[icon-only] {
+          width: $mbutton-smol-size;
+          max-width: $mbutton-smol-size;
+          min-width: $mbutton-smol-size;
+        }
+      }
+
+      &[size="std+"],
+      &[size="midler"] {
+        height: $mbutton-std-plus-size;
+        max-height: $mbutton-std-plus-size;
+        min-height: $mbutton-std-plus-size;
+
+        i:not([size]),
+        mi:not([size]) {
+          font-size: $font-size-midler-plus;
+        }
+
+        &:not([icon-only]) {
+          padding-inline: 24px;
+        }
+
+        &[has-icon]:not([icon-only]) {
+          display: flex;
+          gap: 8px;
+
+          &[has-icon="left"] {
+            &[show-text-active] {
+              &:not([active]) {
+                padding-inline: 0;
+                width: $mbutton-std-plus-size;
+                min-width: $mbutton-std-plus-size;
+              }
+            }
+
+            padding-inline: 12px 24px;
+          }
+
+          &[has-icon="right"] {
+            &[show-text-active] {
+              &:not([active]) {
+                padding-inline: 0;
+                width: $mbutton-std-plus-size;
+                min-width: $mbutton-std-plus-size;
+              }
+            }
+
+            padding-inline: 24px 12px;
+          }
+        }
+
+        &[icon-only]:not([has-icon]) {
+          width: $mbutton-std-plus-size;
+          max-width: $mbutton-std-plus-size;
+          min-width: $mbutton-std-plus-size;
+          padding: 0;
+        }
+
+        &[has-image] {
+          padding-left: 4px;
+          gap: 8px;
+        }
+
+        &[image-only] {
+          padding: 4px;
+          gap: 0;
+        }
+      }
+
+      &[size="mid"] {
+        height: $mbutton-mid-size;
+        max-height: $mbutton-mid-size;
+        min-height: $mbutton-mid-size;
+
+        i,
+        mi {
+          font-size: $font-size-mid;
+        }
+
+        &:not([icon-only]) {
+          padding-inline: 28px;
+        }
+
+        &[has-icon]:not([icon-only]) {
+          display: flex;
+          gap: 8px;
+
+          &[has-icon="left"] {
+            &[show-text-active] {
+              &:not([active]) {
+                padding-inline: 0;
+                width: $mbutton-mid-size;
+                min-width: $mbutton-mid-size;
+              }
+            }
+
+            padding-inline: 20px 28px;
+          }
+
+          &[has-icon="right"] {
+            &[show-text-active] {
+              &:not([active]) {
+                padding-inline: 0;
+                width: $mbutton-mid-size;
+                min-width: $mbutton-mid-size;
+              }
+            }
+
+            padding-inline: 28px 20px;
+          }
+        }
+
+        &[icon-only] {
+          width: $mbutton-mid-size;
+          max-width: $mbutton-mid-size;
+          min-width: $mbutton-mid-size;
+        }
+      }
+
+      &[size="wide"] {
+        height: $mbutton-wide-size;
+        max-height: $mbutton-wide-size;
+        min-height: $mbutton-wide-size;
+
+        &:not([rounded]) {
+          border-radius: 24px;
+        }
+
+        i,
+        mi {
+          font-size: 24px;
+        }
+
+        &:not([icon-only]) {
+          padding-inline: 38px;
+        }
+
+        &[has-icon]:not([icon-only]) {
+          display: flex;
+          gap: 10px;
+
+          &[has-icon="left"] {
+            padding-inline: 28px 38px;
+          }
+
+          &[has-icon="right"] {
+            padding-inline: 38px 28px;
+          }
+        }
+
+        &[icon-only] {
+          width: $mbutton-wide-size;
+          max-width: $mbutton-wide-size;
+          min-width: $mbutton-wide-size;
+        }
+      }
+    }
+
+    &[active] {
+      @include themed() {
+        background: t(active) !important;
+        color: t(active-text);
+
+        &:hover {
+          background: t(active-hover) !important;
+        }
+      }
+    }
+
+    &:focus {
+      @include themed() {
+        outline: 4px solid t(active);
+      }
+
+      box-shadow: none;
+    }
+
+    &:hover {
+      outline: none;
+      box-shadow: var(--mio-theme-elevation-3);
+
+      &[elevated] {
+        box-shadow: var(--mio-theme-elevation-3);
+      }
+    }
+
+    &:active {
+      outline: none;
+      box-shadow: none;
+    }
+
+    &[no-hover-shadow] {
+      &:hover {
+        box-shadow: none;
+      }
+    }
+
+    &[no-hover] {
+      pointer-events: none;
+    }
+
+    &[tag] {
+      &:not([has-tooltip]) {
+        cursor: default;
+        box-shadow: none;
+        pointer-events: none;
+
+        &:hover {
+          scale: 1;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+[ripple-effect] {
+  position: relative;
+
+  span.ripple-effect {
+    display: block;
+    content: "";
+    position: absolute;
+    transition: $trans-cubic;
+    z-index: $ripple-effect-zindex;
+
+    @include themed() {
+      background: t(hover);
+    }
+
+    height: 2px;
+    width: 2px;
+    opacity: 0;
+  }
+
+  span.ripple-effect {
+    &[active] {
+      opacity: 1;
+      height: calc(100% + 1.2px);
+      width: calc(100% + 1.2px);
+    }
+
+    &[active="false"] {
+      opacity: 0;
+    }
+  }
+}
+
+[sign-up-icon] {
+  position: fixed;
+  bottom: calc(80px + 16px);
+  z-index: $endless-z-index + 2;
+  transition: $trans-cubic;
+  visibility: hidden;
+  opacity: 0;
+  bottom: calc(80px + 16px);
+  left: 50%;
+  translate: -50% 0;
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+  }
+
+  &[active] {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+[search-icon] {
+  position: absolute;
+  bottom: calc(100% + 16px);
+  right: 16px;
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+  }
+
+  &[active] {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+[cheering] {
+  animation: cheering 2s $cubic forwards;
+}
+
+@keyframes cheering {
+  from {
+    scale: 1;
+    rotate: 0;
+  }
+
+  80% {
+    scale: 1.12;
+    rotate: -12deg;
+  }
+
+  to {
+    scale: 1;
+    rotate: 0;
+  }
+}

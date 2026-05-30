@@ -1,0 +1,2512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://www.heia.kim/</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/home</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squads</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/login</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/register</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/legal/en</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/43</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/111</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/autopilot/performance/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/vn</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/aq</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/my</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/no</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/cz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/ma</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/au</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/by</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/se</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/cn</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/pe</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/xx</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/br</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/ph</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/ar</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/pa</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/ru</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/th</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/ro</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/tr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/ca</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/nl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/ua</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/nz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/de</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/gb</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/kz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/sg</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/be</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/ec</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/fi</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/np</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/us</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/pl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/cl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/iq</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/kr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/co</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/hu</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/at</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/fr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/it</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/es</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/jp</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/performance/hk</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/885/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/151/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/22/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/277/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/871/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/70/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/494/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/876/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/1/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/174/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/335/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/758/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/924/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/859/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/613/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/779/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/41/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/958/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/576/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/167/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/172/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/372/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/705/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/402/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/895/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/253/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/684/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/550/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/284/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/106/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/769/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/79/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/94/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/legal/en/privacy</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/legal/en/imprint</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/legal/en/sources</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/legal/en/team</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/legal/en/consent</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=osu&amp;order=id</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=1&amp;order=id</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=2&amp;order=id</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=3&amp;order=id</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=0&amp;order=id</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=0&amp;status=2&amp;order=id</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=0&amp;status=3&amp;order=id</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=0&amp;status=4&amp;order=id</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=0&amp;status=5&amp;order=id</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=0&amp;order=title</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=0&amp;order=artist</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmaps?mode=0&amp;order=plays</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2028506/4226999/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2027897/4225770/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2027860/4225699/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2025534/4219957/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2024698/4217898/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2023712/4215279/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2023031/4213728/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2022917/4213424/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2022566/4212541/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2022551/4212498/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2020645/4208098/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2017463/4200328/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2011209/4185023/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2008013/4176910/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2007456/4175598/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2007199/4175008/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2006471/4173443/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2005921/4172054/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2005330/4193498/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/2004646/4168913/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squads?mode=osu</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squads?mode=taiko</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squads?mode=ctb</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squads?mode=mania</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squads?publicity=0</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squads?publicity=1</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squads?publicity=2</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/143</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/141</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/140</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/139</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/138</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/137</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/136</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/135</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/134</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/133</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/132</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/131</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/129</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/128</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/127</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/126</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/125</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/124</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/123</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/122</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/121</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/119</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/118</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/117</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/115</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/113</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/112</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/111</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/110</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/105</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/102</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/100</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/98</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/97</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/96</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/95</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/94</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/90</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/89</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/88</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/87</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/86</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/75</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/74</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/73</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/72</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/71</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/70</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/69</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/68</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/67</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/65</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/62</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/61</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/60</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/59</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/57</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/56</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/55</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/squad/54</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/password-reset</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/43/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/43/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/43/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/43/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/43/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/43/osu/autopilot</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/1636932/3340750/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/4404</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/1202320/2503993/osu/HD</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/12687</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/1202320/2503993/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/111/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/111/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/111/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/111/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/111/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/111/osu/autopilot</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/1250546/2598993/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/10310</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/661919/1401254/osu/DT</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/3771</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/816264/1711830/osu/FL</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/8268</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/742976/1566973/osu/DT</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/4907</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/231114/539090/osu/DT</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/5881</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/1023428/2140939/osu/DT</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/4442</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/776187/1630904/osu/DT</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/9485</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/111/osu/vanilla/recent</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/661919/1401254/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/96103/261725/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/938926/1961270/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/328579/731556/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/beatmapset/816264/1711830/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/111/osu/vanilla/beatmaps</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/10854</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/10546</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/artist/6892</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/score/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/score/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/score/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/score/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/autopilot/score/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/vn</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/aq</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/my</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/no</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/cz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/ma</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/au</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/by</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/se</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/cn</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/pe</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/xx</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/br</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/ph</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/ar</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/pa</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/ru</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/th</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/ro</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/tr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/ca</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/nl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/ua</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/nz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/de</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/gb</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/kz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/sg</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/be</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/ec</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/fi</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/np</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/us</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/pl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/cl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/iq</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/kr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/co</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/hu</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/at</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/fr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/it</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/es</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/jp</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/vanilla/score/hk</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/399/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/444/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/24/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/25/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/60/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/662/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/122/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/316/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/840/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/433/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/417/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/752/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/292/osu/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/relax/performance/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/br</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/de</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/fi</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/jp</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/us</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/cz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/it</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/fr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/aq</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/gb</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/ca</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/taiko/vanilla/performance/se</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/893/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/635/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/477/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/634/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/55/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/636/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/363/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/258/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/279/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/10/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/70/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/277/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/617/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/67/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/876/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/895/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/413/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/56/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/228/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/54/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/871/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/145/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/444/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/41/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/927/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/160/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/759/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/779/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/618/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/316/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/98/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/301/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/60/taiko/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/relax/performance/global</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/br</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/gb</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/ru</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/de</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/se</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/pl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/id</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/us</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/cz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/ctb/vanilla/performance/ca</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/577/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/242/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/632/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/831/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/417/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/635/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/278/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/168/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/124/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/67/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/413/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/488/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/526/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/551/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/60/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/70/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/363/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/444/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/41/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/952/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/690/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/470/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/622/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/316/ctb/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/au</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/ca</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/ar</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/kr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/xx</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/jp</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/ve</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/iq</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/ro</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/hk</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/de</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/us</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/at</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/vn</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/pe</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/sg</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/gb</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/cz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/it</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/br</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/ru</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/cl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/mania/vanilla/performance/ma</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/680/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/822/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/671/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/659/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/787/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/107/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/338/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/738/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/443/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/850/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/888/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/642/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/617/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/841/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/125/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/728/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/79/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/98/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/721/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/250/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/272/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/883/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/67/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/70/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/246/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/388/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/848/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/635/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/914/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/121/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/210/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/945/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/10/mania/vanilla</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/se</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/ar</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/ca</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/jp</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/kz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/de</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/be</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/fr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/pl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/pe</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/ec</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/us</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/tr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/fi</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/za</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/np</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/iq</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/ua</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/hu</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/ru</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/at</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/ro</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/cl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/es</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/xx</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/kr</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/vn</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/br</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/nl</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/it</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/au</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/sg</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/aq</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/gb</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/nz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/no</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/ph</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/pt</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/hk</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/dk</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/leaderboard/osu/relax/performance/cz</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/175/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/72/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/8/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/165/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/269/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/26/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/200/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/141/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/41/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/273/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/885/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/779/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/157/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/402/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/730/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/316/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://www.heia.kim/u/97/osu/relax</loc>
+  <lastmod>2023-08-07T17:23:55+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>

@@ -1,0 +1,7 @@
+BEGIN;
+
+  ALTER TABLE reactions
+  MODIFY reaction VARCHAR(124) NOT NULL,
+  MODIFY type VARCHAR(28) NOT NULL;
+
+COMMIT;

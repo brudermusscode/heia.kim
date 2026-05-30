@@ -1,0 +1,257 @@
+@use "../abstract" as *;
+
+@mixin shrinked-sub-menu {
+  width: auto;
+
+  .sub_menu__inr {
+    justify-content: center;
+    align-items: center;
+    padding-inline: 1.2em;
+    justify-content: stretch;
+  }
+
+  .sm__label {
+    padding-bottom: 0;
+  }
+
+  .sm__featured {
+    padding: 0.4em;
+    padding-bottom: 0.6em;
+    width: 100%;
+    margin: 0;
+    border-radius: 24px;
+    margin-top: 0.8em;
+  }
+
+  [hide-shrinked] {
+    display: none;
+  }
+
+  .sm__button_row {
+    gap: 0.8em;
+    flex: 1;
+    width: 100%;
+  }
+
+  .sm__button {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.2em;
+    padding: 0;
+    background: transparent;
+
+    .b__icon {
+      padding-block: 0.2em;
+      border-radius: 42px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        font-size: 1.4em;
+      }
+    }
+
+    .b__name {
+      font-size: 0.8em;
+      font-weight: 900;
+      opacity: 0.6;
+    }
+
+    &:hover {
+      background: transparent !important;
+
+      .b__icon {
+        @include themed() {
+          background: t(slight-hover);
+        }
+      }
+    }
+  }
+
+  a[active] {
+    .sm__button {
+      background: transparent !important;
+
+      .b__icon {
+        @include themed() {
+          background: t(active);
+        }
+      }
+
+      .b__name {
+        opacity: 1;
+      }
+
+      &:hover {
+        .b__icon {
+          @include themed() {
+            background: t(active-hover);
+          }
+        }
+      }
+    }
+  }
+}
+
+toggle-sub-menu {
+  display: none;
+  content: "";
+  position: fixed;
+  top: 1.2em;
+  left: 1.2em;
+  z-index: $endless-z-index + 1;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+
+    &[active] {
+      left: calc($sub-menu-width + 1.2em + 6px);
+    }
+  }
+
+  @media screen and (max-width: 430px) {
+    &[active] {
+      right: 16px;
+      left: initial;
+    }
+  }
+}
+
+sub-menu {
+  display: block;
+  content: "";
+  position: fixed;
+  z-index: $endless-z-index;
+  top: 1.2em;
+  left: 1.2em;
+  // left: $main-header-width;
+  width: var(--sub-menu-width);
+  height: calc(100svh - 2.4em);
+  // max-height: 100svh;
+  border-radius: 42px;
+  // border-radius: 0 42px 42px 0;
+
+  @include themed() {
+    background: t(nav2);
+  }
+
+  .sub_menu__inr {
+    padding: 1.8em;
+    display: flex;
+    flex-direction: column;
+    gap: $gap-std;
+  }
+
+  .sm__label {
+    padding-inline: 20px;
+    padding-block: 12px;
+  }
+
+  .sm__featured {
+    padding: 0.4em;
+    margin-left: -0.4em;
+    width: calc(100% + 0.8em);
+    border-radius: 32px;
+  }
+
+  .sm__button_row {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .sm__button {
+    position: relative;
+    height: $mbutton-mid-size;
+    display: flex;
+    align-items: center;
+    gap: $gap-smol-plus;
+    padding-inline: 18px 24px;
+    border-radius: 42px;
+
+    picture {
+      height: 1.2em;
+      width: 1.2em;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-left: -2px;
+    }
+
+    &:hover {
+      @include themed() {
+        background: t(slight-hover);
+      }
+    }
+
+    .b__icon {
+      position: relative;
+    }
+
+    .b__badge_label {
+      position: absolute;
+      top: -0.4em;
+      left: calc(100% - 0.8em);
+      border-radius: 32px;
+      padding-inline: 0.4em;
+      height: 1.2em;
+      min-width: 1.2em;
+    }
+  }
+
+  a[active] {
+    .sm__button {
+      @include themed() {
+        background: t(active);
+      }
+
+      &:hover {
+        @include themed() {
+          background: t(active-hover);
+        }
+      }
+    }
+  }
+
+  &[shrinked] {
+    @include shrinked-sub-menu();
+  }
+
+  @media screen and (max-width: 980px) and (min-width: 800px) {
+    @include shrinked-sub-menu();
+
+    .sm__label {
+      padding-inline: 0;
+      text-align: center;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    left: calc(-1 * ($sub-menu-width + 20px));
+    box-shadow: var(--mio-theme-elevation-2);
+    height: calc(100svh - $mobile-nav-height);
+  }
+
+  @media screen and (max-width: 430px) {
+    top: 0;
+    height: calc(100svh - $mobile-nav-height);
+  }
+
+  &[active] {
+    &:not([shrinked]) {
+      @media screen and (max-width: 800px) {
+        left: 0;
+      }
+
+      @media screen and (max-width: 430px) {
+        left: 0;
+        width: 100vw;
+        border-radius: 0;
+      }
+    }
+  }
+}

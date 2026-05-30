@@ -1,0 +1,65 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+.dropdown {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-bottom: 0.4em;
+  height: 0px;
+  overflow: hidden;
+  opacity: 0;
+  transition: $trans-cubic;
+  border-radius: 12px;
+  visibility: hidden;
+
+  @include themed() {
+    background: t(select-model-bg);
+  }
+
+  .dropdown__inr {
+    padding: 0.8em 0;
+    font-size: 0.8em;
+    font-weight: 600;
+
+    .line {
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+      height: 1px;
+      margin: 0.4em 0;
+    }
+
+    .headline {
+      padding: 0.4em 3.2em 0em 2.4em;
+      opacity: 0.4;
+    }
+
+    .dropdown__option {
+      padding: 0 2em 0 1.6em;
+      margin: 0 0.8em;
+      cursor: pointer;
+      text-transform: none;
+      white-space: nowrap;
+      gap: 0.8em;
+      display: flex;
+      align-items: center;
+      border-radius: 12px;
+      line-height: 2.12em;
+      font-weight: 600;
+
+      p:first-of-type {
+        padding-top: 0.2em;
+        font-weight: 400;
+      }
+
+      @include themed() {
+        color: t(text);
+      }
+
+      &:hover {
+        @include themed() {
+          background: t(slight-hover);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+@use "../abstract" as *;
+
+[grid-repeat] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+
+  [grid-keeper] {
+    min-width: 300px;
+    // max-width: 720px;
+  }
+
+  &[grid-repeat="smol"] {
+    display: flex;
+    flex-wrap: wrap;
+
+    [grid-keeper] {
+      flex: 1;
+      min-width: 18em;
+      max-width: 720px;
+    }
+  }
+
+  &[grid-repeat="mid"] {
+    grid-template-columns: repeat(auto-fit, minmax(28em, 1fr));
+
+    [grid-keeper] {
+      min-width: 28em;
+    }
+  }
+
+  &[grid-repeat="clans"] {
+    grid-template-columns: repeat(auto-fit, minmax(14em, 1fr));
+
+    [grid-keeper] {
+      min-width: 10em;
+    }
+  }
+}
+
+[grid] {
+  display: grid;
+
+  &[grid="two"] {
+    grid-template-columns: calc(50% - 0.2em) calc(50% - 0.2em);
+  }
+
+  &[grid="three"] {
+    grid-template-columns: 33.33% 33.33% 33.33%;
+  }
+}

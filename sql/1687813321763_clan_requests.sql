@@ -1,0 +1,6 @@
+BEGIN;
+
+  ALTER TABLE clan_requests
+  ADD deleted_at TIMESTAMP DEFAULT NULL AFTER done;
+
+COMMIT;

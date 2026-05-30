@@ -1,0 +1,80 @@
+@use "../abstract" as *;
+
+[content-width] {
+  max-width: var(--content-width);
+  margin-inline: auto;
+  width: 100%;
+
+  &[content-width="widester"] {
+    max-width: $content-width-widester;
+    margin-inline: auto;
+  }
+
+  &[content-width="widest"] {
+    max-width: $content-width-widest;
+    margin-inline: auto;
+  }
+
+  &[content-width="wider"] {
+    max-width: $content-width-wider;
+    margin-inline: auto;
+  }
+
+  &[content-width="wide"] {
+    max-width: $content-width-wide;
+    margin-inline: auto;
+  }
+
+  &[content-width="pre-wide"] {
+    max-width: $content-width-mid-plus;
+    margin-inline: auto;
+  }
+
+  &[content-width="mid"] {
+    max-width: $content-width-mid;
+    margin-inline: auto;
+  }
+
+  &[content-width="pre-mid"] {
+    max-width: $content-width-std-plus;
+    margin-inline: auto;
+  }
+
+  &[content-width="std"] {
+    max-width: $content-width-std;
+    margin-inline: auto;
+  }
+
+  &[content-width="pre-std"] {
+    max-width: $content-width-smol-plus;
+    margin-inline: auto;
+  }
+
+  &[content-width="smol"] {
+    max-width: $content-width-smol;
+    margin-inline: auto;
+  }
+
+  &[content-width="smoler"] {
+    max-width: $content-width-smoler;
+    margin-inline: auto;
+  }
+
+  &[content-width="smolest"] {
+    max-width: $content-width-smolest;
+    margin-inline: auto;
+  }
+
+  &[content-width="smolestest"] {
+    max-width: $content-width-smolestest;
+    margin-inline: auto;
+  }
+}
+
+[content-gap] {
+  gap: $gap-mid;
+
+  @media screen and (max-width: 800px) {
+    gap: $gap-std;
+  }
+}

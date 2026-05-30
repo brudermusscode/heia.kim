@@ -1,0 +1,22 @@
+@use "../abstract" as *;
+
+[post-subcontent] {
+  @include themed() {
+    color: t(company-color);
+  }
+}
+
+[post-content] {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.12em;
+}
+
+[top-actions] {
+  display: flex;
+  justify-content: flex-end;
+
+  @media screen and (max-width: $mobile-max-width) {
+    padding-inline: calc(1.2em - $main-distance-mobile);
+  }
+}

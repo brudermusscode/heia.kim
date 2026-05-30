@@ -1,0 +1,161 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+[score-grade] {
+  &[score-grade="x"],
+  &[score-grade="xh"],
+  &[score-grade="sh"] {
+    background: $grey !important;
+  }
+
+  &[score-grade="ss"] {
+    background: $yellow !important;
+  }
+
+  &[score-grade="s"] {
+    background: $yellow !important;
+  }
+
+  &[score-grade="a"] {
+    background: $green !important;
+  }
+
+  &[score-grade="b"] {
+    background: $blue-1 !important;
+  }
+
+  &[score-grade="c"] {
+    background: #d685d6 !important;
+  }
+
+  &[score-grade="d"] {
+    background: $red !important;
+  }
+
+  &[score-grade="f"] {
+    background: $red !important;
+  }
+}
+
+[beatmap-state] {
+  background: #ffc400;
+  color: white;
+
+  &[beatmap-state="2"] {
+    background: #9c27b0;
+  }
+
+  &[beatmap-state="5"] {
+    background: #ff1744;
+  }
+
+  &[beatmap-state="3"] {
+    background: #00c853;
+  }
+
+  &[beatmap-state="4"] {
+    background: #455a64;
+  }
+
+  &[beatmap-state="0"] {
+    background: #fcfcfc;
+    color: #2e3136;
+  }
+
+  &[beatmap-state="1"] {
+    background: #b1190e;
+  }
+}
+
+@mixin shine-background {
+  animation: glowing_shadow 1.6s $cubic infinite;
+}
+
+$diff-txt-easy: #70e000;
+$diff-txt-normal: #0091ad;
+$diff-txt-hard: #ffea00;
+$diff-txt-insane: #fcbd1f;
+$diff-txt-extreme: #ff9900;
+$diff-txt-wallah: #fca0f9;
+$diff-txt-holy: #ff6cd3;
+$diff-txt-holymoly: #ff1cbb;
+$diff-txt-dude-stop: #e61363;
+
+[beatmap-difficulty-bg] {
+  background: $diff-txt-dude-stop;
+  color: white !important;
+
+  &[beatmap-difficulty-bg="easy"] {
+    background: $diff-txt-easy;
+  }
+
+  &[beatmap-difficulty-bg="normal"] {
+    background: $diff-txt-normal;
+  }
+
+  &[beatmap-difficulty-bg="hard"] {
+    background: $diff-txt-hard;
+    color: #333 !important;
+  }
+
+  &[beatmap-difficulty-bg="insane"] {
+    background: $diff-txt-insane;
+  }
+
+  &[beatmap-difficulty-bg="extreme"] {
+    background: $diff-txt-extreme;
+  }
+
+  &[beatmap-difficulty-bg="wallah"] {
+    background: $diff-txt-wallah;
+  }
+
+  &[beatmap-difficulty-bg="holy"] {
+    background: $diff-txt-holy;
+  }
+
+  &[beatmap-difficulty-bg="holymoly"] {
+    background: $diff-txt-holymoly;
+  }
+
+  // &[beatmap-difficulty-bg="hurensohn"] {
+  //   background: #550021;
+  //   box-shadow: 0 0 0px 1px white;
+  // }
+}
+
+[beatmap-difficulty-color] {
+  color: $diff-txt-dude-stop;
+
+  &[beatmap-difficulty-color="easy"] {
+    color: $diff-txt-easy;
+  }
+
+  &[beatmap-difficulty-color="normal"] {
+    color: $diff-txt-normal;
+  }
+
+  &[beatmap-difficulty-color="hard"] {
+    color: $diff-txt-hard;
+  }
+
+  &[beatmap-difficulty-color="insane"] {
+    color: $diff-txt-insane;
+  }
+
+  &[beatmap-difficulty-color="extreme"] {
+    color: $diff-txt-extreme;
+  }
+
+  &[beatmap-difficulty-color="wallah"] {
+    color: $diff-txt-wallah;
+  }
+
+  &[beatmap-difficulty-color="holy"] {
+    color: $diff-txt-holy;
+  }
+
+  &[beatmap-difficulty-color="holymoly"] {
+    color: $diff-txt-holymoly;
+  }
+}

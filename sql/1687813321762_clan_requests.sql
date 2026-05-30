@@ -1,0 +1,6 @@
+BEGIN;
+
+  ALTER TABLE clan_requests
+  ADD done TINYINT DEFAULT 0 AFTER type;
+
+COMMIT;

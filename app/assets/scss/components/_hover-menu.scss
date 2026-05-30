@@ -1,0 +1,67 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+[hover-menu] {
+  transition: $trans-cubic;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  right: 1.2em;
+  top: -3em;
+  border-radius: 8px;
+  scale: 0.96;
+  z-index: 20;
+
+  @include themed() {
+    background: t(box3);
+  }
+
+  .options_inr {
+    display: flex;
+    padding: 0.4em;
+  }
+
+  .option {
+    border-radius: 8px;
+    cursor: pointer;
+    height: 2.4em;
+    min-width: 2.4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-inline: 8px;
+
+    mi {
+      font-size: 20px;
+    }
+
+    &:hover {
+      @include themed() {
+        background: t(slight-hover);
+      }
+    }
+  }
+
+  &:hover {
+    scale: 1 !important;
+  }
+
+  &:active {
+    scale: 0.98 !important;
+  }
+}
+
+[has-hover-menu] {
+  &:not([active]) {
+    &:hover {
+      z-index: 1000;
+      position: relative;
+
+      [hover-menu] {
+        opacity: 1;
+        visibility: visible;
+        scale: 0.98;
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+theme-switcher {
+  display: block;
+  content: "";
+  height: $mbutton-std-plus-size;
+  width: $mbutton-std-plus-size;
+  background: transparent;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    @include themed() {
+      background: t(slight-hover);
+    }
+  }
+
+  .theme_switcher__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    transition: $trans-cubic;
+
+    mi {
+      font-size: $font-size-midler-plus;
+    }
+
+    &[left] {
+      opacity: 0;
+      margin-top: -1.2em;
+    }
+
+    &[right] {
+      opacity: 1;
+      margin-top: 0;
+    }
+  }
+
+  &[active] {
+    opacity: 1;
+
+    @include themed() {
+      background: t(active);
+    }
+
+    &:hover {
+      @include themed() {
+        background: t(active-hover);
+      }
+    }
+
+    .theme_switcher__icon {
+      &[right] {
+        opacity: 0;
+        margin-top: 1.2em;
+      }
+
+      &[left] {
+        opacity: 1;
+        margin-top: 0;
+      }
+
+      mi {
+        @include themed() {
+          color: $yellow;
+        }
+      }
+    }
+  }
+}

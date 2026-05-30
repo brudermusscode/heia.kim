@@ -1,0 +1,8 @@
+CREATE TABLE map_search_users(
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NULL,
+  map_search_id INT NULL,
+  updated_at TIMESTAMP NULL,
+  created_at TIMESTAMP NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

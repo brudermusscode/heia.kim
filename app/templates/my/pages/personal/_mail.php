@@ -1,0 +1,72 @@
+<?php
+
+use Bruder\Heiakim\Model\Authentication;
+use Bruder\Heiakim\Model\User;
+
+/**
+ * @var User $CurrentUser
+ */
+
+/**
+ * GET Parameter.
+ */
+$validation_mail = str_replace(" ", "+", $var);
+
+/**
+ * @var ?Authentication
+ */
+$Authentication = $CurrentUser->authentications()
+  ->where([
+    "email" => $validation_mail
+  ])
+  ->first();
+
+/**
+ * @var string
+ */
+$email = !filter_var($CurrentUser->email, FILTER_VALIDATE_EMAIL) ? null : $CurrentUser->email;
+
+?>
+
+<div fl gap=mid alic>
+  <?php include TEMPLATE . "/my/_back_button.php"; ?>
+
+  <label size="mid" has-secondary>
+    <div class="label__main">
+      <p bold>E-mail address</p>
+    </div>
+  </label>
+</div>
+
+<div fl fldircol gap>
+  <tipp-box outlined rounded=mid>
+    <mi>privacy_tip</mi>
+    <p text>Your e-mail address is only visible to you. It's required for authentication.</p>
+  </tipp-box>
+
+  <form responder
+    data-form="authentication:create"
+    data-type="user:update:email">
+    <div fl fldircol gap=smol+>
+      <?php if ($CurrentUser->email) { ?>
+        <p text>Current e-mail address is <strong><?= $CurrentUser->email; ?></strong></p>
+      <?php } else { ?>
+        <p text>You have no e-mail address set, but we <strong>highly recommend to set one</strong>. It is required to properly authenticate any critical action to your account, as well as recovering it if you lose your credentials.</p>
+      <?php } ?>
+
+      <div fl fldircol gap>
+        <div input material has-icon>
+          <mi>alternate_email</mi>
+          <input autofocus type="text" name="value" enter-submitable placeholder="<?= $email ?? "E-mail address"; ?>" autocomplete="false" tabindex=1 />
+        </div>
+
+        <div fl justify-content=end gap>
+          <mbutton size=mid background=besure has-icon=left color=dark-orange material submit-closest tabindex=2>
+            <mi>fingerprint</mi>
+            <p text bold>Request code</p>
+          </mbutton>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

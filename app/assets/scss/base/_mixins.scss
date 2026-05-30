@@ -1,0 +1,216 @@
+@use "../abstract" as *;
+
+@mixin hide_tablet {
+  @media screen and (max-width: $tablet-max-width) {
+    display: none !important;
+  }
+}
+
+@mixin hide_mobile {
+  @media screen and (max-width: $mobile-max-width) {
+    display: none !important;
+  }
+}
+
+@mixin full-header-fixed {
+  position: fixed;
+  top: 6px;
+  left: calc($page-navigator-width);
+  width: $full-header-width;
+  border-radius: 42px;
+  transition: $trans-cubic;
+
+  @media screen and (max-width: 1900px) {
+    right: initial;
+    left: calc($page-navigator-smol-width);
+  }
+
+  @media screen and (max-width: 800px) {
+    right: initial;
+    left: 6px;
+    width: calc(100vw - 12px);
+  }
+}
+
+// ! HURENSOHN
+// * HURENSOHN
+// ? HURENSOHN
+@mixin clickable {
+  &:not([disabled]) {
+    cursor: pointer;
+  }
+
+  &:hover {
+    box-shadow: var(--mio-theme-elevation-1);
+
+    &[elevated] {
+      box-shadow: var(--mio-theme-elevation-2);
+    }
+
+    &[elevated="mid"] {
+      box-shadow: var(--mio-theme-elevation-3);
+    }
+
+    &[elevated="wide"] {
+      box-shadow: var(--mio-theme-elevation-2);
+    }
+  }
+
+  &:active {
+    box-shadow: none;
+
+    &[elevated] {
+      box-shadow: var(--mio-theme-elevation-1);
+    }
+
+    &[elevated="mid"] {
+      box-shadow: var(--mio-theme-elevation-2);
+    }
+
+    &[elevated="wide"] {
+      box-shadow: var(--mio-theme-elevation-1);
+    }
+  }
+}
+
+@mixin flRowBetween {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@mixin flRow {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin center-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin almidhoriz {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin align-center-h {
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+}
+
+@mixin align-center-v {
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+}
+
+@mixin align-center-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+
+@mixin image_fade_before {
+  &:before {
+    display: block;
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 3;
+    opacity: 0.38;
+    background: #000;
+  }
+}
+
+@mixin fit_box {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+@mixin bottom-transparent-transition {
+  position: relative;
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+
+    @include themed() {
+      background: t(bg);
+      background: -moz-linear-gradient(
+        0deg,
+        t(bg) 0%,
+        t(bg) 18%,
+        rgba(0, 212, 255, 0) 100%
+      );
+      background: -webkit-linear-gradient(
+        0deg,
+        t(bg) 0%,
+        t(bg) 18%,
+        rgba(0, 212, 255, 0) 100%
+      );
+      background: linear-gradient(
+        0deg,
+        t(bg) 0%,
+        t(bg) 18%,
+        rgba(0, 212, 255, 0) 100%
+      );
+    }
+  }
+}
+
+@mixin material-card($elevation: 0) {
+  border-radius: 28px;
+  transition: $trans-cubic;
+
+  @if $elevation == 1 {
+    box-shadow: var(--mio-theme-elevation-1);
+  } @else if $elevation == 2 {
+    box-shadow: var(--mio-theme-elevation-2);
+  } @else if $elevation == 3 {
+    box-shadow: var(--mio-theme-elevation-1);
+  }
+}
+
+@mixin material-card-hover($size: 1) {
+  &:hover {
+    z-index: 100;
+    scale: 1.01;
+
+    @if $size == 1 {
+      box-shadow: var(--mio-theme-elevation-1);
+    } @else if $size == 2 {
+      box-shadow: var(--mio-theme-elevation-2);
+    } @else if $size == 3 {
+      box-shadow: var(--mio-theme-elevation-1);
+    }
+  }
+
+  &:active {
+    box-shadow: var(--mio-theme-elevation-1);
+  }
+}

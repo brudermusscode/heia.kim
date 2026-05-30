@@ -1,0 +1,153 @@
+/**
+* ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+* ,,,,,,,,, FLEX BOX ,,,,,,,,,,,,
+* ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+*/
+
+[infl] {
+  display: inline-flex;
+}
+
+[fl] {
+  display: flex;
+
+  &[fldirrow] {
+    flex-direction: row;
+
+    &[flreverse] {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &[fldircol] {
+    flex-direction: column;
+
+    &[flreverse] {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &[align-items] {
+    &[align-items="start"] {
+      align-items: flex-start;
+    }
+
+    &[align-items="center"] {
+      align-items: center;
+    }
+
+    &[align-items="end"] {
+      align-items: flex-end;
+    }
+  }
+
+  &[alic] {
+    align-items: center;
+  }
+
+  &[aliend] {
+    align-items: flex-end;
+  }
+
+  &[alistart] {
+    align-items: flex-start;
+  }
+
+  &[alistretch] {
+    align-items: stretch;
+  }
+
+  &[justify-content] {
+    &[justify-content="space-between"] {
+      justify-content: space-between;
+    }
+
+    &[justify-content="stretch"] {
+      justify-content: stretch;
+    }
+
+    &[justify-content="start"] {
+      justify-content: flex-start;
+    }
+
+    &[justify-content="center"] {
+      justify-content: center;
+    }
+
+    &[justify-content="end"] {
+      justify-content: flex-end;
+    }
+  }
+
+  &[flbetween] {
+    justify-content: space-between;
+  }
+
+  &[jucc] {
+    justify-content: center;
+  }
+
+  &[jucend] {
+    justify-content: flex-end;
+  }
+
+  &[jucstart] {
+    justify-content: flex-start;
+  }
+
+  &[jucsb] {
+    justify-content: space-between;
+  }
+
+  &[jucsev] {
+    justify-content: space-evenly;
+  }
+
+  &[flex-wrap] {
+    flex-wrap: wrap;
+
+    &[flex-wrap="reverse"] {
+      flex-wrap: wrap-reverse;
+    }
+
+    &[flex-wrap="nowrap"] {
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+[flcol] {
+  display: flex;
+  flex-direction: column;
+}
+
+[flcenter] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+[flcolcent] {
+  @extend [flcenter];
+  flex-direction: column;
+}
+
+[justcontcent] {
+  display: flex;
+  justify-content: center;
+}
+
+[alitcent] {
+  display: flex;
+  align-items: center;
+}
+
+[fltr],
+[flex-truncate] {
+  min-width: 0;
+  flex: 1;
+}
+
+[flone] {
+  flex: 1;
+}

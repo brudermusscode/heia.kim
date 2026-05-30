@@ -1,0 +1,9 @@
+CREATE TABLE score_comments(
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NULL,
+  score_id INT NULL,
+  comment_string TEXT NULL,
+  updated_at TIMESTAMP NULL,
+  created_at TIMESTAMP NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

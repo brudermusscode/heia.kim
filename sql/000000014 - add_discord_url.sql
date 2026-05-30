@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE web_urls
+ADD discord TEXT NOT NULL AFTER avatars;
+
+COMMIT;

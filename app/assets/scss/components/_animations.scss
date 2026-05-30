@@ -1,0 +1,401 @@
+@use "sass:math";
+
+@use "../abstract" as *;
+@use "../base" as *;
+
+[bump] {
+  scale: 1;
+  animation: bump 1.2s $cubic forwards;
+}
+
+@keyframes bump {
+  from {
+    scale: 1;
+  }
+
+  60% {
+    scale: 0.8;
+  }
+
+  72% {
+    scale: 1.1;
+  }
+
+  to {
+    scale: 1;
+  }
+}
+
+[animation="changed-zoom"] {
+  scale: 1;
+  animation: changed-zoom 0.4s $cubic forwards;
+
+  @keyframes changed-zoom {
+    from {
+      scale: 1;
+    }
+
+    50% {
+      scale: 1.12;
+    }
+
+    to {
+      scale: 1;
+    }
+  }
+}
+
+[animation="open"] {
+  opacity: 1;
+  visibility: visible;
+  animation: open 0.42s $cubic;
+  -moz-animation: open 0.42s $cubic;
+  -ms-animation: open 0.42s $cubic;
+  -o-animation: open 0.42s $cubic;
+  -webkit-animation: open 0.42s $cubic;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+}
+
+@keyframes open {
+  0% {
+    transform: scale(0.94);
+    -webkit-transform: scale(0.94);
+    -o-transform: scale(0.94);
+    -moz-transform: scale(0.94);
+    -ms-transform: scale(0.94);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    -moz-transform: scale(1);
+    opacity: 1;
+  }
+}
+
+[animation="zoom-in-smol"] {
+  opacity: 0;
+  visibility: visible;
+  animation: zoom-in-smol 0.6s $cubic;
+  -moz-animation: zoom-in-smol 0.6s $cubic;
+  -ms-animation: zoom-in-smol 0.6s $cubic;
+  -o-animation: zoom-in-smol 0.6s $cubic;
+  -webkit-animation: zoom-in-smol 0.6s $cubic;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+}
+
+@keyframes zoom-in-smol {
+  0% {
+    transform: scale(0.99);
+    -webkit-transform: scale(0.99);
+    -o-transform: scale(0.99);
+    -moz-transform: scale(0.99);
+    -ms-transform: scale(0.99);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    -moz-transform: scale(1);
+    opacity: 1;
+  }
+}
+
+[animation="zoom-in"] {
+  opacity: 1;
+  visibility: visible;
+  animation: zoom-in 0.42s $cubic;
+  -moz-animation: zoom-in 0.42s $cubic;
+  -ms-animation: zoom-in 0.42s $cubic;
+  -o-animation: zoom-in 0.42s $cubic;
+  -webkit-animation: zoom-in 0.42s $cubic;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+}
+
+@keyframes zoom-in {
+  0% {
+    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    -moz-transform: scale(1);
+    opacity: 1;
+  }
+}
+
+[animation="zoom-out"] {
+  opacity: 1;
+  visibility: visible;
+  animation: zoom-out 0.75s $cubic;
+  -moz-animation: zoom-out 0.75s $cubic;
+  -ms-animation: zoom-out 0.75s $cubic;
+  -o-animation: zoom-out 0.75s $cubic;
+  -webkit-animation: zoom-out 0.75s $cubic;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+}
+
+@keyframes zoom-out {
+  0% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    -moz-transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.6);
+    -webkit-transform: scale(0.6);
+    -o-transform: scale(0.6);
+    -moz-transform: scale(0.6);
+    -ms-transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+[animation="fade-in"] {
+  opacity: 0;
+  animation: fade-in 0.2s linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@function random_range($min, $max) {
+  $rand: math.random();
+  $random_range: $min + math.floor($rand * (($max - $min) + 1));
+
+  @return $random_range;
+}
+
+.snow {
+  @include themed() {
+    background: t(text);
+  }
+
+  $total: 200;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  @for $i from 1 through $total {
+    $random-x: calc(math.random(1000000) * 0.0001vw);
+    $random-offset: calc(random_range(-100000, 100000) * 0.0001vw);
+    $random-x-end: calc($random-x + $random-offset);
+    $random-x-end-yoyo: calc($random-x + ($random-offset / 2));
+    $random-yoyo-time: calc(random_range(30000, 80000) / 100000);
+    $random-yoyo-y: $random-yoyo-time * 100vh;
+    $random-scale: calc(math.random(10000) * 0.0001);
+    $fall-duration: calc(random_range(10, 30) * 1s);
+    $fall-delay: calc(math.random(30) * -1s);
+
+    &:nth-child(#{$i}) {
+      opacity: math.random(10000) * 0.0001;
+      transform: translate($random-x, -10px) scale($random-scale);
+      animation: fall-#{$i} $fall-duration $fall-delay linear infinite;
+    }
+
+    @keyframes fall-#{$i} {
+      #{math.percentage($random-yoyo-time)} {
+        transform: translate($random-x-end, $random-yoyo-y) scale($random-scale);
+      }
+
+      to {
+        transform: translate($random-x-end-yoyo, 100vh) scale($random-scale);
+      }
+    }
+  }
+}
+
+.quads-animated {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: #633b48;
+    animation: animate-quads 25s linear infinite;
+    bottom: -150px;
+    border-radius: 18px;
+  }
+
+  li:nth-child(1) {
+    left: 25%;
+    width: 10%;
+    height: 10%;
+    animation-delay: 0s;
+  }
+
+  li:nth-child(2) {
+    left: 10%;
+    width: 20%;
+    height: 20%;
+    animation-delay: 2s;
+    animation-duration: 12s;
+  }
+
+  li:nth-child(3) {
+    left: 70%;
+    width: 30%;
+    height: 20%;
+    animation-delay: 4s;
+  }
+
+  li:nth-child(4) {
+    left: 40%;
+    width: 40%;
+    height: 40%;
+    animation-delay: 0s;
+    animation-duration: 18s;
+  }
+
+  li:nth-child(5) {
+    left: 65%;
+    width: 10%;
+    height: 10%;
+    animation-delay: 0s;
+  }
+
+  li:nth-child(6) {
+    left: 75%;
+    width: 60%;
+    height: 60%;
+    animation-delay: 3s;
+  }
+
+  li:nth-child(7) {
+    left: 35%;
+    width: 80%;
+    height: 80%;
+    animation-delay: 7s;
+  }
+
+  li:nth-child(8) {
+    left: 50%;
+    width: 18%;
+    height: 18%;
+    animation-delay: 15s;
+    animation-duration: 45s;
+  }
+
+  li:nth-child(9) {
+    left: 20%;
+    width: 10%;
+    height: 10%;
+    animation-delay: 2s;
+    animation-duration: 35s;
+  }
+
+  li:nth-child(10) {
+    left: 85%;
+    width: 80%;
+    height: 80%;
+    animation-delay: 0s;
+    animation-duration: 11s;
+  }
+}
+
+@keyframes animate-quads {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+[animation="pulse"] {
+  z-index: 2;
+  position: relative;
+
+  &:before {
+    content: "";
+    display: block;
+    z-index: 1;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    animation: enlargen-opacity 4s $cubic infinite;
+    border-radius: 50%;
+
+    @include themed() {
+      background: t(bg-invert);
+    }
+  }
+
+  @keyframes enlargen-opacity {
+    from {
+      opacity: 0.6;
+      height: 100%;
+      width: 100%;
+    }
+
+    30% {
+      opacity: 0;
+      height: calc(100% + 1.6em);
+      width: calc(100% + 1.6em);
+    }
+
+    to {
+      opacity: 0;
+      height: calc(100% + 1.6em);
+      width: calc(100% + 1.6em);
+    }
+  }
+}
