@@ -1,8 +1,6 @@
 >[!Caution]
 >It's in a pre-refactored state, so alot of things are still broken.
 
-<br>
-
 # heia.kim
 
 It's the web base for https://www.heia.kim. Just for transparency, you can view the code! I was coding all alone in the hidden, pushing to my own secret git repository when suddenly I had a feeling of being so full of myself. It should be public, so we can enjoy code together 🫶
