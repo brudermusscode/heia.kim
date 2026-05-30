@@ -12,7 +12,7 @@ code together 🫶
 <br>
 
 >[!Note]
->Copyright (c) Justin Seidel - All Rights Reserved (2022-now)<br>
+><strong>Copyright (c) Justin Seidel</strong> - All Rights Reserved (2022-now)<br>
 It's a project of heart and I have put alot of time into it.<br>
 If you really want to copy it, use it for a good reason and<br>
 try to make something new, something that belongs to you out<br>
