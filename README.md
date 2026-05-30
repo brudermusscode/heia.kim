@@ -8,7 +8,7 @@ It's the web base for https://www.heia.kim. Just for transparency, you can view 
 <br>
 
 >[!Note]
->Copyright (c) Justin Seidel - All Rights Reserved (2022-now)
+>Copyright (c) Justin Seidel - All Rights Reserved (2022-now)<br>
 It's a project of heart and I have put alot of time into it.
 If you really want to copy it, use it for a good reason and
 try to make something new, something that belongs to you out
