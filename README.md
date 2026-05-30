@@ -21,4 +21,4 @@ of it 🙂
 <br>
 <br>
 
-<p align=center><strong>Jesus loves you my friend ❤️</strong></p>
+<p align=right><strong>Jesus loves you my friend ❤️</strong></p>
