@@ -1,5 +1,41 @@
 @use "../abstract" as *;
 
+content {
+  display: block;
+
+  &[smol] {
+    max-width: $content-smol-size;
+  }
+
+  &[smolplus] {
+    max-width: $content-smol-plus-size;
+  }
+
+  &[std] {
+    max-width: $content-std-size;
+  }
+
+  &[stdplus] {
+    max-width: $content-std-plus-size;
+  }
+
+  &[midler] {
+    max-width: $content-midler-size;
+  }
+
+  &[mid] {
+    max-width: $content-mid-size;
+  }
+
+  &[midplus] {
+    max-width: $content-mid-plus-size;
+  }
+
+  &[wide] {
+    max-width: $content-wide-size;
+  }
+}
+
 [content-width] {
   max-width: var(--content-width);
   margin-inline: auto;

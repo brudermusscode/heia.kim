@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Application\Exception;
-use Bruder\Application\Logger;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Justin;
+use Heiakim\Application\Exception;
+use Heiakim\Application\Logger;
+use Heiakim\Model\User;
 
 class Relationship extends Justin
 {

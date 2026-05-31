@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Application\Feature;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Application\Feature;
+use Heiakim\Model\User;
 
 /**
  * @var int
@@ -37,7 +37,17 @@ include TEMPLATE . "/login/_header.php";
 
     <!--- FLEX: MAIN CONTENT --->
 
-    <?php if (!USER_COMEBACK) { ?>
+    <?php
+
+    # + User is logged in, show unavailable.
+    if (LOGGED) :
+      include UNAVAILABLE;
+
+    # + User is revisiting, but session has expired.
+    elseif (USER_COMEBACK) :
+      include __DIR__ . "/_valid_session.php";
+
+    else: ?>
 
       <div fl gap=mid style=width:100%;>
         <div class="login_left" style="margin-top:1.2em;">
@@ -175,12 +185,7 @@ include TEMPLATE . "/login/_header.php";
         </div>
       </div>
 
-    <?php
-
-    } else
-      include __DIR__ . "/_valid_session.php";
-
-    ?>
+    <?php endif; ?>
 
   </div>
 </login>

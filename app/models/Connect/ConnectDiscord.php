@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Connect;
+namespace Heiakim\Model\Connect;
 
-use Bruder\Heiakim\Model\Session;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Vendor\Discord;
+use Heiakim\Model\Session;
+use Heiakim\Model\User;
+use Heiakim\Model\Vendor\Discord;
 
 class ConnectDiscord extends Connect
 {

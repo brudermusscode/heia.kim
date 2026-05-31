@@ -2,7 +2,7 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Heiakim\Controller\User\SettingsPremiumController;
+use Heiakim\Controller\Controller\User\SettingsPremiumController;
 
 $return = (new SettingsPremiumController)->edit($_POST);
 

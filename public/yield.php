@@ -2,8 +2,8 @@
 
 require_once dirname(__DIR__) . "/config/init.php";
 
-use Bruder\Application\CurrentUser;
-use Bruder\Application\Cookie;
+use Heiakim\Application\CurrentUser;
+use Heiakim\Application\Cookie;
 
 /**
  * Sanitizes the output for non DEV environments. Looks so cool
@@ -34,8 +34,6 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
   <link rel="home" href="<?= HOME_URL; ?>" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="csrf_token" content="<?= $csrf_token; ?>" />
-  <meta name="google-adsense-account" content="ca-pub-8743557631395381">
 
   <title><?= CURRENT_PAGE_TITLE ?></title>
 

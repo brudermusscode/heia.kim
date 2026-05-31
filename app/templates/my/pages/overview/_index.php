@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Time\Time;
+use Heiakim\Time\Time;
 
-$premium_time_left = Time::left($CurrentUser->donor_end);
+$premium_time_left = Time::left(CurrentUser->donor_end);
 
 ?>
 
@@ -13,7 +13,7 @@ $premium_time_left = Time::left($CurrentUser->donor_end);
   /**
    * USER RECOMMENDED SETTINGS
    */
-  if ($CurrentUser->has_recommended_settings()) { ?>
+  if (CurrentUser->has_recommended_settings()) { ?>
     <a href="/my/recommendations" sub>
       <box-model filled clickable>
         <bm-inr size=mid fl fldircol gap>
@@ -82,7 +82,7 @@ $premium_time_left = Time::left($CurrentUser->donor_end);
     </box-model>
   </div>
 
-  <?php if (!$CurrentUser->donor_end || $CurrentUser->donor_end < time()) { ?>
+  <?php if (!CurrentUser->donor_end || CurrentUser->donor_end < time()) { ?>
     <a href="/unlock/premium" grid-keeper>
       <box-model background=premium color=premium clickable>
         <bm-inr size=mid fl fldircol gap>

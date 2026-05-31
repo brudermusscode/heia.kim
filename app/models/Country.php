@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Application\Application;
-use Bruder\Justin;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Application\Application;
+use Heiakim\Justin;
+use Heiakim\Model\User;
 use Locale;
 
 class Country extends Justin

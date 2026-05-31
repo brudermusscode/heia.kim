@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Stat;
+namespace Heiakim\Model\Stat;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Justin;
+use Heiakim\Model\User;
 
 class StatDevelopment extends Justin
 {

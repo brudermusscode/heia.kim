@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Time\Time;
+use Heiakim\Time\Time;
 
 /**
  * User
@@ -44,7 +44,7 @@ $User = $Score->user;
                   <p text std bold><?= $Score->feedback()->count(); ?></p>
                 </div>
                 <mbutton submit-closest icon-only size=std material background=slighter ripple-effect
-                  <?php if ($Score->has_received_feedback_from($CurrentUser->id)) echo "active"; ?>>
+                  <?php if ($Score->has_received_feedback_from(CurrentUser->id)) echo "active"; ?>>
                   <div>
                     <p>
                       <i class="mi">thumb_up</i>

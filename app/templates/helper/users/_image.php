@@ -8,15 +8,15 @@ $gdpr ??= true;
 /**
  * @var int
  */
-$user_image_id ??= $User->id ?? $CurrentUser->id ?? $CurrentUser->id ?? 0;
+$user_image_id ??= $User->id ?? CurrentUser->id ?? CurrentUser->id ?? 0;
 
 /**
  * @var string
  */
 $user_profile_picture =
   !DEV ?
-  (GDPR && $gdpr ? AVATAR . '/default' : AVATAR . "/$user_image_id")
-  : AVATAR . "/$user_image_id.jpg";
+  (!LOGGED && $gdpr ? AVATAR . '/default' : AVATAR . "/$user_image_id")
+  : AVATAR . "/0.jpg";
 
 /**
  * Show a red overlay for the image from deleted users.

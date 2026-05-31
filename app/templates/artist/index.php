@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Artist;
+use Heiakim\Model\Artist;
 
 ?>
 
@@ -16,7 +16,7 @@ use Bruder\Heiakim\Model\Artist;
   </div>
 </header>
 
-<div artists-content content-width=widest fl fldircol gap=wide>
+<content widest artists-content fl fldircol gap=wide>
   <div class="content-shelf carousel-shelf" fl fldircol gap>
     <div title-inline>
       <div fl aliend jucsb>
@@ -119,21 +119,21 @@ use Bruder\Heiakim\Model\Artist;
       </ul>
     </carousel>
   </div>
-</div>
+  </div>
 
-<div mt="wide" fl justify-content="center" style="max-width: 620px; margin-inline: auto">
-  <div background="dynamic" pblock32 pinline32 rounded="wide">
-    <div fl gap>
-      <p text mid normalize-icon>
-        <i class="mi">tips_and_updates</i>
-      </p>
-      <p text std>This is a test view of the artists page. A senseful structure is still being determined and will
-        soon be
-        implemented.</p>
+  <div mt="wide" fl justify-content="center" style="max-width: 620px; margin-inline: auto">
+    <div background="dynamic" pblock32 pinline32 rounded="wide">
+      <div fl gap>
+        <p text mid normalize-icon>
+          <i class="mi">tips_and_updates</i>
+        </p>
+        <p text std>This is a test view of the artists page. A senseful structure is still being determined and will
+          soon be
+          implemented.</p>
+      </div>
     </div>
   </div>
-</div>
 
-<?php
+  <?php
 
-include TEMPLATE . "/global/_scroll_end_logo.php";
+  include TEMPLATE . "/global/_scroll_end_logo.php";

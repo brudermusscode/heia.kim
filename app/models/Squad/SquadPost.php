@@ -1,15 +1,15 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Squad;
+namespace Heiakim\Model\Squad;
 
-use Bruder\Justin;
-use Bruder\Application\Exception;
-use Bruder\Application\Logger;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
-use Bruder\Utils\Arr;
-use Bruder\Utils\Str;
+use Heiakim\Justin;
+use Heiakim\Application\Exception;
+use Heiakim\Application\Logger;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
+use Heiakim\Utils\Arr;
+use Heiakim\Utils\Str;
 
 class SquadPost extends Justin
 {

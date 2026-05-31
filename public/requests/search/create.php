@@ -2,7 +2,7 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Heiakim\Controller\SearchesController;
+use Heiakim\Controller\Controller\SearchesController;
 
 $return = (new SearchesController)->create($_POST);
 

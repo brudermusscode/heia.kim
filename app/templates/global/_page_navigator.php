@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Application\Cookie;
-use Bruder\Application\CurrentUser;
+use Heiakim\Application\Cookie;
+use Heiakim\Application\CurrentUser;
 
 ?>
 

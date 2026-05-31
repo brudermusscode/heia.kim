@@ -1,17 +1,16 @@
 <?php
 
-namespace Bruder;
+namespace Heiakim\Controller;
 
-use Bruder\Heiakim\Model\Authentication;
-use Bruder\Heiakim\Model\Image;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
-use Bruder\Heiakim\Model\Squad\SquadPost;
-use Bruder\Heiakim\Model\Squad\SquadPostComment;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-use Bruder\Utils\Arr;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Trait\ProcessesRequests;
-use Bruder\Http\Request;
+use Heiakim\Model\Authentication;
+use Heiakim\Model\Image;
+use Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadPostComment;
+use Heiakim\Model\Squad\SquadUser;
+use Heiakim\Utils\Arr;
+use Heiakim\Model\User;
+use Heiakim\Trait\ProcessesRequests;
 use Dom\Comment;
 
 class Controller
@@ -19,58 +18,31 @@ class Controller
   use ProcessesRequests;
 
   /**
-   * Keys that are valid for prequests even tho not explicitly
-   * noted down in the controller
-   *
-   * @var array
+   * Keys in POST or GET that will always pass.
    */
-  protected $valid_passthrough_keys = [
+  protected static array $valid_passthrough_keys = [
     "habibi",
     "csrf_token",
   ];
 
   /**
-   * @var array|object
+   * Params to send to any inheriting Controller.
    */
-  protected $params = [];
+  protected array|object $params = [];
 
-  /**
-   * @var ?User
-   */
-  protected $CurrentUser;
-
-  public function __construct(array $params = [])
+  public function __construct(array $params = [], array $files =  [])
   {
-    /**
-     * Set current user.
-     */
-    $this->CurrentUser = $this->get_current_user();
 
-    /**
-     * Set the input parameter.
-     */
+    # Set params.
     $this->params = $params;
-  }
 
-  /**
-   * @return ?User
-   */
-  protected function get_current_user()
-  {
-    /**
-     * @var int
-     */
-    $session_id = $_SESSION["session"]->user_id ?? 0;
+    # Append files to params.
+    if ($files) {
+      $this->params["files"] = [];
 
-    /**
-     * @var User
-     */
-    $User = User::find($session_id) ?? User::guest();
-
-    if ($User && $User->exists && $User->privacy->accepts_policies)
-      return $User;
-
-    return null;
+      foreach ($files as $key => $file)
+        $this->params["files"][$key] = $file;
+    }
   }
 
   /**
@@ -82,12 +54,9 @@ class Controller
    *        Expects an array with one key value pair which key should
    *        represent the section and which value the resource that
    *        a user should be granted for to interact with.
-   * @param bool $return_json_string - Whether to return a
-   *        json_encoded Request result or the object itself.
+   * @param bool $return_json_string
    * @param bool $die_on_error
-   *        Whether it should exit all further execution on error or just
-   *        return the request object
-   * @return die|string|object
+   * @return string|object
    */
   protected function authorize(
     bool $logged = true,
@@ -98,7 +67,7 @@ class Controller
     bool $die_on_error = true
   ) {
     return authorize(
-      resource: $resource ?? $this->CurrentUser,
+      resource: $resource ?? CurrentUser,
       logged: $logged,
       can: $can,
       respect_social_exclusion: $respect_social_exclusion,
@@ -113,9 +82,9 @@ class Controller
    * first resource.
    *
    * @param SquadUser|null $resource
-   * @param Image|Comment|SquadPost|SquadPostComment|SquadFeedItem|null $resource2
+   * @param Image|Comment|SquadPost|SquadPostComment|SquadFeedItem|null $item
    * @param bool $die_on_error
-   * @return string|die|void
+   * @return string|void
    */
   protected function can_interact(
     SquadUser|null $resource = null,
@@ -188,7 +157,8 @@ class Controller
     /**
      * @var ?Authentication
      */
-    $Authentication = $this->CurrentUser
+    $Authentication =
+      CurrentUser
       ->authentications()
       ->where("type", $this->params["authentication_type"])
       ->where("code", $this->params["authentication_code"])
@@ -219,9 +189,7 @@ class Controller
       $this->params["authentication_token"],
     );
 
-    /**
-     * Invalidate authentication & return.
-     */
+    # Invalidate authentication & return.
     return $Authentication->delete();
   }
 
@@ -233,20 +201,27 @@ class Controller
    * @param array $strict - Strictly necessary parameter.
    * @param array $optional - Will pass, but not necessary.
    * @param ?array $input_params
-   * @param bool $return_json_string
-   * @param bool $die_on_error
-   * @return string|object
+   * @return void
+   *
+   * NOTE: Will die on error.
    */
-  public function validate_params(array $strict, array $optional = [], ?array $input_params = null, bool $return_json_string = true, bool $die_on_error = true)
-  {
+  public function validate_params(
+    array $strict,
+    array $optional = [],
+    ?array $input_params = null,
+  ) {
+
     /**
      * @var ?object
      */
-    $this->params = $this->serialize_request_params($strict, $input_params ?? $this->params, $optional);
+    $this->params = $this->serialize_request_params(
+      $strict,
+      $input_params ?? $this->params,
+      $optional
+    );
 
-    return !$this->params
-      ? request_error(return_json_string: $return_json_string, die: $die_on_error)
-      : request_success(return_json_string: $return_json_string);
+    if (!$this->params)
+      die(error());
   }
 
   /**
@@ -258,61 +233,82 @@ class Controller
    * @param array $optional Let keys pass that are there but not filled
    * @return object|false
    */
-  protected function serialize_request_params(array $necessary, array $post_params, array $optional = [])
-  {
-    /**
-     * @var array
-     */
-    $always_pass = [
-      "csrf_token",
-      "habibi",
-    ];
+  protected function serialize_request_params(
+    array $necessary,
+    array $post_params,
+    array $optional = []
+  ) {
 
-    // Check if all required parameters are set in the post request
+    $always_pass = self::$valid_passthrough_keys;
+
+    # Check if all required parameters are set in the request.
     foreach ($necessary as $param)
       if (!isset($post_params[$param]))
         return false;
 
-    // Check if any parameter in the post request is not in the required or optional arrays
+    # Check if any parameter in the post request is not in the required or optional arrays
     foreach ($post_params as $key => $value)
-      if (!in_array($key, $necessary) && !in_array($key, $optional) && !in_array($key, $always_pass))
+      if (
+        !in_array($key, $necessary) &&
+        !in_array($key, $optional) &&
+        !in_array($key, $always_pass)
+      )
         return false;
 
-    /**
-     * @var array
-     */
-    $serializedParams = [];
+    $final = (object) Arr::sanitize_special_chars($post_params, skip_keys: []);
 
-    /**
-     * Sanitize all values recursively.
-     */
-    foreach ($post_params as $key => $value)
-      if (is_array($value))
-        $serializedParams[$key] = Arr::sanitize_special_chars($value);
-      else
-        $serializedParams[$key] = is_numeric($value) ? (int) $value : filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
-
-    /**
-     * Append the current user to make it available in any controller.
-     */
-    $serializedParams["CurrentUser"] = $this->CurrentUser;
-
-    return (object) $serializedParams;
+    return $final;
   }
 
   /**
-   * Unset any key from an array except the given ones.
+   * Get the magic happening! Wizards from Waverly Place have been
+   * working on this: This function calls a controller file from a
+   * given file inside a given path and determines the method to
+   * call based on the file name this function is being called in.
    *
-   * @param string ...$keys The keys to retain in the array.
-   * @param array[string] $array The original array.
-   * @return ?object
+   * WOW.
+   *
+   * @param $file __FILE__
+   * @param $from __DIR__
+   * @return string Basic JSON return string
    */
-  function restrict_params(array $restrict, array $array): ?object
+  public static function call(string $file, string $from)
   {
-    foreach ($array as $key => $arr) {
-      if (!array_key_exists($key, array_flip($restrict))) unset($array[$key]);
+
+    $dir_split = explode("/", $from);
+
+    # Remove all directories before (and including) templates so we
+    # can determine, how deep the Controller file lays.
+    foreach ($dir_split as $key => $dir) {
+      unset($dir_split[$key]);
+      if ($dir === "templates") {
+        break;
+      }
     }
 
-    return $array ? (object) $array : null;
+    # Build the controller name.
+    $ControllerName = "Heiakim\\Controller\\";
+
+    foreach ($dir_split as $dir) {
+      $dir_split2 = explode("-", $dir);
+      foreach ($dir_split2 as $dirnamepart)
+        $ControllerName .= ucfirst($dirnamepart);
+    }
+
+    $ControllerName .= "sController";
+
+    // Controller class is non-existent?
+    if (!class_exists($ControllerName))
+      return error("Klasse gibts nicht Bruder.");
+
+    # Get the method name from file name.
+    $method = pathinfo($file, PATHINFO_FILENAME);
+
+    // Method is non-existent inside controller class?
+    if (!method_exists($ControllerName, $method)) {
+      return error("Methode gibts nicht Bruder.");
+    }
+
+    return new $ControllerName($_POST, $_FILES)->$method();
   }
 }

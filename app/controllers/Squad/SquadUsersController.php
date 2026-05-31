@@ -1,13 +1,13 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Squad;
+namespace Heiakim\Controller\Squad;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-use Bruder\Heiakim\Model\Squad\SquadRequest;
-use Bruder\Heiakim\Enum\SquadPrivilege;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
+use Heiakim\Model\Squad\SquadRequest;
+use Heiakim\Enum\SquadPrivilege;
 
 class SquadUsersController extends Controller
 {
@@ -54,7 +54,7 @@ class SquadUsersController extends Controller
       /**
        * User is current user?
        */
-      if ($this->CurrentUser->is($User))
+      if (CurrentUser->is($User))
         return $this->error("???????");
 
       /**
@@ -74,7 +74,7 @@ class SquadUsersController extends Controller
        * Authorize current user to coordinate new members.
        */
       $this->authorize(
-        resource: $this->CurrentUser->squad_user,
+        resource: CurrentUser->squad_user,
         can: ["coordinate", "users"],
       );
     }
@@ -82,7 +82,7 @@ class SquadUsersController extends Controller
     /**
      * User can join this squad?
      */
-    else if (!$this->CurrentUser->sqcan_join($Squad))
+    else if (!CurrentUser->sqcan_join($Squad))
       return $this->error("<strong>You can't join this squad right now.</strong>");
 
     /**
@@ -110,7 +110,7 @@ class SquadUsersController extends Controller
     );
 
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       can: ["manage", "users"],
     );
 
@@ -123,7 +123,7 @@ class SquadUsersController extends Controller
      * If a user tries to remove another squaduser, check for
      * enought privileges.
      */
-    if ($SquadUser->user->is($this->CurrentUser))
+    if ($SquadUser->user->is(CurrentUser))
       return $this->error("<strong>NO 😑</strong>");
 
     /**
@@ -176,7 +176,7 @@ class SquadUsersController extends Controller
      */
     $SquadUser = isset($this->params->squad_user_id)
       ? SquadUser::findOrReturn($this->params->squad_user_id)
-      : $this->CurrentUser->squad_user;
+      : CurrentUser->squad_user;
 
     /**
      * SquadUser doesn't exist?
@@ -189,9 +189,9 @@ class SquadUsersController extends Controller
      * enought privileges.
      */
     if (
-      !$SquadUser->user->is($this->CurrentUser)
+      !$SquadUser->user->is(CurrentUser)
       && (
-        !$this->CurrentUser->sqcan("manage", "users")
+        !CurrentUser->sqcan("manage", "users")
         || $SquadUser->has_any_privileges_of(SquadPrivilege::CHIEF, SquadPrivilege::COMMUNITY_MANAGER)
       )
     )
@@ -223,7 +223,7 @@ class SquadUsersController extends Controller
      * Authorize permissions.
      */
     // $this->squauthorize(
-    //   resource: $this->CurrentUser?->squad_user,
+    //   resource: CurrentUser?->squad_user,
     //   can: ["manage", "users"],
     // );
 
@@ -249,7 +249,7 @@ class SquadUsersController extends Controller
      * Authorize squad user.
      */
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       can: $needed_privileges
     );
 
@@ -261,7 +261,7 @@ class SquadUsersController extends Controller
     /**
      * User exists & has a squad?
      */
-    if (!$User->squad?->is($this->CurrentUser->squad))
+    if (!$User->squad?->is(CurrentUser->squad))
       return $this->error("<strong>This player is not part of your squad.</strong>");
 
     /**
@@ -274,7 +274,7 @@ class SquadUsersController extends Controller
      * Editing themselves in the squad should be enabled later in
      * the game, but for now I keep it disabled.
      */
-    if ($this->CurrentUser->is($User))
+    if (CurrentUser->is($User))
       return $this->error("<strong>You can't edit yourself by now.</strong>");
 
     return $User->squad_user->edit($this->params);

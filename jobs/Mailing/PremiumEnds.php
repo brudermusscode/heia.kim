@@ -1,12 +1,12 @@
 <?php
 
-namespace Bruder\Heiakim\Job\Mailing;
+namespace Heiakim\Job\Mailing;
 
-use Bruder\Job;
-use Bruder\Heiakim\Model\User;
-use Bruder\Utils\Utils;
-use Bruder\Mail\Mail;
-use Bruder\Time\Time;
+use Heiakim\Job;
+use Heiakim\Model\User;
+use Heiakim\Utils\Utils;
+use Heiakim\Mail\Mail;
+use Heiakim\Time\Time;
 
 class PremiumEnds extends Job
 {

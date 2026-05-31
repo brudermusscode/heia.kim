@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Application\Cookie;
-use Bruder\Application\CurrentUser;
+use Heiakim\Application\Cookie;
+use Heiakim\Model\Session;
 
 ?>
 
@@ -33,8 +33,8 @@ use Bruder\Application\CurrentUser;
       data-sub=visibility>
       <div fl gap align-items=center justify-content=space-between>
         <div fl gap alic>
-          <mi wide><?= $CurrentUser->privacy->is_public ? "visibility" : "visibility_off"; ?></mi>
-          <p text bold><?= $CurrentUser->privacy->is_public ? __("Enabled") : __("Disabled"); ?></p>
+          <mi wide><?= CurrentUser->privacy->is_public ? "visibility" : "visibility_off"; ?></mi>
+          <p text bold><?= CurrentUser->privacy->is_public ? __("Enabled") : __("Disabled"); ?></p>
         </div>
         <mi midler>east</mi>
       </div>
@@ -56,11 +56,11 @@ use Bruder\Application\CurrentUser;
       data-category=<?= $category ?>
       data-sub=images>
       <div fl gap alic>
-        <mi wide><?= $CurrentUser->privacy->image_history ? "history" : "history_off"; ?></mi>
+        <mi wide><?= CurrentUser->privacy->image_history ? "history" : "history_off"; ?></mi>
         <div>
           <p text bold>Image history
           <p>
-          <p text><?= $CurrentUser->privacy->image_history ? "Enabled" : "Disabled"; ?>
+          <p text><?= CurrentUser->privacy->image_history ? "Enabled" : "Disabled"; ?>
           <p>
         </div>
       </div>
@@ -115,7 +115,7 @@ use Bruder\Application\CurrentUser;
 
 <div fl jucend>
   <form data-form="session:delete">
-    <input type=hidden name=token value="<?= Cookie::get(CurrentUser::$persistent_cookies[1]); ?>" />
+    <input type=hidden name=token value="<?= Cookie::get(Session::$persistent_cookies[1]); ?>" />
     <mbutton size=mid material outlined=darker color=red color=red submit-closest>
       <p text bold><?= __("Logout") ?></p>
     </mbutton>

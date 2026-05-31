@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Vendor;
+namespace Heiakim\Model\Vendor;
 
-use Bruder\Utils\Utils;
+use Heiakim\Utils\Utils;
 use Google\Client;
 
 class Google extends Vendor implements VendorInterface

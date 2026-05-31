@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\Validate;
+namespace Heiakim\Validate;
 
 class Search
 {

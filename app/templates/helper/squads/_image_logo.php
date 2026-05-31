@@ -2,7 +2,7 @@
 
 $squad_logo ??= $Squad->logo ?? "default.jpg";
 $logo =
-  GDPR
+  !LOGGED
   ? CLAN_DEFAULT_LOGO_URL
   : (CLAN_IMAGE_URL . "/logo-images/$squad_logo");
 

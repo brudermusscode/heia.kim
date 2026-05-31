@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Application;
+namespace Heiakim\Application;
 
-use Bruder\Http\Domain;
+use Heiakim\Http\Domain;
 
 class Session
 {

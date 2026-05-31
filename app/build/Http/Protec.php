@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\Http;
+namespace Heiakim\Http;
 
 class Protec
 {

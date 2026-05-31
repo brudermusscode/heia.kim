@@ -2,8 +2,8 @@
 
 // TODO: Shows +0 more followers
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
 
 /**
  * Followers
@@ -104,12 +104,12 @@ TEXT;
          * If the current user is following this user already, show
          * a different button than the follow button.
          */
-        $is_following = LOGGED && $CurrentUser->follows($Follower);
+        $is_following = LOGGED && CurrentUser->follows($Follower);
 
         /**
          * Follower is current user?
          */
-        $is_me = $Follower->id === $CurrentUser->id;
+        $is_me = $Follower->id === CurrentUser->id;
 
         /**
          * The id for the image to be loaded and displayed properly.

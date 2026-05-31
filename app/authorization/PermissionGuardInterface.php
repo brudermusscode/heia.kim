@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\Heiakim\Authorization;
+namespace Heiakim\Authorization;
 
 interface PermissionGuardInterface
 {

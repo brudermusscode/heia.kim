@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Thread;
+namespace Heiakim\Model\Thread;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
+use Heiakim\Justin;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
 
 class Thread extends Justin
 {

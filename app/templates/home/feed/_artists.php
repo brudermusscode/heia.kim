@@ -1,6 +1,6 @@
 <?php
 
-$FavoriteArtists = $CurrentUser->favorite_artists;
+$FavoriteArtists = CurrentUser->favorite_artists;
 
 ?>
 

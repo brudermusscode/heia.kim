@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model\User;
+namespace Heiakim\Model\User;
 
-use Bruder\Justin;
-use Bruder\Application\Cookie;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Justin;
+use Heiakim\Application\Cookie;
+use Heiakim\Model\User;
 
 class UserSettingsPrivacy extends Justin
 {

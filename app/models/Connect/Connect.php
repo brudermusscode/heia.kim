@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Connect;
+namespace Heiakim\Model\Connect;
 
-use Bruder\Justin;
-use Bruder\Application\Logger;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Justin;
+use Heiakim\Application\Logger;
+use Heiakim\Model\User;
 
 class Connect extends Justin
 {
@@ -51,7 +51,7 @@ class Connect extends Justin
     if (!in_array($params->type, static::$types))
       return request_error("<strong>This service is not yet supported!</strong> Maybe soon ~");
 
-    $service_name = "Bruder\\Heiakim\\Model\\Vendor\\" . ucfirst($params->type);
+    $service_name = "Heiakim\\Model\\Vendor\\" . ucfirst($params->type);
 
     /**
      * Class doesn't exist?
@@ -77,7 +77,7 @@ class Connect extends Justin
     if (!in_array($params->type, static::$types))
       return request_error("<strong>This service is not yet supported!</strong> Maybe soon ~", return_json_string: false);
 
-    $service_name =  "Bruder\\Heiakim\\Model\\Connect\\" . ("Connect" . ucfirst($params->type));
+    $service_name =  "Heiakim\\Model\\Connect\\" . ("Connect" . ucfirst($params->type));
 
     /**
      * Class doesn't exist?

@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Manager;
+namespace Heiakim\Model\Manager;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Justin;
+use Heiakim\Model\User;
 
 class ManagerAuthentication extends Justin
 {

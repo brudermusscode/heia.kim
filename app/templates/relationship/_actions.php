@@ -1,5 +1,7 @@
 <?php
 
+use Heiakim\Model\User;
+
 /**
  * @var ?User $User
  * @var ?User $Follower
@@ -8,17 +10,17 @@
 /**
  * @var User
  */
-$ThisUser = $Follower ?? $User ?? $CurrentUser;
+$ThisUser = $Follower ?? $User ?? CurrentUser;
 
 /**
  * @var bool
  */
-$is_me ??= $User->id === $CurrentUser->id;
+$is_me ??= $User->id === CurrentUser->id;
 
 /**
  * @var bool
  */
-$is_following ??= $CurrentUser->follows($User);
+$is_following ??= CurrentUser->follows($User);
 
 ?>
 

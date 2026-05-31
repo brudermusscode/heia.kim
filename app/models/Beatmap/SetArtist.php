@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Beatmap;
+namespace Heiakim\Model\Beatmap;
 
-use Bruder\Justin;
+use Heiakim\Justin;
 
 class SetArtist extends Justin
 {

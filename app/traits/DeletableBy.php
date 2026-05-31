@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Heiakim\Trait;
+namespace Heiakim\Trait;
 
-use Bruder\Heiakim\Model\User;
+use Heiakim\Model\User;
 
 trait DeletableBy
 {

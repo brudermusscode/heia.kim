@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Thread;
+namespace Heiakim\Controller\Thread;
 
-use Bruder\Controller;
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\Thread\Thread;
-use Bruder\Heiakim\Model\Thread\ThreadPost;
+use Heiakim\Controller\Controller;
+use Heiakim\Http\Request;
+use Heiakim\Model\Thread\Thread;
+use Heiakim\Model\Thread\ThreadPost;
 
 class ThreadPostsController extends Controller
 {
@@ -22,7 +22,7 @@ class ThreadPostsController extends Controller
     /**
      * User logged & verified?
      */
-    if (!$this->CurrentUser)
+    if (!CurrentUser)
       return $this->error("!NOT_LOGGED");
 
     /**
@@ -41,13 +41,13 @@ class ThreadPostsController extends Controller
     /**
      * User has squad and is the same as in the thread?
      */
-    if (!$this->CurrentUser->squad || $this->CurrentUser->squad->id !== $Thread->squad->id)
+    if (!CurrentUser->squad || CurrentUser->squad->id !== $Thread->squad->id)
       return $this->error();
 
     /**
      * Append current user.
      */
-    $this->params->CurrentUser = $this->CurrentUser;
+    $this->params->CurrentUser = CurrentUser;
     $escaped_params->thread = $Thread;
 
     return (new ThreadPost)->new($escaped_params);

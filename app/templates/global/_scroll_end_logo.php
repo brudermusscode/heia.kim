@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Application\Cookie;
+use Heiakim\Application\Cookie;
 
 ?>
 
@@ -38,7 +38,7 @@ use Bruder\Application\Cookie;
 
           $consent_step_cookie = Cookie::exists("POLICIES_CONSENT_STEP") ? Cookie::get("POLICIES_CONSENT_STEP") : "index";
 
-          if (LOGGED && !$CurrentUser->privacy->accepts_policies) {
+          if (LOGGED && !CurrentUser->privacy->accepts_policies) {
             $consent_url = "/legal/consent/$consent_step_cookie";
 
           ?>

@@ -1,12 +1,12 @@
 <?php
 
-namespace Bruder\Heiakim\Job;
+namespace Heiakim\Job;
 
-use Bruder\Http\Request;
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Leaderboard;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Http\Request;
+use Heiakim\Justin;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Leaderboard;
+use Heiakim\Model\User;
 
 class RedisCacheLeaderboard extends Justin
 {

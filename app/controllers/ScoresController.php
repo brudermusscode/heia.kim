@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Application\Feature;
-use Bruder\Controller;
-use Bruder\Http\Request;
+use Heiakim\Application\Feature;
+use Heiakim\Controller\Controller;
+use Heiakim\Http\Request;
 
 class ScoresController extends Controller
 {
@@ -39,15 +39,5 @@ class ScoresController extends Controller
   public function remove(array $params)
   {
     return null;
-  }
-
-  /**
-   * Serialize GET or POST parameters
-   *
-   * @return object
-   */
-  private function sanitize_request(array $params)
-  {
-    return $this->serialize_request_params([], $params, ["wipe"]);
   }
 }

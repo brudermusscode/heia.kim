@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Squad;
+namespace Heiakim\Controller\Squad;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Squad\SquadPost;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Squad\SquadPost;
 
 class SquadPostsController extends Controller
 {
@@ -22,7 +22,7 @@ class SquadPostsController extends Controller
     );
 
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       respect_social_exclusion: true,
     );
 
@@ -49,7 +49,7 @@ class SquadPostsController extends Controller
     );
 
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       respect_social_exclusion: true,
     );
 
@@ -61,7 +61,7 @@ class SquadPostsController extends Controller
     /**
      * Authorize the user to touch this Post.
      */
-    $this->CurrentUser->sqauthorize_content_touch($Post);
+    CurrentUser->sqauthorize_content_touch($Post);
 
     return $Post->edit($this->params);
   }
@@ -80,7 +80,7 @@ class SquadPostsController extends Controller
     );
 
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       respect_social_exclusion: true,
     );
 
@@ -92,7 +92,7 @@ class SquadPostsController extends Controller
     /**
      * Authorize the user to touch this Post.
      */
-    $this->CurrentUser->sqauthorize_content_touch($Post);
+    CurrentUser->sqauthorize_content_touch($Post);
 
     return $Post->remove($this->params);
   }

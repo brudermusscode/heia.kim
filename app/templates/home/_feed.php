@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Enum\Privilege;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Time\Time;
+use Heiakim\Enum\Privilege;
+use Heiakim\Model\Gamemode;
+use Heiakim\Time\Time;
 
 /**
  * Serialize get
@@ -15,7 +15,7 @@ $sub = filter_input(INPUT_GET, "sub", FILTER_SANITIZE_SPECIAL_CHARS);
  *
  * @var array
  */
-$favorite_modes = $CurrentUser->favorite_modes();
+$favorite_modes = CurrentUser->favorite_modes();
 $favorite_gumode = $favorite_modes[0]->mode ?? null;
 
 /**
@@ -81,7 +81,7 @@ include PAGE_NAVIGATOR;
       /**
        * Following
        */
-      $Following = $CurrentUser->followings;
+      $Following = CurrentUser->followings;
 
       /**
        * Sort the followed people by latest activity.

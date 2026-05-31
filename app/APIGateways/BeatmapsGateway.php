@@ -1,15 +1,15 @@
 <?php
 
-namespace Bruder\Heiakim\APIGateway\Count;
+namespace Heiakim\APIGateway\Count;
 
-use Bruder\Gateway;
-use Bruder\Http\Request;
-use Bruder\Heiakim\APIGateway\Score\ScoresGateway;
-use Bruder\Heiakim\APIGateway\User\UsersGateway;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Score;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Gateway;
+use Heiakim\Http\Request;
+use Heiakim\APIGateway\Score\ScoresGateway;
+use Heiakim\APIGateway\User\UsersGateway;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Score;
+use Heiakim\Model\User;
 
 class BeatmapsGateway extends Gateway
 {
@@ -78,8 +78,8 @@ class BeatmapsGateway extends Gateway
         break;
 
       /**
-         * Model valid?
-         */
+       * Model valid?
+       */
       default:
         return $this->error("Invalid Model: " . $this->params->model);
         break;

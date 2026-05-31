@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Utils\Utils;
-use Bruder\Heiakim\Model\Squad\SquadUser;
+use Heiakim\Model\Gamemode;
+use Heiakim\Utils\Utils;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
  * @var SquadUser $SquadUser

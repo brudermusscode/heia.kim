@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Application\Logger;
-use Bruder\Application\Router;
-use Bruder\Utils\Arr;
+use Heiakim\Application\Logger;
+use Heiakim\Application\Router;
+use Heiakim\Utils\Arr;
 
 /**
  * Maintenance mode.

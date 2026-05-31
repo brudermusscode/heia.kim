@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder;
+namespace Heiakim;
 
-use Bruder\Application\Setting;
-use Bruder\Database\Redis;
+use Heiakim\Application\Setting;
+use Heiakim\Database\Redis;
 
 class Job
 {

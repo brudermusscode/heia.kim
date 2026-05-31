@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Utils\Utils;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Country;
+use Heiakim\Utils\Utils;
+use Heiakim\Model\User;
+use Heiakim\Model\Country;
 
 /**
  * @var int $leaderboard_counter

@@ -2,9 +2,9 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\Beatmap\Set;
-use Bruder\Heiakim\Model\Score;
+use Heiakim\Http\Request;
+use Heiakim\Model\Beatmap\Set;
+use Heiakim\Model\Score;
 
 /**
  * @var Request $Request

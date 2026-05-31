@@ -2,7 +2,7 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Heiakim\Controller\User\SettingsPrivacyController;
+use Heiakim\Controller\Controller\User\SettingsPrivacyController;
 
 $return = (new SettingsPrivacyController)->edit($_POST);
 

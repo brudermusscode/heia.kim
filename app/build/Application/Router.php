@@ -3,9 +3,9 @@
 // TODO: Make models available magically (through controller?).
 // TODO: Middleware pls.
 
-namespace Bruder\Application;
+namespace Heiakim\Application;
 
-use Bruder\Exception\RouteConstraintException;
+use Heiakim\Exception\RouteConstraintException;
 use Exception;
 
 class Router

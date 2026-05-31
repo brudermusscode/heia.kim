@@ -1,12 +1,12 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Http\Request;
-use Bruder\Database\Redis;
-use Bruder\Database\Manager as DBM;
-use Bruder\Heiakim\Model\Country;
+use Heiakim\Justin;
+use Heiakim\Http\Request;
+use Heiakim\Database\Redis;
+use Heiakim\Database\Manager as DBM;
+use Heiakim\Model\Country;
 
 class Leaderboard extends Justin
 {

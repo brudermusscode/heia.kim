@@ -1,12 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Profile;
-use Bruder\Heiakim\Model\User;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Profile;
+use Heiakim\Model\User;
 
 /**
  * @var int
@@ -17,20 +13,20 @@ $mode = filter_var(GET->mode ?? "osu", FILTER_VALIDATE_INT);
 /**
  * @var bool
  */
-$is_my_profile = $id === $CurrentUser->id;
+$is_my_profile = $id === CurrentUser->id;
 
 /**
  * @var User
  */
 $User = $is_my_profile
-  ? $CurrentUser
+  ? CurrentUser
   : User::find($id);
 
 /**
  * Whether or not the viewing user can bypass the restricted
  * screen and see the profile of the restricted user.
  */
-$bypass_restricted_screen = $User && ($User->id === $CurrentUser->id || $CurrentUser->priv > 4);
+$bypass_restricted_screen = $User && ($User->id === CurrentUser->id || CurrentUser->priv > 4);
 
 /**
  * User doesn't exist?
@@ -132,8 +128,8 @@ else {
      * relationship instance to reset activity in the feed.
      */
     if (!$is_my_profile && LOGGED) {
-      if ($CurrentUser->follows($User))
-        $CurrentUser->followings()
+      if (CurrentUser->follows($User))
+        CurrentUser->followings()
           ->where("user2", $User->id)
           ->first()
           ->pivot
@@ -145,7 +141,7 @@ else {
     /**
      * @var bool
      */
-    $is_my_profile = $User->id === $CurrentUser->id;
+    $is_my_profile = $User->id === CurrentUser->id;
 
     /**
      * @var Profile
@@ -178,7 +174,7 @@ else {
      */
     $file_path = __DIR__ . "/pages/_$sub_page.php";
 
-    $Statss = $CurrentUser
+    $Statss = CurrentUser
       ->stats()
       ->selectRaw("mode, tscore, rscore, pp, acc")
       ->get();

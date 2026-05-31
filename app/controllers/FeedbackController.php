@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Feedback;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Feedback;
 
 class FeedbackController extends Controller
 {

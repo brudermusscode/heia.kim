@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad;
+use Heiakim\Model\Squad;
 
 if (CURRENT_PAGE === 'squad') {
 

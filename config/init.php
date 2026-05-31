@@ -1,64 +1,34 @@
 <?php
 
+# Initialize composer autoloading.
 require_once dirname(__DIR__) . "/vendor/autoload.php";
 
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
-use Bruder\Utils\Utils;
-
-/**
- * Base error handling.
- */
+# Set custom error handling.
 require_once __DIR__ . "/init/error_handling.php";
 
-/**
- * Initialize database connection.
- */
-new Bruder\Database\Database;
+# Establish a new database connection.
+new Heiakim\Database\Database;
 
-/**
- * Include files from config/init/ directory
- */
+# Begin a new PHP session.
+new Heiakim\Application\Session;
+
+# Include all init files.
 foreach (glob(__DIR__ . "/init/*.php") as $filename) {
 
-  /**
-   * glob returns the files complete path, so we need to extract
-   * the real filename from it. Split the path's string by slashes
-   * and get the lasdt element. Remove the .php from the end for
-   * ease of use.
-   */
+  # Extract the filename from glob()'s full filepath.
   $real_filename = str_replace(".php", "", last(explode("/", $filename)));
 
-  /**
-   * Continue on certain files that need to be loaded before or
-   * after all other init files.
-   */
-  if (in_array($real_filename, ["error_handling", "router"]))
+  # Continue on certain init files.
+  if (in_array($real_filename, ["error_handling", "router", "session"]))
     continue;
 
   include_once $filename;
 }
 
-/**
- * Include definitions.
- */
+# Init files & definitions, that need to be available after all others.
 require_once __DIR__ . "/define.php";
+require_once __DIR__ . "/init/session.php";
 require_once __DIR__ . "/init/router.php";
 
-/**
- * Create a user profile, if none exist.
- */
-// TODO: Outsource to an own file.
-if (LOGGED && !$CurrentUser->profile)
-  $CurrentUser->profile()
-    ->create();
-
-/**
- * @var string
- */
-$csrf_token = Utils::create_unique_token(24);
-
-/**
- * Define this contant to tell further functions that the app has
- * been completly initialized.
- */
+# The App cann access this definition if it's initialized!
 define("APP_INIT", true);

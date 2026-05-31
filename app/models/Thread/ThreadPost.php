@@ -1,12 +1,12 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Thread;
+namespace Heiakim\Model\Thread;
 
-use Bruder\Application\Application;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Justin;
-use Bruder\Http\Request;
+use Heiakim\Application\Application;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Justin;
+use Heiakim\Http\Request;
 
 class ThreadPost extends Justin
 {

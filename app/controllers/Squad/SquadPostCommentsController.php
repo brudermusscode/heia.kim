@@ -1,114 +1,64 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Squad;
+namespace Heiakim\Controller\Squad;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Squad\SquadPost;
-use Bruder\Heiakim\Model\Squad\SquadPostComment;
-use Bruder\Http\Request;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadPostComment;
 
 class SquadPostCommentsController extends Controller
 {
+
   /**
-   * CREATE -> POST
-   *
-   * @param array $params
    * @return object
    */
-  public function create(array $params)
+  public function create()
   {
-    $escaped_params = $this->serialize_request_params(["id", "comment_string"], $params, []);
+
+    $this->validate_params(
+      strict: ["id", "comment_string"]
+    );
 
     /**
-     * Params valid?
-     */
-    if (!$escaped_params)
-      return $this->error();
-
-    /**
-     * User logged?
-     */
-    if (!$this->CurrentUser)
-      return $this->error("!NOT_LOGGED");
-
-    /**
-     * User is socially excluded?
-     */
-    if ($this->CurrentUser->is_socially_excluded())
-      return $this->error("!SOCIALLY_EXCLUDED");
-
-    /**
-     * Post exists?
-     *
      * @var ?SquadPost
      */
-    $Post = SquadPost::find($escaped_params->id);
-    if (!$Post)
-      return $this->error("<strong>This post doesn't exist.</strong>");
+    $this->params->Post = SquadPost::findOrReturn($this->params->id);
 
-    /**
-     * Append all.
-     */
-    $this->params->CurrentUser = $this->CurrentUser;
-    $escaped_params->post = $Post;
+    # Authorize content touch.
+    $this->can_interact(
+      resource: CurrentUser?->squad_user,
+      item: $this->params->Post,
+    );
 
-    return (new SquadPostComment)->new($escaped_params);
+    return (new SquadPostComment)->new($this->params);
   }
 
   /**
-   * EDIT -> POST
-   *
-   * @param array $params
    * @return object
    */
-  public function edit(array $params) {}
+  public function edit() {}
 
   /**
-   * DELETE -> POST
-   *
-   * @param array $params
    * @return object
    */
-  public function remove(array $params)
+  public function remove()
   {
-    $escaped_params = $this->serialize_request_params(["id"], $params, []);
+
+    $this->validate_params(
+      strict: ["id"]
+    );
 
     /**
-     * Params valid?
-     */
-    if (!$escaped_params)
-      return $this->error();
-
-    /**
-     * User logged?
-     */
-    if (!$this->CurrentUser)
-      return $this->error("!NOT_LOGGED");
-
-    /**
-     * Comment exists?
-     *
      * @var ?SquadPostComment
      */
-    $Comment = SquadPostComment::find($escaped_params->id);
-    if (!$Comment)
-      return $this->error("<strong>This doesn't exist.</strong>");
+    $Comment = SquadPostComment::findOrReturn($this->params->id);
 
-    /**
-     * Append all.
-     */
-    $this->params->CurrentUser = $this->CurrentUser;
+    # Authorize content touch.
+    $this->can_interact(
+      resource: CurrentUser?->squad_user,
+      item: $Comment,
+    );
 
-    return $Comment->remove($escaped_params);
-  }
-
-  /**
-   * Serialize parameters.
-   *
-   * @return object
-   */
-  private function sanitize_request(array $params)
-  {
-    return $this->serialize_request_params([], $params, []);
+    return $Comment->remove($this->params);
   }
 }

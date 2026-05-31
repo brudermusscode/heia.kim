@@ -2,10 +2,10 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Score;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Http\Request;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Score;
+use Heiakim\Model\Squad;
+use Heiakim\Http\Request;
 
 /**
  * @var Request $Request

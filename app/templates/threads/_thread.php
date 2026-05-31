@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Thread\Thread;
+use Heiakim\Time\Time;
+use Heiakim\Model\Thread\Thread;
 
 /**
  * @var Thread $Thread

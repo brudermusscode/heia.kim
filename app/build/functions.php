@@ -1,8 +1,28 @@
 <?php
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad\SquadUser;
+use Heiakim\Http\Request;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad\SquadUser;
+
+/**
+ * @param ?string $message
+ * @param ?mixed $data
+ * @return object|string
+ */
+function success(?string $message = null, mixed $data = null, bool $json_encoded = true)
+{
+  return (new Request)->success($message, $data, $json_encoded);
+}
+
+/**
+ * @param ?string $message
+ * @param ?mixed $data
+ * @return object|string
+ */
+function error(?string $message = null, mixed $data = null, bool $json_encoded = true)
+{
+  return (new Request)->error($message, $data, $json_encoded);
+}
 
 /**
  * Return the root path.
@@ -138,7 +158,9 @@ function GET(?string $key = null)
  * @param mixed $data
  * @param bool $return_json_string
  * @param bool $die
- * @return die|string|object
+ * @return string|object
+ *
+ * NOTE: Might die on error.
  */
 function request_error(?string $message = null, mixed $data = null, bool $return_json_string = true, bool $die = false)
 {
@@ -152,7 +174,9 @@ function request_error(?string $message = null, mixed $data = null, bool $return
  * @param mixed $data
  * @param bool $return_json_string
  * @param bool $die
- * @return die|string|object
+ * @return string|object
+ *
+ * NOTE: Might die on error.
  */
 function request_success(?string $message = null, mixed $data = null, bool $return_json_string = true, bool $die = false)
 {
@@ -166,15 +190,16 @@ function request_success(?string $message = null, mixed $data = null, bool $retu
  * another resource. Includes optional checks for social exclusion
  * which restricts the interaction of the resource with the community.
  *
- * Note: can[] will only fire if the given array has exactly 2 keys.
- *
  * @param null|User|SquadUser $resource
  * @param bool $logged
  * @param array $can
  * @param bool $respect_social_exclusion
  * @param bool $return_json_string
  * @param bool $die_on_error
- * @return die|string|object
+ * @return string|object
+ *
+ * NOTE: can[] will only fire if the given array has exactly 2 keys.
+ * NOTE: Might die on error.
  */
 function authorize(
   null|User|SquadUser $resource,
@@ -193,21 +218,18 @@ function authorize(
   /**
    * There is no resource or it doesn't exist yet + the user
    * doesn't have to be logged in - We return!
-   * ? Success
    */
   if (!$resource_exists && !$logged)
     return request_success(return_json_string: $return_json_string);
 
   /**
    * No resource exists but it has to be logged in?
-   * ! Error
    */
   if (!$resource_exists && $logged)
     return request_error("!NO_PERMISSIONS", return_json_string: $return_json_string, die: $die_on_error);
 
   /**
    * The resource is logged in but can't be?
-   * ! Error
    */
   if ($resource_exists && !$logged)
     return request_error("!ALREADY_LOGGED", return_json_string: $return_json_string, die: $die_on_error);
@@ -215,7 +237,6 @@ function authorize(
   /**
    * Respecting social exclusion, is the user excluded from
    * community functionality?
-   * ! Error
    */
   if ($respect_social_exclusion && $resource_exists && $resource->is_socially_excluded())
     return request_error("!SOCIALLY_EXCLUDED", return_json_string: $return_json_string, die: $die_on_error);
@@ -223,14 +244,10 @@ function authorize(
   /**
    * A can is set but no resource exists or the resource has not
    * enough permissions?
-   * ! Error
    */
   if (count($can) === 2 && (!$resource_exists || !$resource?->can($can[0], $can[1])))
     return request_error("!NO_PERMISSIONS", return_json_string: $return_json_string, die: $die_on_error);
 
-  /**
-   * ? Success
-   */
   return request_success(return_json_string: $return_json_string);
 }
 

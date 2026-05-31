@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Squad;
+namespace Heiakim\Controller\Squad;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadRequest;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadRequest;
+use Heiakim\Model\User;
 
 class SquadRequestsController extends Controller
 {
@@ -30,7 +30,7 @@ class SquadRequestsController extends Controller
      */
     $Squad = $this->params->type === "join"
       ? Squad::findOrReturn($this->params->id, "<strong>This Squad doesn't exist.</strong> It might have been deleted or set to private.")
-      : $this->CurrentUser->squad;
+      : CurrentUser->squad;
 
     /**
      * Squad exists?
@@ -94,7 +94,7 @@ class SquadRequestsController extends Controller
      * Current user is logged in?
      */
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       can: ["coordinate", "users"]
     );
 

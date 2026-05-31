@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Beatmap\BeatmapRequest;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Beatmap\BeatmapRequest;
 
 class RequestsController extends Controller
 {

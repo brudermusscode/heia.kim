@@ -38,10 +38,10 @@
 
       <?php if (LOGGED) { ?>
 
-        <a href="/u/<?= $CurrentUser->id; ?>" <?php if (CURRENT_PAGE === "u") echo "active"; ?>>
+        <a href="/u/<?= CurrentUser->id; ?>" <?php if (CURRENT_PAGE === "u") echo "active"; ?>>
           <div class=option>
             <mi>face</mi>
-            <p text smol><?= $CurrentUser->name; ?></p>
+            <p text smol><?= CurrentUser->name; ?></p>
           </div>
         </a>
 

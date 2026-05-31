@@ -1,11 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Stat;
-use Bruder\Heiakim\Model\Profile;
+use Heiakim\Model\User;
+use Heiakim\Model\Stat;
+use Heiakim\Model\Profile;
 
 /**
- * @var User $CurrentUser
  * @var User $User
  * @var Profile $Profile
  * @var Stat $Stats
@@ -27,20 +26,20 @@ $DecodedProfile = $User->decoded_profile();
 <div page-structure=user>
 
   <div top-actions>
-    <?php if ($CurrentUser->sqcan_invite($User)) { ?>
+    <?php if (CurrentUser->sqcan_invite($User)) { ?>
       <form request="squad:request:create" reload responder=always>
         <input type=hidden name=type value=invite />
         <input type=hidden name=user_id value=<?= $User->id; ?> />
         <mbutton submit-closest material has-icon=left size=mid background=slight>
           <mi>north_east</mi>
-          <p text bold>Invite to <?= $CurrentUser->squad->name; ?></p>
+          <p text bold>Invite to <?= CurrentUser->squad->name; ?></p>
         </mbutton>
       </form>
     <?php } else
 
     if (
-      ($Invitation = $User->has_invite_from($CurrentUser?->squad))
-      && $CurrentUser->sqcan("coordinate", "users")
+      ($Invitation = $User->has_invite_from(CurrentUser?->squad))
+      && CurrentUser->sqcan("coordinate", "users")
     ) { ?>
       <a href="/manage/squad/requests?tab=invites">
         <mbutton submit-closest material has-icon=left size=mid background=slight>
@@ -133,7 +132,7 @@ $DecodedProfile = $User->decoded_profile();
         /**
          * @var bool
          */
-        $have_cheered = $CurrentUser->cheered_for_birthday($User, date("y"));
+        $have_cheered = CurrentUser->cheered_for_birthday($User, date("y"));
 
       ?>
         <box-model background=invert rounded=wide <?php if (!$have_cheered) echo "elevated=wide"; ?> style="background:url(<?= IMAGE . "/birthday-card.jpg"; ?>) center center no-repeat;background-size:cover;">

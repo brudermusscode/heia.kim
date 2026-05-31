@@ -2,16 +2,15 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
- * @var User $CurrentUser
  * @var ?Squad $CurrentSquad
  * @var ?SquadUser $CurrentSquadUser
  */
 
-authorize(resource: $CurrentUser);
+authorize(resource: CurrentUser);
 
 /**
  * Validate GET parameter.

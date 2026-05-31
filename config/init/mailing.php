@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\Mailing;
-use Bruder\Heiakim\Model\User\UserSettingsPrivacy;
+use Heiakim\Model\Mailing;
+use Heiakim\Model\User\UserSettingsPrivacy;
 
 /**
  * Update mailing if token is set.

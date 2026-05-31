@@ -2,7 +2,7 @@
 
 $squad_headline ??= $Squad->headline ?? "default.jpg";
 $headline =
-  GDPR
+  !LOGGED
   ? CLAN_DEFAULT_HEADLINE_URL
   : (CLAN_IMAGE_URL . "/headline-images/$squad_headline");
 

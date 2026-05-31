@@ -1,8 +1,8 @@
 <?php
 
-$publicity_text = $CurrentUser->squad->joinable === 0
+$publicity_text = CurrentUser->squad->joinable === 0
   ? "Private"
-  : ($CurrentUser->squad->joinable === 1
+  : (CurrentUser->squad->joinable === 1
     ?  "Request only"
     : "Public for all");
 
@@ -50,7 +50,7 @@ $publicity_text = $CurrentUser->squad->joinable === 0
                   </div>
                 </div>
               </mselect-dropdown>
-              <input mselect-input type=hidden name=joinable value="<?= $CurrentUser->squad->joinable; ?>" />
+              <input mselect-input type=hidden name=joinable value="<?= CurrentUser->squad->joinable; ?>" />
             </mselect>
           </div>
         </div>

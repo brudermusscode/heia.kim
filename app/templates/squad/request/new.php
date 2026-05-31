@@ -2,19 +2,17 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadUser;
+use Heiakim\Http\Request;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
  * @var Request $Request
- * @var User $CurrentUser
  * @var ?Squad $CurrentSquad
  */
 
-authorize(resource: $CurrentUser);
+authorize(resource: CurrentUser);
 
 /**
  * @var int
@@ -120,7 +118,7 @@ $join_action = !$Squad->is_public()
                  */
                 $gumodes = Gamemode::$mods_int_per_mode[$mode];
 
-                $Stats = $CurrentUser->stats;
+                $Stats = CurrentUser->stats;
 
               ?>
                 <div outlined=darker rounded=mid pblock12 pinline24 fl align-items="center" gap="std">

@@ -1,11 +1,6 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Time\Time;
 
 ?>
 
@@ -45,10 +40,10 @@ use Bruder\Heiakim\Model\User;
         </div>
 
         <div>
-          <toggle-switch submit-closest mt=smol toggled=<?= $CurrentUser->privacy->mailing_newsletter ? "true" : "false"; ?>>
+          <toggle-switch submit-closest mt=smol toggled=<?= CurrentUser->privacy->mailing_newsletter ? "true" : "false"; ?>>
             <div class="toggle_switch__inr">
               <div class="toggle_switch__switcher"></div>
-              <input type="hidden" name="mailing_newsletter" value="<?= $CurrentUser->privacy->mailing_newsletter; ?>" />
+              <input type="hidden" name="mailing_newsletter" value="<?= CurrentUser->privacy->mailing_newsletter; ?>" />
               <div fl fldirrow justify-content="center">
                 <div fl fldirrow justify-content="space-between" align-items="center" style="width:calc(100% - .8em);">
                 </div>
@@ -78,10 +73,10 @@ use Bruder\Heiakim\Model\User;
         </div>
 
         <div>
-          <toggle-switch submit-closest mt=smol toggled=<?= $CurrentUser->privacy->mailing_reminder ? "true" : "false"; ?>>
+          <toggle-switch submit-closest mt=smol toggled=<?= CurrentUser->privacy->mailing_reminder ? "true" : "false"; ?>>
             <div class="toggle_switch__inr">
               <div class="toggle_switch__switcher"></div>
-              <input type="hidden" name="mailing_reminder" value="<?= $CurrentUser->privacy->mailing_reminder; ?>" />
+              <input type="hidden" name="mailing_reminder" value="<?= CurrentUser->privacy->mailing_reminder; ?>" />
               <div fl fldirrow justify-content="center">
                 <div fl fldirrow justify-content="space-between" align-items="center" style="width:calc(100% - .8em);">
                 </div>
@@ -110,10 +105,10 @@ use Bruder\Heiakim\Model\User;
         </div>
 
         <div>
-          <toggle-switch submit-closest mt=smol toggled=<?= $CurrentUser->privacy->mailing_birthday ? "true" : "false"; ?>>
+          <toggle-switch submit-closest mt=smol toggled=<?= CurrentUser->privacy->mailing_birthday ? "true" : "false"; ?>>
             <div class="toggle_switch__inr">
               <div class="toggle_switch__switcher"></div>
-              <input type="hidden" name="mailing_birthday" value="<?= $CurrentUser->privacy->mailing_birthday; ?>" />
+              <input type="hidden" name="mailing_birthday" value="<?= CurrentUser->privacy->mailing_birthday; ?>" />
               <div fl fldirrow justify-content="center">
                 <div fl fldirrow justify-content="space-between" align-items="center" style="width:calc(100% - .8em);">
                 </div>
@@ -132,7 +127,7 @@ use Bruder\Heiakim\Model\User;
           <div fl gap=smol+ alic>
             <mi mid>celebration</mi>
             <p text>
-              <?= $CurrentUser->settings->birthday ? date_format(date_create($CurrentUser->settings->birthday), 'd. F Y') : 'Set your birthday'; ?>
+              <?= CurrentUser->settings->birthday ? date_format(date_create(CurrentUser->settings->birthday), 'd. F Y') : 'Set your birthday'; ?>
             </p>
           </div>
           <mi midler>arrow_forward</mi>
@@ -154,10 +149,10 @@ use Bruder\Heiakim\Model\User;
         </div>
 
         <div>
-          <toggle-switch submit-closest mt=smol toggled=<?= $CurrentUser->privacy->mailing_expiring_premium ? "true" : "false"; ?>>
+          <toggle-switch submit-closest mt=smol toggled=<?= CurrentUser->privacy->mailing_expiring_premium ? "true" : "false"; ?>>
             <div class="toggle_switch__inr">
               <div class="toggle_switch__switcher"></div>
-              <input type="hidden" name="mailing_expiring_premium" value="<?= $CurrentUser->privacy->mailing_expiring_premium; ?>" />
+              <input type="hidden" name="mailing_expiring_premium" value="<?= CurrentUser->privacy->mailing_expiring_premium; ?>" />
               <div fl fldirrow justify-content="center">
                 <div fl fldirrow justify-content="space-between" align-items="center" style="width:calc(100% - .8em);">
                 </div>
@@ -173,7 +168,7 @@ use Bruder\Heiakim\Model\User;
     /**
      * @var ?string
      */
-    $premium_time_left = Time::left($CurrentUser->donor_end);
+    $premium_time_left = Time::left(CurrentUser->donor_end);
 
     ?>
 

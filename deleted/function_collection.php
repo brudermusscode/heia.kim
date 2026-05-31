@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad\SquadUser;
+use Heiakim\Http\Request;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
  * Sanitizes the complete given html from whitespace and comments.
@@ -218,7 +218,9 @@ function image(string $path)
  * @param bool $logged
  * @param array $can
  * @param bool $die_on_error
- * @return void|string|die
+ * @return void|string
+ *
+ * NOTE: Might die on error.
  */
 function authorize(null|User|SquadUser $resource, bool $logged = true, array $can = [], bool $die_on_error = true)
 {

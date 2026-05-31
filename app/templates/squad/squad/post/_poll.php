@@ -1,13 +1,13 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadPost;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadPostPollAnswer;
 
 /**
  * @var Squad $Squad
- * @var User $CurrentUser
  * @var User $User
  */
 
@@ -92,14 +92,16 @@ foreach ($options as $count)
     /**
      * @var ?SquadPostPollAnswer
      */
-    $CurrentUserAnswer = $CurrentUser->has_answered_poll($Post);
+    $CurrentUserAnswer = CurrentUser->has_answered_poll($Post);
 
     foreach ($options as $option => $count) {
 
       /**
        * @var bool
        */
-      $has_answered_this = $CurrentUserAnswer !== null ? (int) $CurrentUserAnswer?->answer_key === $iota : null;
+      $has_answered_this = $CurrentUserAnswer !== null
+        ? (int) $CurrentUserAnswer?->answer_key === $iota
+        : null;
 
       /**
        * @var SquadPostPollAnswer

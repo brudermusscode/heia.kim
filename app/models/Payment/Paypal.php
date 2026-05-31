@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Payment;
+namespace Heiakim\Model\Payment;
 
-use Bruder\Application\Application;
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\Order;
+use Heiakim\Application\Application;
+use Heiakim\Http\Request;
+use Heiakim\Model\Order;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
 use PayPalCheckoutSdk\Core\ProductionEnvironment;

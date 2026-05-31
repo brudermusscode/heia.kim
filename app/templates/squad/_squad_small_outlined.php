@@ -1,12 +1,13 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Enum\SquadPrivilege;
+use Heiakim\Time\Time;
+use Heiakim\Model\Squad;
+use Heiakim\Enum\SquadPrivilege;
 
 /**
- *@var Squad
+ * @var Squad
  */
-$Squad ??= $User->squad ?? $CurrentUser->squad;
+$Squad ??= $User->squad ?? CurrentUser->squad;
 
 ?>
 

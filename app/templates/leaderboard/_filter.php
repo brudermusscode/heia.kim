@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Country;
+use Heiakim\Model\Country;
 
 ?>
 

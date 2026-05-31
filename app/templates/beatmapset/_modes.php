@@ -1,9 +1,10 @@
 <?php
 
+use Heiakim\Model\Beatmap;
+
 /**
- * @var User $CurrentUser
- * @var Beatmap\Set $Set
  * @var Beatmap $Beatmap
+ * @var Beatmap\Set $Set
  */
 
 $more ??= null;

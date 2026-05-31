@@ -1,14 +1,9 @@
 <?php
 
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Beatmap\Set;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Artist;
-use Bruder\Heiakim\Model\User;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Beatmap\Set;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Artist;
 
 /**
  * Get params
@@ -109,7 +104,7 @@ else {
                   <p text std bold><?= $Beatmap->feedback()->count(); ?></p>
                 </div>
                 <mbutton material submit-closest icon-only has-tooltip=bottom size=mid filled=lighter ripple-effect
-                  <?php if (LOGGED && $CurrentUser->favorite_beatmaps()->where("reference_id",  $Beatmap->id)->first()) echo "active"; ?>>
+                  <?php if (LOGGED && CurrentUser->favorite_beatmaps()->where("reference_id",  $Beatmap->id)->first()) echo "active"; ?>>
                   <mi>kid_star</mi>
                   <div ttooltip>
                     <p text std bold><?= __("Add to favorites") ?></p>
@@ -188,7 +183,7 @@ else {
                 $can_request_ranking = $Beatmap->ranking_requestable();
 
                 if ($can_request_ranking) :
-                  $MyBeatmapRequest = $CurrentUser->beatmap_requests()
+                  $MyBeatmapRequest = CurrentUser->beatmap_requests()
                     ->where("map_id", $Beatmap->id)
                     ->where("active", 1)
                     ->first();
@@ -216,7 +211,7 @@ else {
 
 
                 <!--- SQUAD --->
-                <?php if ($CurrentUser->squad) { ?>
+                <?php if (CurrentUser->squad) { ?>
                   <div dno ripple-effect class=jm__option hoverable
                     request-get="squad:thread:new"
                     data-id=<?= $Set->id; ?>

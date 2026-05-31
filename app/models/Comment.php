@@ -1,12 +1,12 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Beatmap\Set;
-use Bruder\Heiakim\Trait\DeletableBy;
-use Bruder\Heiakim\Trait\HasDefaultUser;
+use Heiakim\Justin;
+use Heiakim\Model\User;
+use Heiakim\Model\Beatmap\Set;
+use Heiakim\Trait\DeletableBy;
+use Heiakim\Trait\HasDefaultUser;
 
 class Comment extends Justin
 {

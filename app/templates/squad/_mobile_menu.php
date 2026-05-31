@@ -31,13 +31,13 @@
     <?php } ?>
 
     <?php if (LOGGED) { ?>
-      <a href="/u/<?= $CurrentUser->id; ?>">
+      <a href="/u/<?= CurrentUser->id; ?>">
         <picture circled size=smol in-menu>
           <lottie-player lottie-loading-logout src="https://assets4.lottiefiles.com/packages/lf20_bdxrzm9n.json"
             background="transparent" speed="1"
             style="visibility:hidden;opacity:0;width: 8.8em; height: 8.8em;transition:all .1s linear;" loop align-center-screen>
           </lottie-player>
-          <img trigger="user:image,change" src="<?= AVATAR . "/$CurrentUser->id"; ?>" />
+          <img trigger="user:image,change" src="<?= AVATAR . "/" . CurrentUser->id; ?>" />
         </picture>
       </a>
     <?php } else { ?>

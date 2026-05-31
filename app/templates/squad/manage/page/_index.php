@@ -1,16 +1,16 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Time\Time;
+use Heiakim\Model\Squad\SquadUser;
+use Heiakim\Model\Squad\SquadFeedItem;
 
 /**
  * @var SquadUser $SquadUser
  */
 
-$publicity_text = $CurrentUser->squad->joinable === 0
+$publicity_text = CurrentUser->squad->joinable === 0
   ? "Private"
-  : ($CurrentUser->squad->joinable === 1
+  : (CurrentUser->squad->joinable === 1
     ?  "Request only"
     : "Public for all");
 
@@ -104,10 +104,10 @@ $publicity_text = $CurrentUser->squad->joinable === 0
                   <div>
                     <div fl gap=smol alic>
                       <p filled=darker pinline8 pblock4 rounded=std text bold smol>
-                        <?= $CurrentUser->squad->tag; ?>
+                        <?= CurrentUser->squad->tag; ?>
                       </p>
                       <p rounded=std text bold std>
-                        <?= $CurrentUser->squad->name; ?>
+                        <?= CurrentUser->squad->name; ?>
                       </p>
                     </div>
                     <p text std>Name & Tag</p>
@@ -157,7 +157,7 @@ $publicity_text = $CurrentUser->squad->joinable === 0
                   </div>
                   <div>
                     <p text std bold>
-                      Members &middot; <span color=company><?= $CurrentUser->squad->members_count() ?></span>
+                      Members &middot; <span color=company><?= CurrentUser->squad->members_count() ?></span>
                     </p>
                     <p text std>Manage members and their status</p>
                   </div>
@@ -200,9 +200,9 @@ $publicity_text = $CurrentUser->squad->joinable === 0
                   <?php
 
                   echo
-                  $CurrentUser->squad->joinable === 0
+                  CurrentUser->squad->joinable === 0
                     ? "remove_circle"
-                    : ($CurrentUser->squad->joinable === 1
+                    : (CurrentUser->squad->joinable === 1
                       ?  "arrow_circle_right"
                       : "check_circle");
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Utils\Utils;
-use Bruder\Heiakim\Model\User;
-use Bruder\Mail\Mail;
-use Bruder\Time\Time;
-use Bruder\Heiakim\Trait\HasDefaultUser;
+use Heiakim\Justin;
+use Heiakim\Utils\Utils;
+use Heiakim\Model\User;
+use Heiakim\Mail\Mail;
+use Heiakim\Time\Time;
+use Heiakim\Trait\HasDefaultUser;
 
 class PasswordReset extends Justin
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\Database;
+namespace Heiakim\Database;
 
 use Exception;
 use Ehann\RedisRaw\PredisAdapter;

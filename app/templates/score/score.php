@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Score;
+use Heiakim\Model\Score;
 
 $id  = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
 $sub = filter_input(INPUT_GET, "sub", FILTER_SANITIZE_SPECIAL_CHARS) ?? "overview";

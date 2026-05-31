@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Beatmap;
+use Heiakim\Model\Beatmap;
 
 /**
  * @var int

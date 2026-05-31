@@ -1,14 +1,13 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-use Bruder\Heiakim\Enum\SquadPrivilege;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
  * @var Squad
  */
-$Squad = $CurrentUser->squad;
+$Squad = CurrentUser->squad;
 
 /**
  * @var User

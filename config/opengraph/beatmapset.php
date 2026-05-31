@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Beatmap\Set;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Beatmap\Set;
 
 /**
  * Build OpenGraph elements for beatmap set pages.

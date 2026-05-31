@@ -1,15 +1,15 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Application\Logger;
-use Bruder\Http\Request;
-use Bruder\Utils\Utils;
-use Bruder\Mail\Mail;
-use Bruder\Heiakim\Trait\HasDefaultUser;
-use Bruder\Heiakim\Model\User;
-use Bruder\Validate\Validate;
+use Heiakim\Justin;
+use Heiakim\Application\Logger;
+use Heiakim\Http\Request;
+use Heiakim\Utils\Utils;
+use Heiakim\Mail\Mail;
+use Heiakim\Trait\HasDefaultUser;
+use Heiakim\Model\User;
+use Heiakim\Validate\Validate;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Authentication extends Justin

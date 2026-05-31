@@ -1,13 +1,3 @@
-<?php
-
-use Bruder\Heiakim\Model\User;
-
-/**
- * @var User $CurrentUser
- */
-
-?>
-
 <div fl gap=mid alic>
   <?php include TEMPLATE . "/my/_back_button.php"; ?>
 

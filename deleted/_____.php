@@ -2,11 +2,11 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/init.php";
 
-use Bruder\Application\Application;
-use Bruder\Http\Request;
-use Bruder\Http\CSRF;
-use Bruder\Heiakim\Model\User;
-use Bruder\Time\Time;
+use Heiakim\Application\Application;
+use Heiakim\Http\Request;
+use Heiakim\Http\CSRF;
+use Heiakim\Model\User;
+use Heiakim\Time\Time;
 
 /**
  * @var User $CurrentUser

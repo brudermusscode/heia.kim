@@ -1,8 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Score;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\User;
 
 /**
  * @var int

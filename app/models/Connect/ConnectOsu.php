@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Connect;
+namespace Heiakim\Model\Connect;
 
-use Bruder\Heiakim\Model\Session;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Vendor\Osu;
+use Heiakim\Model\Session;
+use Heiakim\Model\User;
+use Heiakim\Model\Vendor\Osu;
 
 class ConnectOsu extends Connect
 {

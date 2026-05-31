@@ -1,9 +1,9 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Leaderboard;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Utils\Utils;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Leaderboard;
+use Heiakim\Model\Squad;
+use Heiakim\Utils\Utils;
 use Predis\Client;
 
 /**

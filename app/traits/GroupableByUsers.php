@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\Heiakim\Trait;
+namespace Heiakim\Trait;
 
 trait GroupableByUsers
 {

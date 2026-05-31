@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Payment;
+namespace Heiakim\Model\Payment;
 
 interface PaymentInterface
 {

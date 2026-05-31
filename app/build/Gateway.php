@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder;
+namespace Heiakim;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Trait\Serialization;
+use Heiakim\Justin;
+use Heiakim\Trait\Serialization;
 
 class Gateway extends Justin
 {

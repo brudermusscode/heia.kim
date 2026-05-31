@@ -1,17 +1,12 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Score;
-use Bruder\Heiakim\Model\Beatmap;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\Score;
+use Heiakim\Model\Beatmap;
 
 /**
  * @var ?Beatmap
  */
-$FavoriteBeatmaps = $CurrentUser->favorite_beatmaps;
+$FavoriteBeatmaps = CurrentUser->favorite_beatmaps;
 
 /**
  * @var int
@@ -69,7 +64,7 @@ $has_favorite_beatmaps = $FavoriteBeatmaps->count();
       /**
        * @var ?Score
        */
-      $Scores = $CurrentUser->scores()
+      $Scores = CurrentUser->scores()
         ->orderBy("id", "DESC")
         ->groupBy("map_md5")
         ->limit(6)

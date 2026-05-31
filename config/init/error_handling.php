@@ -137,6 +137,11 @@ set_error_handler(function (
   ?int $errline = null,
   ?array $errcontext = null
 ) {
+
+  # Was @ used to suppress errors?
+  if (!(error_reporting() & $errno))
+    return true;
+
   /**
    * @var string
    */

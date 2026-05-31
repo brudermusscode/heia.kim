@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad\SquadRequest;
+use Heiakim\Model\Squad\SquadRequest;
 
 /**
  * @var ?SquadRequest

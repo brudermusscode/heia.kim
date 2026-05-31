@@ -1,16 +1,14 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Connect;
+namespace Heiakim\Controller\Connect;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Connect\Connect;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Connect\Connect;
 
 class ConnectController extends Controller
 {
 
   /**
-   * POST
-   *
    * @return string
    */
   public function start()
@@ -26,38 +24,28 @@ class ConnectController extends Controller
     /**
      * @var ?Connect
      */
-    $Connect = $this->CurrentUser
+    $Connect = CurrentUser
       ->connections()
       ->where("type", $this->params->type)
       ->first();
 
-    /**
-     * Return an error, if a connection of that type already exists.
-     */
+    # Connection exists?
     if ($Connect)
-      return request_error("<strong>You have a service connected already.</strong> Remove it, to create a new one.");
+      return error("<strong>You have a service connected already.</strong> Remove it, to create a new one.");
 
     return (new Connect)->auth($this->params);
   }
 
   /**
-   * POST
-   *
    * @return string
    */
   public function create()
   {
 
-    /**
-     * Validate parameter the not so cool way.
-     */
-    if (!$this->validate_params(
+    $this->validate_params(
       strict: ["type", "code", "state"],
       optional: ["scope", "authuser", "prompt"],
-      return_json_string: false,
-      die_on_error: false
-    )->status)
-      return request_error("<strong>Request invalid!</strong> Try again", return_json_string: false);
+    );
 
     /**
      * Authorize the user in a not so cool way.
@@ -68,7 +56,7 @@ class ConnectController extends Controller
     /**
      * @var ?Connect
      */
-    $Connect = $this->CurrentUser
+    $Connect = CurrentUser
       ->connections()
       ->where("type", $this->params->type)
       ->first();
@@ -100,7 +88,7 @@ class ConnectController extends Controller
     /**
      * @var ?Connect
      */
-    $Connect = $this->CurrentUser
+    $Connect = CurrentUser
       ->connections()
       ->where("type", $this->params->type)
       ->first();

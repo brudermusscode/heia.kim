@@ -4,9 +4,9 @@
  * GET parameter.
  */
 
-use Bruder\Heiakim\Controller\Connect\ConnectDiscordController;
-use Bruder\Heiakim\Controller\Connect\ConnectGoogleController;
-use Bruder\Heiakim\Controller\Connect\ConnectOsuController;
+use Heiakim\Controller\Controller\Connect\ConnectDiscordController;
+use Heiakim\Controller\Controller\Connect\ConnectGoogleController;
+use Heiakim\Controller\Controller\Connect\ConnectOsuController;
 
 $vendor  = filter_var(GET["vendor"] ?? "", FILTER_SANITIZE_SPECIAL_CHARS);
 $code    = filter_var(GET["code"] ?? "", FILTER_SANITIZE_SPECIAL_CHARS);

@@ -1,11 +1,12 @@
 <?php
 
+use Heiakim\Model\Squad;
+
 /**
- * @var User $CurrentUser
  * @var Squad $Squad
  */
 
-use Bruder\Time\Time;
+use Heiakim\Time\Time;
 
 $disabled = !$Squad->can_change_name() ? "disabled" : "";
 $is_disabled = !$Squad->can_change_name();
@@ -27,7 +28,7 @@ $is_disabled = !$Squad->can_change_name();
       <mi>info</mi>
       <p class="text">You can only change your name and tag <strong>every 30 days</strong>. Be sure about it,
         since it will affect
-        <strong><?= $CurrentUser->squad->members->count(); ?></strong> members.
+        <strong><?= CurrentUser->squad->members->count(); ?></strong> members.
       </p>
     </tipp-box>
 

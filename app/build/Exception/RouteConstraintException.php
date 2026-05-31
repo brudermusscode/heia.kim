@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Exception;
+namespace Heiakim\Exception;
 
 use Exception;
-use Bruder\Application;
+use Heiakim\Application;
 
 class RouteConstraintException extends Exception
 {

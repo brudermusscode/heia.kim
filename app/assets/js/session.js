@@ -7,15 +7,15 @@ import * as Frontend from "./frontend.js";
 import * as HTMLElements from "./HTMLElements.js";
 
 /**
- * Login
+ * Create a new Session.
  *
  * @action CREATE
  * @controller SessionsController
+ * @event submit
  */
 $(document).on("submit", '[data-form="session:create"]', function (e) {
   e.preventDefault();
 
-  let formdata = new FormData(this);
   let animation;
   let button = this.find("mbutton[submit-closest]");
   let page_overlay = document.find("page-loader");
@@ -24,44 +24,38 @@ $(document).on("submit", '[data-form="session:create"]', function (e) {
 
   $.ajax({
     url: "/session/create",
-    data: formdata,
+    data: new FormData(this),
     method: "POST",
     success: function (data) {
+      if (__page.is_sounds_enabled)
+        data.status
+          ? Audio.play("[bell-downtoup-audio]")
+          : Audio.play("[bell-negative-audio]");
+
       if (data.status) {
-        if (__page.is_sounds_enabled) Audio.play("[bell-downtoup-audio]");
+        setTimeout(() => {
+          window.location.replace("/home");
+        }, 1200);
 
-        __current_user.id = data.data.user.id;
-
-        page_overlay.insertAdjacentHTML("beforeend", HTMLElements.ELEMENT_DONE);
-
-        animation = page_overlay.querySelector("dotlottie-wc");
-        animation.addEventListener("complete", () => {
-          if (data.data.user.priv < 2) window.location.replace("/download");
-          else window.location.replace("/home");
-        });
-      } else {
-        if (__page.is_sounds_enabled) Audio.play("[bell-negative-audio]");
-
-        Frontend.unload();
-        Frontend.close_overlays();
+        return;
       }
-    },
-    error: function (error) {
-      Frontend.ajax_error(error);
+
+      Frontend.unload();
+      Frontend.close_overlays();
     },
   });
 });
 
 /**
- * Destroy session
+ * Destroy session.
  *
  * @action DELETE
  * @controller SessionsController
+ * @event submit
  */
 $(document).on("submit", '[data-form="session:delete"]', function (e) {
   e.preventDefault();
 
-  let formdata = new FormData(this);
   let button = this.find("[submit-closest]");
 
   button.disable();
@@ -69,31 +63,28 @@ $(document).on("submit", '[data-form="session:delete"]', function (e) {
 
   $.ajax({
     url: "/session/delete",
-    data: formdata,
+    data: new FormData(this),
     method: "POST",
-    success: async function (data) {
+    success: function (data) {
+      Frontend.unload();
+
       if (data.status) {
-        if (data.data.current_session) {
-          if (__page.is_sounds_enabled)
-            await Audio.play("[bell-uptodown-audio]");
+        // Deleted session is not the current one, just reload
+        // the page.
+        if (!data.data.is_current_session) Page.reload();
+        else {
+          if (__page.is_sounds_enabled) Audio.play("[bell-uptodown-audio]");
+
           setTimeout(() => {
             window.location.replace("/home");
-            Frontend.unload();
           }, 1200);
-        } else {
-          Frontend.unload();
-          Page.reload();
         }
-      } else button.enable();
 
-      new Responder.Responder().add(
-        document.body,
-        data.message,
-        data.status ? "success" : "error"
-      );
-    },
-    error: function (error) {
-      Frontend.ajax_error(error);
+        return;
+      }
+
+      Frontend.create_responder(data);
+      button.enable();
     },
   });
 });

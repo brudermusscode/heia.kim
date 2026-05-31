@@ -1,10 +1,9 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
 
 /**
- * @var User $CurrentUser
  * @var ?User $User
  * @var object $rankings
  */
@@ -13,7 +12,7 @@ use Bruder\Heiakim\Model\User;
  * Set the User tot the current user, if we are in editor mode.
  */
 if (IS_EDIT_MODE) {
-  $User = $CurrentUser;
+  $User = CurrentUser;
   $gumode = 0;
   $is_my_profile = true;
   $rankings = $User->get_rankings(0);
@@ -42,7 +41,7 @@ $is_champion = $rankings->global == 1;
 /**
  * @var bool
  */
-$both_sides_can_interact_socially = !$User->is_socially_excluded() && !$CurrentUser->is_socially_excluded();
+$both_sides_can_interact_socially = !$User->is_socially_excluded() && !CurrentUser->is_socially_excluded();
 
 ?>
 
@@ -127,10 +126,10 @@ $both_sides_can_interact_socially = !$User->is_socially_excluded() && !$CurrentU
       /**
        * @var string
        */
-      $current_relationship_action = $CurrentUser->follows($User)
+      $current_relationship_action = CurrentUser->follows($User)
         ? "unfollow"
         : ($both_sides_can_interact_socially
-          ? $User->follow_action_display($CurrentUser)
+          ? $User->follow_action_display(CurrentUser)
           : "hidden");
 
       ?>
@@ -332,7 +331,7 @@ $both_sides_can_interact_socially = !$User->is_socially_excluded() && !$CurrentU
 <?php
 
 if (VERIFIED && !$User->is_restricted() && !$is_my_profile) {
-  $current_relationship_action = $User->follow_action_display($CurrentUser);
+  $current_relationship_action = $User->follow_action_display(CurrentUser);
 
 ?>
   <div floating-action>

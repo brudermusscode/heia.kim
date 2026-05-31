@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\PasswordReset;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\PasswordReset;
 
 class PasswordResetsController extends Controller
 {
@@ -27,8 +27,8 @@ class PasswordResetsController extends Controller
      * Append the mail to the params object if a user is logged in
      * right now.
      */
-    if ($this->CurrentUser)
-      $this->params["mail"] = $this->CurrentUser->email;
+    if (CurrentUser)
+      $this->params["mail"] = CurrentUser->email;
 
     $this->validate_params(
       strict: ["mail"],
@@ -50,8 +50,8 @@ class PasswordResetsController extends Controller
      * Append the mail to the params object if a user is logged in
      * right now.
      */
-    if ($this->CurrentUser)
-      $this->params->mail = $this->CurrentUser->email;
+    if (CurrentUser)
+      $this->params->mail = CurrentUser->email;
 
     $this->validate_params(
       strict: ["token", "password"],

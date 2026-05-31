@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\Gamemode;
+use Heiakim\Http\Request;
+use Heiakim\Model\Gamemode;
 
 $limit = 4;
 $status = 2;
@@ -22,7 +22,7 @@ $base_url = "/my/game/scores";
  */
 $gumode = Gamemode::get_gumode_as_int($mode, $mod);
 
-$Scores = $CurrentUser->scores()
+$Scores = CurrentUser->scores()
   ->where("mode", $gumode)
   ->orderByDesc("pp")
   ->orderByDesc("status")

@@ -2,8 +2,8 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\Thread\Thread;
+use Heiakim\Http\Request;
+use Heiakim\Model\Thread\Thread;
 
 /**
  * @var Request $Request

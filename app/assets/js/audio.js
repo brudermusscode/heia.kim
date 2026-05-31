@@ -10,7 +10,6 @@ export const play = (sound) => {
   audio.volume = 0.38;
 
   audio.onended = () => {
-    // audio.pause();
     audio.currentTime = 0;
   };
 };
@@ -64,7 +63,7 @@ export const start = async (id) => {
       audio_player = appendix.querySelector("audio-player");
       add_active = audio_player.querySelectorAll("[add-active]");
       audio_player_controls = audio_player.querySelector(
-        "[audio-player-controls]"
+        "[audio-player-controls]",
       );
 
       setTimeout(() => {
@@ -100,7 +99,7 @@ export const start = async (id) => {
             .setAttribute("active", false);
 
           let play_buttons = document.querySelectorAll(
-            '[data-action="beatmaps:set,play"]'
+            '[data-action="beatmaps:set,play"]',
           );
 
           play_buttons.forEach((button) => {
@@ -111,7 +110,7 @@ export const start = async (id) => {
     } else {
       new Responder.Responder().add(
         document.body,
-        "Could not load map audio. Try again"
+        "Could not load map audio. Try again",
       );
     }
   });

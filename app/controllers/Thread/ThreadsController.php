@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Thread;
+namespace Heiakim\Controller\Thread;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Thread\Thread;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Thread\Thread;
 
 class ThreadsController extends Controller
 {
@@ -22,7 +22,7 @@ class ThreadsController extends Controller
     );
 
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       respect_social_exclusion: true,
     );
 

@@ -1,11 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\Authentication;
-use Bruder\Heiakim\Model\User;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\Authentication;
+use Heiakim\Model\User;
 
 /**
  * GET Parameter.
@@ -15,7 +11,7 @@ $validation_mail = str_replace(" ", "+", $var);
 /**
  * @var ?Authentication
  */
-$Authentication = $CurrentUser->authentications()
+$Authentication = CurrentUser->authentications()
   ->where([
     "email" => $validation_mail
   ])
@@ -24,7 +20,7 @@ $Authentication = $CurrentUser->authentications()
 /**
  * @var string
  */
-$email = !filter_var($CurrentUser->email, FILTER_VALIDATE_EMAIL) ? null : $CurrentUser->email;
+$email = !filter_var(CurrentUser->email, FILTER_VALIDATE_EMAIL) ? null : CurrentUser->email;
 
 ?>
 
@@ -48,8 +44,8 @@ $email = !filter_var($CurrentUser->email, FILTER_VALIDATE_EMAIL) ? null : $Curre
     data-form="authentication:create"
     data-type="user:update:email">
     <div fl fldircol gap=smol+>
-      <?php if ($CurrentUser->email) { ?>
-        <p text>Current e-mail address is <strong><?= $CurrentUser->email; ?></strong></p>
+      <?php if (CurrentUser->email) { ?>
+        <p text>Current e-mail address is <strong><?= CurrentUser->email; ?></strong></p>
       <?php } else { ?>
         <p text>You have no e-mail address set, but we <strong>highly recommend to set one</strong>. It is required to properly authenticate any critical action to your account, as well as recovering it if you lose your credentials.</p>
       <?php } ?>

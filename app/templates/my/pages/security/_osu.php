@@ -1,12 +1,12 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Connect\ConnectOsu;
+use Heiakim\Time\Time;
+use Heiakim\Model\Connect\ConnectOsu;
 
 /**
  * @var ?ConnectOsu
  */
-$Osu = $CurrentUser->osu;
+$Osu = CurrentUser->osu;
 
 ?>
 

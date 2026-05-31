@@ -20,11 +20,15 @@ include TEMPLATE . "/login/_header.php";
 
     <?php
 
-    if (USER_COMEBACK)
-      include TEMPLATE . "/login/_valid_session.php";
-    else {
+    # + User is logged in.
+    if (LOGGED) :
+      include UNAVAILABLE;
 
-    ?>
+    # + User is revisiting, but session has expired.
+    elseif (USER_COMEBACK) :
+      include TEMPLATE . "/login/_valid_session.php";
+
+    else : ?>
 
       <!--- FLEX: MAIN CONTENT --->
       <div style="flex:1;flex-direction:row-reverse;" gap justcontcent>
@@ -79,7 +83,7 @@ include TEMPLATE . "/login/_header.php";
         </div>
       </div>
 
-    <?php } ?>
+    <?php endif; ?>
 
   </div>
 </login>

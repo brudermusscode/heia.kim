@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Reaction;
+namespace Heiakim\Model\Reaction;
 
-use Bruder\Justin;
+use Heiakim\Justin;
 
 class ReactionPackageEmoji extends Justin
 {

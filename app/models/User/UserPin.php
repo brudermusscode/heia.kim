@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Model\User;
+namespace Heiakim\Model\User;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Score;
+use Heiakim\Justin;
+use Heiakim\Model\User;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Score;
 
 class UserPin extends Justin
 {

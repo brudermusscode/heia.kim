@@ -1,6 +1,6 @@
 <?php
 
-$Searches = LOGGED ? $CurrentUser->searches()
+$Searches = LOGGED ? CurrentUser->searches()
   ->where("type", "beatmap")
   ->groupBy("search")
   ->orderByRaw("COUNT(search) DESC")

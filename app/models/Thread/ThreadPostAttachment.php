@@ -1,13 +1,13 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Thread;
+namespace Heiakim\Model\Thread;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Beatmap\Set;
-use Bruder\Heiakim\Model\Score;
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\Thread\ThreadPost;
+use Heiakim\Justin;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Beatmap\Set;
+use Heiakim\Model\Score;
+use Heiakim\Http\Request;
+use Heiakim\Model\Thread\ThreadPost;
 
 class ThreadPostAttachment extends Justin
 {

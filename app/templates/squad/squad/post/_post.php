@@ -1,17 +1,16 @@
 <?php
 
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Score;
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
-use Bruder\Heiakim\Model\Squad\SquadPost;
-use Bruder\Heiakim\Model\Squad\SquadPostAttachment;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Score;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadPostAttachment;
 
 /**
  * @var User $User
- * @var User $CurrentUser
  * @var SquadFeedItem $Item
  */
 
@@ -72,7 +71,7 @@ $Attachment = $Post?->attachment?->reference();
     /**
      * Show the dropdown only for squad members.
      */
-    if ($CurrentUser->sqcan_take_action_in($Squad))
+    if (CurrentUser->sqcan_take_action_in($Squad))
       include __DIR__ . "/_dropdown.php"; ?>
   </t-o-toolbar>
 
@@ -176,14 +175,14 @@ $Attachment = $Post?->attachment?->reference();
       <?php
 
       if (
-        $CurrentUser->sqcan_take_action_in($Squad)
+        CurrentUser->sqcan_take_action_in($Squad)
         && !$Item->is_system_post()
       ) {
 
         /**
          * @var ?SquadPostVote
          */
-        $Vote = $CurrentUser->has_voted_for($Post);
+        $Vote = CurrentUser->has_voted_for($Post);
 
         /**
          * @var object

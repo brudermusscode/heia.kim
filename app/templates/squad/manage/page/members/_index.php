@@ -1,10 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Enum\SquadPrivilege;
+use Heiakim\Enum\SquadPrivilege;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
  * @var string $tab
- * @var User $CurrentUser
  */
 
 /**

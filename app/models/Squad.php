@@ -1,21 +1,21 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Http\Request;
-use Bruder\Time\Time;
-use Bruder\Application\Exception;
-use Bruder\Application\Logger;
-use Bruder\Utils\Str;
-use Bruder\Heiakim\Enum\SquadPrivilege;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
-use Bruder\Utils\Utils;
-use Bruder\Heiakim\Model\Image;
-use Bruder\Heiakim\Model\Squad\SquadRequest;
-use Bruder\Heiakim\Model\Thread\Thread;
-use Bruder\Validate\Validate;
+use Heiakim\Justin;
+use Heiakim\Http\Request;
+use Heiakim\Time\Time;
+use Heiakim\Application\Exception;
+use Heiakim\Application\Logger;
+use Heiakim\Utils\Str;
+use Heiakim\Enum\SquadPrivilege;
+use Heiakim\Model\Squad\SquadUser;
+use Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Utils\Utils;
+use Heiakim\Model\Image;
+use Heiakim\Model\Squad\SquadRequest;
+use Heiakim\Model\Thread\Thread;
+use Heiakim\Validate\Validate;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Interfaces\ImageInterface;
 
@@ -675,7 +675,7 @@ class Squad extends Justin
      * Catch any upload error in advance.
      */
     if (isset($params->files["error"]) && $params->files["error"] > 0)
-      die($this->error(\Bruder\File\Upload::error($params->files["error"])));
+      die($this->error(\Heiakim\File\Upload::error($params->files["error"])));
 
     /**
      * Temporary image is not available?

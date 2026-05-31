@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
+use Heiakim\Model\User;
 
 /**
  * @var User
@@ -34,7 +34,7 @@ else : ?>
       </div>
     </div>
 
-    <?php if ($CurrentUser->is_restricted()) { ?>
+    <?php if (CurrentUser->is_restricted()) { ?>
       <a href="/my/game/restriction">
         <div rounded filled mt=smol color=dynamic clickable>
           <div p12 fl alic gap=smol+>

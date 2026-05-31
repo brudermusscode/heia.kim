@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Session;
+use Heiakim\Time\Time;
+use Heiakim\Model\Session;
 
 /**
  * @var Session $Session

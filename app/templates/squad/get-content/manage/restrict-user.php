@@ -2,20 +2,19 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-use Bruder\Time\Time;
+use Heiakim\Http\Request;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad\SquadUser;
+use Heiakim\Time\Time;
 
 /**
- * @var User $CurrentUser
  * @var Request $Request
  */
 
 /**
  * @var ?SquadUser
  */
-$CurrentSquadUser = $CurrentUser->squad_user;
+$CurrentSquadUser = CurrentUser->squad_user;
 
 /**
  * User has permissions?
@@ -49,7 +48,7 @@ if (
   || !$User->squad()->is($Squad)
   || (
     $User->squad_user->has_elevated_privileges()
-    && !$CurrentUser->is_squad_chief()
+    && !CurrentUser->is_squad_chief()
   )
 )
   exit($Request->error());

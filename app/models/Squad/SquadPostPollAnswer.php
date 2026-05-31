@@ -1,13 +1,13 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Squad;
+namespace Heiakim\Model\Squad;
 
-use Bruder\Application\Exception;
-use Bruder\Application\Logger;
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
-use Bruder\Utils\Arr;
+use Heiakim\Application\Exception;
+use Heiakim\Application\Logger;
+use Heiakim\Justin;
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
+use Heiakim\Utils\Arr;
 
 class SquadPostPollAnswer extends Justin
 {

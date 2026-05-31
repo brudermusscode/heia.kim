@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Heiakim\API;
+namespace Heiakim\API;
 
-use Bruder\Heiakim\Trait\ProcessesRequests;
+use Heiakim\Trait\ProcessesRequests;
 
 class Bancho
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Connect;
+namespace Heiakim\Model\Connect;
 
-use Bruder\Heiakim\Model\Session;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Vendor\Google;
+use Heiakim\Model\Session;
+use Heiakim\Model\User;
+use Heiakim\Model\Vendor\Google;
 
 class ConnectGoogle extends Connect
 {

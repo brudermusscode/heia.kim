@@ -1,12 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Utils\Utils;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Model\Gamemode;
+use Heiakim\Utils\Utils;
+use Heiakim\Model\Squad;
 
 /**
- * @var User $CurrentUser
  * @var Squad $Squad
  * @var string $base_url
  * @var string $mode
@@ -169,7 +167,7 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
                 <p text bold wide><?= __("Nothing") ?></p>
                 <p text std><?= __("No scores have been set here so far") ?></p>
               </div>
-              <?php if ($Squad->is_member($CurrentUser)) { ?>
+              <?php if ($Squad->is_member(CurrentUser)) { ?>
                 <div fl justify-content=center>
                   <a href="/beatmaps">
                     <mbutton material has-icon=left size=mid background=dynamic has-icon>

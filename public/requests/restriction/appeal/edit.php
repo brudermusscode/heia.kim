@@ -2,7 +2,7 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Heiakim\Controller\Restriction\RestrictionAppealsController;
+use Heiakim\Controller\Controller\Restriction\RestrictionAppealsController;
 
 $return = (new RestrictionAppealsController)->edit($_POST);
 

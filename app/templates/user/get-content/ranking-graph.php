@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Time\Time;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\User;
 
 /**
  * @var int

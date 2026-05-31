@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/init.php";
 
-use Bruder\Http\Request;
+use Heiakim\Http\Request;
 
 /**
  * @var Request

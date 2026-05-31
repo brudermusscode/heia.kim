@@ -1,17 +1,16 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Authentication;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\User;
+use Heiakim\Model\Authentication;
+use Heiakim\Model\Session;
 
 class UsersController extends Controller
 {
 
   /**
-   * POST
-   *
    * @return string
    */
   public function create()
@@ -22,10 +21,6 @@ class UsersController extends Controller
       optional: [],
     );
 
-
-    /**
-     * User is logged?
-     */
     $this->authorize(logged: false);
 
     /**
@@ -36,29 +31,30 @@ class UsersController extends Controller
       ->whereNull("deleted_at")
       ->first();
 
-    /**
-     * Authentication not found?
-     */
+    # No authentication found?
     if (!$Authentication)
       return $this->error("<strong>Authentication not found.</strong>");
 
-    /**
-     * Append all.
-     */
-    $this->params->Authentication = $Authentication;
+    # Append params.
     $this->params->email = $Authentication->email;
 
-    return (new User)->new($this->params);
+    # Create a new User.
+    $User = (new User)->new($this->params);
+
+    # Delete the Authentication.
+    $Authentication->delete();
+
+    # Create a new Session.
+    new Session()->new($User);
+
+    return success("<strong>You in!</strong> Have fun on your journey.");
   }
 
   /**
-   * PUT
-   *
    * @return string
    */
   public function update()
   {
-
 
     /**
      * Some updates of the User need to be authenticated by the
@@ -81,40 +77,30 @@ class UsersController extends Controller
 
     $this->authorize();
 
-    return
-      $this->CurrentUser
-      ->edit($this->params);
+    return CurrentUser->edit($this->params);
   }
 
   /**
-   * DELETE
-   *
    * @return string
    */
   public function delete()
   {
 
     $this->authorize();
-
     $this->authenticate();
 
-    return $this->CurrentUser
-      ->remove($this->params);
+    return CurrentUser->remove($this->params);
   }
 
   /**
-   * Requests a wipe of the current users account.
-   *
    * @return string
    */
   public function wipe()
   {
 
     $this->authorize();
-
     $this->authenticate();
 
-    return $this->CurrentUser
-      ->wipe($this->params);
+    return CurrentUser->wipe();
   }
 }

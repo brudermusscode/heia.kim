@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Feed;
+use Heiakim\Model\Feed;
 
 /**
  * @var int
@@ -10,7 +10,7 @@ $base_limit = 3;
 /**
  * @var Feed
  */
-$Feed = new Feed($CurrentUser);
+$Feed = new Feed(CurrentUser);
 
 ?>
 

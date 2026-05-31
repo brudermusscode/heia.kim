@@ -1,14 +1,14 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Squad;
+namespace Heiakim\Model\Squad;
 
-use Bruder\Justin;
-use Bruder\Application\Exception;
-use Bruder\Application\Logger;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Score;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Justin;
+use Heiakim\Application\Exception;
+use Heiakim\Application\Logger;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Score;
+use Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Model\User;
 
 class SquadPostAttachment extends Justin
 {

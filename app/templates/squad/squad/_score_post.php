@@ -1,10 +1,10 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Beatmap\Set;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Comment;
+use Heiakim\Time\Time;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Beatmap\Set;
+use Heiakim\Model\User;
+use Heiakim\Model\Comment;
 
 /**
  * @var Score $Score

@@ -1,10 +1,9 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
 
 /**
- * @var User $CurrentUser
  * @var Squad $Squad
  * @var string $base_url
  * @var string $mode

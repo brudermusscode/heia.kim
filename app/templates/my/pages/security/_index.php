@@ -1,21 +1,17 @@
 <?php
 
-use Bruder\Application\Cookie;
-use Bruder\Application\Feature;
-use Bruder\Application\Session;
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Change;
-use Bruder\Heiakim\Model\Session as ModelSession;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Application\Cookie;
+use Heiakim\Application\Feature;
+use Heiakim\Application\Session;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
+use Heiakim\Model\Change;
+use Heiakim\Model\Session as ModelSession;
 
 /**
  * @var ?Change
  */
-$PasswordChange = $CurrentUser->password_changes()
+$PasswordChange = CurrentUser->password_changes()
   ->select("created_at")
   ->latest()
   ->first();
@@ -57,13 +53,13 @@ $PasswordChange = $CurrentUser->password_changes()
       /**
        * @var int
        */
-      $sessions_count = $CurrentUser->sessions->count();
+      $sessions_count = CurrentUser->sessions->count();
 
       /**
        * @var Session
        */
       $Session =
-        $CurrentUser
+        CurrentUser
         ->sessions()
         ->where("token", Cookie::get(ModelSession::$persistent_cookies[1]))
         ->first();
@@ -83,7 +79,7 @@ $PasswordChange = $CurrentUser->password_changes()
        * @var ?Session
        */
       $Sessions =
-        $CurrentUser
+        CurrentUser
         ->sessions()
         ->orderByRaw('ISNULL(updated_at), updated_at DESC, created_at DESC')
         ->whereNot("token", Cookie::get(ModelSession::$persistent_cookies[1]))
@@ -128,12 +124,12 @@ $PasswordChange = $CurrentUser->password_changes()
       <p text bold>Active connections</p>
 
       <div>
-        <?php if (!$CurrentUser->connections->count()) { ?>
+        <?php if (!CurrentUser->connections->count()) { ?>
           <p text slight mt=smol mb12><?= __("Nothing connected") ?></p>
         <?php } else { ?>
 
           <!--- Discord --->
-          <?php if ($CurrentUser->discord) { ?>
+          <?php if (CurrentUser->discord) { ?>
             <div rounded pinline12 pblock8 fl gap jucsb alic hoverable
               data-category=<?= $category ?>
               data-sub=discord>
@@ -141,7 +137,7 @@ $PasswordChange = $CurrentUser->password_changes()
                 <mi wide color=discord-blue class="ri-discord-fill"></mi>
                 <div>
                   <p text bold>Discord</p>
-                  <p text smol>Active &middot; <span color=company><?= Time::ago($CurrentUser->discord->created_at, true); ?></span></p>
+                  <p text smol>Active &middot; <span color=company><?= Time::ago(CurrentUser->discord->created_at, true); ?></span></p>
                 </div>
               </div>
 
@@ -150,7 +146,7 @@ $PasswordChange = $CurrentUser->password_changes()
           <?php } ?>
 
           <!-- Google --->
-          <?php if ($CurrentUser->google) { ?>
+          <?php if (CurrentUser->google) { ?>
             <div rounded pinline12 pblock8 fl gap jucsb alic hoverable
               data-category=<?= $category ?>
               data-sub=google>
@@ -158,7 +154,7 @@ $PasswordChange = $CurrentUser->password_changes()
                 <mi wide class="ri-google-fill" color=google-blue></mi>
                 <div>
                   <p text bold>Google</p>
-                  <p text smol>Active &middot; <span color=company><?= Time::ago($CurrentUser->google->created_at, true); ?></span></p>
+                  <p text smol>Active &middot; <span color=company><?= Time::ago(CurrentUser->google->created_at, true); ?></span></p>
                 </div>
               </div>
 
@@ -167,7 +163,7 @@ $PasswordChange = $CurrentUser->password_changes()
           <?php } ?>
 
           <!-- Osu --->
-          <?php if ($CurrentUser->osu) { ?>
+          <?php if (CurrentUser->osu) { ?>
             <div rounded pinline12 pblock8 fl gap jucsb alic hoverable
               data-category=<?= $category ?>
               data-sub=osu>
@@ -175,7 +171,7 @@ $PasswordChange = $CurrentUser->password_changes()
                 <mi text size=mid class="osu-icon osu-outlined" color=osu-pink></mi>
                 <div>
                   <p text bold>osu!</p>
-                  <p text smol>Active &middot; <span color=company><?= Time::ago($CurrentUser->osu->created_at, true); ?></span></p>
+                  <p text smol>Active &middot; <span color=company><?= Time::ago(CurrentUser->osu->created_at, true); ?></span></p>
                 </div>
               </div>
 
@@ -190,7 +186,7 @@ $PasswordChange = $CurrentUser->password_changes()
       <p text bold><?= __("Add connection") ?></p>
 
       <div fl gap=smol>
-        <?php if (!$CurrentUser->discord && Feature::is_enabled("connect_discord")) { ?>
+        <?php if (!CurrentUser->discord && Feature::is_enabled("connect_discord")) { ?>
           <mbutton material has-icon=left filled size=mid
             data-action="connect:start"
             data-type=discord>
@@ -199,7 +195,7 @@ $PasswordChange = $CurrentUser->password_changes()
           </mbutton>
         <?php } ?>
 
-        <?php if (!$CurrentUser->google && Feature::is_enabled("connect_google")) { ?>
+        <?php if (!CurrentUser->google && Feature::is_enabled("connect_google")) { ?>
           <mbutton material has-icon=left filled size=mid
             data-action="connect:start"
             data-type=google>
@@ -208,7 +204,7 @@ $PasswordChange = $CurrentUser->password_changes()
           </mbutton>
         <?php } ?>
 
-        <?php if (!$CurrentUser->osu && Feature::is_enabled("connect_osu")) { ?>
+        <?php if (!CurrentUser->osu && Feature::is_enabled("connect_osu")) { ?>
           <mbutton material has-icon=left filled size=mid
             data-action="connect:start"
             data-type=osu>

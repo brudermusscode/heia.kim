@@ -1,10 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Leaderboard;
-use Bruder\Heiakim\Model\Country;
-use Bruder\Heiakim\Model\User;
-use Bruder\Utils\Utils;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Leaderboard;
+use Heiakim\Model\Country;
+use Heiakim\Model\User;
+use Heiakim\Utils\Utils;
 
 /**
  * Mode

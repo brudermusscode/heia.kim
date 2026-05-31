@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Authentication;
+use Heiakim\Model\Authentication;
 
 /**
  * @var ?string
@@ -19,35 +19,31 @@ if (!$Authentication)
 else {
 
 ?>
+  <form data-form="user:create">
+    <api-outer fl fldircol jucc alic>
 
-  <api-outer google fldircol>
-    <?php
+      <?php
 
-    if (ANIMATIONS_ENABLED) {
-      echo '<div class="stars" z>';
-      for ($i = 0; $i < 80; $i++)
-        echo '<div class="snow"></div>';
-      echo '</div>';
-    }
+      if (ANIMATIONS_ENABLED) {
+        echo '<div class="stars" z>';
+        for ($i = 0; $i < 80; $i++)
+          echo '<div class="snow"></div>';
+        echo '</div>';
+      }
 
-    ?>
+      ?>
 
-    <sign-container fl fldircol gap=mid>
-      <div fl alic fldircol jucc color=light>
-        <p text wide bold>Almost done</p>
-        <p text std>Your account needs some personalization</p>
-      </div>
+      <content std fl fldircol gap=mid>
+        <div fl alic fldircol jucc color=light tac>
+          <p text wide bold>Almost done</p>
+          <p text std>Your account needs some personalization</p>
+        </div>
 
-      <form data-form="user:create">
         <box-model filled=lighter class="sign_container__inr" elevated fl fldirrow rounded=wide>
           <bm-inr size=wide fl fldircol gap>
             <div fl jucc alic gap mt mb=smol+>
               <picture circled size=wider>
-                <lottie-player style="height:150px;width:150px;"
-                  src="https://lottie.host/be4145f0-eb7c-4fbe-b3eb-1fee2cd3af92/dpXzJyTebL.json"
-                  background="transparent" speed="1" loop autoplay>
-                </lottie-player>
-                <img src="<?= AVATAR . "/default"; ?>" loading=lazy />
+                <img src="<?= AVATAR . "/0.jpg"; ?>" loading=lazy />
               </picture>
             </div>
 
@@ -85,9 +81,9 @@ else {
             </div>
           </bm-inr>
         </box-model>
-      </form>
-    </sign-container>
-  </api-outer>
+        </div>
+    </api-outer>
+  </form>
 
 <?php
 

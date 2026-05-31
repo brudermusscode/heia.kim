@@ -1,14 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Beatmap\BeatmapRequest;
-use Bruder\Heiakim\Enum\BeatmapStatus;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\User;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Beatmap\BeatmapRequest;
+use Heiakim\Enum\BeatmapStatus;
 
 /**
  * @var ?BeatmapRequest

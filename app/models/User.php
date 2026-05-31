@@ -1,64 +1,66 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
 use Locale;
-use Bruder\Justin;
-use Bruder\Geo\Geo;
-use Bruder\Http\Request;
-use Bruder\Heiakim\API\Bancho;
-use Bruder\Heiakim\APIGateway\Count\BeatmapsGateway;
-use Bruder\Heiakim\APIGateway\Score\ScoresGateway;
-use Bruder\Application\Exception;
-use Bruder\Application\Logger;
-use Bruder\Database\Redis;
-use Bruder\Database\Manager as DBM;
-use Bruder\Heiakim\Enum\Privilege;
-use Bruder\Heiakim\Enum\SquadPrivilege;
-use Bruder\Validate\Validate;
-use Bruder\Validate\Image as ValidateImage;
-use Bruder\Heiakim\Model\Session;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Image;
-use Bruder\Heiakim\Model\Search;
-use Bruder\Heiakim\Model\Change;
-use Bruder\Heiakim\Model\Score;
-use Bruder\Heiakim\Model\User\UserPin;
-use Bruder\Heiakim\Model\User\UserSettings;
-use Bruder\Heiakim\Model\User\UserSettingsPrivacy;
-use Bruder\Heiakim\Model\Connect\Connect;
-use Bruder\Heiakim\Model\Connect\ConnectDiscord;
-use Bruder\Heiakim\Model\Connect\ConnectGoogle;
-use Bruder\Heiakim\Model\Connect\ConnectOsu;
-use Bruder\Heiakim\Model\Manager\ManagerAuthentication;
-use Bruder\Heiakim\Model\Manager\ManagerLog;
-use Bruder\Heiakim\Model\Manager\ManagerSession;
-use Bruder\Heiakim\Model\Manager\ManagerUser;
-use Bruder\Heiakim\Model\Osu\OsuFavorite;
-use Bruder\Heiakim\Model\Osu\OsuIngameLogin;
-use Bruder\Heiakim\Model\Osu\OsuRating;
-use Bruder\Heiakim\Model\Beatmap\BeatmapRequest;
-use Bruder\Heiakim\Model\Relationship;
-use Bruder\Heiakim\Model\Restriction\Restriction;
-use Bruder\Heiakim\Model\Restriction\RestrictionAppeal;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
-use Bruder\Heiakim\Model\Squad\SquadPost;
-use Bruder\Heiakim\Model\Squad\SquadPostComment;
-use Bruder\Heiakim\Model\Squad\SquadPostPollAnswer;
-use Bruder\Heiakim\Model\Squad\SquadRequest;
-use Bruder\Heiakim\Model\Stat\StatDevelopment;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-use Bruder\Heiakim\Model\Thread\Thread;
-use Bruder\Heiakim\Model\Thread\ThreadPost;
-use Bruder\Mail\Mail;
-use Bruder\Utils\Utils;
-use Bruder\Time\Time;
-use Bruder\Utils\Arr;
-use Bruder\Utils\Str;
+use Heiakim\Justin;
+use Heiakim\Geo\Geo;
+use Heiakim\Http\Request;
+use Heiakim\API\Bancho;
+use Heiakim\APIGateway\Count\BeatmapsGateway;
+use Heiakim\APIGateway\Score\ScoresGateway;
+use Heiakim\Application\Exception;
+use Heiakim\Application\Logger;
+use Heiakim\Database\Redis;
+use Heiakim\Database\Manager as DBM;
+use Heiakim\Enum\Privilege;
+use Heiakim\Enum\SquadPrivilege;
+use Heiakim\Validate\Validate;
+use Heiakim\Validate\Image as ValidateImage;
+use Heiakim\Model\Session;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Image;
+use Heiakim\Model\Search;
+use Heiakim\Model\Change;
+use Heiakim\Model\Score;
+use Heiakim\Model\User\UserPin;
+use Heiakim\Model\User\UserSettings;
+use Heiakim\Model\User\UserSettingsPrivacy;
+use Heiakim\Model\Connect\Connect;
+use Heiakim\Model\Connect\ConnectDiscord;
+use Heiakim\Model\Connect\ConnectGoogle;
+use Heiakim\Model\Connect\ConnectOsu;
+use Heiakim\Model\Manager\ManagerAuthentication;
+use Heiakim\Model\Manager\ManagerLog;
+use Heiakim\Model\Manager\ManagerSession;
+use Heiakim\Model\Manager\ManagerUser;
+use Heiakim\Model\Osu\OsuFavorite;
+use Heiakim\Model\Osu\OsuIngameLogin;
+use Heiakim\Model\Osu\OsuRating;
+use Heiakim\Model\Beatmap\BeatmapRequest;
+use Heiakim\Model\Relationship;
+use Heiakim\Model\Restriction\Restriction;
+use Heiakim\Model\Restriction\RestrictionAppeal;
+use Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadPostComment;
+use Heiakim\Model\Squad\SquadPostPollAnswer;
+use Heiakim\Model\Squad\SquadRequest;
+use Heiakim\Model\Stat\StatDevelopment;
+use Heiakim\Model\Squad\SquadUser;
+use Heiakim\Model\Thread\Thread;
+use Heiakim\Model\Thread\ThreadPost;
+use Heiakim\Mail\Mail;
+use Heiakim\Utils\Utils;
+use Heiakim\Time\Time;
+use Heiakim\Utils\Arr;
+use Heiakim\Utils\Str;
 use DateTime;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Justin
 {
+
   /**
    * @var array
    */
@@ -99,147 +101,79 @@ class User extends Justin
     "clan_id" => 0,
   ];
 
-  /**
-   * @var array
-   */
-  public static $disallowed_names = ["mumei no"];
+  public static array $disallowed_names = ["mumei no"];
+
+  public static array $name_length = [1, 16];
+
+  public static string $name_regex = '/^[a-zA-Z0-9_\-\[\] ]+$/';
+
+  public static string $password_regex = '/^(?=.{6,32}$)[\w\d\-_$,.:;#+?=!&%§{}><\'"\[\]\/]+$/u';
 
   /**
-   * @var array
-   */
-  public static $name_length = [1, 16];
-
-  /**
-   * @var string
-   */
-  public static $name_regex = '/^[a-zA-Z0-9_\-\[\] ]+$/';
-
-  /**
-   * @var string
-   */
-  public static $password_regex = '/^(?=.{6,32}$)[\w\d\-_$,.:;#+?=!&%§{}><\'"\[\]\/]+$/u';
-
-  /**
-   * @param object $param
+   * @param object $params
    * @return object
+   *
+   * NOTE: Will die on error.
    */
   public function new(object $params)
   {
+
     /**
-     * @var Connect
+     * @var ?Connect
      */
     $Vendor = $params->vendor ?? null;
 
     /**
-     * @var Authentication
+     * @var User
      */
-    $Authentication = $params->Authentication ?? null;
+    $User = self::make();
 
-    /**
-     * @var array
-     */
-    $Geo = (new Geo())->get();
+    # ? Name + Safe Name
+    $User->set_name_invalid($params->name);
 
-    /**
-     * User's information.
-     */
-    $country = $params->country ?? ($Geo["countryCode"] ?? "xx");
-    $params->country = strtolower($country);
-    $params->creation_time = time();
-    $params->latest_activity = $params->creation_time;
-    $params->remote_address = $Geo["request"] ?? null;
+    # ? E-Mail
+    $User->set_mail_invalid($params->email);
 
-    /**
-     * * Name
-     * @var string
-     */
-    $params->name = trim($params->name);
-
-    /**
-     * Validate the new name.
-     */
-    $this->validate_name($params->name);
-
-    /**
-     * @var string
-     */
-    $params->safe_name = self::create_safe_name($params->name);
-
-    /**
-     * * Password
-     * Need to htmlspecialchars_decode() the password, because it
-     * has been serialized by the controller validation.
-     * @var string
-     */
+    # ? Password
+    # Need to decode special chars as the Controller will automatically
+    # encode everything.
     $password = htmlspecialchars_decode($params->password);
+    $User->set_password_invalid($password);
 
-    /**
-     * Password is invalid?
-     * ! Error
-     */
-    if (!Validate::string_length(6, 36, $password)) {
-      return $this->error(
-        "<strong>Your password should be between 6 and 36 characters long.</strong> Keep your account secure!"
-      );
-    }
+    $ip = Request::get_remote_address();
+    $time = time();
 
-    /**
-     * @var string
-     */
-    $params->pw_bcrypt = self::encrypt_password($password);
+    # Set the rest.
+    $User->remote_address = $ip;
+    $User->country = Geo::country_code($ip);
+    $User->creation_time = $time;
+    $User->latest_activity = $time;
 
-    /**
-     * Begin new database transaction.
-     */
+    # Begin the database transaction! Nothing to be left behind.
     $this->db_transaction();
 
     try {
-      /**
-       * Create the user account.
-       */
-      $User = self::create([
-        "name" => $params->name,
-        "safe_name" => $params->safe_name,
-        "pw_bcrypt" => $params->pw_bcrypt,
-        "email" => filter_var($params->email, FILTER_VALIDATE_EMAIL)
-          ? $params->email
-          : null,
-        "country" => $params->country,
-        "creation_time" => $params->creation_time,
-        "latest_activity" => $params->latest_activity,
-        "remote_address" => $params->remote_address,
-      ]);
 
-      /**
-       * @var User
-       */
-      $User = $User->fresh();
+      # Save it!
+      $User->save();
 
-      /**
-       * @var UserSettings
-       */
+      # Create UserSettings.
       $User->settings()->create([
         "birthday" => null,
         "is_legit" => $Vendor?->is_legit ? 1 : null,
       ]);
 
-      /**
-       * @var UserSettingsPrivacy
-       */
+      # Create UserPrivacySettings
       $User->privacy()->create([
         "accepts_policies" => 1,
         "is_public" => 1,
         "image_history" => 1,
       ]);
 
-      /**
-       * @var Profile
-       */
+      # Create Profile.
       $User->create_default_profile();
 
-      /**
-       * Stats for each gamemode 0-7(8)
-       */
+      # Create Stats for each gamemode 0-7(8)
       for ($i = 0; $i <= 7; $i++) {
         if ($i == 7) {
           $i = 8;
@@ -250,26 +184,18 @@ class User extends Justin
         ]);
       }
 
-      /**
-       * Should soft delete the authentication.
-       */
-      $Authentication?->delete();
-
-      /**
-       * Update the Vendor Connection with the new user id.
-       */
+      # Update the Vendor Connection with the new user id.
       $Vendor?->update([
         "user_id" => $User->id,
       ]);
 
-      /**
-       * Download Vendor image.
-       */
+      # Download Vendor image.
       if (
         $Vendor &&
         $params->avatar_url &&
         ValidateImage::validate($params->avatar_url)
       ) {
+
         $image_file = file_get_contents($params->avatar_url);
         $image_name =
           $User->id .
@@ -282,34 +208,15 @@ class User extends Justin
         );
       }
 
-      /**
-       * @var Session
-       */
-      (new Session())->new(
-        (object) [
-          "user_id" => $User->id,
-          "geodata" => $Geo,
-        ]
-      );
-
-      /**
-       * * Success
-       */
       $this->db_commit();
-      return $this->success(
-        "<strong>You are now a part of us!</strong> Have fun on your journey."
-      );
+
+      return $User;
     } catch (\Exception $e) {
-      /**
-       * Log & rollback 🥲.
-       */
+
       Logger::to_file($e);
       $this->db_rollback();
 
-      /**
-       * ! Error
-       */
-      return $this->error($e->getMessage());
+      return die(error($e->getMessage()));
     }
   }
 
@@ -751,137 +658,94 @@ class User extends Justin
   }
 
   /**
+   * Complete validation, serialization and setting of a given
+   * e-mail address for this instance.
+   *
+   * @param string $email
+   * @return void
+   *
+   * NOTE: Will die on error.
+   */
+  public function set_mail_invalid(string $email)
+  {
+
+    # Trim the email string first.
+    $email = trim($email);
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+      return die(error("<strong>Mail invalid!</strong>"));
+
+    if (self::where("email", $email)->exists())
+      return die(error("<strong>You can't use this E-Mail brother!</strong>"));
+
+    $this->email = $email;
+  }
+
+  /**
    * Complete validation of name as it is used in the ingame client.
    *
    * @param string $name The name to validate
    * @param bool $include_former_names
-   * @return object
+   * @return void|string
+   *
+   * NOTE: Will die on error.
    */
-  public function validate_name(
-    string $name,
-    bool $include_former_names = true,
-    bool $die_on_error = true
-  ) {
-    /**
-     * Name is in disallowed list?
-     */
-    if (in_array($name, self::$disallowed_names)) {
-      return $die_on_error
-        ? die($this->error(
-          "<strong>This name is not allowed.</strong> Choose another one."
-        ))
-        : $this->error(
-          "<strong>This name is not allowed.</strong> Choose another one."
-        );
-    }
+  public function set_name_invalid(string $name, bool $include_former_names = true)
+  {
 
-    /**
-     * Name length.
-     */
+    # Trim the name string first.
+    $name = trim($name);
+
+    $min = self::$name_length[0];
+    $max = self::$name_length[1];
+    $errors = [
+      "disallowed" => "<strong>Name is not allowed.</strong>",
+      "out-of-range" => "<strong>Name should be between $min and $max characters.</strong>",
+      "invalid" => "<strong>Name can contain letters, numbers, dashes and underscores.</strong>",
+      "taken" => "<strong>Name not available!</strong> Choose another one.",
+    ];
+
+    # Disallowed?
+    if (in_array($name, self::$disallowed_names))
+      return die(error($errors["disallowed"]));
+
+    # Length invalid?
+    if (!Validate::string_length($min, $max, $name))
+      return die(error($errors["out-of-range"]));
+
+    # Has invalid characters?
+    if (!Validate::string_matches(self::$name_regex, $name))
+      return die(error($errors["invalid"]));
+
+    # In use?
     if (
-      !Validate::string_length(
-        self::$name_length[0],
-        self::$name_length[1],
-        $name
-      )
-    ) {
-      return $die_on_error
-        ? die($this->error(
-          "<strong>Your name should be between " .
-            self::$name_length[0] .
-            " and " .
-            self::$name_length[1] .
-            " characters long.</strong>"
-        ))
-        : $this->error(
-          "<strong>Your name should be between " .
-            self::$name_length[0] .
-            " and " .
-            self::$name_length[1] .
-            " characters long.</strong>"
-        );
-    }
+      self::where(function ($q) use ($name) {
+        $q->where("name", $name)->orWhere("safe_name", $name);
+      })->exists()
+    )
+      return die(error($errors["taken"]));
 
-    /**
-     * Name characters valid?
-     */
-    if (!Validate::string_matches(self::$name_regex, $name)) {
-      return $die_on_error
-        ? die($this->error(
-          "<strong>Your name should only contain letters, numbers, dashes and underscores.</strong>"
-        ))
-        : $this->error(
-          "<strong>Your name should only contain letters, numbers, dashes and underscores.</strong>"
-        );
-    }
+    # Former name of someone else?
+    if (
+      $include_former_names &&
+      Change::where("type", "name")
+      ->where("previous_value", $name)
+      ->whereNot("user_id", $this->id)
+      ->first()
+    )
+      return die(error($errors["taken"]));
 
-    /**
-     * In use already?
-     */
-    if (self::name_is_taken($name)) {
-      return $die_on_error
-        ? die($this->error(
-          "<strong>Your name is not available!</strong> Please choose another one."
-        ))
-        : $this->error(
-          "<strong>Your name is not available!</strong> Please choose another one."
-        );
-    }
-
-    /**
-     * * Name changes
-     * Search through changes of type name and check if the name
-     * is a former name of any user.
-     */
-    if ($include_former_names):
-      /**
-       * @var ?Change
-       */
-      $Change = Change::where("type", "name")
-        ->where("previous_value", $name)
-        ->whereNot("user_id", $this->id)
-        ->first();
-
-      /**
-       * Change available?
-       */
-      if ($Change) {
-        return $die_on_error
-          ? die($this->error(
-            "<strong>Your name is not available!</strong> Please choose another one."
-          ))
-          : $this->error(
-            "<strong>Your name is not available!</strong> Please choose another one."
-          );
-      }
-    endif;
+    # Set the name + safe_name for this instance!
+    $this->name = $name;
+    $this->safe_name = self::safe_name($name);
   }
 
   /**
    * @param string $name
-   * @return ?User
+   * @return string
    */
-  public static function name_is_taken(string $name)
+  public static function safe_name(string $name)
   {
-    $UserExists = self::where(function ($q) use ($name) {
-      $q->where("name", $name)->orWhere("safe_name", $name);
-    })->first();
-
-    return $UserExists;
-  }
-
-  /**
-   * Create safe name for database use
-   *
-   * @param string $name The name
-   * @return string The name as safe formated
-   */
-  public static function create_safe_name(string $name)
-  {
-    /**
-     * Escape name
-     */
-    $name = strtolower(htmlspecialchars($name));
 
     /**
      * Replace all whitespace and dashes with underscores
@@ -894,12 +758,29 @@ class User extends Justin
     $safe_name = preg_replace($regex_pattern, "_", $name);
     $counter = 1;
 
+    # Append a number after the users safe_name, as it should be unique.
     while (User::where("safe_name", $safe_name)->exists()) {
       $safe_name = $safe_name . "_" . $counter;
       $counter++;
     }
 
     return $safe_name;
+  }
+
+  /**
+   * @param string $password
+   * @return void|string
+   *
+   * NOTE: May die on error.
+   */
+  public function set_password_invalid(string $password, bool $die_on_error = true)
+  {
+
+    # Set some validation if wanted. I think the user can decide
+    # for themselves, if their password should be secure or not.
+    # I don't see it as my task to force them 🙂
+
+    $this->pw_bcrypt = self::encrypt_password($password);
   }
 
   /**
@@ -1643,12 +1524,17 @@ class User extends Justin
   }
 
   /**
-   * @param string $login E-mail or name
+   * Verifies login credentials with either name or e-mail.
+   *
+   * @param string $login
    * @param string $password
    * @return ?User
+   *
+   * NOTE: Might die on error.
    */
-  public static function verify_login(string $login, string $password)
+  public static function verify_login(string $login, string $password, bool $die = false)
   {
+
     /**
      * @var User
      */
@@ -1656,13 +1542,13 @@ class User extends Justin
       $q->where("name", $login)->orWhere("email", $login);
     })->first();
 
-    if (!$User) {
-      return null;
-    }
+    # No user found?
+    if (!$User)
+      return $die ? die(error("<strong>No! 🙂‍↔️</strong>")) : null;
 
-    if (!self::password_is_matching($password, $User->pw_bcrypt)) {
-      return null;
-    }
+    # Password doesn't decrypt hash?
+    if (!self::decrypt_password($password, $User->pw_bcrypt))
+      return $die ? die(error("<strong>No! 🙂‍↔️</strong>")) : null;
 
     return $User;
   }
@@ -2211,6 +2097,9 @@ TEXT;
 
   // ? >>>>>>>>>>>>>>>>> NOTIFICATIONS >>>>>>>>>>>>>>>>>>>>>>
 
+  /**
+   * @return HasMany<Notification>
+   */
   public function notifications()
   {
     return $this->hasMany(Notification::class);
@@ -2227,21 +2116,19 @@ TEXT;
   }
 
   /**
-   * Counts all the notifications that a user has that are older
-   * than the checked_notifications_at value from the settings.
-   *
-   * @return int The count
+   * @return int
    */
   public function unread_notifications_count()
   {
-    $last_checked = $this->settings->checked_notifications_at;
+
+    $last_checked = $this->settings->checked_notifications_at ?? "2000-01-01 01:01:01";
 
     return $this->notifications()
       ->where("created_at", ">", $last_checked)
       ->count();
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> SQUADS >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ? >>>>>>>>>>>>>>>>>>>>> SQUADS >>>>>>>>>>>>>>>>>>>>>>>>>
 
   /**
    * @return ?Squad
@@ -3072,33 +2959,24 @@ TEXT;
   }
 
   /**
-   * Gets the changes left for which passed for a given user
-   * @return mixed
+   * Users can do some changes to their settings for just a set
+   * amount. This function checks, if the User has available a
+   * "change" to the given type.
+   *
+   * @param string $of
+   * @return ?int
    */
-  public function changes_left(string $which, int $user_id): mixed
+  public function changes_left(string $of)
   {
-    $db = new DBM();
 
-    if ($which === "name") {
-      $change = "name_changes_left";
-    }
-    if ($which === "birthday") {
-      $change = "birthday_changes_left";
-    }
-    if ($which === "wipe") {
-      $change = "account_wipes_left";
-    }
+    $which = match ($of) {
+      "name" => "name_changes_left",
+      "birthday" => "birthday_changes_left",
+      "wipe" => "account_wipes_left",
+      default => null,
+    };
 
-    $stmt = $db->select(
-      "SELECT $change FROM user_settings WHERE user_id = ?",
-      [$user_id]
-    );
-
-    if (!$stmt) {
-      return false;
-    }
-
-    return $stmt->$change;
+    return $which ? $this->settings->$which : null;
   }
 
   /**
@@ -3147,31 +3025,18 @@ TEXT;
   }
 
   /**
+   * @param string $password
+   * @param string $hash
    * @return bool
    */
   public static function decrypt_password(
     string $password,
     string $hash,
-    bool $make_md5 = true
+    bool $md5 = true
   ) {
-    $md5_password = $make_md5 ? md5($password) : $password;
 
-    if (!password_verify($md5_password, $hash)) {
-      return false;
-    }
-
-    return true;
-  }
-
-  /**
-   * @return bool
-   */
-  public static function password_is_matching(
-    string $password,
-    string $hash,
-    bool $make_md5 = true
-  ) {
-    return self::decrypt_password($password, $hash, $make_md5);
+    $md5_password = $md5 ? md5($password) : $password;
+    return password_verify($md5_password, $hash);
   }
 
   /**

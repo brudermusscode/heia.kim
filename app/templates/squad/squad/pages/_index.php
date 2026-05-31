@@ -1,11 +1,9 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadFeedItem;
 
 /**
- * @var User $CurrentUser
  * @var Squad $Squad
  * @var string $base_url
  * @var string $mode
@@ -25,7 +23,7 @@ use Bruder\Heiakim\Model\Squad\SquadFeedItem;
 
   <div column-wrapper>
 
-    <?php if ($Squad->is_private() && !$CurrentUser->sqcan_take_action_in($Squad)) { ?>
+    <?php if ($Squad->is_private() && !CurrentUser->sqcan_take_action_in($Squad)) { ?>
 
     <?php } else { ?>
       <div column=small fl fldircol gap=mid hide-tablet>

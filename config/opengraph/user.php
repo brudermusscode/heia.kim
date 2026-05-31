@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
+use Heiakim\Model\User;
 
 if (CURRENT_PAGE === "u") {
   /**

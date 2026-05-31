@@ -2,15 +2,15 @@
 
 require_once dirname(__DIR__) . "/vendor/autoload.php";
 
-use Bruder\Heiakim\Job\CreateDefaultProfile;
-use Bruder\Heiakim\Job\Mailing\BirthdayWishes;
-use Bruder\Heiakim\Job\Mailing\LongTimeNoSee;
-use Bruder\Heiakim\Job\Mailing\PremiumEnds;
-use Bruder\Heiakim\Job\RedisCacheLeaderboardDevelopment;
-use Bruder\Heiakim\Job\RemoveOpenOrders;
-use Bruder\Heiakim\Job\SaveCurrentRanks;
-use Bruder\Heiakim\Job\RemovePremium;
-use Bruder\Heiakim\Job\RestrictFrozenAccounts;
+use Heiakim\Job\CreateDefaultProfile;
+use Heiakim\Job\Mailing\BirthdayWishes;
+use Heiakim\Job\Mailing\LongTimeNoSee;
+use Heiakim\Job\Mailing\PremiumEnds;
+use Heiakim\Job\RedisCacheLeaderboardDevelopment;
+use Heiakim\Job\RemoveOpenOrders;
+use Heiakim\Job\SaveCurrentRanks;
+use Heiakim\Job\RemovePremium;
+use Heiakim\Job\RestrictFrozenAccounts;
 
 /**
  * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -21,7 +21,7 @@ use Bruder\Heiakim\Job\RestrictFrozenAccounts;
 /**
  * Initialize database connection.
  */
-new Bruder\Database\Database;
+new Heiakim\Database\Database;
 
 // (new CreateDefaultProfile)->execute();
 

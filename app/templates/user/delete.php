@@ -1,13 +1,5 @@
 <?php
 
-use Bruder\Heiakim\Controller\UsersController;
-
 require _root() . "/config/get_requirements.php";
 
-/**
- * @var Request $Request
- */
-
-$Controller = (new UsersController($_POST))->delete();
-
-exit($Controller);
+exit(\Heiakim\Controller\Controller::call(__FILE__, __DIR__));

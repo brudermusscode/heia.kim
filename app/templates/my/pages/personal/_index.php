@@ -11,7 +11,7 @@
           <div fl gap align-items=center justify-content=space-between>
             <div fl gap align-items=center>
               <picture size=midler circled>
-                <?php $CurrentUser->image(); ?>
+                <?php CurrentUser->image(); ?>
               </picture>
               <div posrel>
                 <p text bold><?= __("Picture") ?></p>
@@ -40,7 +40,7 @@
             </div>
 
             <div>
-              <p text std bold><?= $CurrentUser->name; ?></p>
+              <p text std bold><?= CurrentUser->name; ?></p>
               <p text std><?= __("Public username") ?></p>
             </div>
           </div>
@@ -62,10 +62,12 @@
 
             <div>
               <p text bold>
-                <?= $CurrentUser->settings->birthday ? date_format(date_create($CurrentUser->settings->birthday), 'd. F Y') : 'Birthday'; ?>
+                <?= CurrentUser->settings->birthday
+                  ? date_format(date_create(CurrentUser->settings->birthday), 'd. F Y')
+                  : 'Birthday'; ?>
               </p>
               <p text>
-                <?= $CurrentUser->settings->birthday ? __("Birthday") : __("Add your birthday for surprises!"); ?>
+                <?= CurrentUser->settings->birthday ? __("Birthday") : __("Add your birthday for surprises!"); ?>
               </p>
             </div>
           </div>
@@ -80,17 +82,17 @@
         <div fl gap align-items=center justify-content=space-between>
           <div fl gap align-items=center>
 
-            <?php if ($CurrentUser->country !== "xx") { ?>
+            <?php if (CurrentUser->country !== "xx") { ?>
 
               <div fl style=width:3.2em; justify-content=center>
                 <picture size=std circled>
-                  <img src="<?= IMAGE . "/country-flags/$CurrentUser->country.svg"; ?>" loading=lazy />
+                  <img src="<?= IMAGE . "/country-flags/" . CurrentUser->country . ".svg"; ?>" loading=lazy />
                 </picture>
               </div>
 
               <div fl fldircol gap=smoler>
                 <p text std bold>
-                  <?= $CurrentUser->country_string(); ?>
+                  <?= CurrentUser->country_string(); ?>
                 </p>
                 <p text slight><?= __("Country can not be changed") ?></p>
               </div>
@@ -134,14 +136,14 @@
               <mi wide>alternate_email</mi>
             </div>
 
-            <?php if (!filter_var($CurrentUser->email, FILTER_VALIDATE_EMAIL)) { ?>
+            <?php if (!filter_var(CurrentUser->email, FILTER_VALIDATE_EMAIL)) { ?>
               <div>
                 <p text std bold>E-mail address</p>
                 <p text>Add your e-mail address for recovery</p>
               </div>
             <?php } else { ?>
               <div>
-                <p text std bold><?= $CurrentUser->email; ?></p>
+                <p text std bold><?= CurrentUser->email; ?></p>
                 <p text>Connected e-mail address</p>
               </div>
             <?php } ?>

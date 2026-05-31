@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Beatmap;
+namespace Heiakim\Model\Beatmap;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Justin;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\User;
 
 class BeatmapRequest extends Justin
 {

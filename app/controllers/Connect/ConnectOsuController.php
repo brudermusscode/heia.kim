@@ -1,12 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Connect;
+namespace Heiakim\Controller\Connect;
 
-use Bruder\Application\Application;
-use Bruder\Http\Request;
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Connect\ConnectOsu;
-use Bruder\Heiakim\Model\Vendor\Osu;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Connect\ConnectOsu;
+use Heiakim\Model\Vendor\Osu;
 
 class ConnectOsuController extends Controller
 {
@@ -41,13 +39,13 @@ class ConnectOsuController extends Controller
     /**
      * If user is logged, already having a connection?
      */
-    if ($this->CurrentUser && $this->CurrentUser->osu)
+    if (CurrentUser && CurrentUser->osu)
       return $this->error("<strong>You have connected your account already.</strong>");
 
     /**
      * Append user etc.
      */
-    $this->params->CurrentUser = $this->CurrentUser;
+    $this->params->CurrentUser = CurrentUser;
 
     return (new ConnectOsu)->new($escaped_params);
   }
@@ -71,13 +69,13 @@ class ConnectOsuController extends Controller
     /**
      * If user is logged, already having a discord connection?
      */
-    if (!$this->CurrentUser)
+    if (!CurrentUser)
       return $this->error("!NOT_LOGGED");
 
     /**
      * Remove the connection.
      */
-    $this->CurrentUser->osu->delete();
+    CurrentUser->osu->delete();
 
     return $this->success("<strong>Connection removed!</strong>");
   }
@@ -101,25 +99,15 @@ class ConnectOsuController extends Controller
     /**
      * User logged?
      */
-    if ($this->CurrentUser)
+    if (CurrentUser)
       return $this->error("!ALREADY_LOGGED");
 
     /**
      * Append user etc.
      */
-    $this->params->CurrentUser = $this->CurrentUser;
+    $this->params->CurrentUser = CurrentUser;
     $escaped_params->return_uri = "login";
 
     return (new ConnectOsu)->login($escaped_params);
-  }
-
-  /**
-   * Serialize GET or POST parameters
-   *
-   * @return object
-   */
-  private function sanitize_request(array $params)
-  {
-    return $this->serialize_request_params([], $params, []);
   }
 }

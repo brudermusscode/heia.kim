@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Model\User;
+namespace Heiakim\Model\User;
 
-use Bruder\Http\Request;
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Beatmap\Set;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Http\Request;
+use Heiakim\Justin;
+use Heiakim\Model\Beatmap\Set;
+use Heiakim\Model\User;
 
 class UserSettingsPremium extends Justin
 {

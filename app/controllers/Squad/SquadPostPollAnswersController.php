@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Squad;
+namespace Heiakim\Controller\Squad;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Squad\SquadPost;
-use Bruder\Heiakim\Model\Squad\SquadPostPollAnswer;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadPostPollAnswer;
 
 class SquadPostPollAnswersController extends Controller
 {
@@ -22,7 +22,7 @@ class SquadPostPollAnswersController extends Controller
     );
 
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       respect_social_exclusion: true,
     );
 
@@ -34,7 +34,7 @@ class SquadPostPollAnswersController extends Controller
     /**
      * Authorize the user to interact with the SquadPost.
      */
-    $this->CurrentUser->sqauthorize_content_interaction($Post);
+    CurrentUser->sqauthorize_content_interaction($Post);
 
     return (new SquadPostPollAnswer)->new($this->params);
   }
@@ -60,7 +60,7 @@ class SquadPostPollAnswersController extends Controller
     );
 
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       respect_social_exclusion: true,
     );
 
@@ -69,7 +69,7 @@ class SquadPostPollAnswersController extends Controller
      */
     $PollAnswer = SquadPostPollAnswer::findOrReturn($this->params->id);
 
-    $this->CurrentUser->sqauthorize_content_touch($PollAnswer);
+    CurrentUser->sqauthorize_content_touch($PollAnswer);
 
     return $PollAnswer->remove($this->params);
   }

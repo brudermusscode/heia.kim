@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Trait;
+namespace Heiakim\Trait;
 
-use Bruder\I18n\I18n;
-use Bruder\Application\Cookie;
+use Heiakim\I18n\I18n;
+use Heiakim\Application\Cookie;
 
 trait Translation
 {

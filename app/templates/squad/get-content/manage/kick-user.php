@@ -2,27 +2,26 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-use Bruder\Time\Time;
+use Heiakim\Http\Request;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
+use Heiakim\Time\Time;
 
 /**
- * @var User $CurrentUser
  * @var Request $Request
  */
 
 /**
  * User has permissions?
  */
-if (!$CurrentUser?->sqcan("manage", "users"))
+if (!CurrentUser?->sqcan("manage", "users"))
   exit($Request->error("!NO_PERMISSIONS"));
 
 /**
  * @var Squad
  */
-$Squad = $CurrentUser->squad;
+$Squad = CurrentUser->squad;
 
 /**
  * @var int
@@ -43,9 +42,9 @@ $User = $Member->user;
  * Check up on permissions of the user.
  */
 if (
-  $User->is($CurrentUser)
-  || $CurrentUser->is_squad_chief() && $User->is_squad_chief()
-  || !$CurrentUser->is_squad_chief()
+  $User->is(CurrentUser)
+  || CurrentUser->is_squad_chief() && $User->is_squad_chief()
+  || !CurrentUser->is_squad_chief()
   && (
     $Member->can("manage", "users", in: $Squad)
   )

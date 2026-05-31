@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Connect;
+namespace Heiakim\Controller\Connect;
 
-use Bruder\Http\Request;
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Connect\ConnectGoogle;
-use Bruder\Heiakim\Model\Vendor\Google;
+use Heiakim\Http\Request;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Connect\ConnectGoogle;
+use Heiakim\Model\Vendor\Google;
 
 class ConnectGoogleController extends Controller
 {
@@ -40,13 +40,13 @@ class ConnectGoogleController extends Controller
     /**
      * If user is logged, already having a google connection?
      */
-    if ($this->CurrentUser && $this->CurrentUser->google)
+    if (CurrentUser && CurrentUser->google)
       return $this->error("<strong>You have connected your account to Google already.</strong>");
 
     /**
      * Append user etc.
      */
-    $escaped_params->CurrentUser = $this->CurrentUser;
+    $escaped_params->CurrentUser = CurrentUser;
 
     return (new ConnectGoogle)->new($escaped_params);
   }
@@ -70,13 +70,13 @@ class ConnectGoogleController extends Controller
     /**
      * If user is logged, already having a discord connection?
      */
-    if (!$this->CurrentUser)
+    if (!CurrentUser)
       return $this->error("!NOT_LOGGED");
 
     /**
      * Remove the connection.
      */
-    $this->CurrentUser->google->delete();
+    CurrentUser->google->delete();
 
     return $this->success("<strong>Connection removed!</strong>");
   }
@@ -100,25 +100,15 @@ class ConnectGoogleController extends Controller
     /**
      * User logged?
      */
-    if ($this->CurrentUser)
+    if (CurrentUser)
       return $this->error("!ALREADY_LOGGED");
 
     /**
      * Append user etc.
      */
-    $escaped_params->CurrentUser = $this->CurrentUser;
+    $escaped_params->CurrentUser = CurrentUser;
     $escaped_params->return_uri = "login";
 
     return (new ConnectGoogle)->login($escaped_params);
-  }
-
-  /**
-   * Serialize GET or POST parameters
-   *
-   * @return object
-   */
-  private function sanitize_request(array $params)
-  {
-    return $this->serialize_request_params([], $params, []);
   }
 }

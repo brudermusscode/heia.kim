@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Vendor;
+namespace Heiakim\Model\Vendor;
 
 interface VendorInterface
 {

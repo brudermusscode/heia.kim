@@ -1,12 +1,12 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Connect\ConnectDiscord;
+use Heiakim\Time\Time;
+use Heiakim\Model\Connect\ConnectDiscord;
 
 /**
  * @var ?ConnectDiscord
  */
-$Discord = $CurrentUser->discord;
+$Discord = CurrentUser->discord;
 
 ?>
 

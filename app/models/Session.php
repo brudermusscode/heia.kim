@@ -1,14 +1,17 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Geo\Geo;
-use Bruder\Utils\Utils;
-use Bruder\Application\Cookie;
-use Bruder\Application\CurrentUser;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Trait\HasDefaultUser;
+use Heiakim\Justin;
+use Heiakim\Geo\Geo;
+use Heiakim\Utils\Utils;
+use Heiakim\Application\Cookie;
+use Heiakim\Application\CurrentUser;
+use Heiakim\Application\Session as ApplicationSession;
+use Heiakim\Http\Request;
+use Heiakim\Model\User;
+use Heiakim\Trait\HasDefaultUser;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Session extends Justin
 {
@@ -42,160 +45,39 @@ class Session extends Justin
    * @var array
    */
   public static $persistent_cookies = [
-    "__uid__",
-    "__utk__",
+    "__user_id",
+    "__user_token",
   ];
 
   /**
-   * Default values to start a session with
-   *
-   * @var object
+   * @param User $User
+   * @return User
    */
-  protected static $default_values = [
-    "id" => 0,
-    "priv" => 0,
-    "clan_id" => 0,
-    "clan_priv" => 0,
-    "image" => 'default',
-    "privacy" => [
-      "accepts_policies" => false
-    ]
-  ];
-
-  /**
-   * Just needs the user_id to passed with the $params object.
-   *
-   * @param object $params
-   * @return object
-   */
-  public function new(object $params)
+  public function new(User $User)
   {
-    $User = null;
 
     /**
-     * @var ?User
+     * @var self
      */
-    if (!empty($params->user_id))
-      $User = User::find($params->user_id ?? 0);
-    else if (!empty($params->login) && !empty($params->password)) {
+    $Session = self::make();
 
-      /**
-       * Login params empty?
-       * ! Error
-       */
-      if (!$params->login || !$params->password)
-        return $this->error("Fill out all fields!");
+    $ip = Request::get_remote_address();
+    $country_code = Geo::country_code($ip);
+    $token = Utils::random_alpha_token(42);
 
-      $password = htmlspecialchars_decode($params->password);
-      $User = User::verify_login($params->login, $password);
-    }
+    # Set all values.
+    $Session->user_id = $User->id;
+    $Session->token = $token;
+    $Session->remote_address = $ip;
+    $Session->country = $country_code;
 
-    /**
-     * User exists?
-     * ! Error
-     */
-    if (!$User)
-      return $this->error("Your credentials are wrong, try again!");
+    # Save & persist!
+    $Session->save();
+    $Session->persist();
 
-    /**
-     * @var array
-     */
-    $Geo = $params->geodata ?? (new Geo)->get();
+    $success = "<strong>Great to see you again " . $User->name . "!</strong>";
 
-    /**
-     * @var object
-     */
-    $device = Utils::detect_browser();
-
-    /**
-     * Unique token
-     */
-    $token = Utils::random_alpha_token(100);
-
-    /**
-     * @var Session
-     */
-
-    /**
-     * Session with similiar info exists?
-     */
-    $Session = $User->sessions()
-      ->where([
-        "user_id" => $User->id,
-        "os" => $device->os_name ?? null,
-        "os_type" => $device->os_type ?? null,
-        "os_title" => $device->os_title ?? null,
-        "device_type" => $device->device_type ?? null,
-        "city" => $Geo["city"] ?? null,
-        "postal_code" => $Geo["postCode"] ?? null,
-        "country" => $Geo["countryCode"] ?? null,
-      ])
-      ->first();
-
-    /**
-     * Either update the existing session or create a new one.
-     */
-    if ($Session)
-      $Session->update([
-        "token" => $token,
-        "remote_address" => $Geo["request"] ?? null,
-        "browser" => $device->browser_name ?? null,
-        "browser_version" => $device->browser_version ?? null,
-        "deleted_at" => null,
-      ]);
-    else
-      $Session = $User->sessions()
-        ->create([
-          "token" => $token,
-          "remote_address" => $Geo["request"] ?? null,
-          "browser" => $device->browser_name ?? null,
-          "browser_version" => $device->browser_version ?? null,
-          "os" => $device->os_name ?? null,
-          "os_type" => $device->os_type ?? null,
-          "os_title" => $device->os_title ?? null,
-          "device_type" => $device->device_type ?? null,
-          "city" => $Geo["city"] ?? null,
-          "postal_code" => $Geo["postCode"] ?? null,
-          "country" => $Geo["countryCode"] ?? null,
-          "region" => $Geo["region"] ?? null,
-          "continent" => null,
-          "timezone" => $Geo["timezone"] ?? null,
-          "updated_at" => null,
-        ]);
-
-    /**
-     * Get fresh data.
-     */
-    $Session = $Session->fresh();
-
-    /**
-     * Append to PHP session cookie.
-     */
-    $_SESSION["session"] = $Session->data();
-
-    /**
-     * @var array
-     */
-    $return_data = [
-      "user" => [
-        "id" => $User->id,
-        "priv" => $User->priv,
-        "accepts_policies" => $User->privacy->accepts_policies,
-      ]
-    ];
-
-    /**
-     * Set cookies to persist the session.
-     */
-    Cookie::set(CurrentUser::$persistent_cookies[0], $User->id, "+10 months", samesite: "Lax");
-    Cookie::set(CurrentUser::$persistent_cookies[1], $token, "+10 months", samesite: "Lax");
-    Cookie::set(CurrentUser::$persistent_cookies[2], $User->id, "+10 months", samesite: "Lax");
-    Cookie::set(CurrentUser::$persistent_cookies[3], $token, "+10 months", samesite: "Lax");
-
-    return $this->success(
-      "<strong>Welcome back, " . $User->name . "!</strong> Really great to see you again.",
-      data: $return_data,
-    );
+    return $User;
   }
 
   /**
@@ -204,63 +86,72 @@ class Session extends Justin
    */
   public function remove(object $params)
   {
-
-    /**
-     * @var bool
-     */
-    $is_current_session = Cookie::get(CurrentUser::$persistent_cookies[1]) === $params->token;
-
-    /**
-     * Check if the token is the same as the one in the cookie.
-     */
-    if ($is_current_session)
-      CurrentUser::logout();
-
-    /**
-     * Soft-delete the session instance!
-     */
-    $this->update([
-      "deleted_at" => $this->current_timestamp(),
-    ]);
-
-    return $this->success(
-      $is_current_session ? "<strong>See you soon, friend!</strong>" : "<strong>You have been logged out on this device!</strong>",
-      data: ["current_session" => $is_current_session]
-    );
+    return success();
   }
 
   /**
-   * @return User
+   * @param ?int $user_id
+   * @param ?string $token
+   * @return ?self
+   */
+  public static function valid(?int $user_id = null, ?string $token = null)
+  {
+
+    # Anything is missing?
+    if (!$user_id || !$token)
+      return null;
+
+    $Session = self::where([
+      "user_id" => $user_id,
+      "token" => $token
+    ])
+      ->whereNull("deleted_at")
+      ->first();
+
+    $PHPSession = \Heiakim\Application\Session::get("Session");
+
+    if (!$Session || !$PHPSession || !$PHPSession->is($Session))
+      return null;
+
+    return $Session;
+  }
+
+  /**
+   * @return bool
+   */
+  public function persist()
+  {
+
+    # Set User & Session to the PHP session object.
+    $_SESSION["Session"] = $this;
+    $_SESSION["User"] = $this->user->fresh();
+
+    # Reset the persistent cookies.
+    Cookie::set(self::$persistent_cookies[1], $this->token, "+1 year", samesite: "Lax");
+    Cookie::set(self::$persistent_cookies[0], $this->user->id, "+1 year", samesite: "Lax");
+  }
+
+  /**
+   * Cleans up all the cookies and left over sessions that do not
+   * belong to a possible instance.
+   *
+   * @return void
+   */
+  public static function clean_up()
+  {
+
+    foreach (self::$persistent_cookies as $cookie)
+      Cookie::delete($cookie);
+
+    ApplicationSession::remove("User");
+    ApplicationSession::remove("Session");
+  }
+
+  /**
+   * @return BelongsTo<User>
    */
   public function user()
   {
     return $this->belongsTo(User::class);
-  }
-
-  /**
-   * @return object
-   */
-  public function display()
-  {
-    return (object) [
-      "icon_class" => match (strtolower($this->os ?? "")) {
-        "windows" => "ri-microsoft-fill",
-        "linux" => "ri-ubuntu-fill",
-        "ios" => "ri-apple-fill",
-        "android" => "ri-android-fill",
-        "macos" => "ri-finder-fill",
-        default => "ri-mac-fill",
-      },
-      "os_full" => $this->os ?? "Unknown OS " . "-" . ucfirst($this->os_type ?? " N/A"),
-      "browser_icon_class" => match (strtolower($this->browser ?? "")) {
-        "firefox" => "ri-firefox-fill",
-        "chrome" => "ri-chrome-fill",
-        "edge" => "ri-edge-new-fill",
-        "opera" => "ri-opera-fill",
-        "safari",
-        "safari mobile" => "ri-safari-fill",
-        default => "ri-question-fill",
-      },
-    ];
   }
 }

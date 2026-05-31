@@ -1,12 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Beatmap;
+use Heiakim\Model\Beatmap;
 
 /**
- * @var User $CurrentUser
- * @var Beatmap\Set $Set
  * @var Beatmap $Beatmap
+ * @var Beatmap\Set $Set
  */
 
 ?>

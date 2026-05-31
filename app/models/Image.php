@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Trait\HasDefaultUser;
-use Bruder\Heiakim\Trait\DeletableBy;
+use Heiakim\Justin;
+use Heiakim\Trait\HasDefaultUser;
+use Heiakim\Trait\DeletableBy;
 
 class Image extends Justin
 {

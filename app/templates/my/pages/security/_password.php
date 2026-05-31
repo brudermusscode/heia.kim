@@ -1,14 +1,3 @@
-<?php
-
-use Bruder\Heiakim\Model\Authentication;
-use Bruder\Heiakim\Model\User;
-
-/**
- * @var User $CurrentUser
- */
-
-?>
-
 <div content-width=smol>
   <div mt=wide mb fl gap=mid align-items="center" mb=std>
     <?php

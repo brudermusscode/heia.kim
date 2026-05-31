@@ -2,13 +2,12 @@
 
 // TODO: Time to remove Database\Manager class 😂
 
-namespace Bruder\Database;
+namespace Heiakim\Database;
 
 date_default_timezone_set('Europe/Berlin');
 
-use Bruder\Application\Logger;
-use Bruder\Utils\Arr;
-use PDO;
+use Heiakim\Application\Logger;
+use Heiakim\Utils\Arr;
 use Exception;
 
 class Manager

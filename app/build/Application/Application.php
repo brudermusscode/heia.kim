@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Application;
+namespace Heiakim\Application;
 
-use Bruder\Database\Manager as DBM;
-use Bruder\Application\Cookie;
-use Bruder\Time\Time;
+use Heiakim\Database\Manager as DBM;
+use Heiakim\Application\Cookie;
+use Heiakim\Time\Time;
 
 class Application
 {

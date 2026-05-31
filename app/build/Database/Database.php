@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\Database;
+namespace Heiakim\Database;
 
 /**
  * Using the Laravel Eloquernt ORM for easy m8.

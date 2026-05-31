@@ -2,17 +2,16 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Application\Server;
-use Bruder\Heiakim\Enum\SquadPrivilege;
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Score;
+use Heiakim\Application\Server;
+use Heiakim\Enum\SquadPrivilege;
+use Heiakim\Http\Request;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Score;
 
 /**
  * @var Request $Request
- * @var User $CurrentUser
  */
 
 /**
@@ -47,7 +46,7 @@ if (!in_array($type, $types) || $attachment_id && !in_array($attachment_type, $a
 /**
  * User verified?
  */
-authorize(resource: $CurrentUser, respect_social_exclusion: true);
+authorize(resource: CurrentUser, respect_social_exclusion: true);
 
 /**
  * ? squad:post
@@ -60,7 +59,7 @@ if ($type === "squad:post") {
   /**
    * @var Squad
    */
-  $Squad = $CurrentUser->squad;
+  $Squad = CurrentUser->squad;
 } else
   exit($Request->error());
 
@@ -99,11 +98,11 @@ ob_start(); ?>
         <div post-types fl alic gap jucsb>
           <div fl alic gap>
             <picture size=std circled>
-              <?php $CurrentUser->image(); ?>
+              <?php CurrentUser->image(); ?>
             </picture>
             <div flexone>
               <p title text>What's on your mind?</p>
-              <p user text bold><?= $CurrentUser->name(); ?></p>
+              <p user text bold><?= CurrentUser->name(); ?></p>
             </div>
           </div>
 

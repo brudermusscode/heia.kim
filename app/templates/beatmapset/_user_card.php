@@ -1,14 +1,12 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Score;
+use Heiakim\Model\User;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Score;
 
 /**
- * @var User $CurrentUser
- * @var Beatmap\Set $Set
  * @var Beatmap $Beatmap
+ * @var Beatmap\Set $Set
  * @var Score $Score
  */
 

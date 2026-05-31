@@ -2,21 +2,21 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
-use Bruder\Time\Time;
-use Bruder\Heiakim\Enum\SquadPrivilege;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad\SquadUser;
+use Heiakim\Http\Request;
+use Heiakim\Time\Time;
+use Heiakim\Enum\SquadPrivilege;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
  * @var Request $Request
- * @var User $CurrentUser
  */
 
 /**
  * @var Squad
  */
-$Squad = $CurrentUser->squad;
+$Squad = CurrentUser->squad;
 
 /**
  * @var int
@@ -37,7 +37,7 @@ $User = $Member->user;
  * CurrentUser has permissions?
  */
 // TODO: Automatically exit on error inside GET templates.
-if (!$CurrentUser->squad_user->can_edit_permissions_of($Member))
+if (!CurrentUser->squad_user->can_edit_permissions_of($Member))
   exit($Request->error("!NO_PERMISSIONS"));
 
 /**
@@ -126,7 +126,7 @@ include SNOW; ?>
                   /**
                    * @var bool
                    */
-                  $missing_permissions_disable = !$CurrentUser->is_squad_chief()
+                  $missing_permissions_disable = !CurrentUser->is_squad_chief()
                     && in_array($Privilege, [SquadPrivilege::CHIEF, SquadPrivilege::COMMUNITY_MANAGER])
                     || $Privilege === SquadPrivilege::CHIEF;
 

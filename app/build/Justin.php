@@ -1,12 +1,12 @@
 <?php
 
-namespace Bruder;
+namespace Heiakim;
 
-use Bruder\Application\Application;
-use Bruder\Database\Redis;
-use Bruder\File\JSON;
-use Bruder\Heiakim\Trait\Translation as TraitTranslation;
-use Bruder\Heiakim\Trait\ProcessesRequests;
+use Heiakim\Application\Application;
+use Heiakim\Database\Redis;
+use Heiakim\File\JSON;
+use Heiakim\Trait\Translation as TraitTranslation;
+use Heiakim\Trait\ProcessesRequests;
 use Illuminate\Database\Eloquent\Model;
 
 class Justin extends Model

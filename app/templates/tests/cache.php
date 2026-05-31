@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Database\Redis;
+use Heiakim\Database\Redis;
 
 $Redis = Redis::connect();
 
-p($Redis->keys('*'));
+pdie($Redis->keys('*'));

@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Restriction;
+namespace Heiakim\Model\Restriction;
 
-use Bruder\Application\Application;
-use Bruder\Http\Request;
-use Bruder\Justin;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Application\Application;
+use Heiakim\Http\Request;
+use Heiakim\Justin;
+use Heiakim\Model\User;
 
 class Restriction extends Justin
 {

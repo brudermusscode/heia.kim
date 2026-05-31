@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Exception;
+namespace Heiakim\Exception;
 
 use Exception;
-use Bruder\Application\Logger;
+use Heiakim\Application\Logger;
 
 class AuthorizationException extends Exception
 {

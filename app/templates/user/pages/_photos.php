@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Image;
+use Heiakim\Model\Image;
 
 ?>
 

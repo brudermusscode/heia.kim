@@ -1,19 +1,19 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Order;
+namespace Heiakim\Model\Order;
 
-use Bruder\Application\Exception;
-use Bruder\Application\Logger;
-use Bruder\Application\Setting;
-use Bruder\Http\Request;
-use Bruder\Justin;
-use Bruder\Heiakim\Enum\Privilege;
-use Bruder\Heiakim\Model\Order;
-use Bruder\Heiakim\Model\Payment\PayPal;
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Connect\ConnectDiscord;
-use Bruder\Utils\Utils;
+use Heiakim\Application\Exception;
+use Heiakim\Application\Logger;
+use Heiakim\Application\Setting;
+use Heiakim\Http\Request;
+use Heiakim\Justin;
+use Heiakim\Enum\Privilege;
+use Heiakim\Model\Order;
+use Heiakim\Model\Payment\PayPal;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
+use Heiakim\Model\Connect\ConnectDiscord;
+use Heiakim\Utils\Utils;
 
 class OrderPaypal extends Justin
 {

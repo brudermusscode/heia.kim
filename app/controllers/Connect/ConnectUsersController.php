@@ -1,14 +1,14 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Connect;
+namespace Heiakim\Controller\Connect;
 
-use Bruder\Application\Application;
-use Bruder\Http\Request;
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Connect\ConnectDiscord;
-use Bruder\Heiakim\Model\Vendor\Discord;
-use Bruder\Heiakim\Model\Connect\Connect;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Application\Application;
+use Heiakim\Http\Request;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Connect\ConnectDiscord;
+use Heiakim\Model\Vendor\Discord;
+use Heiakim\Model\Connect\Connect;
+use Heiakim\Model\User;
 
 class ConnectUsersController extends Controller
 {
@@ -32,7 +32,7 @@ class ConnectUsersController extends Controller
     /**
      * Session valid?
      */
-    if ($this->CurrentUser)
+    if (CurrentUser)
       return $this->error("!ALREADY_LOGGED");
 
     /**
@@ -70,15 +70,5 @@ class ConnectUsersController extends Controller
     $escaped_params = $this->serialize_request_params([], $params, []);
 
     return (new Discord)->auth($escaped_params);
-  }
-
-  /**
-   * Serialize GET or POST parameters
-   *
-   * @return object
-   */
-  private function sanitize_request(array $params)
-  {
-    return $this->serialize_request_params([], $params, []);
   }
 }

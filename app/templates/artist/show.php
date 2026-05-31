@@ -1,11 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\Artist;
-use Bruder\Heiakim\Model\User;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\Artist;
+use Heiakim\Model\User;
 
 /**
  * @var int
@@ -103,7 +99,7 @@ else {
               <div count>
                 <p text std bold><?= $Artist->feedback->count(); ?></p>
               </div>
-              <mbutton submit-closest icon-only size=mid material ripple-effect filled=lighter has-tooltip=bottom <?php if (LOGGED && $CurrentUser->feedback()->where("type", "artist")->where("reference_id", $Artist->id)->count()) echo "active"; ?>>
+              <mbutton submit-closest icon-only size=mid material ripple-effect filled=lighter has-tooltip=bottom <?php if (LOGGED && CurrentUser->feedback()->where("type", "artist")->where("reference_id", $Artist->id)->count()) echo "active"; ?>>
                 <mi>kid_star</mi>
                 <div ttooltip>
                   <p text std bold>Add to favorites</p>

@@ -1,11 +1,10 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Score;
+use Heiakim\Time\Time;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Score;
 
 /**
- * @var User $CurrentUser
  * @var Score $Score
  */
 
@@ -68,7 +67,7 @@ if (!$Beatmap || !$Score) {
    * @var User
    */
   $ScoreUser = $Score->user;
-  $is_my_score = $ScoreUser->id == $CurrentUser->id;
+  $is_my_score = $ScoreUser->id == CurrentUser->id;
 
   /**
    * Create artists references.

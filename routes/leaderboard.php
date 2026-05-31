@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Application\Router;
+use Heiakim\Application\Router;
 
 /**
  * @var Router $Router

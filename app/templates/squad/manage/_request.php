@@ -1,10 +1,10 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Squad\SquadRequest;
+use Heiakim\Time\Time;
+use Heiakim\Model\Squad\SquadRequest;
+use Heiakim\Model\User;
 
 /**
- * @var User $CurrentUser
  * @var SquadRequest $Request
  */
 

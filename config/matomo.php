@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Application\Cookie;
+use Heiakim\Application\Cookie;
 
 ?>
 

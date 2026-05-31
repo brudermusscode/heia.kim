@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Application;
+namespace Heiakim\Application;
 
-use Bruder\Justin;
+use Heiakim\Justin;
 
 class Feature extends Justin
 {

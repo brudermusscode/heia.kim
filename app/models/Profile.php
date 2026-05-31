@@ -3,12 +3,12 @@
 // TODO: Custom -> Headline fade optional.
 // TODO: Custom -> Move profile picture and name anywhere.
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Http\Request;
-use Bruder\Heiakim\Trait\HasDefaultUser;
-use Bruder\Utils\Arr;
+use Heiakim\Justin;
+use Heiakim\Http\Request;
+use Heiakim\Trait\HasDefaultUser;
+use Heiakim\Utils\Arr;
 
 class Profile extends Justin
 {

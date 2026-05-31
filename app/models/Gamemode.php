@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Utils\Arr;
+use Heiakim\Justin;
+use Heiakim\Utils\Arr;
 
 class Gamemode extends Justin
 {

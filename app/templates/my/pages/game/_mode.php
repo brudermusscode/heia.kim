@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
+use Heiakim\Model\Gamemode;
 
-$preferred_gamemode = $CurrentUser->preferred_mode;
+$preferred_gamemode = CurrentUser->preferred_mode;
 
 /**
  * @var object

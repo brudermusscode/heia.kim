@@ -1,29 +1,22 @@
 <?php
 
-namespace Bruder\Application;
+namespace Heiakim\Application;
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Session;
-use Bruder\Application\Session as ApplicationSession;
+use Heiakim\Model\User;
+use Heiakim\Model\Session;
+use Heiakim\Application\Session as ApplicationSession;
 
 class CurrentUser
 {
-
-  /**
-   * @var array
-   */
-  public static $persistent_cookies = [
-    "__uid__",
-    "__utk__",
-    "__uid__cmb__",
-    "__utk__cmb__",
-  ];
 
   /**
    * @return User
    */
   public static function get()
   {
+
+
+
     return self::is_authenticated()
       ? (object) User::find(
         Session::get("user")["user_id"]

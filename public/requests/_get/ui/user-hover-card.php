@@ -3,12 +3,12 @@
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/define.php";
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/vendor/autoload.php";
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Http\Request;
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Score;
-use Bruder\Utils\Utils;
+use Heiakim\Model\User;
+use Heiakim\Http\Request;
+use Heiakim\Time\Time;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Score;
+use Heiakim\Utils\Utils;
 
 /**
  * @var Request $Request

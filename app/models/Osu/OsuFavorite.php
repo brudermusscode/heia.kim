@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Osu;
+namespace Heiakim\Model\Osu;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Justin;
+use Heiakim\Model\User;
 
 class OsuFavorite extends Justin
 {

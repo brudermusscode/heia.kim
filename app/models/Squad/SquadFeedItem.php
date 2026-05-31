@@ -1,12 +1,12 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Squad;
+namespace Heiakim\Model\Squad;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Image;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Trait\HasDefaultUser;
+use Heiakim\Justin;
+use Heiakim\Model\Image;
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
+use Heiakim\Trait\HasDefaultUser;
 
 class SquadFeedItem extends Justin
 {

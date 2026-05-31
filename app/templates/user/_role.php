@@ -1,10 +1,9 @@
 <?php
 
-use Bruder\Heiakim\Enum\Privilege;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Enum\Privilege;
+use Heiakim\Model\User;
 
 /**
- * @var User $CurrentUser
  * @var User $User
  * @var bool $is_my_profile
  */

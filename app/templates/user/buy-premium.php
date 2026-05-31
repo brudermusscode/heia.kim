@@ -2,8 +2,8 @@
 
 require_once _root() . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Http\Request;
+use Heiakim\Model\User;
 
 /**
  * @var Request $Request
@@ -24,7 +24,7 @@ if (!LOGGED)
 /**
  * @var ?User
  */
-$User = User::find($id) ?? $CurrentUser;
+$User = User::find($id) ?? CurrentUser;
 
 /**
  * User doesn't exist when an id is set?
@@ -36,7 +36,7 @@ if ($id && !$User)
 /**
  * @var bool
  */
-$want_gift = $User->id !== $CurrentUser->id;
+$want_gift = $User->id !== CurrentUser->id;
 
 /**
  * Begin output buffer.

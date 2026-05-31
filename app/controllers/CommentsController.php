@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Http\Request;
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Comment;
+use Heiakim\Http\Request;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Comment;
 
 class CommentsController extends Controller
 {
@@ -21,7 +21,7 @@ class CommentsController extends Controller
     /**
      * User logged?
      */
-    if (!$this->CurrentUser)
+    if (!CurrentUser)
       return $this->error("!NOT_LOGGED");
 
     /**
@@ -33,13 +33,13 @@ class CommentsController extends Controller
     /**
      * User can interact with the community?
      */
-    if ($this->CurrentUser->is_socially_excluded())
+    if (CurrentUser->is_socially_excluded())
       return $this->error("!SOCIALLY_EXCLUDED");
 
     /**
      * Append current user to params object.
      */
-    $escaped_params->CurrentUser = $this->CurrentUser;
+    $escaped_params->CurrentUser = CurrentUser;
 
     return (new Comment)->new($escaped_params);
   }
@@ -63,7 +63,7 @@ class CommentsController extends Controller
     /**
      * User logged & verified?
      */
-    if (!$this->CurrentUser)
+    if (!CurrentUser)
       return $this->error("!NOT_LOGGED");
 
     /**
@@ -76,18 +76,8 @@ class CommentsController extends Controller
     /**
      * Append all.
      */
-    $escaped_params->CurrentUser = $this->CurrentUser;
+    $escaped_params->CurrentUser = CurrentUser;
 
     return $Comment->remove($escaped_params);
-  }
-
-  /**
-   * Serialize GET or POST parameters
-   *
-   * @return object
-   */
-  private function sanitize_request(array $params)
-  {
-    return $this->serialize_request_params(["type", "comment_string", "reference_id"], $params, []);
   }
 }

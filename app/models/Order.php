@@ -1,12 +1,12 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Http\Request;
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Order\OrderPaypal;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Trait\HasDefaultUser;
+use Heiakim\Http\Request;
+use Heiakim\Justin;
+use Heiakim\Model\Order\OrderPaypal;
+use Heiakim\Model\User;
+use Heiakim\Trait\HasDefaultUser;
 
 class Order extends Justin
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\File;
+namespace Heiakim\File;
 
-use Bruder\Utils\Arr;
+use Heiakim\Utils\Arr;
 
 class JSON
 {

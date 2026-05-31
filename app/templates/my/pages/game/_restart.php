@@ -1,22 +1,22 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Application\Feature;
+use Heiakim\Time\Time;
+use Heiakim\Application\Feature;
 
 /**
  * @var string $base_url
  */
 
-$wipes_left = $CurrentUser->settings->account_wipes_left;
+$wipes_left = CurrentUser->settings->account_wipes_left;
 $one_month_ts = strtotime("-1 month");
 $current_ts = strtotime(date('Y-m-d H:i:s'));
 $can_wipe = true;
 $time_ago = false;
 
-if ($CurrentUser->settings->account_wiped_at) {
-  $account_wiped_at = strtotime($CurrentUser->settings->account_wiped_at);
+if (CurrentUser->settings->account_wiped_at) {
+  $account_wiped_at = strtotime(CurrentUser->settings->account_wiped_at);
   $can_wipe = !(($current_ts - $account_wiped_at) < ($current_ts - $one_month_ts));
-  $time_ago = Time::ago($CurrentUser->settings->account_wiped_at);
+  $time_ago = Time::ago(CurrentUser->settings->account_wiped_at);
 }
 
 ?>
@@ -41,7 +41,7 @@ if ($CurrentUser->settings->account_wiped_at) {
 <form fl fldircol gap
   data-form="authentication:create"
   data-type="user:wipe"
-  data-redirect="<?= $CurrentUser->link() ?>">
+  data-redirect="<?= CurrentUser->link() ?>">
   <p text std tac mb mt>
     <?php
 

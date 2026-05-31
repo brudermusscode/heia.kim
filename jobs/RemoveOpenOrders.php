@@ -2,13 +2,13 @@
 
 // L::2024-12-15 21:39:01#
 
-namespace Bruder\Heiakim\Job;
+namespace Heiakim\Job;
 
-use Bruder\Job;
-use Bruder\Heiakim\Enum\Privilege;
-use Bruder\Heiakim\Model\Order;
-use Bruder\Heiakim\Model\User;
-use Bruder\Time\Time;
+use Heiakim\Job;
+use Heiakim\Enum\Privilege;
+use Heiakim\Model\Order;
+use Heiakim\Model\User;
+use Heiakim\Time\Time;
 use DateTime;
 
 class RemoveOpenOrders extends Job

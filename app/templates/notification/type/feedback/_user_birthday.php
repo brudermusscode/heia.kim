@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Notification;
+use Heiakim\Model\User;
+use Heiakim\Model\Notification;
 
 /**
  * @var Notification $Notification
@@ -40,7 +40,7 @@ else :
           <div fl gap alic mb=smol>
             <div circled class="notif__element_picture posrel" fl alic jucc>
               <p text mid>🎉</p>
-              <?php if ($CurrentUser->has_birthday()) { ?>
+              <?php if (CurrentUser->has_birthday()) { ?>
                 <div style="overflow: hidden;" align-center-screen>
                   <dotlottie-player src="https://lottie.host/c4710359-746c-42f2-8da3-7dc0c081ee52/YO8TI7K1dJ.json"
                     background="transparent" speed="1" style="width: 100px; height: 100px;" autoplay></dotlottie-player>

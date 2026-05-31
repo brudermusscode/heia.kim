@@ -1,14 +1,13 @@
 <?php
 
-use Bruder\Heiakim\Enum\SquadPrivilege;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-use Bruder\Time\Time;
+use Heiakim\Enum\SquadPrivilege;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad\SquadUser;
+use Heiakim\Time\Time;
 
 /**
- * @var User $CurrentUser
- * @var SquadUser $Member
  * @var User $User
+ * @var SquadUser $Member
  */
 
 ?>
@@ -37,7 +36,7 @@ use Bruder\Time\Time;
    */
   if (!$Member->is_owner()) { ?>
     <div box-floating-actions fl gap=smoler alic jucend>
-      <?php if ($CurrentUser->squad_user->can("manage", "users")) { ?>
+      <?php if (CurrentUser->squad_user->can("manage", "users")) { ?>
         <mbutton
           request-get="squad:get-content:manage:promote-user"
           data-id=<?= $Member->id; ?>
@@ -52,9 +51,9 @@ use Bruder\Time\Time;
       <?php
 
       if (
-        $CurrentUser->sqcan("coordinate", "users")
+        CurrentUser->sqcan("coordinate", "users")
         && !$Member->has_elevated_privileges()
-        || $CurrentUser->is_squad_chief()
+        || CurrentUser->is_squad_chief()
       ) : ?>
 
         <?php if (!$Member->is_restricted()) { ?>
@@ -82,9 +81,9 @@ use Bruder\Time\Time;
         <?php } ?>
       <?php endif; ?>
 
-      <?php if ($CurrentUser->sqcan("manage", "users")) : ?>
+      <?php if (CurrentUser->sqcan("manage", "users")) : ?>
         <div has-inner-prompt=left>
-          <form request="squad:user:kick" posrel responder <?= $CurrentUser->is($User) ? "" : "reload"; ?>>
+          <form request="squad:user:kick" posrel responder <?= CurrentUser->is($User) ? "" : "reload"; ?>>
             <input type=hidden name=id value=<?= $Member->id; ?> />
             <div filled=lighter rounded=mid elevated=wide prompt inner-prompt>
               <div prompt-content fl fldircol gap>
@@ -92,7 +91,7 @@ use Bruder\Time\Time;
                   <div prompt-header fl fldircol gap=smoler>
                     <p text midler bold>Are you sure?</p>
                   </div>
-                  <?php if ($CurrentUser->is($User)) { ?>
+                  <?php if (CurrentUser->is($User)) { ?>
                     <p text><strong>When removing yourself</strong> from the squad, you risk a deplacement for it on the leaderboards.</p>
                   <?php } else { ?>
                     <p text>When removing this user, you risk a deplacement of your squad.</p>

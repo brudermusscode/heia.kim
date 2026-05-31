@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\File;
+namespace Heiakim\File;
 
 use ZipArchive;
 

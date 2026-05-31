@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\User\UserSettingsPremium;
+use Heiakim\Model\User\UserSettingsPremium;
 
 /**
  * @var array

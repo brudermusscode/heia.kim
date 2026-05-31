@@ -1,12 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\User;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\Squad;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\User;
 
 /**
  * @var int

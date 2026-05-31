@@ -1,9 +1,9 @@
 <?php
 
-use Bruder\Database\Manager as DBM;
-use Bruder\Heiakim\Enum\Privilege;
-use Bruder\Heiakim\Model\User;
-use Bruder\Time\Time;
+use Heiakim\Database\Manager as DBM;
+use Heiakim\Enum\Privilege;
+use Heiakim\Model\User;
+use Heiakim\Time\Time;
 
 $db = new DBM;
 

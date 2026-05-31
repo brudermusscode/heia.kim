@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad;
+use Heiakim\Model\Squad;
 
 /**
  * Get Parameter.
@@ -11,7 +11,7 @@ $action = filter_var(get("action"), FILTER_SANITIZE_SPECIAL_CHARS);
 /**
  * @var Squad
  */
-$Squad = $CurrentUser->squad;
+$Squad = CurrentUser->squad;
 
 /**
  * @var string
@@ -22,12 +22,12 @@ if (!$Squad)
   include UNAVAILABLE;
 else {
 
-  $squad_headline = $CurrentUser->squad->headline ?? "default.jpg";
+  $squad_headline = CurrentUser->squad->headline ?? "default.jpg";
 
   /**
    * SquadUser
    */
-  $SquadUser = $CurrentUser->squad_user;
+  $SquadUser = CurrentUser->squad_user;
 
   /**
    * Header

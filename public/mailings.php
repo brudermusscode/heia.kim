@@ -3,7 +3,7 @@
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/vendor/autoload.php";
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/define.php";
 
-use Bruder\Heiakim\Controller\Mailings\MailingsController;
+use Heiakim\Controller\Controller\Mailings\MailingsController;
 
 /**
  * GET Params.

@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Payment;
+namespace Heiakim\Model\Payment;
 
-use Bruder\Application\Application;
-use Bruder\Heiakim\Trait\ProcessesRequests;
+use Heiakim\Application\Application;
+use Heiakim\Trait\ProcessesRequests;
 
 class Payment
 {

@@ -1,13 +1,11 @@
 <?php
 
-use Bruder\Heiakim\Model\Score;
-use Bruder\Heiakim\Model\Artist;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Gamemode;
+use Heiakim\Model\Score;
+use Heiakim\Model\Artist;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Gamemode;
 
 /**
- * @var User $CurrentUser
  * @var Score $Score
  * @var Beatmap $Beatmap
  * @var Artist $Artists
@@ -26,7 +24,7 @@ $mode_mod = Gamemode::convert_gumode_to_mode_mod($current_score_gumode);
 /**
  * @var bool
  */
-$is_my_score ??= $Score->user->is($CurrentUser);
+$is_my_score ??= $Score->user->is(CurrentUser);
 
 /**
  * @var bool
@@ -44,8 +42,8 @@ $is_post ??= false;
 $can_interact_with_squad =
   ($sub ?? null) !== "thread"
   && (
-    ($is_my_score && $CurrentUser->squad)
-    || (!$is_my_score && $Score->user->squad && $Score->user->squad->is_member($CurrentUser))
+    ($is_my_score && CurrentUser->squad)
+    || (!$is_my_score && $Score->user->squad && $Score->user->squad->is_member(CurrentUser))
   );
 
 ?>
@@ -111,7 +109,7 @@ $can_interact_with_squad =
       </a>
     <?php } ?>
 
-    <?php if ($CurrentUser->squad && $CurrentUser->sqcan_take_action_in($CurrentUser->squad) && !$is_post) { ?>
+    <?php if (CurrentUser->squad && CurrentUser->sqcan_take_action_in(CurrentUser->squad) && !$is_post) { ?>
       <div overlay has-tooltip=top
         request-get="ui:squad:posting-machine"
         data-type=squad:post
@@ -197,18 +195,18 @@ $can_interact_with_squad =
         <div divide=line></div>
 
         <!--- Pin to profile --->
-        <form request="user:pin:<?= $CurrentUser->has_pinned($Score) ? "delete" : "create" ?>" reload responder>
+        <form request="user:pin:<?= CurrentUser->has_pinned($Score) ? "delete" : "create" ?>" reload responder>
           <input type=hidden name=id value=<?= $Score->id; ?> />
           <input type=hidden name=type value=score />
           <div submit-closest ripple-effect class=jm__option hoverable>
-            <mi><?= $CurrentUser->has_pinned($Score) ? 'link_off' : 'add_link'; ?></mi>
-            <p text std><?= $CurrentUser->has_pinned($Score) ? 'Unpin from' : 'Pin to'; ?> profile</p>
+            <mi><?= CurrentUser->has_pinned($Score) ? 'link_off' : 'add_link'; ?></mi>
+            <p text std><?= CurrentUser->has_pinned($Score) ? 'Unpin from' : 'Pin to'; ?> profile</p>
           </div>
         </form>
 
         <!--- PREMIUM: Set headline --->
-        <?php if ($CurrentUser->is_premium()) { ?>
-          <?php if ($CurrentUser->settings->headline != $Score->beatmap->set_id) { ?>
+        <?php if (CurrentUser->is_premium()) { ?>
+          <?php if (CurrentUser->settings->headline != $Score->beatmap->set_id) { ?>
             <form data-form="users:settings,premium,edit" responder>
               <input type=hidden name=headline value=<?= $Score->beatmap->set_id; ?> />
               <div submit-closest ripple-effect class=jm__option hoverable>
@@ -234,7 +232,7 @@ $can_interact_with_squad =
 
         <?php
 
-        $Report = $CurrentUser->reports()
+        $Report = CurrentUser->reports()
           ->where("reference_id", $Score->id)
           ->where("report_type", "score")
           ->count();

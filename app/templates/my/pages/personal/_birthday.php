@@ -1,6 +1,6 @@
 <?php
 
-$birthday_set = $CurrentUser->settings->birthday;
+$birthday_set = CurrentUser->settings->birthday;
 
 ?>
 
@@ -57,7 +57,7 @@ $birthday_set = $CurrentUser->settings->birthday;
 
         <div fl justify-content=center>
           <p text mid bold>
-            <?= date_format(date_create($CurrentUser->settings->birthday), 'd F Y'); ?>
+            <?= date_format(date_create(CurrentUser->settings->birthday), 'd F Y'); ?>
           </p>
         </div>
 

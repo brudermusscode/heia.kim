@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Http;
+namespace Heiakim\Http;
 
-use Bruder\Application\Application;
+use Heiakim\Application\Application;
 
 class Request
 {
@@ -147,32 +147,33 @@ class Request
   }
 
   /**
-   * Return real estate client ip
-   * @return string
+   * Return real estate client IP.
+   *
+   * @return ?string
    */
   public static function get_remote_address()
   {
-    if (!isset($_SERVER['REMOTE_ADDR'])) return NULL;
 
-    $proxy_header = "HTTP_X_FORWARDED_FOR";
-    $trusted_proxies = ["2001:db8::1", "192.168.50.1"];
+    $candidates = [];
 
-    if (in_array($_SERVER['REMOTE_ADDR'], $trusted_proxies)) {
+    if (!empty($_SERVER['HTTP_CF_CONNECTING_IP']))
+      $candidates[] = $_SERVER['HTTP_CF_CONNECTING_IP'];
 
-      if (array_key_exists($proxy_header, $_SERVER)) {
+    if (!empty($_SERVER['HTTP_X_REAL_IP']))
+      $candidates[] = $_SERVER['HTTP_X_REAL_IP'];
 
-        $proxy_list = explode(",", $_SERVER[$proxy_header]);
-        $client_ip = trim(end($proxy_list));
+    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+      foreach (explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']) as $ip)
+        $candidates[] = trim($ip);
 
-        if (filter_var($client_ip, FILTER_VALIDATE_IP)) {
-          return $client_ip;
-        } else {
-          // Validation failed
-        }
-      }
-    }
+    if (!empty($_SERVER['REMOTE_ADDR']))
+      $candidates[] = $_SERVER['REMOTE_ADDR'];
 
-    return $_SERVER['REMOTE_ADDR'];
+    foreach ($candidates as $ip)
+      if (filter_var($ip, FILTER_VALIDATE_IP))
+        return $ip;
+
+    return null;
   }
 
   /**

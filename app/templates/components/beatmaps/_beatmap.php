@@ -1,10 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Time\Time;
+use Heiakim\Time\Time;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Beatmap;
 
 /**
- * @var User $CurrentUser
  * @var Beatmap $Beatmap
  */
 

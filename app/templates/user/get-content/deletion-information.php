@@ -2,7 +2,10 @@
 
 require_once _root() . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
+use Heiakim\Http\Request;
+use Heiakim\Model\Comment;
+use Heiakim\Model\Score;
+use Heiakim\Model\User;
 
 /**
  * @var Request $Request
@@ -23,32 +26,32 @@ ob_start();
 /**
  * @var ?Score
  */
-$Scores = $CurrentUser->scores;
+$Scores = CurrentUser->scores;
 
 /**
  * @var ?User
  */
-$Squad = $CurrentUser->squad;
+$Squad = CurrentUser->squad;
 
 /**
  * @var int
  */
-$community_activity_count = $CurrentUser->threads->count() + $CurrentUser->thread_posts->count();
+$community_activity_count = CurrentUser->threads->count() + CurrentUser->thread_posts->count();
 
 /**
  * @var ?Comment
  */
-$comments_count = $CurrentUser->comments->count();
+$comments_count = CurrentUser->comments->count();
 
 /**
  * @var ?User
  */
-$Followers = $CurrentUser->followers;
+$Followers = CurrentUser->followers;
 
 /**
  * @var ?User
  */
-$Followings = $CurrentUser->followings;
+$Followings = CurrentUser->followings;
 
 /**
  * @var bool

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\Heiakim\Enum;
+namespace Heiakim\Enum;
 
 enum SquadPrivilege: int
 {

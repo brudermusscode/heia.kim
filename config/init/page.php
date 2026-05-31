@@ -2,8 +2,8 @@
 
 // TODO: Delete this file.
 
-// use Bruder\Http\Request;
-// use Bruder\Application\Server;
+// use Heiakim\Http\Request;
+// use Heiakim\Application\Server;
 
 // /**
 //  * Get the query string from the currently requested URL.

@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Notification;
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
+use Heiakim\Model\Notification;
 
 /**
  * @var Notification $Notification

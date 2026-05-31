@@ -1,44 +1,48 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Session;
-use Bruder\Application\Feature;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Session;
+use Heiakim\Application\Feature;
+use Heiakim\Model\User;
 
 class SessionsController extends Controller
 {
+
   /**
-   * POST
-   *
    * @return object
    */
   public function create()
   {
 
-    /**
-     * Feature disabled?
-     */
+    # Feature disabled?
     if (!Feature::is_enabled("login"))
-      return $this->error("!FEATURE_DISABLED");
-
+      return error("!FEATURE_DISABLED");
 
     $this->validate_params(
       strict: ["login", "password"],
       optional: [],
     );
 
-    /**
-     * User already logged in?
-     */
     $this->authorize(logged: false);
 
-    return (new Session)->new($this->params);
+    /**
+     * @var ?User
+     */
+    $User = User::verify_login(
+      $this->params->login,
+      $this->params->password,
+      die: true
+    );
+
+    # Create a new Session.
+    $Session = (new Session)->new($User);
+
+    return success(data: $Session);
   }
 
   /**
-   * DELETE
-   *
    * @return string
    */
   public function delete()
@@ -49,41 +53,31 @@ class SessionsController extends Controller
       optional: [],
     );
 
-    /**
-     * User is not logged in?
-     */
     $this->authorize();
 
     /**
      * @var ?Session
      */
-    $Session = $this->CurrentUser
-      ->sessions()
+    $Session = CurrentUser->sessions()
       ->where("token", $this->params->token)
       ->first();
 
-    /**
-     * Session exists?
-     */
-    if (!$Session)
-      return $this->error();
+    # Session doesn't exist or is deleted already?
+    if (!$Session) return error();
 
-    /**
-     * Already deleted?
-     */
-    if ($Session->deleted_at)
-      return $this->error();
+    # As Users can have more than one Session on different
+    # devices, they can delete one that is not the current
+    # one. So not every Session deletion is a logout.
+    $is_current_session = SESSION->is($Session);
 
-    return $Session->remove($this->params);
-  }
+    # Clean up anything related to a current session if the
+    # User has logged out.
+    if ($is_current_session)
+      $Session::clean_up();
 
-  /**
-   * Serialize GET or POST parameters
-   *
-   * @return object
-   */
-  public function serialize_params(array $params)
-  {
-    return $this->serialize_request_params(["login", "password"], $params, ["api", "action", "code", "state"]);
+    # Delete the Session and clean up every relation.
+    $Session->delete();
+
+    return success(data: ["is_current_session" => $is_current_session]);
   }
 }

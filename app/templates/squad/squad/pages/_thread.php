@@ -1,10 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\Thread\Thread;
-use Bruder\Heiakim\Model\Thread\ThreadPost;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Beatmap\Set;
+use Heiakim\Model\Thread\Thread;
+use Heiakim\Model\Thread\ThreadPost;
+use Heiakim\Model\Squad;
+use Heiakim\Time\Time;
+use Heiakim\Model\Beatmap\Set;
 
 /**
  * @var Squad $Squad

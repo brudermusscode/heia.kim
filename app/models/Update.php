@@ -1,7 +1,7 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
+use Heiakim\Justin;
 
 class Update extends Justin {}

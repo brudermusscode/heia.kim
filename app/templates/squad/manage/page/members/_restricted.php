@@ -1,8 +1,9 @@
 <?php
 
+use Heiakim\Model\Squad\SquadUser;
+
 /**
  * @var string $tab
- * @var User $CurrentUser
  */
 
 /**
@@ -15,9 +16,6 @@ $Members = $Squad->restricted_members();
 <div fl fldircol gap=mid>
   <?php
 
-  /**
-   * @var HTML
-   */
   $none = <<<HTML
       <box-model rounded=mid>
         <bm-inr size=wider fl fldircol gap=smol+ alic jucc>

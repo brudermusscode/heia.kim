@@ -1,79 +1,60 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Order;
+namespace Heiakim\Controller\Order;
 
-use Bruder\Application\Application;
-use Bruder\Application\Setting;
-use Bruder\Http\Request;
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Order;
-use Bruder\Heiakim\Model\Order\OrderPaypal;
-use Bruder\Heiakim\Model\User;
-use Bruder\Utils\Utils;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Order;
+use Heiakim\Model\Order\OrderPaypal;
+use Heiakim\Model\User;
 
 class OrderPaypalController extends Controller
 {
 
   /**
-   * POST
-   *
-   * @param array $params
-   * @return object
+   * @return string
    */
-  public function create(array $params)
+  public function create()
   {
-    $escaped_params = $this->serialize_request_params(["months"], $params, ["user_id"]);
 
-    /**
-     * Params valid?
-     */
-    if (!$escaped_params)
-      return $this->error("!FIELDS_MISSING");
+    $this->validate_params(
+      strict: ["months"],
+      optional: ["user_id"],
+    );
 
-    /**
-     * Logged in & verified?
-     */
-    if (!$this->CurrentUser)
-      return $this->error("!NOT_LOGGED");
+    $this->authorize();
 
     /**
      * @var ?User
      */
     $User = User::find($escaped_params->user_id ?? 0);
 
-    /**
-     * @var string
-     */
     $error_message = $User ? "<strong>This user is currently socially excluded.</strong> Wait for them to be reintegrated." : "!SOCIALLY_EXCLUDED";
 
-    /**
-     * Both users are verified?
-     */
-    if ($this->CurrentUser->is_socially_excluded() || $User && $User->is_socially_excluded())
+    # Any of the Users is socially excluded?
+    if (CurrentUser->is_socially_excluded() || $User && $User->is_socially_excluded())
       return $this->error($error_message);
 
-    /**
-     * Append necessary params.
-     */
-    $this->params->CurrentUser = $this->CurrentUser;
+    # Append params.
+    $this->params->CurrentUser = CurrentUser;
 
-    return (new OrderPaypal)->new($escaped_params);
+    return (new OrderPaypal)->new($this->params);
   }
 
   /**
-   * @param array $params
    * @return object
    */
   public function capture(array $params)
   {
-    $escaped_params = $this->serialize_request_params(["id", "capture_url"], $params, []);
-    $this->return->status = 8;
 
-    /**
-     * Logged in & verified?
-     */
-    if (!$this->CurrentUser)
-      return $this->error("!NOT_LOGGED");
+
+    $this->validate_params(
+      strict: ["id", "capture_url"],
+      optional: ["user_id"],
+    );
+
+    $this->authorize();
+
+    $this->return->status = 8;
 
     /**
      * Params valid?
@@ -84,7 +65,7 @@ class OrderPaypalController extends Controller
     /**
      * @var ?Order
      */
-    $Order = $this->CurrentUser
+    $Order = CurrentUser
       ->orders()
       ->whereHas("paypal")
       ->find($escaped_params->id);
@@ -93,15 +74,5 @@ class OrderPaypalController extends Controller
       return $this->error();
 
     return $Order->paypal->capture($escaped_params);
-  }
-
-  /**
-   * Serialize GET or POST parameters
-   *
-   * @return object
-   */
-  private function sanitize_request(array $params)
-  {
-    return $this->serialize_request_params([], $params, []);
   }
 }

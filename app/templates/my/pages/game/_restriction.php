@@ -1,13 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Restriction\Restriction;
-use Bruder\Heiakim\Model\Restriction\RestrictionAppeal;
-use Bruder\Time\Time;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\Restriction\Restriction;
+use Heiakim\Model\Restriction\RestrictionAppeal;
+use Heiakim\Time\Time;
 
 /**
  * User is not restricted?
@@ -19,12 +14,12 @@ else {
   /**
    * @var ?Restriction
    */
-  $Restriction = $CurrentUser->current_restriction();
+  $Restriction = CurrentUser->current_restriction();
 
   /**
    * @var int
    */
-  $restrictions_count = $CurrentUser->restrictions()->count();
+  $restrictions_count = CurrentUser->restrictions()->count();
 
   /**
    * @var string
@@ -43,12 +38,12 @@ else {
   /**
    * @var string
    */
-  $frozen_at = $CurrentUser->frozen_at;
+  $frozen_at = CurrentUser->frozen_at;
 
   /**
    * @var ?DateTime
    */
-  $freeze_ends = $is_frozen ? (new DateTime($CurrentUser->frozen_at))->modify("+5 days") : null;
+  $freeze_ends = $is_frozen ? (new DateTime(CurrentUser->frozen_at))->modify("+5 days") : null;
 
   /**
    * @var ?string
@@ -59,13 +54,13 @@ else {
    * @var ?RestrictionAppeal
    */
   $Appeal =
-    $CurrentUser->current_appeal()
-    ?? $CurrentUser->current_appeal_after_restriction_waiting_period();
+    CurrentUser->current_appeal()
+    ?? CurrentUser->current_appeal_after_restriction_waiting_period();
 
   /**
    * @var bool
    */
-  $reviewing_appeal = $CurrentUser->appeal_being_reviewed();
+  $reviewing_appeal = CurrentUser->appeal_being_reviewed();
 
 ?>
 
@@ -109,7 +104,7 @@ else {
               restricted mode.
             </p>
 
-            <?php if (!$Appeal && !$CurrentUser->current_appeal_declined()) { ?>
+            <?php if (!$Appeal && !CurrentUser->current_appeal_declined()) { ?>
               <?php if ($freeze_time_left && !RESTRICTED) { ?>
                 <p text midler bold><strong><?= Time::left($freeze_ends->format("Y-m-d H:i:s"), true); ?></strong></p>
 
@@ -134,7 +129,7 @@ else {
     /**
      * User is not yet restricted.
      */
-    if (!$CurrentUser->is_restricted()) { ?>
+    if (!CurrentUser->is_restricted()) { ?>
 
       <div fl gap alistart>
         <div class=pl-icon outlined fl jucc alic circled>
@@ -217,12 +212,12 @@ else {
 
 
     <!--- AUTOMATIC RESTRICTION LOCKED --->
-    <div fl gap <?php if (!$CurrentUser->is_restricted()) echo "slighter"; ?>>
+    <div fl gap <?php if (!CurrentUser->is_restricted()) echo "slighter"; ?>>
       <div class=pl-icon outlined fl jucc alic circled>
         <mi midler>raven</mi>
       </div>
 
-      <?php if (!$CurrentUser->is_restricted()) { ?>
+      <?php if (!CurrentUser->is_restricted()) { ?>
 
         <p text flexone tac pinline24>
           <?php if (!$Appeal) { ?>
@@ -243,7 +238,7 @@ else {
         /**
          * @var Restriction
          */
-        $Restriction = $CurrentUser->current_restriction();
+        $Restriction = CurrentUser->current_restriction();
 
       ?>
 
@@ -268,7 +263,7 @@ else {
 
 
     <!--- APPEAL NOW --->
-    <?php if ($CurrentUser->is_restricted()) { ?>
+    <?php if (CurrentUser->is_restricted()) { ?>
       <div fl gap alistart>
         <div class=pl-icon outlined fl jucc alic circled>
           <mi midler>rate_review</mi>
@@ -281,7 +276,7 @@ else {
           /**
            * @var ?RestrictionAppeal
            */
-          $DeclinedAppeal = $CurrentUser->declined_appeal();
+          $DeclinedAppeal = CurrentUser->declined_appeal();
 
           if (!$DeclinedAppeal) { ?>
 
@@ -290,7 +285,7 @@ else {
             /**
              * @var ?string
              */
-            $appeal_locked = $CurrentUser->appeal_locked();
+            $appeal_locked = CurrentUser->appeal_locked();
 
             if ($appeal_locked) { ?>
               <mbutton background=follow color=dark-green material size=mid has-icon=left disabled>
@@ -298,7 +293,7 @@ else {
                 <p text bold>Appeal locked for <?= $appeal_locked; ?></p>
               </mbutton>
             <?php } else { ?>
-              <?php if (!$CurrentUser->current_appeal_after_restriction_waiting_period()) { ?>
+              <?php if (!CurrentUser->current_appeal_after_restriction_waiting_period()) { ?>
                 <mbutton background=follow color=dark-green material size=mid has-icon=left data-action="popup:open"
                   data-href="/user/appeal/create">
                   <mi>edit</mi>

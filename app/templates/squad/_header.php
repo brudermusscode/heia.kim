@@ -1,11 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
-use Bruder\Time\Time;
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
+use Heiakim\Time\Time;
 
 /**
- * @var User $CurrentUser
  * @var Squad $Squad
  */
 
@@ -125,7 +124,7 @@ use Bruder\Time\Time;
 
   <div pn-options>
 
-    <?php switch ($CurrentUser->available_action_for($Squad)):
+    <?php switch (CurrentUser->available_action_for($Squad)):
       case "is_member": ?>
         <a href="/manage/squad/leave">
           <mbutton pn-option material icon-only size=mid outlined has-tooltip=right>
@@ -210,7 +209,7 @@ use Bruder\Time\Time;
       </mbutton>
     </a>
 
-    <?php if ($Squad->is($CurrentUser->squad)) { ?>
+    <?php if ($Squad->is(CurrentUser->squad)) { ?>
       <a pn-option href="<?= $base_url; ?>/threads" disabled>
         <mbutton material icon-only size=mid background=clean has-tooltip=right
           <?php display_active($page, ["threads", "thread"]); ?>>
@@ -245,7 +244,7 @@ use Bruder\Time\Time;
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, COMPOSE BUTTON ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, --->
 
-<?php if ($CurrentUser->sqcan_take_action_in($Squad) && $CurrentUser->squad->is($Squad)) { ?>
+<?php if (CurrentUser->sqcan_take_action_in($Squad) && CurrentUser->squad->is($Squad)) { ?>
   <mode-menu>
     <jump-menu mm-menu filled="lighter" elevated color="dynamic">
       <div jm-inr>

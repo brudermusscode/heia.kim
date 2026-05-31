@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Mail;
+namespace Heiakim\Mail;
 
-use Bruder\Application\Logger;
+use Heiakim\Application\Logger;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class Mail

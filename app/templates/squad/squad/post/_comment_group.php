@@ -1,11 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad\SquadPostComment;
-use Bruder\Time\Time;
+use Heiakim\Model\Squad\SquadPostComment;
+use Heiakim\Time\Time;
 
 /**
  * @var array $Group
- * @var User $CurrentUser
  * @var SquadPostComment $Comment
  */
 

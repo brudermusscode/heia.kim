@@ -2,10 +2,10 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Heiakim\Model\Report;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Model\Report;
+use Heiakim\Model\User;
 
-authorize(resource: $CurrentUser);
+authorize(resource: CurrentUser);
 
 $id   = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
 $type = filter_input(INPUT_GET, "type", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -24,7 +24,7 @@ $Reference = Report::find_reference_or_die($type, $id);
 /**
  * @var ?Report
  */
-$Report = $CurrentUser
+$Report = CurrentUser
   ->reports()
   ->where("reference_id", $id)
   ->where("report_type", $type)
@@ -39,7 +39,7 @@ if ($Report)
 /**
  * Content belongs to the action taking user?
  */
-if ($CurrentUser->is($Reference instanceof User ? $Reference : $Reference?->user))
+if (CurrentUser->is($Reference instanceof User ? $Reference : $Reference?->user))
   request_error("<strong>Why you want report urself? 😒</strong>", die: true);
 
 /**

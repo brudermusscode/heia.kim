@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Image;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Image;
 
 class ImagesController extends Controller
 {
@@ -46,18 +46,8 @@ class ImagesController extends Controller
      */
     $Image = Image::findOrReturn($this->params->id, "<strong>Could not find that image!</strong>");
 
-    $this->CurrentUser->authorize_content_touch($Image);
+    CurrentUser->authorize_content_touch($Image);
 
     return $Image->remove($this->params);
-  }
-
-  /**
-   * Serialize parameters.
-   *
-   * @return object
-   */
-  private function sanitize_request(array $params)
-  {
-    return $this->serialize_request_params([], $params, []);
   }
 }

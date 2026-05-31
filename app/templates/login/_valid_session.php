@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Application\Feature;
+use Heiakim\Application\Feature;
 
 /**
  * @var bool

@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Model\User;
+namespace Heiakim\Model\User;
 
-use Bruder\Justin;
-use Bruder\Application\Logger;
-use Bruder\Heiakim\Model\User;
-use Bruder\Utils\Utils;
+use Heiakim\Justin;
+use Heiakim\Application\Logger;
+use Heiakim\Model\User;
+use Heiakim\Utils\Utils;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Interfaces\ImageInterface;
 use Intervention\Image\Interfaces\EncodedImageInterface;
@@ -164,7 +164,7 @@ class UserSettings extends Justin
      * Catch any upload error in advance.
      */
     if (isset($params->files["error"]) && $params->files["error"] > 0)
-      die($this->error(\Bruder\File\Upload::error($params->files["error"])));
+      die($this->error(\Heiakim\File\Upload::error($params->files["error"])));
 
     /**
      * Temporary image is not available?

@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Artist;
-use Bruder\Heiakim\Model\Gamemode;
+use Heiakim\Model\User;
+use Heiakim\Model\Artist;
+use Heiakim\Model\Gamemode;
 
 /**
  * @var int
@@ -38,7 +38,7 @@ $User = User::find($id);
 /**
  * @var bool
  */
-$is_my_profile = $User->is($CurrentUser);
+$is_my_profile = $User->is(CurrentUser);
 
 /**
  * User doesn't exist?

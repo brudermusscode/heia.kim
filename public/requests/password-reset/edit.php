@@ -2,7 +2,7 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Heiakim\Controller\PasswordResetsController;
+use Heiakim\Controller\Controller\PasswordResetsController;
 
 $request = (new PasswordResetsController)->edit($_POST);
 

@@ -1,13 +1,3 @@
-<?php
-
-use Bruder\Heiakim\Model\User;
-
-/**
- * @var User $CurrentUser
- */
-
-?>
-
 <div fl gap=mid alic>
   <?php include TEMPLATE . "/my/_back_button.php"; ?>
 
@@ -31,10 +21,10 @@ use Bruder\Heiakim\Model\User;
         <p text>Save images you upload in a history like a photo gallery, which can be displayed on your profile.</p>
       </div>
 
-      <toggle-switch submit-closest mt=smol toggled=<?= $CurrentUser->privacy->image_history ? "true" : "false"; ?>>
+      <toggle-switch submit-closest mt=smol toggled=<?= CurrentUser->privacy->image_history ? "true" : "false"; ?>>
         <div class="toggle_switch__inr">
           <div class="toggle_switch__switcher"></div>
-          <input type="hidden" name="image_history" value="<?= $CurrentUser->privacy->image_history; ?>" />
+          <input type="hidden" name="image_history" value="<?= CurrentUser->privacy->image_history; ?>" />
           <div fl fldirrow justify-content="center">
             <div fl fldirrow justify-content="space-between" align-items="center" style="width:calc(100% - .8em);">
             </div>

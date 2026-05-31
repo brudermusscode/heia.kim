@@ -1,13 +1,13 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Session;
-use Bruder\Application\Cookie;
+use Heiakim\Time\Time;
+use Heiakim\Model\Session;
+use Heiakim\Application\Cookie;
 
 /**
  * @var ?Session
  */
-$Session = $CurrentUser->sessions()
+$Session = CurrentUser->sessions()
   ->where("id", $id)
   ->first();
 

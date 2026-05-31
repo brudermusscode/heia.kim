@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\APIGateway\User;
+namespace Heiakim\APIGateway\User;
 
-use Bruder\Gateway;
-use Bruder\Http\Http;
+use Heiakim\Gateway;
+use Heiakim\Http\Http;
 
 class LogsGateway extends Gateway
 {
@@ -46,8 +46,8 @@ class LogsGateway extends Gateway
         break;
 
       /**
-         * Model invalid?
-         */
+       * Model invalid?
+       */
       default:
         return $this->error("Invalid Model: " . $this->params->model);
         break;

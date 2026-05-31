@@ -13,7 +13,7 @@ require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/vendor/autoload.php";
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/define.php";
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/init/i18n.php";
 
-use Bruder\Http\CSRF;
+use Heiakim\Http\CSRF;
 
 /**
  * If there is no maintenance mode enabled and the current user is
@@ -21,8 +21,6 @@ use Bruder\Http\CSRF;
  */
 if (!MAINTENANCE && !in_array($CurrentUser->id, [1, 2, 3, 4, 8]))
   header("location: /home");
-
-$csrf_token = CSRF::create_token();
 
 /**
  * Sanitizes the output for non DEV environments. I don't know if
@@ -40,7 +38,6 @@ include TEMPLATE . "/global/_sanitize_html_output.php";
   <meta charset="UTF-8" />
   <link rel="canonical" href="<?= HOME_URL; ?>" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="csrf_token" content="<?= $csrf_token; ?>" />
 
   <!--- Tell IE to render webpage for edge --->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">

@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Authorization;
+namespace Heiakim\Authorization;
 
-use Bruder\Exception\AuthorizationException;
-use Bruder\Heiakim\Enum\SquadPrivilege;
+use Heiakim\Exception\AuthorizationException;
+use Heiakim\Enum\SquadPrivilege;
 
 class SquadGuard implements PermissionGuardInterface
 {

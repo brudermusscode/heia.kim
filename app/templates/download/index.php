@@ -1,8 +1,6 @@
 <?php
 
-/**
- * @var User $CurrentUser
- */
+$from = filter_input(INPUT_GET, "from", FILTER_SANITIZE_SPECIAL_CHARS);
 
 ?>
 
@@ -47,19 +45,19 @@
       </tipp-box>
 
       <div fl gap=smol alic>
-        <?php if (LOGGED) { ?>
-          <a href="<?= $CurrentUser->link(); ?>">
+        <?php if (LOGGED) : ?>
+          <a href="<?= CurrentUser->link(); ?>">
             <mbutton material size=mid>
               <p text>Later</p>
             </mbutton>
           </a>
-        <?php } else { ?>
+        <?php else : ?>
           <a href="/">
             <mbutton material size=mid>
               <p text>Back</p>
             </mbutton>
           </a>
-        <?php } ?>
+        <?php endif; ?>
 
         <a href="/Apps/Setup/heiakimSetup.exe" target="_blank" extern>
           <mbutton has-icon=left material size=mid background=follow color=dark-green>
@@ -79,7 +77,7 @@
 </verify-container>
 
 <?php if (LOGGED) { ?>
-  <a href="<?= $CurrentUser->link(); ?>" page sub>
+  <a href="<?= CurrentUser->link(); ?>" page sub>
     <div next elevated=wide>
       <mi wide color=green>check</mi>
     </div>

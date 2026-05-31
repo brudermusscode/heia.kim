@@ -1,12 +1,12 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\Connect\ConnectDiscord;
+use Heiakim\Time\Time;
+use Heiakim\Model\Connect\ConnectGoogle;
 
 /**
  * @var ?ConnectGoogle
  */
-$Google = $CurrentUser->google;
+$Google = CurrentUser->google;
 
 ?>
 

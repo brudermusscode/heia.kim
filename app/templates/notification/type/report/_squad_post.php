@@ -1,13 +1,8 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Report;
-use Bruder\Heiakim\Model\Squad\SquadPost;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Time\Time;
+use Heiakim\Model\Report;
+use Heiakim\Model\Squad\SquadPost;
 
 /**
  * @var ?SquadPost
@@ -17,7 +12,7 @@ $Post = $Notification->reference;
 /**
  * @var ?Report
  */
-$Report = $CurrentUser
+$Report = CurrentUser
   ->reports()
   ->where([
     "report_type" => "squad:post",

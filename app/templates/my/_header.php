@@ -1,15 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\Squad\SquadUser;
 
 $title_w_desc = [
   "overview" => [
-    __("Hey") . ", $CurrentUser->name",
+    __("Hey") . ", " . CurrentUser->name,
     __("Welcome to the account manager"),
     "dashboard"
   ],
@@ -137,7 +132,7 @@ $title_w_desc = [
 
 
     <!--- PREMIUM --->
-    <?php if ($CurrentUser->is_premium()) { ?>
+    <?php if (CurrentUser->is_premium()) { ?>
       <div class=sm__featured outlined fl fldircol>
         <div class=sm__label hide-shrinked>
           <p text smol bold ttup timestamp><?= PREMIUM_NAME; ?></p>
@@ -163,7 +158,7 @@ $title_w_desc = [
 
       <?php
 
-      $Squad = $CurrentUser->squad;
+      $Squad = CurrentUser->squad;
 
       if (!$Squad) {
 
@@ -185,7 +180,7 @@ $title_w_desc = [
         /**
          * @var ?SquadUser
          */
-        $SquadUser = $CurrentUser->squad_user;
+        $SquadUser = CurrentUser->squad_user;
 
       ?>
 

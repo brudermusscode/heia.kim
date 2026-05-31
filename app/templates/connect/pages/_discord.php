@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Controller\Connect\ConnectDiscordController;
+use Heiakim\Controller\Controller\Connect\ConnectDiscordController;
 
 /**
  * Retrieve the Data from the vendor API.

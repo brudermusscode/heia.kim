@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Job\Mailing;
+namespace Heiakim\Job\Mailing;
 
-use Bruder\Job;
-use Bruder\Heiakim\Model\User;
-use Bruder\Utils\Utils;
-use Bruder\Mail\Mail;
+use Heiakim\Job;
+use Heiakim\Model\User;
+use Heiakim\Utils\Utils;
+use Heiakim\Mail\Mail;
 use Illuminate\Support\Carbon;
 
 class BirthdayWishes extends Job

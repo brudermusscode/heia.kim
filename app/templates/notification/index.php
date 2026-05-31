@@ -1,15 +1,11 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Notification;
+use Heiakim\Model\User;
+use Heiakim\Model\Notification;
 
 require _root() . "/config/get_requirements.php";
 
-/**
- * @var User $CurrentUser
- */
-
-authorize(resource: $CurrentUser);
+authorize(resource: CurrentUser);
 
 /**
  * @var string
@@ -19,13 +15,13 @@ $category = filter_var(GET("category") ?? "all", FILTER_SANITIZE_SPECIAL_CHARS);
 /**
  * Update last opened notifications.
  */
-$CurrentUser->touch_notifications();
+CurrentUser->touch_notifications();
 
 /**
  * @var Notification
  */
 $Notifications =
-  Notification::where("user_id", $CurrentUser->id)
+  Notification::where("user_id", CurrentUser->id)
   ->orWhere([
     "type" => "__system__",
     "user_id" => 0,

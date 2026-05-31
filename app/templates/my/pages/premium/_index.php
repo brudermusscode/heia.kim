@@ -18,7 +18,7 @@
                   <i class="mi" size=mid>format_shapes</i>
                 </p>
                 <p text std>
-                  <?= $CurrentUser->name(); ?>
+                  <?= CurrentUser->name(); ?>
                 </p>
               </div>
               <p text midler>

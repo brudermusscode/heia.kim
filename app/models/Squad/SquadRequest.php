@@ -1,14 +1,14 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Squad;
+namespace Heiakim\Model\Squad;
 
-use Bruder\Justin;
-use Bruder\Application\Exception;
-use Bruder\Application\Logger;
-use Bruder\Heiakim\Enum\SquadPrivilege;
-use Bruder\Heiakim\Model\Notification;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Justin;
+use Heiakim\Application\Exception;
+use Heiakim\Application\Logger;
+use Heiakim\Enum\SquadPrivilege;
+use Heiakim\Model\Notification;
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
 
 class SquadRequest extends Justin
 {

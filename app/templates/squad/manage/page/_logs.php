@@ -1,11 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\User;
+use Heiakim\Model\Squad\SquadFeedItem;
 
 /**
  * @var ?SquadFeedItem
@@ -118,7 +114,7 @@ $Logs = $Squad
               <jump-menu menu-more filled="lighter" elevated color="dynamic">
                 <?php if ($TriggeredUser && $TriggeredUser->squad?->is($Squad)) : ?>
 
-                  <?php if ($CurrentUser->squad_user->can_restrict($TriggeredUser->squad_user)) : ?>
+                  <?php if (CurrentUser->squad_user->can_restrict($TriggeredUser->squad_user)) : ?>
                     <form request="squad:user:update" reload responder>
                       <input type=hidden name=id value=<?= $TriggeredUser->id ?>>
                       <input type=hidden name=clan_priv value=2>
@@ -135,7 +131,7 @@ $Logs = $Squad
 
                 <?php if ($AffectedUser->exists && $AffectedUser->squad?->is($Squad)) : ?>
 
-                  <?php if ($CurrentUser->squad_user->can_restrict($AffectedUser->squad_user)) : ?>
+                  <?php if (CurrentUser->squad_user->can_restrict($AffectedUser->squad_user)) : ?>
                     <form request="squad:user:update" reload responder>
                       <input type=hidden name=id value=<?= $AffectedUser->id ?>>
                       <input type=hidden name=clan_priv value=2>

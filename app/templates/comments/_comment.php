@@ -1,11 +1,10 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Comment;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
+use Heiakim\Model\Comment;
 
 /**
- * @var User $CurrentUser
  * @var Comment $Comment
  */
 
@@ -29,7 +28,7 @@ $is_new ??= false;
     </mbutton>
 
     <jump-menu menu-more filled=lighter elevated color=dynamic>
-      <?php if ($Comment->is_deletable_by($CurrentUser)) { ?>
+      <?php if ($Comment->is_deletable_by(CurrentUser)) { ?>
         <form data-form="comments:remove">
           <div submit-closest class=jm__option hoverable>
             <mi>delete</mi>

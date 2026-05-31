@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad\SquadPostComment;
+use Heiakim\Model\Squad\SquadPostComment;
 
 /**
  * @var SquadPostComment $Comment

@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Enum\Privilege;
+use Heiakim\Enum\Privilege;
 
 $legal_head_slogan = "Join our team";
 $legal_head_title  = "Applications";

@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Application\Application;
+use Heiakim\Time\Time;
+use Heiakim\Application\Application;
 
 $action = $get_params->action ?? "";
 $token = $get_params->token ?? "";
@@ -12,7 +12,7 @@ else if ($action == "error")
   include __DIR__ . "/_error.php";
 else {
 
-  $premium_time_left = Time::left($CurrentUser->donor_end) ?? null;
+  $premium_time_left = Time::left(CurrentUser->donor_end) ?? null;
 
   /**
    * Feature disabled?
@@ -87,7 +87,7 @@ else {
               <p class=name>Upload GIFs</p>
             </div>
             <div class="option">
-              <?php if (!$CurrentUser->discord) { ?>
+              <?php if (!CurrentUser->discord) { ?>
                 <div has-tooltip=bottom>
                   <p class=icon>
                     <mi size=mid color=orange>error</mi>

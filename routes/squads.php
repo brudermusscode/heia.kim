@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Application\Router;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Squad;
+use Heiakim\Application\Router;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Squad;
 
 /**
  * @var Router $Router

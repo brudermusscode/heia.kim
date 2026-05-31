@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Utils\Str;
+use Heiakim\Utils\Str;
 
 ?>
 

@@ -25,14 +25,14 @@
       "app/build/functions.php"
     ],
     "psr-4": {
-      "Bruder\\": "app/build/",
-      "Bruder\\Heiakim\\Authorization\\": "app/authorization/",
-      "Bruder\\Heiakim\\APIGateway\\": "app/APIGateways/",
-      "Bruder\\Heiakim\\Controller\\": "app/controllers/",
-      "Bruder\\Heiakim\\Collection\\": "app/collections/",
-      "Bruder\\Heiakim\\Enum\\": "app/enums/",
-      "Bruder\\Heiakim\\Model\\": "app/models/",
-      "Bruder\\Heiakim\\Trait\\": "app/traits/",
+      "Heiakim\\": "app/build/",
+      "Heiakim\\Authorization\\": "app/authorization/",
+      "Heiakim\\APIGateway\\": "app/APIGateways/",
+      "Heiakim\\Controller\\": "app/controllers/",
+      "Heiakim\\Collection\\": "app/collections/",
+      "Heiakim\\Enum\\": "app/enums/",
+      "Heiakim\\Model\\": "app/models/",
+      "Heiakim\\Trait\\": "app/traits/",
       "Bruder\\Bin\\Classes\\": "bin/classes/"
     }
   }

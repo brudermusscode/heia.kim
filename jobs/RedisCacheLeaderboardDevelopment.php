@@ -1,16 +1,16 @@
 <?php
 
-namespace Bruder\Heiakim\Job;
+namespace Heiakim\Job;
 
-use Bruder\Application\Setting;
-use Bruder\Http\Request;
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Leaderboard;
-use Bruder\Heiakim\Model\App\AppSettings;
-use Bruder\Heiakim\Model\Country;
-use Bruder\Heiakim\Model\User;
-use Bruder\Time\Time;
+use Heiakim\Application\Setting;
+use Heiakim\Http\Request;
+use Heiakim\Justin;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Leaderboard;
+use Heiakim\Model\App\AppSettings;
+use Heiakim\Model\Country;
+use Heiakim\Model\User;
+use Heiakim\Time\Time;
 
 class RedisCacheLeaderboardDevelopment extends Justin
 {

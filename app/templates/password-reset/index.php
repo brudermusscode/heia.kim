@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\PasswordReset;
+use Heiakim\Model\PasswordReset;
 
 /**
  * @var string

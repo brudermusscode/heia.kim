@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\Application;
+namespace Heiakim\Application;
 
 use Exception;
 

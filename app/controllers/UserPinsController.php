@@ -1,17 +1,15 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\User;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\User\UserPin;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\User\UserPin;
 
-class PinsController extends Controller
+class UserPinsController extends Controller
 {
 
   /**
-   * POST
-   *
    * @return string
    */
   public function create()
@@ -22,9 +20,6 @@ class PinsController extends Controller
       optional: [],
     );
 
-    /**
-     * User logged in?
-     */
     $this->authorize();
 
     /**
@@ -40,25 +35,20 @@ class PinsController extends Controller
      */
     $Reference = match ($this->params->type) {
       "score" =>
-      $this->CurrentUser
+      CurrentUser
         ->scores()
         ->find($this->params->reference_id),
       "beatmap" => Beatmap::find($this->params->reference_id),
       default => null,
     };
 
-    /**
-     * Reference doesn't exist?
-     */
-    if (!$Reference)
-      return $this->error();
+    # Reference doesn't exist?
+    if (!$Reference) return error();
 
     return (new UserPin)->new($this->params);
   }
 
   /**
-   * DELETE
-   *
    * @return string
    */
   public function delete()
@@ -69,26 +59,19 @@ class PinsController extends Controller
       optional: [],
     );
 
-    /**
-     * User logged in?
-     */
     $this->authorize();
 
     /**
      * @var ?UserPin
      */
-    $Pin =
-      $this->CurrentUser
-      ->pins()
+    $Pin = CurrentUser->pins()
       ->where("type", $this->params->type)
       ->where("reference_id", $this->params->id)
       ->first();
 
-    /**
-     * Delete it!
-     */
+    # Delete it!
     $Pin?->delete();
 
-    return $this->success("<strong>Pin removed!</strong>");
+    return success("<strong>Pin removed!</strong>");
   }
 }

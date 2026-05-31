@@ -19,10 +19,10 @@
           </div>
 
           <div>
-            <toggle-switch submit-closest mt=smol toggled=<?= $CurrentUser->privacy->is_public ? "true" : "false"; ?>>
+            <toggle-switch submit-closest mt=smol toggled=<?= CurrentUser->privacy->is_public ? "true" : "false"; ?>>
               <div class="toggle_switch__inr">
                 <div class="toggle_switch__switcher"></div>
-                <input type="hidden" name="is_public" value="<?= $CurrentUser->privacy->is_public; ?>" />
+                <input type="hidden" name="is_public" value="<?= CurrentUser->privacy->is_public; ?>" />
                 <div fl fldirrow justify-content="center">
                   <div fl fldirrow justify-content="space-between" align-items="center" style="width:calc(100% - .8em);">
                   </div>

@@ -2,14 +2,14 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Database\Manager as DBM;
-use Bruder\Heiakim\Model\Artist;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
-use Bruder\Http\Request;
-use Bruder\Time\Time;
-use Bruder\Validate\Search;
+use Heiakim\Database\Manager as DBM;
+use Heiakim\Model\Artist;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
+use Heiakim\Http\Request;
+use Heiakim\Time\Time;
+use Heiakim\Validate\Search;
 
 /**
  * @var Request $Request

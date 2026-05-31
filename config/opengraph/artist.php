@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Artist;
+use Heiakim\Model\Artist;
 
 /**
  * Build OpenGraph elements for artist pages.

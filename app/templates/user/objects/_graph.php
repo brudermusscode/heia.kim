@@ -1,7 +1,8 @@
 <?php
 
-use Bruder\Utils\Utils;
-use Bruder\Heiakim\Model\Stat;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Stat;
 
 /**
  * @var User $User

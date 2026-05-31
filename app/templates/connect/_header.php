@@ -3,7 +3,7 @@
 /**
  * Return url based on being logged or not.
  */
-$return_url = LOGGED ? "/u/$CurrentUser->id" : "/home";
+$return_url = LOGGED ? "/u/" . CurrentUser->id : "/home";
 
 ?>
 

@@ -5,7 +5,7 @@
  * looks like one of a real player.
  */
 
-use Bruder\Database\Manager as DBM;
+use Heiakim\Database\Manager as DBM;
 
 $honeyworks_maps = (new DBM)->select(
   "SELECT * FROM maps WHERE artist LIKE '%honeyworks%'",

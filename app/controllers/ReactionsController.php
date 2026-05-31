@@ -1,16 +1,14 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Reaction;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Reaction;
 
 class ReactionsController extends Controller
 {
 
   /**
-   * POST
-   *
    * @return string
    */
   public function create()

@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
 
 /**
  * @var User
@@ -11,13 +11,13 @@ $User = $Member->user;
 /**
  * Whether this is the current user.
  */
-$is_me = $CurrentUser->id === $User->id;
+$is_me = CurrentUser->id === $User->id;
 
 /**
  * If the current user is following this user already, show
  * a different button than the follow button.
  */
-$is_following = LOGGED && $CurrentUser->follows($User);
+$is_following = LOGGED && CurrentUser->follows($User);
 
 ?>
 

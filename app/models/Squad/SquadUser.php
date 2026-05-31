@@ -1,18 +1,18 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Squad;
+namespace Heiakim\Model\Squad;
 
-use Bruder\Justin;
-use Bruder\Application\Exception;
-use Bruder\Application\Logger;
-use Bruder\Heiakim\Authorization\SquadGuard;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Enum\SquadPrivilege;
-use Bruder\Heiakim\Model\Comment;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Image;
-use Bruder\Utils\Arr;
+use Heiakim\Justin;
+use Heiakim\Application\Exception;
+use Heiakim\Application\Logger;
+use Heiakim\Authorization\SquadGuard;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Enum\SquadPrivilege;
+use Heiakim\Model\Comment;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Image;
+use Heiakim\Utils\Arr;
 
 class SquadUser extends Justin
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Report;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Report;
 
 class ReportsController extends Controller
 {

@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Application\Server;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Gamemode;
+use Heiakim\Application\Server;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Gamemode;
 
 /**
  * GET Parameter.
@@ -84,7 +84,7 @@ $append_query_string  = $query ? "?query=$query" : "";
 /**
  * @var bool
  */
-$has_searches = LOGGED && $CurrentUser->searches->count();
+$has_searches = LOGGED && CurrentUser->searches->count();
 
 /**
  * Include header .

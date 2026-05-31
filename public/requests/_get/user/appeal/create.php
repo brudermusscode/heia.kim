@@ -2,11 +2,11 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\Restriction\Restriction;
-use Bruder\Heiakim\Model\Restriction\RestrictionAppeal;
-use Bruder\Heiakim\Model\User;
-use Bruder\Time\Time;
+use Heiakim\Http\Request;
+use Heiakim\Model\Restriction\Restriction;
+use Heiakim\Model\Restriction\RestrictionAppeal;
+use Heiakim\Model\User;
+use Heiakim\Time\Time;
 
 /**
  * @var User $CurrentUser

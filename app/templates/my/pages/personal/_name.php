@@ -1,6 +1,6 @@
 <?php
 
-$name_changes_left = $CurrentUser->changes_left('name', $CurrentUser->id);
+$name_changes_left = CurrentUser->changes_left("name");
 
 ?>
 
@@ -25,8 +25,8 @@ $name_changes_left = $CurrentUser->changes_left('name', $CurrentUser->id);
   <div fl fldircol gap>
     <div input material has-icon>
       <mi>text_fields</mi>
-      <input type="text" name="name" placeholder="Username" autocomplete="false" toggle="username-taken" value="<?= $CurrentUser->name; ?>" data-backup="<?= $CurrentUser->name; ?>" />
-      <input type=hidden data-backup value="<?= $CurrentUser->name; ?>" />
+      <input type="text" name="name" placeholder="Username" autocomplete="false" toggle="username-taken" value="<?= CurrentUser->name; ?>" data-backup="<?= CurrentUser->name; ?>" />
+      <input type=hidden data-backup value="<?= CurrentUser->name; ?>" />
     </div>
 
     <div fl justify-content=end gap>

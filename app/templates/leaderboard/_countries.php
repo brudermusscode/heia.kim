@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Leaderboard;
+use Heiakim\Model\Leaderboard;
 
 /**
  * Countries

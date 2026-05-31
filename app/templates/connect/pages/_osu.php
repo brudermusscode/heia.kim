@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Controller\Connect\ConnectOsuController;
+use Heiakim\Controller\Controller\Connect\ConnectOsuController;
 
 /**
  * Retrieve the Data from the vendor API.

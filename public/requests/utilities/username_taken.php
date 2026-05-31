@@ -2,9 +2,9 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\Change;
+use Heiakim\Model\User;
+use Heiakim\Http\Request;
+use Heiakim\Model\Change;
 
 /**
  * @var Request $Request

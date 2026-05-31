@@ -7,41 +7,7 @@ import * as HTMLElements from "../HTMLElements.js";
 import Overlay from "../elements/Overlay.js";
 
 /**
- * Remove Image
- *
- * @action DELETE
- * @controller ImagesController
- */
-$(document).on("submit", '[data-form="image:delete"]', function (e) {
-  e.preventDefault();
-
-  let formdata = new FormData(this);
-  let button = this.find("[submit-closest]");
-  let image = this.closest("ig-object");
-  let id = image.dataset.id;
-
-  formdata.append("id", id);
-
-  button.disable();
-
-  $.ajax({
-    url: subst(this.dataset.form),
-    method: "POST",
-    data: formdata,
-    success: function (data) {
-      if (data.status) {
-        image.remove();
-      } else {
-        button.enable();
-      }
-
-      Frontend.create_responder(data);
-    },
-  });
-});
-
-/**
- * Create new user
+ * Create a new User.
  *
  * @action CREATE
  * @controller UsersController
@@ -49,30 +15,21 @@ $(document).on("submit", '[data-form="image:delete"]', function (e) {
 $(document).on("submit", '[data-form="user:create"]', function (e) {
   e.preventDefault();
 
-  let formdata = new FormData(this);
-  let page_overlay = document.find("page-loader");
-
   Frontend.load();
 
   $.ajax({
     url: subst(this.dataset.form),
     method: "POST",
-    data: formdata,
+    data: new FormData(this),
     success: function (data) {
-      // Frontend.unload();
-
       if (data.status) {
-        page_overlay.insertAdjacentHTML("beforeend", HTMLElements.ELEMENT_DONE);
-
         if (__page.is_sounds_enabled) Audio.play("[bell-downtoup-audio]");
 
-        let animation = page_overlay.querySelector("dotlottie-player");
-        animation.addEventListener("complete", () => {
-          setTimeout(() => {
-            window.location.replace("/download");
-          }, 1000);
-        });
+        setTimeout(() => {
+          window.location.replace("/download?from=begin");
+        }, 1000);
       } else {
+        Frontend.unload();
         Frontend.create_responder(data);
       }
     },
@@ -110,8 +67,42 @@ $(document).on("submit", '[data-form="user:delete"]', function (e) {
       new Responder.Responder().add(
         document.body,
         data.message,
-        data.status ? "success" : "error"
+        data.status ? "success" : "error",
       );
+    },
+  });
+});
+
+/**
+ * Remove Image
+ *
+ * @action DELETE
+ * @controller ImagesController
+ */
+$(document).on("submit", '[data-form="image:delete"]', function (e) {
+  e.preventDefault();
+
+  let formdata = new FormData(this);
+  let button = this.find("[submit-closest]");
+  let image = this.closest("ig-object");
+  let id = image.dataset.id;
+
+  formdata.append("id", id);
+
+  button.disable();
+
+  $.ajax({
+    url: subst(this.dataset.form),
+    method: "POST",
+    data: formdata,
+    success: function (data) {
+      if (data.status) {
+        image.remove();
+      } else {
+        button.enable();
+      }
+
+      Frontend.create_responder(data);
     },
   });
 });
@@ -158,7 +149,7 @@ $(document).on(
         Frontend.unload();
       },
     });
-  }
+  },
 );
 
 /**
@@ -204,7 +195,7 @@ $(document).on(
         Frontend.unload();
       },
     });
-  }
+  },
 );
 
 /**

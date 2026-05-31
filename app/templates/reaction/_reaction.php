@@ -1,10 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Model\Reaction;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Model\Reaction;
 
 /**
- * @var User $CurrentUser
  * @var Reaction $Reaction
  */
 
@@ -19,7 +17,7 @@ $CurrentReactions = Reaction::where("reaction", $Reaction->reaction)
 /**
  * @var int
  */
-$have_reacted = $CurrentReactions->where("user_id", $CurrentUser->id)->count();
+$have_reacted = $CurrentReactions->where("user_id", CurrentUser->id)->count();
 
 ?>
 

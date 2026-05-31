@@ -1,14 +1,14 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Application\Logger;
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Thread\ThreadPostAttachment;
-use Bruder\Heiakim\Enum\Mod;
-use Bruder\Heiakim\Trait\HasDefaultUser;
+use Heiakim\Application\Logger;
+use Heiakim\Justin;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\User;
+use Heiakim\Model\Thread\ThreadPostAttachment;
+use Heiakim\Enum\Mod;
+use Heiakim\Trait\HasDefaultUser;
 
 class Score extends Justin
 {

@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Enum\Privilege;
+use Heiakim\Model\User;
+use Heiakim\Enum\Privilege;
 
 /**
  * @var User

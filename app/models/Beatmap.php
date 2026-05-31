@@ -1,14 +1,14 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Application\Application;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Justin;
-use Bruder\Heiakim\Enum\BeatmapStatus;
-use Bruder\Heiakim\Model\Beatmap\BeatmapRequest;
-use Bruder\Heiakim\Model\Beatmap\SetArtist;
-use Bruder\Utils\Arr;
+use Heiakim\Application\Application;
+use Heiakim\Model\Gamemode;
+use Heiakim\Justin;
+use Heiakim\Enum\BeatmapStatus;
+use Heiakim\Model\Beatmap\BeatmapRequest;
+use Heiakim\Model\Beatmap\SetArtist;
+use Heiakim\Utils\Arr;
 
 class Beatmap extends Justin
 {

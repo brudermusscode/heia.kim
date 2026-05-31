@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Heiakim\Collection;
+namespace Heiakim\Collection;
 
-use Bruder\Heiakim\Trait\GroupableByUsers;
+use Heiakim\Trait\GroupableByUsers;
 use Illuminate\Database\Eloquent\Collection;
 
 class GroupByUsersCollection extends Collection

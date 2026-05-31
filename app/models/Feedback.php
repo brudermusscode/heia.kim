@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Time\Time;
-use Bruder\Application\Cookie;
-use Bruder\Heiakim\Trait\HasDefaultUser;
+use Heiakim\Justin;
+use Heiakim\Time\Time;
+use Heiakim\Application\Cookie;
+use Heiakim\Trait\HasDefaultUser;
 
 class Feedback extends Justin
 {

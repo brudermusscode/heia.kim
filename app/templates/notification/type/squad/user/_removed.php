@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
 
 /**
  * @var Squad

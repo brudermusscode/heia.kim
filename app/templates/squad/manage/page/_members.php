@@ -1,11 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Enum\SquadPrivilege;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadUser;
+use Heiakim\Enum\SquadPrivilege;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
- * @var User $CurrentUser
  * @var Squad $Squad
  */
 
@@ -76,7 +75,7 @@ use Bruder\Heiakim\Model\Squad\SquadUser;
         </td>
 
         <td colspan=1 fl jucend>
-          <?php if (!$Member->user->is($CurrentUser) && (!$Member->can("manage", "users") || $CurrentUser->is_squad_chief())) : ?>
+          <?php if (!$Member->user->is(CurrentUser) && (!$Member->can("manage", "users") || CurrentUser->is_squad_chief())) : ?>
             <div posrel menu-outer>
               <mbutton material outlined icon-only ripple-effect open-more-menu has-tooltip="bottom">
                 <mi>more_vert</mi>
@@ -97,7 +96,7 @@ use Bruder\Heiakim\Model\Squad\SquadUser;
                 /**
                  * @var bool
                  */
-                $can_manage_user_updates = $CurrentUser->squad_user->can_edit_permissions_of($Member);
+                $can_manage_user_updates = CurrentUser->squad_user->can_edit_permissions_of($Member);
 
                 /**
                  * ? Edit permissions
@@ -120,7 +119,7 @@ use Bruder\Heiakim\Model\Squad\SquadUser;
                 /**
                  * ? Restrict/Set free
                  */
-                if ($CurrentUser->squad_user->can_restrict($Member)) : ?>
+                if (CurrentUser->squad_user->can_restrict($Member)) : ?>
                   <?php if (!$Member->is_restricted()) : ?>
                     <div
                       request-get="squad:get-content:manage:restrict-user"

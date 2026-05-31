@@ -1,15 +1,11 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Comment;
-use Bruder\Heiakim\Model\Score;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Notification;
-use Bruder\Utils\Str;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Model\User;
+use Heiakim\Model\Comment;
+use Heiakim\Model\Score;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Notification;
+use Heiakim\Utils\Str;
 
 /**
  * @var Score
@@ -22,7 +18,7 @@ else :
 
   $AllNotificationsComments = Notification::where("type", "__comment__/score")
     ->where("reference_id", $Score->id)
-    ->whereNot("reference_2_id", $CurrentUser->id)
+    ->whereNot("reference_2_id", CurrentUser->id)
     ->orderBy("created_at", "DESC")
     ->get();
 

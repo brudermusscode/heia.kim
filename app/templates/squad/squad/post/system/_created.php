@@ -1,11 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadFeedItem;
 
 /**
- * @var User $CurrentUser
  * @var User $User
  * @var Squad $Squad
  * @var SquadFeedItem $Item

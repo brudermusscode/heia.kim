@@ -1,10 +1,9 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad\SquadPost;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadFeedItem;
 
 /**
- * @var User $CurrentUser
  * @var SquadPost $Post
  * @var SquadFeedItem $Item
  */
@@ -28,7 +27,7 @@ use Bruder\Heiakim\Model\Squad\SquadFeedItem;
       </form>
     <?php } else { ?>
 
-      <?php if ($CurrentUser->sqcan_touch($Post ?? $Item)) { ?>
+      <?php if (CurrentUser->sqcan_touch($Post ?? $Item)) { ?>
         <div class=jm__option hoverable disabled>
           <mi>edit</mi>
           <p text std>Edit</p>

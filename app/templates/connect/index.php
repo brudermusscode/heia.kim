@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Controller\Connect\ConnectController;
+use Heiakim\Controller\Controller\Connect\ConnectController;
 
 /**
  * Get the type from the url parameter.

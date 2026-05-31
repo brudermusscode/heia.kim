@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Artist;
+use Heiakim\Model\User;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Artist;
 
 /**
  * @var ?Score
@@ -12,7 +12,7 @@ $Score = $Notification->reference;
 /**
  * @var ?Report
  */
-$Report = $CurrentUser->reports()
+$Report = CurrentUser->reports()
   ->where("report_type", "score")
   ->where("reference_id", $Score?->id)
   ->first();

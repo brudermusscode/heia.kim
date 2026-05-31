@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Controller\Connect\ConnectGoogleController;
+use Heiakim\Controller\Controller\Connect\ConnectGoogleController;
 
 /**
  * Retrieve the Data from the vendor API.

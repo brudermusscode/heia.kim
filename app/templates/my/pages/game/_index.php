@@ -1,19 +1,16 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\User;
-use Bruder\Time\Time;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\User;
+use Heiakim\Time\Time;
 
-/**
- * @var User $CurrentUser
- */
 
-$gm = Gamemode::get_gumode_as_text($CurrentUser->preferred_mode);
+$gm = Gamemode::get_gumode_as_text(CurrentUser->preferred_mode);
 
 ?>
 
 <div fl fldircol gap=smol+>
-  <?php if (FROZEN || $CurrentUser->is_restricted()) { ?>
+  <?php if (FROZEN || CurrentUser->is_restricted()) { ?>
     <div fl fldircol gap>
       <a href="<?= "/my/game/restriction"; ?>" sub>
         <box-model style="background:#C9534F;" color=white elevated clickable>
@@ -111,8 +108,8 @@ $gm = Gamemode::get_gumode_as_text($CurrentUser->preferred_mode);
             <p text std>
               <?php
 
-              echo $CurrentUser->settings->account_wiped_at
-                ? "Last restart &middot; <span color=company>" . Time::ago($CurrentUser->settings->account_wiped_at, true) . "</span>"
+              echo CurrentUser->settings->account_wiped_at
+                ? "Last restart &middot; <span color=company>" . Time::ago(CurrentUser->settings->account_wiped_at, true) . "</span>"
                 : __("Wipe all your scores and start fresh");
 
               ?>

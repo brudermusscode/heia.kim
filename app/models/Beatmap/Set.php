@@ -1,14 +1,14 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Beatmap;
+namespace Heiakim\Model\Beatmap;
 
-use Bruder\Application\Application;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Validate\Search;
-use Bruder\Heiakim\Model\Comment;
-use Bruder\Heiakim\Model\Artist;
+use Heiakim\Application\Application;
+use Heiakim\Model\Beatmap;
+use Heiakim\Justin;
+use Heiakim\Model\Gamemode;
+use Heiakim\Validate\Search;
+use Heiakim\Model\Comment;
+use Heiakim\Model\Artist;
 
 class Set extends Justin
 {

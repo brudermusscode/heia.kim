@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Validate\Search;
-use Bruder\Database\Manager as DBM;
+use Heiakim\Justin;
+use Heiakim\Validate\Search;
+use Heiakim\Database\Manager as DBM;
 
 class Artist extends Justin
 {

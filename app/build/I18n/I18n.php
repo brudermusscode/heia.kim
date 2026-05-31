@@ -1,6 +1,6 @@
 <?php
 
-namespace Bruder\I18n;
+namespace Heiakim\I18n;
 
 class I18n
 {

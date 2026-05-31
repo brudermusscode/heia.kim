@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Squad\SquadPost;
-use Bruder\Heiakim\Model\Squad\SquadPostComment;
-use Bruder\Heiakim\Trait\HasDefaultUser;
+use Heiakim\Justin;
+use Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadPostComment;
+use Heiakim\Trait\HasDefaultUser;
 
 class Report extends Justin
 {

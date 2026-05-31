@@ -1,21 +1,20 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\User;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\User\UserSettingsPrivacy;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\User\UserSettingsPrivacy;
 
-class SettingsPrivacyController extends Controller
+class UserSettingsPrivacyController extends Controller
 {
 
   /**
-   * PUT
-   *
    * @return object
    */
   public function update()
   {
 
+    # Merge different params.
     $accepted_params = array_merge(
       [
         "accepts_policies",
@@ -31,13 +30,8 @@ class SettingsPrivacyController extends Controller
       optional: $accepted_params
     );
 
-    /**
-     * User is not logged in?
-     */
     $this->authorize();
 
-    return $this->CurrentUser
-      ->privacy
-      ->edit($this->params);
+    return CurrentUser->privacy->edit($this->params);
   }
 }

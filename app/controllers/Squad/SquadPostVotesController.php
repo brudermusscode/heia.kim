@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Squad;
+namespace Heiakim\Controller\Squad;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Squad\SquadPost;
-use Bruder\Heiakim\Model\Squad\SquadPostVote;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadPostVote;
 
 class SquadPostVotesController extends Controller
 {
@@ -23,7 +23,7 @@ class SquadPostVotesController extends Controller
     );
 
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       respect_social_exclusion: true,
     );
 
@@ -35,7 +35,7 @@ class SquadPostVotesController extends Controller
     /**
      * Authorize the user to interact with the SquadPost.
      */
-    $this->CurrentUser->sqauthorize_content_interaction($this->params->SquadPost);
+    CurrentUser->sqauthorize_content_interaction($this->params->SquadPost);
 
     return (new SquadPostVote)->new($this->params);
   }
@@ -61,14 +61,14 @@ class SquadPostVotesController extends Controller
     );
 
     $this->authorize(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       respect_social_exclusion: true,
     );
 
     /**
      * @var ?SquadPostVote
      */
-    $Vote = $this->CurrentUser
+    $Vote = CurrentUser
       ->squad_post_votes()
       ->where("post_id", $this->params->id)
       ->first();

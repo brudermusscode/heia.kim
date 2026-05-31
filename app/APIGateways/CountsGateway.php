@@ -1,13 +1,13 @@
 <?php
 
-namespace Bruder\Heiakim\APIGateway\Count;
+namespace Heiakim\APIGateway\Count;
 
-use Bruder\Gateway;
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\Beatmap;
-use Bruder\Heiakim\Model\Score;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Gateway;
+use Heiakim\Http\Request;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Score;
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
 
 class CountsGateway extends Gateway
 {

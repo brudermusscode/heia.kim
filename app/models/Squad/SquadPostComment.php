@@ -1,13 +1,13 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Squad;
+namespace Heiakim\Model\Squad;
 
-use Bruder\Justin;
-use Bruder\Application\Exception;
-use Bruder\Application\Logger;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Collection\GroupByUsersCollection;
+use Heiakim\Justin;
+use Heiakim\Application\Exception;
+use Heiakim\Application\Logger;
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
+use Heiakim\Collection\GroupByUsersCollection;
 
 class SquadPostComment extends Justin
 {
@@ -179,6 +179,7 @@ class SquadPostComment extends Justin
    */
   public function remove(object $params)
   {
+
     /**
      * @var User
      */
@@ -200,8 +201,7 @@ class SquadPostComment extends Justin
       /**
        * Update the post's feedback.
        */
-      $this->post
-        ->update_feedback("comments", -1);
+      $this->post->update_feedback("comments", -1);
 
       /**
        * Delete it!

@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\I18n\I18n;
-use Bruder\Application\Cookie;
+use Heiakim\I18n\I18n;
+use Heiakim\Application\Cookie;
 
 /**
  * Does the locale cookie exist? If not, fallback to the default.

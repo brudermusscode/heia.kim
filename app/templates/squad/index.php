@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Squad;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Squad;
 
 /**
  * @var string
@@ -111,7 +111,7 @@ include PAGE_NAVIGATOR;
         </div>
       </a>
 
-      <?php if (!$CurrentUser->squad && !$CurrentUser->is_socially_excluded()) { ?>
+      <?php if (!CurrentUser->squad && !CurrentUser->is_socially_excluded()) { ?>
         <div ripple-effect rounded=mid class="option" create data-action="popup:open" data-href="/squad/new" has-tooltip=bottom>
           <p class=icon><i class="ri-add-fill"></i></p>
           <p class=text><?= __("Create") ?></p>

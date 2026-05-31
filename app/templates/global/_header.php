@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Application\Cookie;
+use Heiakim\Time\Time;
+use Heiakim\Application\Cookie;
 
 $ranked_last_update = Time::ago(APP_SETTING->ranked_updated_at);
 

@@ -2,9 +2,9 @@
 
 // TODO: Remove SEO class.
 
-namespace Bruder\Application;
+namespace Heiakim\Application;
 
-use Bruder\Justin;
+use Heiakim\Justin;
 
 
 class SEO extends Justin

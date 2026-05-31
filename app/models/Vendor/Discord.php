@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Vendor;
+namespace Heiakim\Model\Vendor;
 
-use Bruder\Utils\Utils;
+use Heiakim\Utils\Utils;
 
 class Discord extends Vendor implements VendorInterface
 {

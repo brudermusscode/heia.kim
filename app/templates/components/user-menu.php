@@ -2,18 +2,16 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Application\Cookie;
-use Bruder\Application\CurrentUser;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
+use Heiakim\Application\Cookie;
+use Heiakim\Application\CurrentUser;
+use Heiakim\Model\Session;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
 
 /**
- * @var User $CurrentUser
  * @var ?Squad $CurrentSquad
  * @var ?SquadUser $CurrentSquadUser
  */
-
-// authorize(resource: $CurrentUser);
 
 ob_start(); ?>
 
@@ -24,13 +22,13 @@ ob_start(); ?>
       <div ttooltip>Toggle menu</div>
     </div>
 
-    <a href="<?= $CurrentUser->link(); ?>">
+    <a href="<?= CurrentUser->link(); ?>">
       <mbutton style="padding-right:12px;"
         material size=midler has-image=left background=clean hoverable has-tooltip=top>
         <picture in-menu size=std circled>
-          <?php $CurrentUser->image(); ?>
+          <?php CurrentUser->image(); ?>
         </picture>
-        <?= $CurrentUser->name() ?>
+        <?= CurrentUser->name() ?>
         <div ttooltip>Your Profile</div>
       </mbutton>
     </a>
@@ -41,7 +39,7 @@ ob_start(); ?>
       open-ui-component=notifications
       url="/notification/category/all"
       toggle-user-menu="1800"
-      <?= $CurrentUser->unread_notifications_count() ? "has-notifications" : "" ?>>
+      <?= CurrentUser->unread_notifications_count() ? "has-notifications" : "" ?>>
       <mi></mi>
       <div ttooltip>Notifications</div>
     </mbutton>
@@ -66,10 +64,10 @@ ob_start(); ?>
 
     <?php
 
-    if ($CurrentUser->has_squad()) :
+    if (CurrentUser->has_squad()) :
 
       /**
-       * @var Squad $CurrentUser->squad
+       * @var Squad CurrentUser->squad
        */
 
     ?>
@@ -92,7 +90,7 @@ ob_start(); ?>
     <div dot-divider></div>
 
     <form data-form="session:delete">
-      <input type=hidden name=token value="<?= Cookie::get(CurrentUser::$persistent_cookies[1]); ?>" />
+      <input type=hidden name=token value="<?= Cookie::get(Session::$persistent_cookies[1]); ?>" />
       <mbutton material size=midler submit-closest icon-only hoverable has-tooltip=top>
         <mi>logout</mi>
         <div ttooltip><?= __("Logout"); ?></div>
@@ -188,9 +186,8 @@ ob_start(); ?>
         </div>
 
         <dotlottie-wc
-          src="https://lottie.host/d4242e69-28a6-469c-a497-9101bd6682bf/JLC47Liv8f.lottie"
-          style="width: 220px;height: 220px;margin-bottom:-3.6em;"
-          speed="1"
+          src="https://lottie.host/540f0e28-590a-4eaf-adb5-900b30b91e8f/M2HiBpksQx.lottie"
+          style="width: 180px;height: 180px;margin-bottom:-1.2em;"
           autoplay
           loop></dotlottie-wc>
 

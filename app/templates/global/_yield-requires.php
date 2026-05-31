@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Application\Cookie;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Application\Cookie;
+use Heiakim\Model\User;
 
 ?>
 
@@ -82,11 +82,11 @@ use Bruder\Heiakim\Model\User;
 <script>
   <?php
 
-  $CurrentUser ??= User::guest();
+  $CurrentUser = CurrentUser;
 
-  $name = $CurrentUser->name;
-  $priv = $CurrentUser->priv;
-  $policies_consent = $CurrentUser->privacy->accepts_policies ?? 0;
+  $name = CurrentUser->name;
+  $priv = CurrentUser->priv;
+  $policies_consent = CurrentUser->privacy->accepts_policies ?? 0;
   $policies_consent_page = Cookie::get("POLICIES_CONSENT_STEP") ?? "index";
   $legal_lang = defined("LEGAL_LANG") ? LEGAL_LANG : "en";
 

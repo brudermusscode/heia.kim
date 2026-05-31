@@ -1,12 +1,12 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
 
 /**
- * @var User $CurrentUser
  * @var User $User
  */
+
 ?>
 
 <a href="/u/<?= $User->id; ?>">

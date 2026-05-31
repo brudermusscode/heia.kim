@@ -2,8 +2,8 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
-use Bruder\Heiakim\Model\Authentication;
+use Heiakim\Http\Request;
+use Heiakim\Model\Authentication;
 
 /**
  * @var Request $Request
@@ -30,7 +30,7 @@ if (!$type)
  * @var ?Authentication
  */
 $Authentication =
-  $CurrentUser
+  CurrentUser
   ->authentications()
   ->where("type", $type)
   ->whereNull("deleted_at")
@@ -55,7 +55,7 @@ ob_start();
   responder
   <?= $redirect ? "redirect='$redirect'" : "reload" ?>
   <?= get("update-user-references") ? "update-user-references" : "" ?>>
-  <div content-width=smolest prompt-height>
+  <content smolest prompt-height>
     <box-model prompt elevated rounded="wide" filled=lighter>
       <div prompt-content>
         <div prompt-header>
@@ -67,7 +67,7 @@ ob_start();
         </div>
 
         <div prompt-inner-content fl fldircol gap>
-          <p text std mt tac>We've sent a mail to <strong><?= $CurrentUser->email; ?></strong> with an authentication code.</p>
+          <p text std mt tac>We've sent a mail to <strong><?= CurrentUser->email; ?></strong> with an authentication code.</p>
 
           <div input material has-icon>
             <i color=company>heia &nbsp;-</i>
@@ -103,7 +103,7 @@ ob_start();
         </mbutton>
       </div>
     </box-model>
-  </div>
+    </div>
 </form>
 
 <?php

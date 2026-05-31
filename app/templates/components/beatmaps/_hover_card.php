@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Gamemode;
+use Heiakim\Model\Gamemode;
 
 $beatmap = $Beatmap->data();
 

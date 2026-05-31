@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Time\Time;
+use Heiakim\Time\Time;
 
 foreach ($Notifications as $Notification) {
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Bruder\Heiakim\Model;
+namespace Heiakim\Model;
 
-use Bruder\Justin;
-use Bruder\Heiakim\Model\Reaction\ReactionPackageEmoji;
-use Bruder\Heiakim\Trait\HasDefaultUser;
+use Heiakim\Justin;
+use Heiakim\Model\Reaction\ReactionPackageEmoji;
+use Heiakim\Trait\HasDefaultUser;
 
 class Reaction extends Justin
 {

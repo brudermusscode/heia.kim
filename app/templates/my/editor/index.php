@@ -1,22 +1,21 @@
 <?php
 
-use Bruder\Heiakim\Model\Profile;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Model\Profile;
+use Heiakim\Model\User;
 
 /**
- * @var User $CurrentUser
  * @var bool IS_EDIT_MODE
  */
 
 /**
  * @var Profile
  */
-$Profile = $CurrentUser->profile;
+$Profile = CurrentUser->profile;
 
 /**
  * @var object
  */
-$DecodedProfile = $CurrentUser->decoded_profile();
+$DecodedProfile = CurrentUser->decoded_profile();
 
 /**
  * @var array
@@ -203,7 +202,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
         /**
          * @var array
          */
-        $Column = $CurrentUser->decoded_profile()
+        $Column = CurrentUser->decoded_profile()
           ->sections_visibility[0]
           ?? Profile::$sections_visibility[0];
 
@@ -242,7 +241,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
         /**
          * @var array
          */
-        $Column = $CurrentUser->decoded_profile()
+        $Column = CurrentUser->decoded_profile()
           ->sections_visibility[1]
           ?? Profile::$sections_visibility[1];
 
@@ -281,7 +280,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
         /**
          * @var array
          */
-        $Column = $CurrentUser->decoded_profile()
+        $Column = CurrentUser->decoded_profile()
           ->sections_visibility[2]
           ?? Profile::$sections_visibility[2];
 

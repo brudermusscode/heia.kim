@@ -2,12 +2,12 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/init.php";
 
-use Bruder\Heiakim\APIGateway\Count\BeatmapsGateway;
-use Bruder\Http\Request;
-use Bruder\Heiakim\APIGateway\User\UsersGateway;
-use Bruder\Heiakim\APIGateway\Score\ScoresGateway;
-use Bruder\Heiakim\APIGateway\Count\CountsGateway;
-use Bruder\Heiakim\APIGateway\User\LogsGateway;
+use Heiakim\APIGateway\Count\BeatmapsGateway;
+use Heiakim\Http\Request;
+use Heiakim\APIGateway\User\UsersGateway;
+use Heiakim\APIGateway\Score\ScoresGateway;
+use Heiakim\APIGateway\Count\CountsGateway;
+use Heiakim\APIGateway\User\LogsGateway;
 
 /**
  * APIs are JSON!
@@ -64,7 +64,7 @@ $Data = match ($model) {
   "log",
   "logs" => (new LogsGateway(params: $_GET))->get(),
 
-    /**
+  /**
    * Unknown model.
    * ! Error
    */

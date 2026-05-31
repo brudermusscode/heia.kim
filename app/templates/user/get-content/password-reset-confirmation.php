@@ -2,7 +2,7 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Http\Request;
+use Heiakim\Http\Request;
 
 /**
  * @var Request $Request
@@ -32,7 +32,7 @@ ob_start();
       </div>
 
       <div prompt-inner-content fl fldircol gap>
-        <?php if ($CurrentUser->email) { ?>
+        <?php if (CurrentUser->email) { ?>
           <form request="password-reset:create" responder redirect="/my/security">
             <box-model submit-closest filled clickable>
               <bm-inr size=smol fl gap alistart>

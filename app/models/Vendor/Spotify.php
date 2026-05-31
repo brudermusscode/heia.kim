@@ -1,13 +1,13 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Vendor;
+namespace Heiakim\Model\Vendor;
 
-use Bruder\Model;
-use Bruder\Http\Request;
-use Bruder\Application\Cookie;
-use Bruder\Database\Manager as DBM;
-use Bruder\Justin;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Model;
+use Heiakim\Http\Request;
+use Heiakim\Application\Cookie;
+use Heiakim\Database\Manager as DBM;
+use Heiakim\Justin;
+use Heiakim\Model\User;
 use SpotifyWebAPI;
 use DateTime;
 

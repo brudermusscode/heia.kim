@@ -1,15 +1,14 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadUser;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
-use Bruder\Heiakim\Model\Squad\SquadRequest;
-use Bruder\Heiakim\Enum\SquadPrivilege;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
+use Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Model\Squad\SquadRequest;
+use Heiakim\Enum\SquadPrivilege;
 
 /**
- * @var User $CurrentUser
  * @var Squad $Squad
  */
 
@@ -17,7 +16,7 @@ use Bruder\Heiakim\Enum\SquadPrivilege;
 
 <div page-structure=squad>
 
-  <?php if ($CurrentUser->sqcan("manage", "members") && $CurrentUser->squad->is($Squad)) : ?>
+  <?php if (CurrentUser->sqcan("manage", "members") && CurrentUser->squad->is($Squad)) : ?>
     <div fl jucsb top-actions>
       <div></div>
       <a href="/manage/squad/members">

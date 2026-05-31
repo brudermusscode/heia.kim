@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadPost;
 
 /**
  * @var SquadPost $Post

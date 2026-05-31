@@ -1,15 +1,13 @@
 <?php
 
-namespace Bruder\Heiakim\Controller;
+namespace Heiakim\Controller;
 
-use Bruder\Controller;
+use Heiakim\Controller\Controller;
 
 class SearchesController extends Controller
 {
 
   /**
-   * POST
-   *
    * @return string
    */
   public function create()
@@ -20,21 +18,14 @@ class SearchesController extends Controller
       optional: [],
     );
 
-    /**
-     * User logged in?
-     */
     $this->authorize();
 
-    /**
-     * Create a new search!
-     */
-    $this->CurrentUser
-      ->searches()
-      ->create([
-        "type" => $this->params->type,
-        "search" => $this->params->query,
-      ]);
+    # Create a new Search.
+    CurrentUser->searches()->create([
+      "type" => $this->params->type,
+      "search" => $this->params->query,
+    ]);
 
-    return $this->success();
+    return success();
   }
 }

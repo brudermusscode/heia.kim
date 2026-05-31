@@ -1,42 +1,37 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Squad;
+namespace Heiakim\Controller\Squad;
 
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Squad\SquadFeedItem;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Squad\SquadFeedItem;
 
 class SquadFeedItemsController extends Controller
 {
 
   /**
-   * DELETE
-   *
    * @return object
    */
   public function delete()
   {
 
-    /**
-     * Params valid?
-     */
-    $this->validate_params(["id"]);
+    $this->validate_params(
+      strict: ["id"]
+    );
 
     /**
      * @var ?SquadFeedItem
      */
-    $Item = SquadFeedItem::findOrReturn($this->params->id, "<strong>This feed item doesn't exist!</strong> It might have been deleted.");
+    $Item = SquadFeedItem::findOrReturn(
+      $this->params->id,
+      "<strong>This feed item doesn't exist!</strong> It might have been deleted."
+    );
 
-    /**
-     * SquadUser can interact with this item?
-     */
     $this->can_interact(
-      resource: $this->CurrentUser?->squad_user,
+      resource: CurrentUser?->squad_user,
       item: $Item,
     );
 
-    /**
-     * Delete it!
-     */
+    # Delete it!
     $Item->delete();
 
     return $this->success("<strong>Deleted!</strong>");

@@ -1,7 +1,7 @@
 <?php
 
-use Bruder\Heiakim\Model\User\SettingsPremium;
-use Bruder\Heiakim\Model\User\UserSettingsPremium;
+use Heiakim\Model\User\SettingsPremium;
+use Heiakim\Model\User\UserSettingsPremium;
 
 function format_premium_name_style(string $name)
 {
@@ -9,7 +9,7 @@ function format_premium_name_style(string $name)
 }
 
 $formated_premium_name_style =
-  format_premium_name_style($CurrentUser->premium->premium_name_style ?? "");
+  format_premium_name_style(CurrentUser->premium->premium_name_style ?? "");
 
 ?>
 
@@ -47,8 +47,8 @@ $formated_premium_name_style =
                 <mselect outlined=lighter size=std align=center clickable mselect-type=input-visible>
                   <div class="mselect__inr" fl gap=smol align-items=center>
                     <p mselect-visible-value text bold>
-                      <?php if ($CurrentUser->premium->premium_name_style) { ?>
-                        <span text std bold class="premium-txt-<?= $CurrentUser->premium->premium_name_style; ?>">
+                      <?php if (CurrentUser->premium->premium_name_style) { ?>
+                        <span text std bold class="premium-txt-<?= CurrentUser->premium->premium_name_style; ?>">
                           <?= $formated_premium_name_style; ?>
                         </span>
                       <?php } else { ?>
@@ -89,7 +89,7 @@ $formated_premium_name_style =
                   </mselect-dropdown>
 
                   <input mselect-input type=hidden name=premium_name_style
-                    value=<?= $CurrentUser->premium->premium_name_style; ?>>
+                    value=<?= CurrentUser->premium->premium_name_style; ?>>
                 </mselect>
               </div>
             </div>

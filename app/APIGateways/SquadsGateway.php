@@ -2,8 +2,8 @@
 
 // TODO: Implement Squads API gateway.
 
-namespace Bruder\Heiakim\APIGateway\Squad;
+namespace Heiakim\APIGateway\Squad;
 
-use Bruder\Gateway;
+use Heiakim\Gateway;
 
 class SquadsGateway extends Gateway {}

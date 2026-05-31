@@ -1,6 +1,6 @@
 <?php
 
-use Bruder\Heiakim\Model\Profile;
+use Heiakim\Model\Profile;
 
 /**
  * @var Profile $Profile

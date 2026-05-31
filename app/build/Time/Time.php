@@ -1,8 +1,8 @@
 <?php
 
-namespace Bruder\Time;
+namespace Heiakim\Time;
 
-use Bruder\Heiakim\Trait\Translation;
+use Heiakim\Trait\Translation;
 use DateTime;
 
 class Time

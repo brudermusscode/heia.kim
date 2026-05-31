@@ -12,7 +12,7 @@
 
   <div fl fldircol gap>
 
-    <?php if (!filter_var($CurrentUser->email, FILTER_VALIDATE_EMAIL)) { ?>
+    <?php if (!filter_var(CurrentUser->email, FILTER_VALIDATE_EMAIL)) { ?>
       <a href="/my/personal/mail">
         <box-model filled hoverable>
           <bm-inr size=mid fl gap fl gap alistart>

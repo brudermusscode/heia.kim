@@ -1,11 +1,10 @@
 <?php
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Gamemode;
-use Bruder\Heiakim\Model\Squad;
+use Heiakim\Model\User;
+use Heiakim\Model\Gamemode;
+use Heiakim\Model\Squad;
 
 /**
- * @var User $CurrentUser
  * @var Squad $Squad
  */
 
@@ -22,7 +21,7 @@ $set_appart ??= false;
 /**
  * @var bool
  */
-$is_my_clan = $CurrentUser->squad?->is($Squad);
+$is_my_clan = CurrentUser->squad?->is($Squad);
 
 if ($is_my_clan) {
   $pub_text = __("Your squad");
@@ -35,7 +34,7 @@ if ($is_my_clan) {
     </div>
   TEXT;
 } else if (
-  LOGGED && $CurrentUser->squad_requests()
+  LOGGED && CurrentUser->squad_requests()
   ->where("clan_id", $Squad->id)
   ->where("type", "join")
   ->whereNull("deleted_at")
@@ -111,7 +110,7 @@ if ($is_my_clan) {
           <p text mid bold trimt><?= $Squad->name; ?></p>
           <div fl gap=smol>
 
-            <?php switch ($CurrentUser->available_action_for($Squad)):
+            <?php switch (CurrentUser->available_action_for($Squad)):
               case "is_member": ?>
                 <div class=joinable background=green color=light-green circled has-tooltip=bottom>
                   <mi>check</mi>

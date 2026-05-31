@@ -1,11 +1,11 @@
 <?php
 
-namespace Bruder\Heiakim\Model\Restriction;
+namespace Heiakim\Model\Restriction;
 
-use Bruder\Application\Application;
-use Bruder\Heiakim\Model\User;
-use Bruder\Justin;
-use Bruder\Utils\Utils;
+use Heiakim\Application\Application;
+use Heiakim\Model\User;
+use Heiakim\Justin;
+use Heiakim\Utils\Utils;
 use Verot\Upload\Upload;
 
 class RestrictionAppeal extends Justin

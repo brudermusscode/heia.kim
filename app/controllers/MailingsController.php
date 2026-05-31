@@ -1,10 +1,9 @@
 <?php
 
-namespace Bruder\Heiakim\Controller\Mailings;
+namespace Heiakim\Controller\Mailings;
 
-use Bruder\Http\Request;
-use Bruder\Controller;
-use Bruder\Heiakim\Model\Mailing;
+use Heiakim\Controller\Controller;
+use Heiakim\Model\Mailing;
 
 class MailingsController extends Controller
 {
@@ -32,15 +31,5 @@ class MailingsController extends Controller
       return $this->error("<strong>The mailing does not exist.</strong>");
 
     return $Mailing->touch();
-  }
-
-  /**
-   * Serialize GET or POST parameters
-   *
-   * @return object
-   */
-  private function sanitize_request(array $params)
-  {
-    return $this->serialize_request_params([], $params, []);
   }
 }

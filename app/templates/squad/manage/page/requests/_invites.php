@@ -1,8 +1,8 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad;
-use Bruder\Heiakim\Model\Squad\SquadRequest;
-use Bruder\Time\Time;
+use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadRequest;
+use Heiakim\Time\Time;
 
 /**
  * @var Squad $Squad

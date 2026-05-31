@@ -1,19 +1,15 @@
 <?php
 
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
-use Bruder\Heiakim\Model\Report;
-
-/**
- * @var User $CurrentUser
- */
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
+use Heiakim\Model\Report;
 
 $Comment = $Notification->reference;
 
 /**
  * @var ?Report
  */
-$Report = $CurrentUser
+$Report = CurrentUser
   ->reports()
   ->where([
     "report_type" => "squad_post_comment",

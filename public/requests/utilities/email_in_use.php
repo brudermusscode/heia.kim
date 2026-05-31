@@ -2,8 +2,8 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Bruder\Heiakim\Model\User;
-use Bruder\Validate\Validate;
+use Heiakim\Model\User;
+use Heiakim\Validate\Validate;
 
 if (empty($_POST['email'])) exit(0);
 

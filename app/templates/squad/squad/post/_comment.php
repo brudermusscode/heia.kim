@@ -1,12 +1,11 @@
 <?php
 
-use Bruder\Heiakim\Model\Squad\SquadPost;
-use Bruder\Heiakim\Model\Squad\SquadPostComment;
-use Bruder\Time\Time;
-use Bruder\Heiakim\Model\User;
+use Heiakim\Model\Squad\SquadPost;
+use Heiakim\Model\Squad\SquadPostComment;
+use Heiakim\Time\Time;
+use Heiakim\Model\User;
 
 /**
- * @var User $CurrentUser
  * @var SquadPost $Post
  * @var SquadPostComment $Comment
  */
@@ -65,7 +64,7 @@ $is_new ??= false;
               </mbutton>
 
               <jump-menu menu-more background=dynamic elevated color=dynamic>
-                <?php if ($CurrentUser->is($Comment->user) || $CurrentUser->squad_user?->can_touch($Comment)) { ?>
+                <?php if (CurrentUser->is($Comment->user) || CurrentUser->squad_user?->can_touch($Comment)) { ?>
                   <form request="squad:post:comment:delete" responder=error reload>
                     <input type=hidden name=id value=<?= $Comment->id; ?> />
                     <div submit-closest class=jm__option hoverable>
@@ -73,7 +72,7 @@ $is_new ??= false;
                       <p text std>Delete</p>
                     </div>
                   </form>
-                <?php } else if ($CurrentUser->sqcan_take_action_in($Squad)) { ?>
+                <?php } else if (CurrentUser->sqcan_take_action_in($Squad)) { ?>
                   <div class=jm__option hoverable
                     request-get="report:new"
                     data-id=<?= $Comment->id; ?>
