@@ -28,7 +28,7 @@ class Controller
   /**
    * Params to send to any inheriting Controller.
    */
-  protected array|object $params = [];
+  protected mixed $params = [];
 
   public function __construct(array $params = [], array $files =  [])
   {

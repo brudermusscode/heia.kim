@@ -1,7 +1,9 @@
 @use "../abstract" as *;
 @use "../base" as *;
 
-body[begin] {
+body[begin],
+body[register],
+body[login] {
   background: $dark-01;
 
   main {
@@ -9,46 +11,31 @@ body[begin] {
   }
 }
 
-header[disguised] {
-  position: fixed;
+$header-disguised-height: 100px;
+
+header[begin] {
+  position: sticky;
   top: 0;
-  left: 0;
-  width: 100vw;
-  z-index: $endless-z-index;
+  z-index: 0;
+  height: $header-disguised-height;
+  transition:
+    opacity 0.1s linear,
+    scale 0.6s $cubic;
 
   &[scrolled="true"] {
-    @include themed() {
-      background: t(nav);
-    }
-
-    @extend [elevated];
+    scale: 0.8;
+    opacity: 0.4;
+    z-index: -1;
   }
 }
 
-[disguised-content] {
-  padding-block: 86px 124px;
-}
-
-login {
-  display: flex;
-  content: "";
+content[begin] {
+  min-height: calc(100vh - $header-disguised-height);
   align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 0;
-  padding: 2.4em;
-  background: transparent;
+  padding-block: 24px 62px;
 
-  @media screen and (max-height: 900px) {
+  @media screen and (max-height: 1000px) {
     align-items: flex-start;
-  }
-
-  @media screen and (max-width: 500px) {
-    padding-inline: 0.4em;
   }
 
   .login_left {
@@ -217,4 +204,10 @@ api-outer {
     align-items: flex-start;
     padding-block: 6.2em;
   }
+}
+
+.floating-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
 }

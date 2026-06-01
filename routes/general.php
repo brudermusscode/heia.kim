@@ -16,10 +16,8 @@ $Router->get("/home", "home/index", title: APP_NAME . " ~ " . _env("APP_SLOGAN")
 $Router->get("/home/:sub", "home/index", title: APP_NAME . " ~ " . _env("APP_SLOGAN"));
 $Router->get("/home/get-content/:file_name", "home/get-content/index", return: "JSON");
 
-$Router->get("/login", "login/index", title: "Login | " . APP_NAME);
-
-$Router->get("/register", "register/index", title: "Sign up | " . APP_NAME);
-$Router->get("/register/:sub", "register/index", title: "Sign up | " . APP_NAME);
+$Router->get("/login", "login", title: "Login to " . APP_NAME);
+$Router->get("/register", "register", title: "Sign up to " . APP_NAME);
 
 $Router->get("/password-reset", "password-reset/index", title: "Reset password | " . APP_NAME);
 $Router->get("/password-reset/:token", "password-reset/index", title: "Verify password reset | " . APP_NAME);

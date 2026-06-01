@@ -1,4 +1,4 @@
-<header disguised fl jucc scroll-manipulated>
+<header begin fl alic jucc scroll-manipulated>
   <div main-logo class="main__logo">
     <a href="/home">
       <picture quadrat style="height:3.4em;width:3.4em;" loading>

@@ -4,7 +4,8 @@
   font-style: normal;
   font-weight: 100 300 700;
   font-display: block;
-  src: url(/assets/fonts/material-symbols-rounded.woff2) format("woff");
+  src: url(https://raw.githubusercontent.com/brudermusscode/heia.kim-cdn/master/fonts/material-symbols-rounded.woff2)
+    format("woff");
 }
 
 @font-face {
