@@ -44,8 +44,7 @@ const get_content = async (href, append_to, show_responder, overlay) => {
         if (data.status) {
           if (!data.data) return resolve(data);
 
-          if (show_responder !== undefined && show_responder === "success")
-            Frontend.create_responder(data.message, "succes");
+          if (show_responder !== undefined && show_responder === "success") Frontend.create_responder(data.message, "succes");
 
           if (overlay) {
             let overlay = new Overlay();
@@ -60,15 +59,11 @@ const get_content = async (href, append_to, show_responder, overlay) => {
           }
           Frontend.reload_images();
         } else {
-          if (show_responder !== undefined && show_responder === "error")
-            Frontend.create_responder(data.message, "error");
+          if (show_responder !== undefined && show_responder === "error") Frontend.create_responder(data.message, "error");
         }
 
         if (show_responder !== undefined && show_responder === "always")
-          Frontend.create_responder(
-            data.message,
-            data.status ? "success" : "error"
-          );
+          Frontend.create_responder(data.message, data.status ? "success" : "error");
 
         resolve(data);
       },
@@ -80,11 +75,7 @@ const get_content = async (href, append_to, show_responder, overlay) => {
   });
 };
 
-const construct_get_request_url = (
-  element,
-  baseUrl,
-  prefix = "request-get-attribute-"
-) => {
+const construct_get_request_url = (element, baseUrl, prefix = "request-get-attribute-") => {
   // Initialize query string
   let queryString = "?";
 
@@ -110,12 +101,60 @@ const construct_get_request_url = (
   return fullUrl;
 };
 
+/**
+ * Starts a request.
+ *
+ * @param {HTMLElement} element
+ */
+export const request = (element) => {
+  let method = element.getAttribute("method") ?? "GET";
+  let formdata = new FormData();
+  let query = "?";
+  let redirect_from_data = element.hasAttribute("redirect-from-data");
+
+  for (let date in element.dataset) {
+    if (date === "action" || date === "method") continue;
+
+    formdata.append(date, element.dataset[date]);
+    query += `${date}=${element.dataset[date]}&`;
+  }
+
+  query = query.slice(0, -1);
+
+  $.ajax({
+    url: url(element) + (method === "GET" ? query : ""),
+    method: method,
+    data: method === "POST" ? formdata : null,
+    success: function (data) {
+      console.log(data, redirect_from_data);
+
+      if (data.status) {
+        console.log("good");
+        if (redirect_from_data && data.data.redirect) {
+          console.log("replacing");
+          window.location.replace(data.data.redirect);
+        }
+      }
+    },
+  });
+};
+
+/**
+ * Either pass an element that has a data-action attribute or a
+ * string which both will be transformed to a valid request url.
+ */
+export const url = (string) => {
+  let action = string.dataset.action ?? string.getAttribute("action");
+  let url = action ? action : string;
+
+  return "/" + url.replaceAll(":", "/");
+};
+
 $(function () {
   $(document).on("submit", "[request], [request-do]", function (e) {
     e.preventDefault();
 
-    let request_url =
-      this.getAttribute("request") || this.getAttribute("request-do");
+    let request_url = this.getAttribute("request") || this.getAttribute("request-do");
 
     if (!request_url) return;
 
@@ -136,9 +175,6 @@ $(function () {
       let close_overlays = this.getAttribute("close-overlays");
       let update_user_references = this.hasAttribute("update-user-references");
 
-      /**
-       * Serialize request url.
-       */
       request_url = request_url.replaceAll(":", "/");
 
       buttons.forEach((button) => button.disable());
@@ -146,9 +182,6 @@ $(function () {
       if (this.getAttribute("no-loader") == null) Frontend.load();
 
       if (redirect) {
-        /**
-         * @var array
-         */
         let split_redirect_url = redirect.split("/");
 
         /**
@@ -205,16 +238,12 @@ $(function () {
               /**
                * Full reload requested.
                */
-            } else if (full_reload !== null)
-              window.location.replace(
-                redirect ?? window.location.pathname + window.location.search
-              );
+            } else if (full_reload !== null) window.location.replace(redirect ?? window.location.pathname + window.location.search);
 
             /**
              * Show responder only on success.
              */
-            if (responder !== null && responder === "success")
-              Frontend.create_responder(data);
+            if (responder !== null && responder === "success") Frontend.create_responder(data);
 
             /**
              * Execute on success functions.
@@ -229,15 +258,13 @@ $(function () {
             /**
              * Show responder only on error.
              */
-            if (responder !== null && responder === "error")
-              Frontend.create_responder(data.message, "error");
+            if (responder !== null && responder === "error") Frontend.create_responder(data.message, "error");
           }
 
           /**
            * Always show responder.
            */
-          if (responder !== null && (responder === "always" || !responder))
-            Frontend.create_responder(data);
+          if (responder !== null && (responder === "always" || !responder)) Frontend.create_responder(data);
 
           buttons.forEach((button) => button.enable());
         },
@@ -260,11 +287,7 @@ $(function () {
      */
     if (dataset_count > 0) {
       for (const key in this.dataset) {
-        query +=
-          key.replace(/[A-Z]/g, (letter) => "_" + letter.toLowerCase()) +
-          "=" +
-          this.dataset[key] +
-          "&";
+        query += key.replace(/[A-Z]/g, (letter) => "_" + letter.toLowerCase()) + "=" + this.dataset[key] + "&";
       }
 
       query += "is_popup=kurwa";
@@ -312,8 +335,7 @@ $(function () {
       }
 
       if (!resolved.data) {
-        if (resolved.error || resolved.message)
-          create_responder(resolved.error || resolved.message);
+        if (resolved.error || resolved.message) create_responder(resolved.error || resolved.message);
 
         return;
       }
@@ -328,10 +350,7 @@ $(function () {
     let offset = this.getAttribute("request-get-attribute-offset");
 
     if (limit && offset) {
-      this.setAttribute(
-        "request-get-attribute-offset",
-        parseInt(offset) + parseInt(limit)
-      );
+      this.setAttribute("request-get-attribute-offset", parseInt(offset) + parseInt(limit));
     }
   });
 });

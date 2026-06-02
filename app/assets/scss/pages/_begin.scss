@@ -3,8 +3,9 @@
 
 body[begin],
 body[register],
-body[login] {
-  background: $dark-01;
+body[login],
+body[connect] {
+  background: $dark;
 
   main {
     padding: 0;

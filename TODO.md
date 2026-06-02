@@ -1,2 +1,3 @@
 + Remove class Heiakim\Application\Exception for more specific Heiakim\Exception\…
-+
++ Rename connections provider `osu` to `osu!`
++ Add CurrentUser to Controller params automatically.

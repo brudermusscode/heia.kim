@@ -1,6 +1,10 @@
 @use "../abstract" as *;
 @use "mixins" as *;
 
+[minlineauto] {
+  margin-inline: auto;
+}
+
 [hide-tablet] {
   @media screen and (max-width: $tablet-max-width) {
     display: none !important;

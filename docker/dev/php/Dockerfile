@@ -10,7 +10,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt update -y \
     libpng-dev \
     libgif-dev \
     libavif-dev \
-    libwebp-dev
+    libwebp-dev \
+    nano
 
 # Set the production php.ini to default
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
@@ -22,10 +23,9 @@ RUN docker-php-ext-configure gd \
     --with-freetype \
     --with-jpeg \
     --with-avif \
-    --with-webp \
-    && docker-php-ext-install gd
-RUN docker-php-ext-install pdo_mysql intl exif curl zip
-RUN docker-php-ext-enable pdo_mysql intl exif curl zip gd
+    --with-webp
+RUN docker-php-ext-install gd pdo_mysql intl exif curl zip
+RUN docker-php-ext-enable gd pdo_mysql intl exif curl zip
 
 # Custom ini and config files.
 COPY zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf

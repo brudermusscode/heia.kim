@@ -41,7 +41,7 @@ include SNOW; ?>
       <box-model filled=lighter class="sign_container__inr" elevated rounded=wide>
         <bm-inr size=wide fl fldircol gap>
           <div fl fldircol gap=smolest>
-            <h1 text wide bold><?= __("Login") ?></h1>
+            <h2 text wider bold><?= __("Login") ?></h2>
             <section>
               <p text std><?= __("Resume your journey on") ?> <?= APP_NAME; ?></p>
             </section>

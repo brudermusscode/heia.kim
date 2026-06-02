@@ -1,37 +1,35 @@
 <?php
 
-/**
- * Heading
- */
-include TEMPLATE . "/login/_header.php";
+# + Snow.
+include SNOW;
 
-?>
+# + Header partial.
+include TEMPLATE . "/global/_basic-header.php"; ?>
 
-<toggle-header></toggle-header>
-<disguised></disguised>
+<content begin fl fldircol alic jucsb gap>
+  <div flone fl fldircol alic jucc style="max-width:600px;">
 
-<login>
+    <div style="margin-bottom:-2.4em;height:300px;width:300px;">
+      <?php
 
-  <?php include SNOW; ?>
-
-  <div disguised-content content-width=smolest fl fldircol gap>
-
-    <!--- FLEX: MAIN CONTENT --->
-    <div style="flex:1;flex-direction:row-reverse;" gap justcontcent>
-      <sign-container fl fldircol gap=mid>
-        <div tac color=light fl fldircol gap alic>
-
-          <div style=height:6.2em;width:6.2em; background=light color=dark circled fl alic jucc>
-            <mi wider>pageless</mi>
-          </div>
-
-          <div fl fldircol gap=smoler>
-            <p text widest bold>Nothing</p>
-            <p text mid>This page is unavailable</p>
-          </div>
-        </div>
-      </sign-container>
+      # + Ghost animation.
+      include TEMPLATE . "/global/_lottie-pixelghost.html"; ?>
     </div>
 
+    <div mb=mid tac>
+      <p text bold wider>Huh?</p>
+      <p text>You have entered an unknown path. Better return!</p>
+    </div>
+
+    <mbutton material size=mid filled=lighter has-icon=left color=dynamic
+      onclick="history.go(-1);">
+      <mi>west</mi>
+      <p text bold>Go back</p>
+    </mbutton>
   </div>
-</login>
+
+  <?php
+
+  # + Basic footer with links.
+  include TEMPLATE . "/global/_basic-footer.php"; ?>
+</content>

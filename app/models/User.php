@@ -57,6 +57,7 @@ use Heiakim\Utils\Arr;
 use Heiakim\Utils\Str;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Justin
 {
@@ -966,35 +967,38 @@ class User extends Justin
   }
 
   /**
-   * @return ?Connect
+   * @return HasMany<Connection>
    */
   public function connections()
   {
-    return $this->hasMany(Connect::class);
+    return $this->hasMany(Connection::class);
   }
 
   /**
-   * @return ?ConnectDiscord
+   * @return HasOne<ConnectionDiscord>
    */
   public function discord()
   {
-    return $this->hasOne(ConnectDiscord::class)->where("type", "discord");
+    return $this->hasOne(ConnectionDiscord::class)
+      ->where("provider", "discord");
   }
 
   /**
-   * @return ?ConnectGoogle
+   * @return HasOne<ConnectionGoogle>
    */
   public function google()
   {
-    return $this->hasOne(ConnectGoogle::class)->where("type", "google");
+    return $this->hasOne(ConnectionGoogle::class)
+      ->where("provider", "google");
   }
 
   /**
-   * @return ?ConnectOsu
+   * @return HasOne<ConnectionOsu>
    */
   public function osu()
   {
-    return $this->hasOne(ConnectOsu::class)->where("type", "osu");
+    return $this->hasOne(ConnectionOsu::class)
+      ->where("provider", "osu!");
   }
 
     // ? >>>>>>>>>>>>>>>>>>> RESTRICTION SYSTEM >>>>>>>>>>>>>>>>>>>>>>>

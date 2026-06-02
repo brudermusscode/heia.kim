@@ -15,27 +15,32 @@ $Router->get("/", "home/index", title: APP_NAME . " - Bruder! Geil!");
 $Router->get("/home", "home/index", title: APP_NAME . " ~ " . _env("APP_SLOGAN"));
 $Router->get("/home/:sub", "home/index", title: APP_NAME . " ~ " . _env("APP_SLOGAN"));
 $Router->get("/home/get-content/:file_name", "home/get-content/index", return: "JSON");
+$Router->get("/download", "download/index", title: "The easiest to setup with " . APP_NAME);
 
-$Router->get("/login", "login", title: "Login to " . APP_NAME);
+# ? Register
 $Router->get("/register", "register", title: "Sign up to " . APP_NAME);
+$Router->get("/begin/:token", "begin/index", title: "Begin your journey on " . APP_NAME);
 
+# ? Sessions
+$Router->get("/login", "login", title: "Login to " . APP_NAME);
+$Router->post("/session/create", "session/create", return: "JSON");
+$Router->post("/session/delete", "session/delete", return: "JSON");
+
+# ? PasswortResets
 $Router->get("/password-reset", "password-reset/index", title: "Reset password | " . APP_NAME);
 $Router->get("/password-reset/:token", "password-reset/index", title: "Verify password reset | " . APP_NAME);
 $Router->post("/password-reset/create", "password-reset/create", return: "JSON");
 $Router->post("/password-reset/update", "password-reset/update", return: "JSON");
 
-$Router->post("/session/create", "session/create", return: "JSON");
-$Router->post("/session/delete", "session/delete", return: "JSON");
-
-$Router->get("/begin/:token", "begin/index", title: "Begin your journey on " . APP_NAME);
-
-$Router->get("/download", "download/index", title: "The easiest to setup with " . APP_NAME);
-
 # ? Connections
 $Router->post("/connection/start", "connection/start", return: "JSON");
-// $Router->post("/connection/create", "connection/create", return: "JSON");
+$Router->post("/connection/create", "connection/create", return: "JSON");
 // $Router->post("/connection/delete", "connection/delete", return: "JSON");
 // $Router->post("/connection/update", "connection/update", return: "JSON");
+$Router->get("/connect/:provider", "connection/index", title: function ($params) {
+  return "Connect your " . $params["provider"] . " to " . APP_NAME . "!";
+});
+
 
 
 // rewrite ^/register/with/(.*) /yield.php?page=register&sub=with-api&api=$1&$query_string last;

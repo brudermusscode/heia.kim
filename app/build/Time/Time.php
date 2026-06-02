@@ -38,6 +38,19 @@ class Time
   }
 
   /**
+   * @param string $timestamp
+   * @return bool
+   */
+  public static function over(string $timestamp)
+  {
+    $unix_timestamp = ctype_digit($timestamp)
+      ? (int) $timestamp
+      : new DateTime($timestamp)->getTimestamp();
+
+    return time() >= $unix_timestamp;
+  }
+
+  /**
    * @param int|string $timestamp
    * @param bool $exact_hours
    * @param bool $full
@@ -140,7 +153,7 @@ class Time
    * time to have passed.
    *
    * @param string $timestamp
-   * @param string $time_to_have_passed | e-g. `+30 minutes`
+   * @param string $time_to_have_passed +30 minutes
    * @return bool
    */
   public static function has_passed($timestamp, $time_to_have_passed)

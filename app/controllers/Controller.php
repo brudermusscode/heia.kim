@@ -21,8 +21,7 @@ class Controller
    * Keys in POST or GET that will always pass.
    */
   protected static array $valid_passthrough_keys = [
-    "habibi",
-    "csrf_token",
+    "CurrentUser",
   ];
 
   /**
@@ -43,6 +42,9 @@ class Controller
       foreach ($files as $key => $file)
         $this->params["files"][$key] = $file;
     }
+
+    # Append the CurrentUser so it's available everyhwere.
+    $this->params["CurrentUser"] = CurrentUser;
   }
 
   /**
@@ -201,27 +203,25 @@ class Controller
    * @param array $strict - Strictly necessary parameter.
    * @param array $optional - Will pass, but not necessary.
    * @param ?array $input_params
-   * @return void
+   * @return void|false
    *
-   * NOTE: Will die on error.
+   * NOTE: May die on error.
    */
   public function validate_params(
     array $strict,
     array $optional = [],
     ?array $input_params = null,
+    bool $die = true,
   ) {
 
-    /**
-     * @var ?object
-     */
     $this->params = $this->serialize_request_params(
       $strict,
       $input_params ?? $this->params,
       $optional
     );
 
-    if (!$this->params)
-      die(error());
+    if ($this->params === false)
+      return $die ? die(error()) : false;
   }
 
   /**

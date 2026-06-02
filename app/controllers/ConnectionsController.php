@@ -3,116 +3,108 @@
 namespace Heiakim\Controller;
 
 use Heiakim\Controller\Controller;
-use Heiakim\Model\Connection;
-use Heiakim\Model\ConnectionDiscord;
-use Heiakim\Model\ConnectionGoogle;
+use Heiakim\Http\Request;
+use Heiakim\Model\Authentication;
 use Heiakim\Model\ConnectionOsu;
+use Heiakim\Trait\IsProviderConnection;
+use Heiakim\Utils\Utils;
 
 class ConnectionsController extends Controller
 {
 
   /**
-   * This functions creates a new OAuth link to a given Vendor's
-   * API. Nothing more. It starts the authentication so to speak.
-   * User's shall be able to create new calls while logged in or
-   * logged out.
+   * This functions creates a new OAuth link to a given Vendor's API. Nothing
+   * more. It starts the authentication so to speak. User's shall be able to
+   * create new calls while logged in or logged out.
    *
    * @return string
    */
   public function start()
   {
 
-    # [provider] has to match the exact class name.
-
     $this->validate_params(
       strict: ["provider"],
       optional: [],
     );
 
+    # CurrentUser has a connection of this provider already?
     if (
-      CurrentUser->exists &&
-      CurrentUser->connections()
-      ->where("type", $this->params->type)
+      CurrentUser?->connections()
+      ->where("provider", $this->params->provider)
       ->first()
     )
       return error("!API_CONNECTED_ALREADY");
 
-    # Vendor class doesn't exist?
-    if (!($ProviderClass = Connection::map_provider($this->params->provider)))
-      return error("!INVALID_API_CALL");
-
-    /**
-     * @var class-string<ConnectionDiscord|ConnectionOsu|ConnectionGoogle> $ProviderClass
-     */
+    $ProviderClass = IsProviderConnection::ProviderClassOrDie($this->params->provider);
 
     return success(data: ["link" => $ProviderClass::generate_link()]);
   }
 
   /**
-   * @return string
+   * Creates a new instance of an existing class of a given provider by utili-
+   * zing the received code from authentication screen of the third party.
+   *
+   * @return object
    */
-  public function create_old()
+  public function create()
   {
 
     $this->validate_params(
-      strict: ["type", "code", "state"],
-      optional: ["scope", "authuser", "prompt"],
+      strict: ["provider", "code", "state"],
+      optional: ["scope"],
     );
 
-    /**
-     * Authorize the user in a not so cool way.
-     */
-    if (!$this->authorize(return_json_string: false, die_on_error: false)->status)
-      return request_error("!NO_PERMISSIONS", return_json_string: false);
+    # CurrentUser has a provider of this type connected already?
+    if (
+      CurrentUser?->connections()
+      ->where("provider", $this->params->provider)
+      ->first()
+    )
+      return error("!API_CONNECTED_ALREADY");
+
+    $ProviderClass = IsProviderConnection::ProviderClassOrDie($this->params->provider);
 
     /**
-     * @var ?Connect
+     * @var ConnectionOsu
      */
-    $Connect = CurrentUser
-      ->connections()
-      ->where("type", $this->params->type)
-      ->first();
+    $Connection = new $ProviderClass()->new($this->params);
 
-    /**
-     * Return an error, if a connection of that type already exists.
-     */
-    if ($Connect)
-      return request_error("<strong>You have a service connected already.</strong> Remove it, to create a new one.", return_json_string: false);
+    # Associate an existing CurrentUser with the ProviderClass.
+    if (CurrentUser->exists)
+      $Connection->associate(CurrentUser);
 
-    return (new Connect)->new($this->params);
+    # Create a new Authentication so the ProviderUser can create a real
+    # User in the next step.
+    $Authentication = Authentication::create([
+      "email" => $Connection->email,
+      "user_id" => $Connection->user_id,
+      "type" => "user:create",
+      "token" => Utils::random_alpha_token(24),
+      "code" => Utils::random_numeric_token(4),
+      "remote_address" => Request::get_remote_address(),
+    ]);
+
+    # Prepare the redirect URL.
+    $redirect = "/begin/" . $Authentication->token . (
+      # Append the username.
+      $Connection->provider_user_nickname ? "?name=" . $Connection->provider_user_nickname : ""
+    );
+
+    return success(data: [
+      "Connection" => $Connection,
+      "redirect" => $redirect,
+    ]);
   }
 
   /**
-   * DELETE
-   *
    * @return string
    */
   public function delete()
   {
 
     $this->validate_params(
-      strict: ["type"],
+      strict: ["provider"],
       optional: [],
     );
-
-    $this->authorize();
-
-    /**
-     * @var ?Connect
-     */
-    $Connect = CurrentUser
-      ->connections()
-      ->where("type", $this->params->type)
-      ->first();
-
-    /**
-     * Connection doesn't exist?
-     */
-    if (!$Connect)
-      return request_error("<strong>You have no service connected.</strong>");
-
-    $Connect->delete();
-
-    return request_success("<strong>Connection deleted!</strong> You can add another one at any time 😁");
   }
 }
