@@ -31,6 +31,11 @@ $Router->get("/begin/:token", "begin/index", title: "Begin your journey on " . A
 
 $Router->get("/download", "download/index", title: "The easiest to setup with " . APP_NAME);
 
+# ? Connections
+$Router->post("/connection/start", "connection/start", return: "JSON");
+// $Router->post("/connection/create", "connection/create", return: "JSON");
+// $Router->post("/connection/delete", "connection/delete", return: "JSON");
+// $Router->post("/connection/update", "connection/update", return: "JSON");
 
 
 // rewrite ^/register/with/(.*) /yield.php?page=register&sub=with-api&api=$1&$query_string last;

@@ -1,5 +1,5 @@
-<menu class="menu_main__top">
-  <div class="menu_main__top_inr">
+<header top fl alic jucsb>
+  <div inr flone>
     <div class=left>
       <div class="logo">
         <div main-logo class="main__logo">
@@ -71,4 +71,4 @@
       </a>
     </div>
   </div>
-</menu>
+</header>

@@ -2,15 +2,8 @@
 
 namespace Heiakim\Model\Vendor;
 
-use Heiakim\Utils\Utils;
-
-class Osu extends Vendor implements VendorInterface
+class Osu extends Vendor
 {
-
-  protected array $scopes = [
-    "identify",
-    "public",
-  ];
 
   public ?string $access_token = null;
 
@@ -39,29 +32,7 @@ class Osu extends Vendor implements VendorInterface
   }
 
   /**
-   * @return void
-   */
-  public function get_client() {}
-
-  /**
-   * @param object $param
-   * @return object
-   */
-  public function get_auth_uri(?object $params = null)
-  {
-    $redirect_uri = $this->credentials["redirect_uris"][current_env()]["return_uris"]["connect"];
-    $return = $this->credentials["auth_url"]
-      . "?client_id=" . $this->credentials["client_id"]
-      . "&redirect_uri=" . $redirect_uri
-      . "&response_type=code"
-      . "&state=" . Utils::random_alpha_token(124)
-      . "&scope=" . implode(" ", $this->scopes);
-
-    return request_success(data: $return);
-  }
-
-  /**
-   * @param object $param
+   * @param object $params
    * @return string|self
    */
   public function new(object $params)

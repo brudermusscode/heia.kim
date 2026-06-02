@@ -1,13 +1,44 @@
 <?php
 
-namespace Heiakim\Model\Connect;
+/**
+ * This class represents a connection to an existing osu! account.
+ */
+
+namespace Heiakim\Model;
 
 use Heiakim\Model\Session;
 use Heiakim\Model\User;
 use Heiakim\Model\Vendor\Osu;
+use Heiakim\Utils\Utils;
 
-class ConnectOsu extends Connect
+class ConnectionOsu extends Connection
 {
+
+  protected static array $scopes = [
+    "identify",
+    "public",
+  ];
+
+  /**
+   * Generates the link to the vendor's API where the user has to auth-
+   * orize their account.
+   *
+   * @return string
+   */
+  public static function generate_link()
+  {
+
+    $credentials = self::oauth_credentials();
+    $callback = $credentials["callback"][current_env()]["connect"];
+    $return = $credentials["auth_url"]
+      . "?client_id=" . $credentials["client_id"]
+      . "&redirect_uri=" . $callback
+      . "&response_type=code"
+      . "&state=" . Utils::random_alpha_token(124)
+      . "&scope=" . implode(" ", self::$scopes);
+
+    return $return;
+  }
 
   /**
    * @param object $params

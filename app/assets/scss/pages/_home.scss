@@ -1,29 +1,24 @@
 @use "../abstract" as *;
 @use "../base" as *;
 
-$home-header-height: 4em;
+body[home] {
+  main {
+    min-height: 100svh;
+    padding: 0;
+  }
+}
 
-.home_content {
-  position: absolute;
-  left: 50%;
-  top: $home-header-height;
-  translate: -50% 0;
-  height: calc(100svh - $home-header-height);
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  padding: 2.4em;
-  padding-bottom: 8em;
-  overflow: hidden;
-  gap: 2.4em;
+content[home] {
+  height: calc(100vh);
+  padding: $gap-std;
+  padding-top: $home-header-height;
 
   @media screen and (max-width: 800px) {
     padding-inline: 0.4em;
     gap: 1.2em;
   }
 
-  .home_content__inr {
-    flex: 1;
+  [inr] {
     border-radius: 38px;
     padding-inline: 8.2em;
     display: flex;
@@ -33,20 +28,6 @@ $home-header-height: 4em;
 
     @include themed() {
       background: t(box2);
-    }
-
-    .stars {
-      position: absolute !important;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-
-      .snow {
-        @include themed() {
-          background: t(text);
-        }
-      }
     }
 
     .home_content__inr_main {
@@ -167,24 +148,6 @@ $home-header-height: 4em;
       }
     }
 
-    // .actions {
-    //   margin-top: 0.8em;
-    //   display: flex;
-    //   justify-content: flex-start;
-    //   gap: 0.8em;
-
-    //   mbutton {
-    //     @media screen and (max-width: 1260px) {
-    //       $mbutton-size: 3.2em;
-    //       height: $mbutton-size;
-    //       max-height: $mbutton-size;
-    //       min-height: $mbutton-size;
-    //       padding-inline: 1.6em;
-    //       font-size: 1em;
-    //     }
-    //   }
-    // }
-
     @media (min-width: 675px) {
       @media (max-height: 582px) {
         @media (max-width: 1020px) {
@@ -202,9 +165,8 @@ $home-header-height: 4em;
     }
   }
 
-  .home_content__sub {
-    @media screen and (max-width: 800px) {
-      padding-bottom: 50px;
-    }
+  footer {
+    padding-top: $gap-std;
+    padding-inline: $gap-std;
   }
 }

@@ -1,12 +1,16 @@
 <?php
 
-namespace Heiakim\Model\Connect;
+/**
+ * This class represents a connection to an existing Discord account.
+ */
+
+namespace Heiakim\Model;
 
 use Heiakim\Model\Session;
 use Heiakim\Model\User;
 use Heiakim\Model\Vendor\Discord;
 
-class ConnectDiscord extends Connect
+class ConnectionDiscord extends Connection
 {
 
   /**

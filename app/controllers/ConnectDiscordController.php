@@ -1,6 +1,6 @@
 <?php
 
-namespace Heiakim\Controller\Connect;
+namespace Heiakim\Controller;
 
 use Heiakim\Controller\Controller;
 use Heiakim\Model\Connect\ConnectDiscord;

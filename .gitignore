@@ -1,8 +1,8 @@
-vendor/
-bin/
-node_modules/
-docker/deploy
-storage/
+/vendor
+/bin
+**/node_modules/
+/docker/deploy
+/storage
 
 # config files
 .env
@@ -16,21 +16,21 @@ compose.deploy.yml
 discord-vote-reminder.js
 
 # uploaded files
-public/Apps/
-public/data/*
+/public/Apps/
+/public/data/*
 
-public/assets/images/users/
+/public/assets/images/users/
 
 # config
-config/oauth*
-config/keys/
-config/security/
+/config/oauth*
+/config/keys/
+/config/security/
 
 # sql
-sql/last_migration
+/sql/last_migration
 
 # exclude .empty files within directories
-!public/assets/**/vendor
+!/public/assets/**/vendor
 !**/.empty
 
 # ! [public/data] Structure should look like this:

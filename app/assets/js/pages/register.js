@@ -3,8 +3,37 @@ import * as Audio from "../audio.js";
 import * as Frontend from "../frontend.js";
 
 /**
- * ? Password Reset
+ * Create a new authentication for a given provider.
+ *
+ * @action start
+ * @controller ConnectionsController
+ * @event click
  */
+$(document).on("click", "[data-action='connection:start']", function (e) {
+  e.preventDefault();
+  Frontend.load();
+
+  let formdata = new FormData();
+  let provider = this.dataset.provider;
+
+  formdata.append("provider", provider);
+
+  if (!provider) return;
+
+  $.ajax({
+    url: "/connection/start",
+    data: formdata,
+    method: "POST",
+    success: function (data) {
+      if (data.status && data.data.link?.includes("https://")) {
+        return window.location.replace(data.data.link);
+      }
+
+      Frontend.unload();
+      Frontend.create_responder(data);
+    },
+  });
+});
 
 /**
  * @action EDIT

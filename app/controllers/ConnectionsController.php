@@ -1,45 +1,57 @@
 <?php
 
-namespace Heiakim\Controller\Connect;
+namespace Heiakim\Controller;
 
 use Heiakim\Controller\Controller;
-use Heiakim\Model\Connect\Connect;
+use Heiakim\Model\Connection;
+use Heiakim\Model\ConnectionDiscord;
+use Heiakim\Model\ConnectionGoogle;
+use Heiakim\Model\ConnectionOsu;
 
-class ConnectController extends Controller
+class ConnectionsController extends Controller
 {
 
   /**
+   * This functions creates a new OAuth link to a given Vendor's
+   * API. Nothing more. It starts the authentication so to speak.
+   * User's shall be able to create new calls while logged in or
+   * logged out.
+   *
    * @return string
    */
   public function start()
   {
 
+    # [provider] has to match the exact class name.
+
     $this->validate_params(
-      strict: ["type"],
+      strict: ["provider"],
       optional: [],
     );
 
-    $this->authorize();
+    if (
+      CurrentUser->exists &&
+      CurrentUser->connections()
+      ->where("type", $this->params->type)
+      ->first()
+    )
+      return error("!API_CONNECTED_ALREADY");
+
+    # Vendor class doesn't exist?
+    if (!($ProviderClass = Connection::map_provider($this->params->provider)))
+      return error("!INVALID_API_CALL");
 
     /**
-     * @var ?Connect
+     * @var class-string<ConnectionDiscord|ConnectionOsu|ConnectionGoogle> $ProviderClass
      */
-    $Connect = CurrentUser
-      ->connections()
-      ->where("type", $this->params->type)
-      ->first();
 
-    # Connection exists?
-    if ($Connect)
-      return error("<strong>You have a service connected already.</strong> Remove it, to create a new one.");
-
-    return (new Connect)->auth($this->params);
+    return success(data: ["link" => $ProviderClass::generate_link()]);
   }
 
   /**
    * @return string
    */
-  public function create()
+  public function create_old()
   {
 
     $this->validate_params(

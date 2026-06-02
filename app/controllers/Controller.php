@@ -297,14 +297,14 @@ class Controller
 
     $ControllerName .= "sController";
 
-    // Controller class is non-existent?
+    # Controller class is non-existent?
     if (!class_exists($ControllerName))
       return error("Klasse gibts nicht Bruder.");
 
     # Get the method name from file name.
     $method = pathinfo($file, PATHINFO_FILENAME);
 
-    // Method is non-existent inside controller class?
+    # Method is non-existent inside controller class?
     if (!method_exists($ControllerName, $method)) {
       return error("Methode gibts nicht Bruder.");
     }

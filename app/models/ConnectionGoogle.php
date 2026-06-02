@@ -1,12 +1,16 @@
 <?php
 
-namespace Heiakim\Model\Connect;
+/**
+ * This class represents a connection to an existing google account.
+ */
+
+namespace Heiakim\Model;
 
 use Heiakim\Model\Session;
 use Heiakim\Model\User;
 use Heiakim\Model\Vendor\Google;
 
-class ConnectGoogle extends Connect
+class ConnectionGoogle extends Connection
 {
 
   /**

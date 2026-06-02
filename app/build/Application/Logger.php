@@ -8,17 +8,20 @@ class Logger
 {
 
   /**
-   * Logs a given message to the php_errors.log file.
+   * Logs a given message to a specified file, which will be cerated if not exists.
+   * Returns the Exception itself, so the function can be thrown if wanted 😃.
    *
-   * @param Exception $exception The message to log.
-   * @param string $logFile The path to the log file. Default is 'php_errors.log'.
+   * @param Exception $exception
+   * @param string $logFile
+   * @return Exception
    */
   public static function to_file(Exception $exception, string $logFile = 'php_errors.log')
   {
-    // Get the root directory path using Application::root()
+
+    # Get the root directory path using Application::root()
     $logFilePath = _root() . "/storage/logs/" . $logFile;
 
-    // Prepare the message with timestamp, exception details
+    # Prepare the message with timestamp, exception details
     $formattedMessage = "[" . date('Y-m-d H:i:s') . "] " .
       "Exception: " . get_class($exception) . PHP_EOL .
       "Message: " . $exception->getMessage() . PHP_EOL .
@@ -26,13 +29,14 @@ class Logger
       "Stack Trace: " . PHP_EOL . $exception->getTraceAsString() . PHP_EOL .
       "-------------------------------" . PHP_EOL;
 
-    // Check if log directory exists, if not create it
-    if (!is_dir(dirname($logFilePath))) {
+    # Check if log directory exists, if not create it
+    if (!is_dir(dirname($logFilePath)))
       mkdir(dirname($logFilePath), 0777, true);  // Create the logs directory if not exists
-    }
 
-    // Append the message to the log file
+    # Append the message to the log file
     file_put_contents($logFilePath, $formattedMessage, FILE_APPEND);
+
+    return $exception;
   }
 
   /**
