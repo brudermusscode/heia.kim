@@ -1,17 +1,18 @@
-FROM php:8.5-fpm
+FROM php:8.5.7RC2-fpm-alpine3.22
 
-RUN DEBIAN_FRONTEND=noninteractive apt update -y \
-    && apt install -y \
-    libicu-dev \
-    libcurl4-openssl-dev \
-    libzip-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    libgif-dev \
-    libavif-dev \
-    libwebp-dev \
-    nano
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apk add --no-cache \
+  icu-dev \
+  curl-dev \
+  libzip-dev \
+  freetype-dev \
+  jpeg-dev \
+  libpng-dev \
+  giflib-dev \
+  libavif-dev \
+  libwebp-dev \
+  nano \
+  $PHPIZE_DEPS
 
 # Set the production php.ini to default
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
@@ -20,12 +21,13 @@ RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 RUN rm -rf -r /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini-production
 
 RUN docker-php-ext-configure gd \
-    --with-freetype \
-    --with-jpeg \
-    --with-avif \
-    --with-webp
-RUN docker-php-ext-install gd pdo_mysql intl exif curl zip
-RUN docker-php-ext-enable gd pdo_mysql intl exif curl zip
+  --with-freetype \
+  --with-jpeg \
+  --with-avif \
+  --with-webp
+RUN pecl install redis
+RUN docker-php-ext-enable redis # gd pdo_mysql intl exif curl zip
+RUN docker-php-ext-install gd pdo_mysql intl exif zip # curl
 
 # Custom ini and config files.
 COPY zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf

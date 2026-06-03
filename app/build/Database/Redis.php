@@ -14,6 +14,7 @@ class Redis
    */
   private static function connection_credentials(): array
   {
+
     $env = _env();
 
     return [
