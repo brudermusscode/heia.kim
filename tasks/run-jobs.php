@@ -1,7 +1,8 @@
 <?php
 
-require_once dirname(__DIR__) . "/vendor/autoload.php";
+require dirname(__DIR__) . "/vendor/autoload.php";
 
+use Heiakim\Job\ApiOsuCacheLeaderboard;
 use Heiakim\Job\CreateDefaultProfile;
 use Heiakim\Job\Mailing\BirthdayWishes;
 use Heiakim\Job\Mailing\LongTimeNoSee;
@@ -12,16 +13,16 @@ use Heiakim\Job\SaveCurrentRanks;
 use Heiakim\Job\RemovePremium;
 use Heiakim\Job\RestrictFrozenAccounts;
 
-/**
- * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
- * ,,,,,,,,,,,,,,,,,,,,,, OCCASIONAL JOBS ,,,,,,,,,,,,,,,,,,,,,,,
- * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
- */
-
-/**
- * Initialize database connection.
- */
+# Get a database connection.
 new Heiakim\Database\Database;
+
+# Caches the official osu! leaderboards for any ruleset daily.
+ApiOsuCacheLeaderboard::run("+1 day");
+
+exit;
+
+
+
 
 // (new CreateDefaultProfile)->execute();
 

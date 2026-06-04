@@ -20,36 +20,40 @@ x-web: &x-web
 
 services:
   php:
-    container_name: frontend-php
-    restart: always
+    container_name: heiakim-frontend-php
     build: ./docker/dev/php
+    restart: always
+    tty: true
     volumes:
       - .:/data
 
   web:
     <<: *x-web
-    container_name: frontend-web
+    container_name: heiakim-frontend-web
     ports:
       - ${WEB_PORT}:80
+    entrypoint: ["/wait-for-it.sh", "php:9000", "--", "/data/docker/entrypoint.sh"]
     command: ["nginx"]
-    entrypoint: ["/wait-for-it.sh", "frontend-php:9000", "--", "/data/docker/entrypoint.sh"]
+    depends_on:
+      - php
 
   api:
     <<: *x-web
-    container_name: frontend-api
+    container_name: heiakim-frontend-api
     ports:
       - ${API_PORT}:80
     command: ["api"]
-    entrypoint: ["/wait-for-it.sh", "frontend-php:80", "--", "/data/docker/entrypoint.sh"]
+    depends_on:
+      - php
 
-  # jobs:
-  #   <<: *x-web
-  #   volumes_from:
-  #     - php
-  #   command: ["jobs"]
-  #   depends_on:
-  #     - php
+  jobs:
+    <<: *x-web
+    container_name: heiakim-frontend-jobs
+    command: ["jobs"]
+    depends_on:
+      - php
 
+  # ? Development specific services. These will not appear in production.
   node:
     image: node:26.2-trixie-slim
     working_dir: /data

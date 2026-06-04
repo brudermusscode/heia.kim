@@ -5,7 +5,7 @@ namespace Heiakim\Exception;
 use Exception;
 use Heiakim\Application\Logger;
 
-class APIException extends Exception
+class ApiException extends Exception
 {
   public function __construct($message = "API Error", $code = 0, ?Exception $previous = null)
   {

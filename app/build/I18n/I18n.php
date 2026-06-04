@@ -38,8 +38,8 @@ class I18n
    */
   private function get_translations_by_locale(string $locale)
   {
-    $originals_file_path = _root() . "/locales/original.php";
-    $file_path = _root() . "/locales/$locale/t.php";
+    $originals_file_path = ROOT . "/locales/original.php";
+    $file_path = ROOT . "/locales/$locale/t.php";
 
     return include file_exists($file_path) ? $file_path : $originals_file_path;
   }

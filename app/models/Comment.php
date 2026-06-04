@@ -177,7 +177,7 @@ class Comment extends Justin
 
     $CurrentUser;
 
-    include _root() . "/app/templates/comments/_comment.php";
+    include ROOT . "/app/templates/comments/_comment.php";
 
     $this->return->id = $params->id;
     $this->return->data = ob_get_clean();

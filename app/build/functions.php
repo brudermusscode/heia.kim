@@ -1,8 +1,30 @@
 <?php
 
+use Heiakim\Exception\ApiException;
 use Heiakim\Http\Request;
 use Heiakim\Model\User;
 use Heiakim\Model\Squad\SquadUser;
+
+function _root()
+{
+  return dirname($_SERVER["DOCUMENT_ROOT"]) ?: "/data";
+}
+
+define("ROOT", _root());
+define("LOG_EOL", "\n\n-----------------------------------\n\n");
+
+/**
+ * Gets oauth credentials for a specified key from /config/oauth.php.
+ *
+ * @return array
+ * @throws ApiException
+ */
+function oauth_credentials(string $key)
+{
+  $arr = require ROOT . "/config/security/oauth.php";
+
+  return $arr[$key] ?? throw new ApiException("No OAuth credentials found for key »" . $key . "«");
+}
 
 /**
  * @param ?string $message
@@ -25,16 +47,6 @@ function error(?string $message = null, mixed $data = null, bool $json_encoded =
 }
 
 /**
- * Return the root path.
- *
- * @return string
- */
-function _root()
-{
-  return dirname($_SERVER["DOCUMENT_ROOT"]);
-}
-
-/**
  * Get a specific value for a key from the .env file.
  *
  * @param string $key
@@ -43,7 +55,8 @@ function _root()
  */
 function _env(?string $key = null)
 {
-  $env_file_path = _root() . "/.env";
+
+  $env_file_path = ROOT . "/.env";
 
   /**
    * Environment variables file is missing?
@@ -315,7 +328,7 @@ function template(string $file, bool $is_partial = true, array $variables = [])
    */
   extract($variables);
 
-  include _root() . "/app/templates/$file_path" . (!$has_php_ending ? ".php" : "");
+  include ROOT . "/app/templates/$file_path" . (!$has_php_ending ? ".php" : "");
 }
 
 /**

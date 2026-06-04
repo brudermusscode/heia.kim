@@ -84,7 +84,7 @@ class UserPin extends Justin
       $Score = $Pin->reference;
       $CurrentUser;
 
-      include_once _root() . "/app/templates/score/_score.php";
+      include_once ROOT . "/app/templates/score/_score.php";
     }
 
     return $this->success(

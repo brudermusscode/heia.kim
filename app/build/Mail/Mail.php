@@ -28,7 +28,7 @@ class Mail
     bool $debug = false
   ) {
 
-    $private_key = _root() . "/config/keys/DKIM.key";
+    $private_key = ROOT . "/config/keys/DKIM.key";
     $mail = new PHPMailer(true);
     $config = _env();
 

@@ -31,7 +31,7 @@ class Artist extends Justin
   {
     $beatmap_set_id ??= $this->beatmapsets->first()?->id;
     $big_cover ??= false;
-    return include _root() . "/app/templates/helper/beatmaps/_cover.php";
+    return include ROOT . "/app/templates/helper/beatmaps/_cover.php";
   }
 
   /**

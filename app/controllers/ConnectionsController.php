@@ -6,7 +6,8 @@ use Heiakim\Controller\Controller;
 use Heiakim\Http\Request;
 use Heiakim\Model\Authentication;
 use Heiakim\Model\ConnectionOsu;
-use Heiakim\Trait\IsProviderConnection;
+use Heiakim\Registry\ApiConnectionRegistry;
+use Heiakim\Trait\IsConnectionProvider;
 use Heiakim\Utils\Utils;
 
 class ConnectionsController extends Controller
@@ -35,7 +36,7 @@ class ConnectionsController extends Controller
     )
       return error("!API_CONNECTED_ALREADY");
 
-    $ProviderClass = IsProviderConnection::ProviderClassOrDie($this->params->provider);
+    $ProviderClass = ApiConnectionRegistry::ClassOrDie($this->params->provider);
 
     return success(data: ["link" => $ProviderClass::generate_link()]);
   }
@@ -62,7 +63,7 @@ class ConnectionsController extends Controller
     )
       return error("!API_CONNECTED_ALREADY");
 
-    $ProviderClass = IsProviderConnection::ProviderClassOrDie($this->params->provider);
+    $ProviderClass = ApiConnectionRegistry::ClassOrDie($this->params->provider);
 
     /**
      * @var ConnectionOsu

@@ -7,14 +7,18 @@
 namespace Heiakim\Model;
 
 use Heiakim\Justin;
-use Heiakim\Model\Session;
-use Heiakim\Model\Vendor\Osu;
+use Heiakim\Time\Time;
 use Heiakim\Utils\Utils;
-use Heiakim\Trait\IsProviderConnection;
+use Heiakim\Trait\IsConnectionProvider;
 
 class ConnectionOsu extends Justin
 {
-  use IsProviderConnection;
+  use IsConnectionProvider;
+
+  /**
+   * @see https://osu.ppy.sh
+   */
+  protected string $provider = "osu!";
 
   /**
    * @see https://osu.ppy.sh/docs/#scopes
@@ -23,18 +27,6 @@ class ConnectionOsu extends Justin
     "identify" => "identify",
     "public" => "public",
   ];
-
-  /**
-   * @see https://osu.ppy.sh/docs/#ruleset
-   */
-  protected static array $rulesets = [
-    "osu",
-    "taiko",
-    "mania",
-    "fruits"
-  ];
-
-  private ?string $access_token = null;
 
   /**
    * Generates the link to the vendor's API where the user has to auth-
@@ -46,7 +38,7 @@ class ConnectionOsu extends Justin
   public static function generate_link()
   {
 
-    $credentials = self::oauth_credentials();
+    $credentials = oauth_credentials(static::$provider);
     $callback = $credentials["callback"][current_env()]["connect"];
     $return = $credentials["auth_url"]
       . "?client_id=" . $credentials["client_id"]
@@ -70,7 +62,7 @@ class ConnectionOsu extends Justin
   {
 
     # Build data & headers for the comming cURL request.
-    $credentials = self::oauth_credentials();
+    $credentials = oauth_credentials(static::$provider);
     $data = [
       "client_id" => $credentials["client_id"],
       "client_secret" => $credentials["client_secret"],
@@ -121,7 +113,7 @@ class ConnectionOsu extends Justin
     /**
      * @var object
      */
-    $ProviderUser = $this->provider_user();
+    $ProviderUser = $this->provider_user($response->access_token);
 
     # If a Connection already exists, the User or another one has already con-
     # nected the vendor's user account.
@@ -140,7 +132,7 @@ class ConnectionOsu extends Justin
     # TODO: Access token is not saved somehow?
     $Connection->access_token = $response->access_token;
     $Connection->refresh_token = $response->refresh_token;
-    $Connection->expires_at = gmdate("Y-m-d H:i:s", time() + $response->expires_in);
+    $Connection->expires_at = Time::add($response->expires_in);
     $Connection->provider = self::provider_map_key();
     $Connection->provider_user_id = $ProviderUser->id;
     $Connection->provider_user_email = null;
@@ -163,36 +155,7 @@ class ConnectionOsu extends Justin
    */
   public function login(object $params)
   {
-    /**
-     * Create a new request to the API.
-     */
-    $Osu = $this->fetch_credentials_with_code($params);
-
-    /**
-     * Credentials valid?
-     */
-    if (!($Osu instanceof Osu))
-      return $Osu;
-
-    /**
-     * @var ?ConnectOsu
-     */
-    $Connect = ConnectOsu::whereNotNull("user_id")
-      ->where("vendor_id", $Osu->user->id)
-      ->first();
-
-    /**
-     * Account is signed up already with this vendor?
-     */
-    if (!$Connect)
-      return $this->error("<strong>Couldn't find this account.</strong>");
-
-    /**
-     * Create a session!
-     */
-    return (new Session)->new((object) [
-      "user_id" => $Connect->user_id,
-    ]);
+    $credentials = oauth_credentials(static::$provider);
   }
 
   /**
@@ -208,7 +171,7 @@ class ConnectionOsu extends Justin
   public function provider_user(?string $access_token = null)
   {
 
-    $credentials = self::oauth_credentials();
+    $credentials = oauth_credentials(static::$provider);
     $headers = [
       'Accept: application/json',
       'Content-Type: application/x-www-form-urlencoded',
@@ -231,82 +194,5 @@ class ConnectionOsu extends Justin
       die(error("!INVALID_API_CALL"));
 
     return $response;
-  }
-
-  /**
-   * Utilizes a cURL request to fetch the leaderboards from official osu! ser-
-   * vers. It will return the $count for ANY ruleset passed, so when, for ex-
-   * ample fetching all rulesets (4), it will return an array of 400 user_ids.
-   *
-   * @param int $count 50, 100, 150, …
-   * @param ?string $rulesets osu, taiko, mania, fruits
-   * @return array of user_ids
-   */
-  public function leaderboard(int $count = 50, ?array $rulesets = null)
-  {
-
-    $user_ids = [];
-
-    # One request will atleast fetch 50 players.
-    if ($count < 50)
-      $count = 50;
-
-    # Pages to iterate through can be determined by the set count, when
-    # divisible by 50. Otherwise we fallback to 1.
-    $pages = ($count % 50 === 0 ? $count / 50 : 1);
-
-    # Based on the mode set in params, we iterate through either the one
-    # set or when null, all.
-    foreach ((!$rulesets ? self::$rulesets : $rulesets) as $ruleset)
-      for ($page = 1; $page <= $pages; $page++) {
-        $top50 = $this->top_50(mode: $ruleset, page: $page);
-        foreach ($top50 ?? [] as $rank)
-          $user_ids[] = $rank->user->id;
-
-        # osu! permits one request per second, so throttle the execu-
-        # tion by exactly one second 🙂.
-        sleep(1);
-      }
-
-    return $user_ids;
-  }
-
-  /**
-   * Fetch leaderboards from osu! API. One request will return 50 players.
-   *
-   * @param string $mode
-   * @param int $page
-   * @param ?string $access_token
-   * @return ?object
-   * @see https://osu.ppy.sh/docs/#get-ranking
-   *
-   */
-  public function top_50(string $mode = "osu", int $page = 1, ?string $access_token = null)
-  {
-
-    # Build data & headers for the comming cURL request.
-    $credentials = self::oauth_credentials();
-    $headers = [
-      'Accept: application/json',
-      'Content-Type: application/json',
-      'Authorization: Bearer ' . ($this->access_token ?? $access_token),
-    ];
-
-    # Start cURL request as GET.
-    $curl = curl_init();
-    curl_setopt_array($curl, [
-      CURLOPT_URL => $credentials["base_url"] . "/rankings/$mode/performance?cursor[page]=$page",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_HTTPHEADER => $headers
-    ]);
-
-    $response = curl_exec($curl);
-    $response = json_decode($response);
-
-    # cURL failed indicated by no user inside a ranking object is set?
-    if (empty($response->ranking[0]->user))
-      return null;
-
-    return $response->ranking;
   }
 }

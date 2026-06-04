@@ -4,8 +4,6 @@ use Heiakim\Utils\Utils;
 use Heiakim\Application\Application;
 use Heiakim\Application\Setting;
 use Heiakim\Application\Cookie;
-use Heiakim\Application\Session as SessionManager;
-use Heiakim\Enum\Privilege;
 use Heiakim\Model\Session;
 use Heiakim\Model\User;
 
@@ -13,7 +11,7 @@ use Heiakim\Model\User;
 define("ENV", _env());
 define("DEV", current_env() === "dev");
 define("STAGE", current_env() === "stage");
-define('PROD', current_env() === "prod");
+define("PROD", current_env() === "prod");
 
 # Application.
 define("CURRENT_TIMESTAMP",  date("Y-m-d H:i:s", time()));
@@ -22,7 +20,6 @@ define("APP_SLOGAN", ENV->APP_SLOGAN);
 define("SEO_DESCRIPTION", ENV->SEO_DESCRIPTION);
 define("SEO_KEYWORDS", ENV->SEO_KEYWORDS);
 define('APP', new Application);
-define("ROOT", _root());
 define("PREROOT", dirname(ROOT));
 define("VENDOR", ROOT . '/vendor');
 define("CONFIG", ROOT . '/config');

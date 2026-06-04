@@ -7,9 +7,9 @@
 namespace Heiakim\Model;
 
 use Heiakim\Justin;
-use Heiakim\Trait\IsProviderConnection;
+use Heiakim\Trait\IsConnectionProvider;
 
 class Connection extends Justin
 {
-  use IsProviderConnection;
+  use IsConnectionProvider;
 }

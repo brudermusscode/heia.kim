@@ -1081,7 +1081,7 @@ class Squad extends Justin
   public function logo()
   {
     $squad_logo = $this->logo;
-    return include _root() . "/app/templates/helper/squads/_image_logo.php";
+    return include ROOT . "/app/templates/helper/squads/_image_logo.php";
   }
 
   /**
@@ -1090,7 +1090,7 @@ class Squad extends Justin
   public function headline()
   {
     $squad_headline = $this->headline;
-    return include _root() . "/app/templates/helper/squads/_image_headline.php";
+    return include ROOT . "/app/templates/helper/squads/_image_headline.php";
   }
 
   /**

@@ -193,7 +193,7 @@ class Authentication extends Justin
       $mail_token = Utils::random_alpha_token(64);
       $mail_template = "signed_up";
       $mail_subject = $Authentication->display_mail_subject();
-      $mail_body = file_get_contents(_root() . "/app/templates/mail/$mail_template.html");
+      $mail_body = file_get_contents(ROOT . "/app/templates/mail/$mail_template.html");
 
       /**
        * Replace curly variables.
@@ -262,7 +262,7 @@ class Authentication extends Justin
     $mail_template = "email_authentication";
     $mail_subject = $this->display_mail_subject();
     $mail_token = Utils::random_alpha_token(64);
-    $mail_body = file_get_contents(_root() . "/app/templates/mail/$mail_template.html");
+    $mail_body = file_get_contents(ROOT . "/app/templates/mail/$mail_template.html");
 
     /**
      * Replace curly variables.

@@ -206,7 +206,7 @@ class RestrictionAppeal extends Justin
     /**
      * Process it!
      */
-    $video->process(_root() . "/public/data/users/liveplay-videos");
+    $video->process(ROOT . "/public/data/users/liveplay-videos");
 
     /**
      * Processing failed?

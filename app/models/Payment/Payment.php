@@ -15,7 +15,7 @@ class Payment
    */
   public function get_credentials(string $vendor)
   {
-    $arr = require _root() . "/config/security/oauth.php";
+    $arr = require ROOT . "/config/security/oauth.php";
 
     return $arr[$vendor] ?? [];
   }

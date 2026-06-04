@@ -14,6 +14,10 @@ fi
 case "$command" in
 nginx) exec nginx -c /data/docker/nginx.conf "$@" ;;
 api) exec nginx -c /data/docker/nginx-api.conf "$@" ;;
-jobs) exec cron -f -l 2 "$@" ;;
+jobs)
+  cp /data/docker/crontab /etc/crontab
+  pkill cron || true
+  exec cron -f "$@"
+  ;;
 *) exec "$command" "$@" ;;
 esac

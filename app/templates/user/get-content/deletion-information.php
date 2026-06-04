@@ -1,6 +1,6 @@
 <?php
 
-require_once _root() . "/config/get_requirements.php";
+require_once ROOT . "/config/get_requirements.php";
 
 use Heiakim\Http\Request;
 use Heiakim\Model\Comment;

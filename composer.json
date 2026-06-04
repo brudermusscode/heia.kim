@@ -12,8 +12,6 @@
     "paragonie/constant_time_encoding": "^3.1",
     "foroco/php-browser-detection": "^2.8",
     "byjg/migration": "^6.0",
-    "predis/predis": "^3.4",
-    "ethanhann/redisearch-php": "^3.1",
     "jwilsson/spotify-web-api-php": "^7.1",
     "google/apiclient": "^2.19",
     "illuminate/database": "^13.12",
@@ -31,9 +29,14 @@
       "Heiakim\\Controller\\": "app/controllers/",
       "Heiakim\\Collection\\": "app/collections/",
       "Heiakim\\Enum\\": "app/enums/",
+      "Heiakim\\Job\\": "app/jobs/",
       "Heiakim\\Model\\": "app/models/",
+      "Heiakim\\Registry\\": "app/registries/",
       "Heiakim\\Trait\\": "app/traits/",
       "Bruder\\Bin\\Classes\\": "bin/classes/"
     }
+  },
+  "require-dev": {
+    "jetbrains/phpstorm-stubs": "^2026.1"
   }
 }

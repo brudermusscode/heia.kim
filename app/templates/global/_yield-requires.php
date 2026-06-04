@@ -127,6 +127,6 @@ if (current_env() === "dev") :
   echo '<script type="text/javascript" src="' . _env("NODE_BUNDLE_OUTPUT_PUBLIC_PATH") . 'main.bundle.js"></script>';
 else :
   echo "<script defer>";
-  include _root() . "/public/assets/js/main.production.bundle.js";
+  include ROOT . "/public/assets/js/main.production.bundle.js";
   echo "</script>";
 endif;

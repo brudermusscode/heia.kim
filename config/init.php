@@ -12,6 +12,9 @@ new Heiakim\Database\Database;
 # Begin a new PHP session.
 new Heiakim\Application\Session;
 
+# Establish a Redis connection.
+// new Heiakim\Database\RedisManager;
+
 # Include all init files.
 foreach (glob(__DIR__ . "/init/*.php") as $filename) {
 

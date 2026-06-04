@@ -9,7 +9,7 @@ class CSRF
    */
   public static function token()
   {
-    $env_path = include _root() . '/config/security/tokens.php';
+    $env_path = include ROOT . '/config/security/tokens.php';
     return $env_path["csrf"];
   }
 

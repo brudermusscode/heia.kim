@@ -137,7 +137,7 @@ class Set extends Justin
   {
     $big_cover ??= false;
     $beatmap_set_id ??= $this->id;
-    return include _root() . "/app/templates/helper/beatmaps/_cover.php";
+    return include ROOT . "/app/templates/helper/beatmaps/_cover.php";
   }
 
   /**

@@ -114,7 +114,7 @@ class PasswordReset extends Justin
     $mail_template = "password_reset";
     $mail_subject = "♻️ Password forgotten?";
     $mail_token = Utils::random_alpha_token(64);
-    $mail_body = file_get_contents(_root() . "/app/templates/mail/$mail_template.html");
+    $mail_body = file_get_contents(ROOT . "/app/templates/mail/$mail_template.html");
 
     /**
      * Replace curly variables.

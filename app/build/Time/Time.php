@@ -38,6 +38,18 @@ class Time
   }
 
   /**
+   * Adds a specified amount of seconds to time().
+   *
+   * @param int $seconds
+   * @param string $format
+   * @return string
+   */
+  public static function add(int $seconds, string $format = "Y-m-d H:i:s")
+  {
+    return gmdate($format, time() + $seconds);
+  }
+
+  /**
    * @param string $timestamp
    * @return bool
    */

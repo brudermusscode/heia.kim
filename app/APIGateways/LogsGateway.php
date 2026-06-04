@@ -19,7 +19,7 @@ class LogsGateway extends Gateway
   public function get()
   {
     $authorization_in_request = Http::authorization("Bearer", $_SERVER);
-    $tokens = include _root() . "/config/security/tokens.php";
+    $tokens = include ROOT . "/config/security/tokens.php";
 
     /**
      * Request authorized && valid?
@@ -69,8 +69,8 @@ class LogsGateway extends Gateway
      * @var string|die
      */
     $return_data = match ($this->params->id) {
-      "phperrors" => file_get_contents(_root() . "/storage/logs/php_errors.log"),
-      "cron" => file_get_contents(_root() . "/storage/logs/cron.log"),
+      "phperrors" => file_get_contents(ROOT . "/storage/logs/php_errors.log"),
+      "cron" => file_get_contents(ROOT . "/storage/logs/cron.log"),
       default => die($this->error("Invalid Second Model: " . $this->params->id)),
     };
 
@@ -83,8 +83,8 @@ class LogsGateway extends Gateway
   public function many()
   {
     $return_data = [
-      "phperrors" => file_get_contents(_root() . "/storage/logs/php_errors.log"),
-      "cron" => file_get_contents(_root() . "/storage/logs/cron.log"),
+      "phperrors" => file_get_contents(ROOT . "/storage/logs/php_errors.log"),
+      "cron" => file_get_contents(ROOT . "/storage/logs/cron.log"),
     ];
 
     return $this->success(data: $return_data);

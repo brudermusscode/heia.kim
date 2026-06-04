@@ -12,6 +12,7 @@ RUN apk add --no-cache \
   libavif-dev \
   libwebp-dev \
   nano \
+  cronie \
   $PHPIZE_DEPS
 
 # Set the production php.ini to default

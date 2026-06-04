@@ -37,6 +37,6 @@ class Country extends Justin
   public function icon()
   {
     $country_abbreviation = $this->abbreviation;
-    return include _root() . "/app/templates/helper/_image_country.php";
+    return include ROOT . "/app/templates/helper/_image_country.php";
   }
 }

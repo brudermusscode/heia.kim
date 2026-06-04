@@ -19,7 +19,7 @@ $Router = new Router;
  * Populates the routes array in the router by iterating through
  * all files in the routes/ directory.
  */
-foreach (glob(_root() . "/routes/*.php") as $filename)
+foreach (glob(ROOT . "/routes/*.php") as $filename)
   include $filename;
 
 /**

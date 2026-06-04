@@ -3,7 +3,7 @@
 use Heiakim\Model\User;
 use Heiakim\Model\Notification;
 
-require _root() . "/config/get_requirements.php";
+require ROOT . "/config/get_requirements.php";
 
 authorize(resource: CurrentUser);
 

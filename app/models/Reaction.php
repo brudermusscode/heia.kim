@@ -95,7 +95,7 @@ class Reaction extends Justin
     ob_start();
     $CurrentUser;
 
-    include _root() . "/app/templates/reaction/_reaction.php";
+    include ROOT . "/app/templates/reaction/_reaction.php";
 
     return $this->success(data: ob_get_clean());
   }

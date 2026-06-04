@@ -1081,7 +1081,7 @@ class User extends Justin
       $mail_subject = "⚠️ You have been restricted";
       $mail_template = "restricted";
       $mail_template_path =
-        _root() . "/app/templates/mail/$mail_template.html";
+        ROOT . "/app/templates/mail/$mail_template.html";
       $mail_body = file_get_contents($mail_template_path);
       $mail_body = str_replace(
         "{current-date}",
@@ -1334,7 +1334,7 @@ class User extends Justin
         ->first();
     }
 
-    return include _root() . "/app/templates/helper/beatmaps/_cover.php";
+    return include ROOT . "/app/templates/helper/beatmaps/_cover.php";
   }
 
   /**
@@ -1370,7 +1370,7 @@ class User extends Justin
     $gdpr ??= true;
     $deleted = $this->deleted ?? null;
 
-    include _root() . "/app/templates/helper/users/_image.php";
+    include ROOT . "/app/templates/helper/users/_image.php";
   }
 
     // ? >>>>>>>>>>>>>>>>>>>>> BIRTHDAY >>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1735,7 +1735,7 @@ class User extends Justin
   public function country_icon()
   {
     $country_abbreviation = $this->country;
-    return include _root() . "/app/templates/helper/_image_country.php";
+    return include ROOT . "/app/templates/helper/_image_country.php";
   }
 
     // ? >>>>>>>>>>>>>>>>>>>>> RANKING >>>>>>>>>>>>>>>>>>>>>>>>>

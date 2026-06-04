@@ -91,7 +91,7 @@ class BirthdayWishes extends Job
         /**
          * Prepare mail body.
          */
-        $file_path = _root() . "/app/templates/mail/$template.html";
+        $file_path = ROOT . "/app/templates/mail/$template.html";
         $mail_body = file_get_contents($file_path);
 
         /**

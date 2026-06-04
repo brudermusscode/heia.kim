@@ -59,7 +59,7 @@ set_exception_handler(function ($ex) {
   /**
    * Any js and css file.
    */
-  include _root() . "/app/templates/global/_yield-requires.php";
+  include ROOT . "/app/templates/global/_yield-requires.php";
 
 
   $include_styles = $app_init ? "" : ob_get_clean();

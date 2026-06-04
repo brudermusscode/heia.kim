@@ -384,7 +384,7 @@ class Profile extends Justin
     // TODO: Make it dynamic. By now it just uses the default sections wrapper.
     $wrapper = self::$wrapper[1];
 
-    return include _root() . "/app/templates/my/editor/placeholders/_" .
+    return include ROOT . "/app/templates/my/editor/placeholders/_" .
       match ($object_name) {
         "graph" => "graph",
         "scores_pinned",

@@ -1,4 +1,3 @@
-# This will run the run.php file located in the jobs directory,
-# which will execute any job listed respective to their set interval.
-* * * * * root php /data/jobs/run.php >> /data/storage/logs/cron.log 2>&1
-# * * * * * root sleep 30; php /data/jobs/run.php >> /data/storage/logs/cron.log 2>&1
+* * * * * root /usr/bin/php /data/tasks/run-jobs.php >> /data/storage/logs/cron.log 2>&1
+* * * * * root sleep 20; /usr/bin/php /data/tasks/run-jobs.php >> /data/storage/logs/cron.log 2>&1
+* * * * * root sleep 40; /usr/bin/php /data/tasks/run-jobs.php >> /data/storage/logs/cron.log 2>&1

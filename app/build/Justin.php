@@ -30,11 +30,11 @@ class Justin extends Model
   private static $oauth_credentials_file = "/config/security/oauth_credentials.json";
 
   /**
-   * @return \Predis\Client
+   * @return \Heiakim\Database\RedisManager
    */
   public function redis()
   {
-    return Redis::connect();
+    return new \Heiakim\Database\RedisManager();
   }
 
   /**
@@ -61,7 +61,7 @@ class Justin extends Model
    */
   public function template(string $path)
   {
-    return _root() . "/app/templates$path";
+    return ROOT . "/app/templates$path";
   }
 
   /**
@@ -72,7 +72,7 @@ class Justin extends Model
    */
   public static function get_oauth_credentials(?string $oauth_app = null)
   {
-    $path = _root() . self::$oauth_credentials_file;
+    $path = ROOT . self::$oauth_credentials_file;
     $credentials = $oauth_app ? JSON::read($path)->$oauth_app : JSON::read($path);
 
     return $credentials;

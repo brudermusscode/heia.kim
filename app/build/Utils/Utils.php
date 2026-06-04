@@ -107,7 +107,7 @@ class Utils
    */
   public static function get_token(string $key)
   {
-    $env_path = include _root() . '/config/security/tokens.php';
+    $env_path = include ROOT . '/config/security/tokens.php';
     return $env_path[$key] ?? null;
   }
 }

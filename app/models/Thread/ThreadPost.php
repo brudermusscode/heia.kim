@@ -149,7 +149,7 @@ class ThreadPost extends Justin
     ob_start();
     $is_new = true;
     $CurrentUser;
-    include _root() . "/app/templates/threads/_post.php";
+    include ROOT . "/app/templates/threads/_post.php";
     $this->return->data = ob_get_clean();
 
     return $this->success($msg);

@@ -3,6 +3,7 @@
 namespace Heiakim\Application;
 
 use Exception;
+use Throwable;
 
 class Logger
 {
@@ -11,15 +12,15 @@ class Logger
    * Logs a given message to a specified file, which will be cerated if not exists.
    * Returns the Exception itself, so the function can be thrown if wanted 😃.
    *
-   * @param Exception $exception
+   * @param Throwable $exception
    * @param string $logFile
    * @return Exception
    */
-  public static function to_file(Exception $exception, string $logFile = 'php_errors.log')
+  public static function to_file(Throwable $exception, string $logFile = 'php_errors.log')
   {
 
     # Get the root directory path using Application::root()
-    $logFilePath = _root() . "/storage/logs/" . $logFile;
+    $logFilePath = ROOT . "/storage/logs/" . $logFile;
 
     # Prepare the message with timestamp, exception details
     $formattedMessage = "[" . date('Y-m-d H:i:s') . "] " .
@@ -48,7 +49,7 @@ class Logger
   public static function message_to_file(string $message, string $logFile = 'php_errors.log')
   {
     // Get the root directory path using Application::root()
-    $logFilePath = _root() . "/storage/logs/" . $logFile;
+    $logFilePath = ROOT . "/storage/logs/" . $logFile;
 
     // Prepare the message with timestamp, exception details
     $formattedMessage = "[" . date('Y-m-d H:i:s') . "] " .
