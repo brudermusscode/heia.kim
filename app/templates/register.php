@@ -52,7 +52,10 @@ include SNOW; ?>
 
             # + Discord
             if (Feature::is_enabled("connect_discord")) : ?>
-              <mbutton has-tooltip=bottom flexone material ripple-effect size=mid background="discord-blue" data-action="vendors:discord,auth,create" color=white>
+              <mbutton
+                data-action="connection:start"
+                data-provider="discord"
+                has-tooltip=bottom flexone material ripple-effect size=mid background="discord-blue" color=white>
                 <i class="ri-discord-fill"></i>
                 <div ttooltip>
                   <p text bold>Discord</p>

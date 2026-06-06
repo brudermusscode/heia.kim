@@ -45,12 +45,12 @@ class UsersController extends Controller
     # tication itself. If none of these have an email set, the User will in any other
     # case send one with the form parameters. This ensures that the mail from previous
     # authentication steps will be used.
-    $this->params->email = $Authentication->connection?->email
+    $this->params->email = $Connection?->email
       ?? $Authentication->email
       ?? $this->params->email;
 
     # Append some other parameter from a possible API Connection.
-    $this->params->is_legit = $Authentication->connection?->is_legit;
+    $this->params->is_legit = $Connection?->is_legit;
 
     # TODO: Append a picture from API Connection.
     $this->params->files = null;
@@ -58,8 +58,8 @@ class UsersController extends Controller
     # Create a new User.
     $User = (new User)->new($this->params);
 
-    # Associate the new User with a API Connection if one shall exist.
-    $Connection->user()
+    # Associate the new User with an API Connection if one shall exist.
+    $Connection?->user()
       ->associate($User)
       ->save();
 

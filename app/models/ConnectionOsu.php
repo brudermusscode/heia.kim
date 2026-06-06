@@ -22,36 +22,6 @@ class ConnectionOsu extends Connection
   protected const string PROVIDER = "osu!";
 
   /**
-   * osu! API specifications.
-   */
-  protected array $api = [
-    "auth" => [
-      "endpoint" => "https://osu.ppy.sh/api/v2",
-      "grant_type" => "client_credentials",
-    ],
-    "user-auth" => [
-      "endpoint" => "https://osu.ppy.sh/oauth/authorize",
-      "response_type" => "code",
-    ],
-    "user-access" => [
-      "endpoint" => "https://osu.ppy.sh/oauth/token",
-      "grant_type" => "authorization_code"
-    ],
-    "user-refresh-access" => [
-      "endpoint" => "https://osu.ppy.sh/oauth/token",
-      "grant_type" => "refresh_token",
-    ],
-  ];
-
-  /**
-   * @see https://osu.ppy.sh/docs/#scopes
-   */
-  protected array $scopes = [
-    "identify" => "identify",
-    "public" => "public",
-  ];
-
-  /**
    * Generates the link to the vendor's API where the user has to authorize their ac-
    * count.
    *
@@ -61,13 +31,14 @@ class ConnectionOsu extends Connection
   public function generate_link()
   {
 
+    $api = $this->api();
     $callback = $this->credentials["callback"][current_env()]["connect"];
-    $return = $this->api["user-auth"]["endpoint"]
+    $return = $api["user-auth"]["endpoint"]
       . "?client_id=" . $this->credentials["client_id"]
+      . "&response_type=" . $api["user-auth"]["response_type"]
       . "&redirect_uri=" . $callback
-      . "&response_type=" . $this->api["user-auth"]["response_type"]
       . "&state=" . Utils::random_alpha_token(124)
-      . "&scope=" . implode(" ", $this->scopes);
+      . "&scope=" . implode(" ", $this->scopes());
 
     return $return;
   }
@@ -88,11 +59,12 @@ class ConnectionOsu extends Connection
     string $action = "connect"
   ) {
 
+    $api = $this->api();
     $response = static::request(
-      api: $this->api["user-access"]["endpoint"],
+      api: $api["user-access"]["endpoint"],
       data: [
         "code" => $code,
-        "grant_type" => $this->api["user-access"]["grant_type"],
+        "grant_type" => $api["user-access"]["grant_type"],
         "redirect_uri" => $this->credentials["callback"][current_env()][$action],
       ],
     );
@@ -119,11 +91,11 @@ class ConnectionOsu extends Connection
     if (!$this->refresh_token)
       return false;
 
-    # Start the cURL request!
+    $api = $this->api();
     $this->request(
-      api: $this->api["user-refresh-access"]["endpoint"],
+      api: $api["user-refresh-access"]["endpoint"],
       data: [
-        "grant_type" => $this->api["user-refresh-access"]["grant_type"],
+        "grant_type" => $api["user-refresh-access"]["grant_type"],
         "refresh_token" => $this->refresh_token,
       ],
     );
@@ -210,7 +182,7 @@ class ConnectionOsu extends Connection
 
     # Evaluate if the user is a legit player by checkeing their rank against the top
     # 1000 players on the public osu! leaderboards.
-    foreach (new ApiOsu()->rulesets as $ruleset) {
+    foreach (ApiOsu::$rulesets as $ruleset) {
       $user_ids = $this->redis()
         ->sMembers(ApiRegistry::$redis_map["osu!"]["ranking"] . ":$ruleset");
 
@@ -250,8 +222,9 @@ class ConnectionOsu extends Connection
   public function provider_user(?string $access_token = null)
   {
 
+    $api = $this->api();
     $response = CURL::start(
-      url: $this->api["auth"]["endpoint"] . "/me",
+      url: $api["general"]["endpoint"] . "/me",
       type: "GET",
       options: [
         CURLOPT_HTTPHEADER => [

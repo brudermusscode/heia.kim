@@ -9,6 +9,7 @@ namespace Heiakim\Model;
 use Heiakim\Exception\ApiException;
 use Heiakim\Registry\ApiRegistry;
 use Heiakim\Time\Time;
+use Heiakim\Http\CURL;
 
 class ApiOsu extends ApiProvider
 {
@@ -19,16 +20,42 @@ class ApiOsu extends ApiProvider
   protected const PROVIDER = "osu!";
 
   /**
+   * osu! API specifications.
+   */
+  public static array $api = [
+    "general" => [
+      "endpoint" => "https://osu.ppy.sh/api/v2",
+    ],
+    "auth" => [
+      "endpoint" => "https://osu.ppy.sh/oauth/token",
+      "grant_type" => "client_credentials",
+    ],
+    "user-auth" => [
+      "endpoint" => "https://osu.ppy.sh/oauth/authorize",
+      "response_type" => "code",
+    ],
+    "user-access" => [
+      "endpoint" => "https://osu.ppy.sh/oauth/token",
+      "grant_type" => "authorization_code"
+    ],
+    "user-refresh-access" => [
+      "endpoint" => "https://osu.ppy.sh/oauth/token",
+      "grant_type" => "refresh_token",
+    ],
+  ];
+
+  /**
    * @see https://osu.ppy.sh/docs/#scopes
    */
-  protected array $scopes = [
+  public static array $scopes = [
+    "identify" => "identify",
     "public" => "public",
   ];
 
   /**
    * @see https://osu.ppy.sh/docs/#ruleset
    */
-  public array $rulesets = [
+  public static array $rulesets = [
     "osu",
     "taiko",
     "mania",
@@ -52,40 +79,22 @@ class ApiOsu extends ApiProvider
     if ($this->access_token && !Time::over($this->expires_at) && !$force)
       return $this;
 
-    # Build data & headers for the comming cURL request.
-    $credentials = oauth_credentials(static::PROVIDER);
-    $data = [
-      "client_id" => $credentials["client_id"],
-      "client_secret" => $credentials["client_secret"],
-      "grant_type" => "client_credentials",
-      "scope" => $this->scopes["public"],
-    ];
-
-    $headers = [
-      'Accept: application/json',
-      'Content-Type: application/x-www-form-urlencoded',
-    ];
-
-    # Start cURL request.
-    $curl = curl_init();
-    curl_setopt_array($curl, [
-      // CURLOPT_VERBOSE => true,
-      CURLOPT_URL => $credentials["token_url"],
-      CURLOPT_POST => true,
-      CURLOPT_POSTFIELDS => http_build_query($data),
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_HTTPHEADER => $headers
-    ]);
-
-    # For development environment without SSL, we need to disable
-    # SSL specific validations for cURL requests.
-    if (current_env() === "dev") {
-      curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-      curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-    }
-
-    $response = curl_exec($curl);
-    $response = json_decode($response);
+    $c = oauth_credentials(static::PROVIDER);
+    $response = CURL::start(
+      url: static::$api["auth"]["endpoint"],
+      data: [
+        "client_id" => $c["client_id"],
+        "client_secret" => $c["client_secret"],
+        "grant_type" => "client_credentials",
+        "scope" => static::$scopes["public"],
+      ],
+      options: [
+        CURLOPT_HTTPHEADER => [
+          'Accept: application/json',
+          'Content-Type: application/x-www-form-urlencoded',
+        ],
+      ]
+    );
 
     # cURL request failed based on no access token is given?
     if (empty($response->access_token))
@@ -152,7 +161,7 @@ class ApiOsu extends ApiProvider
 
     # Based on the mode set in params, we iterate through either the one
     # set or when null, all.
-    foreach ((!$rulesets ? $this->rulesets : $rulesets) as $ruleset) {
+    foreach ((!$rulesets ? static::$rulesets : $rulesets) as $ruleset) {
       $final[$ruleset] = [];
 
       for ($page = 1; $page <= $pages; $page++) {
@@ -180,26 +189,24 @@ class ApiOsu extends ApiProvider
   public function top_50(string $mode = "osu", int $page = 1)
   {
 
-    # Build data & headers for the comming cURL request.
-    $credentials = oauth_credentials(static::PROVIDER);
-    $headers = [
-      'Accept: application/json',
-      'Content-Type: application/json',
-      'Authorization: Bearer ' . ($this->access_token),
-    ];
+    # Refresh the access token first 🙂 Will only refresh if the old is expired.
+    $this->refresh_access_token();
 
-    # Start cURL request as GET.
-    $curl = curl_init();
-    curl_setopt_array($curl, [
-      CURLOPT_URL => $credentials["base_url"] . "/rankings/$mode/performance?cursor[page]=$page",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_HTTPHEADER => $headers
-    ]);
+    # Start the cURL request.
+    $response = CURL::start(
+      url: static::$api["general"]["endpoint"]
+        . "/rankings/$mode/performance?cursor[page]=$page",
+      type: "GET",
+      options: [
+        CURLOPT_HTTPHEADER => [
+          'Accept: application/json',
+          'Content-Type: application/json',
+          'Authorization: Bearer ' . ($this->access_token),
+        ]
+      ],
+    );
 
-    $response = curl_exec($curl);
-    $response = json_decode($response);
-
-    # cURL failed indicated by no user inside a ranking object is set?
+    # No user inside a ranking object set?
     if (empty($response->ranking[0]->user))
       return null;
 

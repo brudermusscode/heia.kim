@@ -6,112 +6,39 @@
 
 namespace Heiakim\Model;
 
-use Heiakim\Model\Session;
-use Heiakim\Model\User;
 use Heiakim\Model\Vendor\Discord;
+use Heiakim\Trait\IsConnectionProvider;
+use Heiakim\Utils\Utils;
 
 class ConnectionDiscord extends Connection
 {
+  use IsConnectionProvider;
 
   /**
-   * @param object $params
-   * @return string
+   * @see https://osu.ppy.sh
    */
-  public function new(object $params)
-  {
-
-    /**
-     * @var User
-     */
-    $CurrentUser = $params->CurrentUser;
-
-    /**
-     * Create a new request to the API.
-     */
-    $Discord = (new Discord)->new($params);
-
-    /**
-     * Request failed?
-     */
-    if (!($Discord instanceof Discord))
-      return json_decode($Discord);
-
-    /**
-     * @var null|User|Connect
-     */
-    $email_in_use =
-      User::where("email", $Discord->user->email)->first()
-      ?? Connect::where("type", "discord")
-      ->where(function ($q) use ($Discord) {
-        $q->where("vendor_id", $Discord->user->id)
-          ->orWhere("vendor_email", $Discord->user->email);
-      })
-      ->first();
-
-    /**
-     * User exists?
-     */
-    if ($email_in_use)
-      return $this->error("<strong>You can't use this Discord.</strong> It is already connected to another account.", return_json_string: false);
-
-    /**
-     * Join the user to our
-     */
-    $Discord->join_server();
-
-    /**
-     * Create the connection!
-     */
-    ConnectDiscord::create([
-      "user_id" => $CurrentUser->id,
-      "type" => "discord",
-      "vendor_id" => $Discord->user->id,
-      "vendor_email" => $Discord->user->email,
-      "access_token" => $Discord->access_token,
-      "refresh_token" => $Discord->refresh_token,
-      "token_type" => $Discord->auth->token_type,
-      "scope" => $Discord->auth->scope,
-    ]);
-
-    return $this->success("<strong>Account connected!</strong>", return_json_string: false);
-  }
+  protected const string PROVIDER = "discord";
 
   /**
-   * @param object $params
+   * Generates the link to the vendor's API where the user has to authorize their ac-
+   * count.
+   *
    * @return string
+   * @see https://osu.ppy.sh/docs/#authorization-code-grant
    */
-  public function login(object $params)
+  public function generate_link()
   {
-    /**
-     * Create a new request to the API.
-     */
-    $Discord = $this->fetch_credentials_with_code($params);
 
-    /**
-     * Credentials valid?
-     */
-    if (!($Discord instanceof Discord))
-      return $Discord;
+    $api = $this->api();
+    $callback = $this->credentials["callback"][current_env()]["connect"];
+    $return = $api["user-auth"]["endpoint"]
+      . "?client_id=" . $this->credentials["client_id"]
+      . "&response_type=" . $api["user-auth"]["response_type"]
+      . "&redirect_uri=" . $callback
+      . "&state=" . Utils::random_alpha_token(124)
+      . "&scope=" . implode(" ", $this->scopes());
 
-    /**
-     * @var ?ConnectDiscord
-     */
-    $Connect = ConnectDiscord::whereNotNull("user_id")
-      ->where("vendor_id", $Discord->user->id)
-      ->first();
-
-    /**
-     * Account is signed up already with this vendor?
-     */
-    if (!$Connect)
-      return $this->error("<strong>Couldn't find this account.</strong>");
-
-    /**
-     * Create a session!
-     */
-    return (new Session)->new((object) [
-      "user_id" => $Connect->user_id,
-    ]);
+    return $return;
   }
 
   /**

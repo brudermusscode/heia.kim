@@ -9,6 +9,7 @@ namespace Heiakim\Model;
 use Heiakim\Justin;
 use Heiakim\Trait\IsConnectionProvider;
 use Heiakim\Http\CURL;
+use Heiakim\Registry\ApiRegistry;
 
 class Connection extends Justin
 {
@@ -36,6 +37,28 @@ class Connection extends Justin
     $this->credentials = oauth_credentials(static::PROVIDER);
 
     return parent::__construct();
+  }
+
+  /**
+   * Gets the API specifications for public access.
+   *
+   * @return ?array
+   */
+  public function scopes()
+  {
+    return (ApiRegistry::$map[static::PROVIDER ?: $this->provider]::$scopes)
+      ?? null;
+  }
+
+  /**
+   * Gets the API specifications for public access.
+   *
+   * @return ?array
+   */
+  public function api()
+  {
+    return (ApiRegistry::$map[static::PROVIDER ?: $this->provider]::$api)
+      ?? null;
   }
 
   /**

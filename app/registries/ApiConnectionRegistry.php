@@ -3,6 +3,7 @@
 namespace Heiakim\Registry;
 
 use Heiakim\Model\ConnectionOsu;
+use Heiakim\Model\ConnectionDiscord;
 
 abstract class ApiConnectionRegistry
 {
@@ -14,11 +15,12 @@ abstract class ApiConnectionRegistry
    */
   public static array $map = [
     "osu!" => \Heiakim\Model\ConnectionOsu::class,
+    "discord" => \Heiakim\Model\ConnectionDiscord::class,
   ];
 
   /**
    * @param string $key
-   * @return class-string<ConnectionOsu>
+   * @return class-string<ConnectionOsu|ConnectionDiscord>
    *
    * NOTE: Will die when no class was found in mapping.
    */

@@ -1,2 +1,3 @@
 + Remove class Heiakim\Application\Exception for more specific Heiakim\Exception\…
-+ Implement Registries instead of over utilizing Traits.
++ Upload picture from vendor API in User::new()
++ Make discord client credentials grant work (general api interactions)
