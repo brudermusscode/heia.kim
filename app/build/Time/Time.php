@@ -38,7 +38,8 @@ class Time
   }
 
   /**
-   * Adds a specified amount of seconds to time().
+   * Adds a specified amount of seconds to time() and returns the timestamp as a str-
+   * ing in a format of your wishes 🙂
    *
    * @param int $seconds
    * @param string $format
@@ -111,7 +112,8 @@ class Time
 
         $difference %= $seconds;
 
-        // To show only one level of granularity (e.g., "1 day 2 hours" instead of "1 day 2 hours 30 minutes")
+        # To show only one level of granularity (e.g., "1 day 2 hours" instead of
+        # "1 day 2 hours 30 minutes")
         break;
       }
     }
@@ -161,8 +163,7 @@ class Time
 
 
   /**
-   * Function to check, if a timestamp is older than the passed
-   * time to have passed.
+   * Function to check, if a timestamp is older than the passed time to have passed.
    *
    * @param string $timestamp
    * @param string $time_to_have_passed +30 minutes
@@ -172,8 +173,7 @@ class Time
   {
 
     /**
-     * Convert the timestamp passed, whether it's unix or string
-     * to a DateTime object.
+     * Convert the timestamp passed, whether it's unix or string to a DateTime object.
      */
     $timestamp = is_numeric($timestamp) ? new DateTime("@$timestamp") : new DateTime($timestamp);
 
@@ -186,8 +186,12 @@ class Time
   }
 
 
-  public static function has_passed_since_return_time($timestamp1, $timestamp2, $daysToPass)
-  {
+  public static function has_passed_since_return_time(
+    string $timestamp1,
+    string $timestamp2,
+    string $daysToPass
+  ) {
+
     // Convert timestamps to DateTime objects
     $dateTime1 = new DateTime($timestamp1);
     $dateTime2 = new DateTime($timestamp2);

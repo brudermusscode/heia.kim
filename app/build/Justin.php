@@ -30,11 +30,12 @@ class Justin extends Model
   private static $oauth_credentials_file = "/config/security/oauth_credentials.json";
 
   /**
-   * @return \Heiakim\Database\RedisManager
+   * @return \Redis
    */
   public function redis()
   {
-    return new \Heiakim\Database\RedisManager();
+    return new \Heiakim\Database\RedisManager()
+      ->connection();
   }
 
   /**

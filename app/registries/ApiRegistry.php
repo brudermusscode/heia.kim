@@ -12,4 +12,13 @@ abstract class ApiRegistry
   public static array $map = [
     "osu!" => \Heiakim\Model\ApiOsu::class,
   ];
+
+  /**
+   * Mapping for redis keys.
+   */
+  public static array $redis_map = [
+    "osu!" => [
+      "ranking" => "osu!:ranking", # + osu,mania,taiko,fruits
+    ]
+  ];
 }

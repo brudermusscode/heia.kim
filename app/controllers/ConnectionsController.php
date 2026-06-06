@@ -38,7 +38,7 @@ class ConnectionsController extends Controller
 
     $ProviderClass = ApiConnectionRegistry::ClassOrDie($this->params->provider);
 
-    return success(data: ["link" => $ProviderClass::generate_link()]);
+    return success(data: ["link" => new $ProviderClass()->generate_link()]);
   }
 
   /**

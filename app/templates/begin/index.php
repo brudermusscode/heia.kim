@@ -80,7 +80,8 @@ else :
             <p text std>Cancel</p>
           </mbutton>
 
-          <mbutton submit-closest material icon-only size=wide background=green tabindex=3>
+          <mbutton submit-closest tabindex=3 material icon-only size=wide
+            background=green color=light>
             <mi>arrow_forward</mi>
           </mbutton>
         </div>

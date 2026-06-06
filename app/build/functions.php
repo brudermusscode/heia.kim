@@ -23,7 +23,7 @@ function oauth_credentials(string $key)
 {
   $arr = require ROOT . "/config/security/oauth.php";
 
-  return $arr[$key] ?? throw new ApiException("No OAuth credentials found for key »" . $key . "«");
+  return $arr[$key] ?? null;
 }
 
 /**

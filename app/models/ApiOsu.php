@@ -6,7 +6,6 @@
 
 namespace Heiakim\Model;
 
-use Heiakim\Application\Logger;
 use Heiakim\Exception\ApiException;
 use Heiakim\Time\Time;
 
@@ -28,7 +27,7 @@ class ApiOsu extends ApiProvider
   /**
    * @see https://osu.ppy.sh/docs/#ruleset
    */
-  protected array $rulesets = [
+  public array $rulesets = [
     "osu",
     "taiko",
     "mania",
@@ -105,8 +104,6 @@ class ApiOsu extends ApiProvider
   public function cache_leaderboard(int $count = 1000)
   {
 
-    $this->redis()->connection()->flushAll();
-
     try {
       $redis_cache_key = "osu!:ranking";
       $leaderboard = $this->leaderboard(count: $count);
@@ -114,10 +111,9 @@ class ApiOsu extends ApiProvider
       foreach ($leaderboard as $ruleset => $users) {
         foreach ($users as $user) {
 
-          # Add the user to a list (sAdd) with key consisting of the cache key
-          # and the ruleset. This will sum up to 4 different lists later.
-          $this->redis()->connection()
-            ->sAdd("$redis_cache_key:$ruleset", (int) $user);
+          # Add the user to a list (sAdd) with key consisting of the cache base
+          # key and the ruleset. This will sum up to 4 different lists later.
+          $this->redis()->sAdd("$redis_cache_key:$ruleset", (int) $user);
         }
       }
 
@@ -179,7 +175,6 @@ class ApiOsu extends ApiProvider
    * @param int $page
    * @return ?object
    * @see https://osu.ppy.sh/docs/#get-ranking
-   *
    */
   public function top_50(string $mode = "osu", int $page = 1)
   {
