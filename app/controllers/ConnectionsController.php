@@ -29,7 +29,7 @@ class ConnectionsController extends Controller
 
     # CurrentUser has a connection of this provider already?
     if (
-      CurrentUser?->connections()
+      CurrentUser->connections()
       ->where("provider", $this->params->provider)
       ->first()
     )
@@ -56,7 +56,7 @@ class ConnectionsController extends Controller
 
     # CurrentUser has a provider of this type connected already?
     if (
-      CurrentUser?->connections()
+      CurrentUser->connections()
       ->where("provider", $this->params->provider)
       ->first()
     )
@@ -69,9 +69,16 @@ class ConnectionsController extends Controller
      */
     $Connection = new $ProviderClass()->new($this->params);
 
-    # Associate an existing CurrentUser with the ProviderClass.
-    if (CurrentUser->exists)
-      $Connection->associate(CurrentUser);
+    # Associate an existing CurrentUser with the ProviderClass and return.
+    if (CurrentUser->exists) {
+      $Connection->user()->associate(CurrentUser);
+      $Connection->save();
+
+      return success($Connection->provider . " connected!");
+    }
+
+    # ? ---------------------------------------
+    # ? From here only when a new user signs up.
 
     # Create a new Authentication so the ProviderUser can create a real User in the
     # next step.
@@ -84,9 +91,9 @@ class ConnectionsController extends Controller
       "remote_address" => Request::get_remote_address(),
     ]);
 
-    # Set the token from Authentication to the Connection to authenticate the User
-    # in the next step.
-    $Connection->associate($Authentication);
+    # Make the Authentication relate to the Connection 🙂
+    $Connection->authentication()->associate($Authentication);
+    $Connection->save();
 
     # Prepare the redirect URL.
     $redirect = "/begin/" . $Authentication->token . (
