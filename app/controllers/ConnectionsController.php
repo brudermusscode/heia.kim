@@ -71,8 +71,9 @@ class ConnectionsController extends Controller
 
     # Associate an existing CurrentUser with the ProviderClass and return.
     if (CurrentUser->exists) {
-      $Connection->user()->associate(CurrentUser);
-      $Connection->save();
+      $Connection->user()
+        ->associate(CurrentUser)
+        ->save();
 
       return success($Connection->provider . " connected!");
     }
@@ -92,8 +93,9 @@ class ConnectionsController extends Controller
     ]);
 
     # Make the Authentication relate to the Connection 🙂
-    $Connection->authentication()->associate($Authentication);
-    $Connection->save();
+    $Connection->authentication()
+      ->associate($Authentication)
+      ->save();
 
     # Prepare the redirect URL.
     $redirect = "/begin/" . $Authentication->token . (

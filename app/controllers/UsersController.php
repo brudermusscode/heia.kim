@@ -5,6 +5,7 @@ namespace Heiakim\Controller;
 use Heiakim\Controller\Controller;
 use Heiakim\Model\User;
 use Heiakim\Model\Authentication;
+use Heiakim\Model\ConnectionOsu;
 use Heiakim\Model\Session;
 
 class UsersController extends Controller
@@ -17,7 +18,7 @@ class UsersController extends Controller
   {
 
     $this->validate_params(
-      strict: ["name", "password", "token"],
+      strict: ["name", "password", "token", "email"],
       optional: [],
     );
 
@@ -35,16 +36,32 @@ class UsersController extends Controller
     if (!$Authentication)
       return $this->error("<strong>Authentication not found.</strong>");
 
-    # Append params.
-    $this->params->email = $Authentication->email;
+    /**
+     * @var ?ConnectionOsu
+     */
+    $Connection = $Authentication->connection;
+
+    # The email can either come from an API Connection (high priority) or the Authen-
+    # tication itself. If none of these have an email set, the User will in any other
+    # case send one with the form parameters. This ensures that the mail from previous
+    # authentication steps will be used.
+    $this->params->email = $Authentication->connection?->email
+      ?? $Authentication->email
+      ?? $this->params->email;
+
+    # Append some other parameter from a possible API Connection.
+    $this->params->is_legit = $Authentication->connection?->is_legit;
+
+    # TODO: Append a picture from API Connection.
+    $this->params->files = null;
 
     # Create a new User.
     $User = (new User)->new($this->params);
 
-    # Update the Connection, if one exists.
-    $Authentication->connection()->associate($User);
-
-    pdie($Authentication->connection()->first());
+    # Associate the new User with a API Connection if one shall exist.
+    $Connection->user()
+      ->associate($User)
+      ->save();
 
     # Delete the Authentication.
     $Authentication->delete();

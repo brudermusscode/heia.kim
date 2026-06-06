@@ -120,11 +120,6 @@ class User extends Justin
   {
 
     /**
-     * @var ?Connect
-     */
-    $Vendor = $params->vendor ?? null;
-
-    /**
      * @var User
      */
     $User = self::make();
@@ -151,7 +146,7 @@ class User extends Justin
     $User->latest_activity = $time;
 
     # Begin the database transaction! Nothing to be left behind.
-    $this->db_transaction();
+    $User->db_transaction();
 
     try {
 
@@ -161,7 +156,7 @@ class User extends Justin
       # Create UserSettings.
       $User->settings()->create([
         "birthday" => null,
-        "is_legit" => $Vendor?->is_legit ? 1 : null,
+        "is_legit" => $params->is_legit,
       ]);
 
       # Create UserPrivacySettings
@@ -185,37 +180,15 @@ class User extends Justin
         ]);
       }
 
-      # Update the Vendor Connection with the new user id.
-      $Vendor?->update([
-        "user_id" => $User->id,
-      ]);
+      # TODO: Upload a picture. Filename has to be the user id.
 
-      # Download Vendor image.
-      if (
-        $Vendor &&
-        $params->avatar_url &&
-        ValidateImage::validate($params->avatar_url)
-      ) {
-
-        $image_file = file_get_contents($params->avatar_url);
-        $image_name =
-          $User->id .
-          "." .
-          ValidateImage::extension($params->avatar_url);
-
-        file_put_contents(
-          ENV->AVATAR_DIR . "/$image_name",
-          $image_file
-        );
-      }
-
-      $this->db_commit();
+      $User->db_commit();
 
       return $User;
     } catch (\Exception $e) {
 
       Logger::to_file($e);
-      $this->db_rollback();
+      $User->db_rollback();
 
       return die(error($e->getMessage()));
     }
