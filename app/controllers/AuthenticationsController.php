@@ -64,4 +64,28 @@ class AuthenticationsController extends Controller
 
     return $Authentication->edit($this->params);
   }
+
+  public function delete()
+  {
+
+    $this->validate_params(
+      strict: ["token"],
+    );
+
+    /**
+     * @var ?Authentication
+     */
+    $Authentication = Authentication::where("token", $this->params->token)
+      ->first();
+
+    # Authentication does not exist?
+    if (!$Authentication)
+      return error();
+
+    # Delete all relations + the Authentication.
+    $Authentication->connection()->delete();
+    $Authentication->delete();
+
+    return success();
+  }
 }

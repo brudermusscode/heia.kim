@@ -4,10 +4,8 @@ import * as Audio from "./audio";
 import Overlay from "./elements/Overlay";
 
 /**
- *
- * Create a new ajax request. This will push the request to the
- * global active request array and make it available throughout
- * the website.
+ * Create a new ajax request. This will push the request to the global active request
+ * array and make it available throughout the website.
  */
 export const queue = (options) => {
   const xhr = $.ajax(options);
@@ -20,7 +18,6 @@ export const queue = (options) => {
 };
 
 /**
- *
  * @param {string} href
  * @param {Element} append_to
  * @param {boolean} show_responder
@@ -44,7 +41,8 @@ const get_content = async (href, append_to, show_responder, overlay) => {
         if (data.status) {
           if (!data.data) return resolve(data);
 
-          if (show_responder !== undefined && show_responder === "success") Frontend.create_responder(data.message, "succes");
+          if (show_responder !== undefined && show_responder === "success")
+            Frontend.create_responder(data.message, "succes");
 
           if (overlay) {
             let overlay = new Overlay();
@@ -59,7 +57,8 @@ const get_content = async (href, append_to, show_responder, overlay) => {
           }
           Frontend.reload_images();
         } else {
-          if (show_responder !== undefined && show_responder === "error") Frontend.create_responder(data.message, "error");
+          if (show_responder !== undefined && show_responder === "error")
+            Frontend.create_responder(data.message, "error");
         }
 
         if (show_responder !== undefined && show_responder === "always")
@@ -75,7 +74,11 @@ const get_content = async (href, append_to, show_responder, overlay) => {
   });
 };
 
-const construct_get_request_url = (element, baseUrl, prefix = "request-get-attribute-") => {
+const construct_get_request_url = (
+  element,
+  baseUrl,
+  prefix = "request-get-attribute-",
+) => {
   // Initialize query string
   let queryString = "?";
 
@@ -140,8 +143,8 @@ export const request = (element) => {
 };
 
 /**
- * Either pass an element that has a data-action attribute or a
- * string which both will be transformed to a valid request url.
+ * Either pass an element that has a data-action attribute or a string which both
+ * will be transformed to a valid request url.
  */
 export const url = (string) => {
   let action = string.dataset.action ?? string.getAttribute("action");
@@ -150,7 +153,84 @@ export const url = (string) => {
   return "/" + url.replaceAll(":", "/");
 };
 
+/**
+ * Any attribute that can be attached to a form to manipulate the
+ * behaviour of submitting a form.
+ *
+ * @var array
+ */
+const SUBMIT_FORM_ATTRIBUTES = [
+  "request",
+  "request-do",
+  "submit-closest",
+  "method",
+  "responder",
+  "no-scroll-top",
+  "toggle-button-active",
+  "redirect",
+  "full-redirect",
+  "reload",
+  "full-reload",
+  "close-overlays",
+  "on-success",
+  "update-library",
+  "update-current-track",
+  "interchange-action",
+];
+
 $(function () {
+  /**
+   * Shadow submitting a form. It mimics the functionality of form[request="…"] when
+   * submitted, but as a button, where the dataset entries are being converted to hid-
+   * den inputs.
+   *
+   * @event click
+   * @this [request]
+   */
+  $(document).on("click", "[request], [request-do]", function () {
+    if (!this.closest("[shadow-submit]")) return;
+
+    let form = document.createElement("form");
+    let button = document.createElement("mbutton");
+
+    button.setAttribute("submit-closest", true);
+    form.prepend(button);
+
+    /**
+     * Create an input inside the form for every dataset entry.
+     */
+    for (const [key, value] of Object.entries(this.dataset)) {
+      form.insertAdjacentHTML(
+        "afterbegin",
+        `<input type=hidden name=${key} value="${value}" />`,
+      );
+    }
+
+    /**
+     * Append all attributes from this element to the form.
+     */
+    for (const attribute of this.attributes) {
+      if (!SUBMIT_FORM_ATTRIBUTES.includes(attribute.name)) continue;
+
+      form.setAttribute(attribute.name, attribute.value);
+    }
+
+    document.body.prepend(form);
+
+    // # Submit the form!
+    button.click();
+
+    form.remove();
+
+    return;
+  });
+
+  /**
+   * Submitting a form with attribute [request].
+   *
+   * @event submit
+   * @this form[request]
+   */
   $(document).on("submit", "[request], [request-do]", function (e) {
     e.preventDefault();
 
@@ -238,12 +318,16 @@ $(function () {
               /**
                * Full reload requested.
                */
-            } else if (full_reload !== null) window.location.replace(redirect ?? window.location.pathname + window.location.search);
+            } else if (full_reload !== null)
+              window.location.replace(
+                redirect ?? window.location.pathname + window.location.search,
+              );
 
             /**
              * Show responder only on success.
              */
-            if (responder !== null && responder === "success") Frontend.create_responder(data);
+            if (responder !== null && responder === "success")
+              Frontend.create_responder(data);
 
             /**
              * Execute on success functions.
@@ -258,13 +342,15 @@ $(function () {
             /**
              * Show responder only on error.
              */
-            if (responder !== null && responder === "error") Frontend.create_responder(data.message, "error");
+            if (responder !== null && responder === "error")
+              Frontend.create_responder(data.message, "error");
           }
 
           /**
            * Always show responder.
            */
-          if (responder !== null && (responder === "always" || !responder)) Frontend.create_responder(data);
+          if (responder !== null && (responder === "always" || !responder))
+            Frontend.create_responder(data);
 
           buttons.forEach((button) => button.enable());
         },
@@ -287,7 +373,11 @@ $(function () {
      */
     if (dataset_count > 0) {
       for (const key in this.dataset) {
-        query += key.replace(/[A-Z]/g, (letter) => "_" + letter.toLowerCase()) + "=" + this.dataset[key] + "&";
+        query +=
+          key.replace(/[A-Z]/g, (letter) => "_" + letter.toLowerCase()) +
+          "=" +
+          this.dataset[key] +
+          "&";
       }
 
       query += "is_popup=kurwa";
@@ -335,7 +425,8 @@ $(function () {
       }
 
       if (!resolved.data) {
-        if (resolved.error || resolved.message) create_responder(resolved.error || resolved.message);
+        if (resolved.error || resolved.message)
+          create_responder(resolved.error || resolved.message);
 
         return;
       }
@@ -350,7 +441,10 @@ $(function () {
     let offset = this.getAttribute("request-get-attribute-offset");
 
     if (limit && offset) {
-      this.setAttribute("request-get-attribute-offset", parseInt(offset) + parseInt(limit));
+      this.setAttribute(
+        "request-get-attribute-offset",
+        parseInt(offset) + parseInt(limit),
+      );
     }
   });
 });

@@ -2,8 +2,10 @@
 
 namespace Heiakim\Trait;
 
+use Heiakim\Model\Authentication;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Heiakim\Model\User;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 trait IsConnectionProvider
 {
@@ -18,6 +20,7 @@ trait IsConnectionProvider
    */
   protected $fillable = [
     "user_id",
+    "authentication_token",
     "provider",
     "is_legit",
     "provider_user_id",
@@ -50,5 +53,16 @@ trait IsConnectionProvider
   public function user()
   {
     return $this->model()->belongsTo(User::class);
+  }
+
+  /**
+   * Saving the authentication_token to a Connection.
+   *
+   * @return BelongsTo<Authentication>
+   */
+  public function authentication()
+  {
+    return $this->model()
+      ->belongsTo(Authentication::class, "authentication_token", "token");
   }
 }

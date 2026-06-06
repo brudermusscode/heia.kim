@@ -9,7 +9,6 @@ namespace Heiakim\Model;
 use Heiakim\Justin;
 use Heiakim\Trait\IsConnectionProvider;
 use Heiakim\Http\CURL;
-use Override;
 
 class Connection extends Justin
 {

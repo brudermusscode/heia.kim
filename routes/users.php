@@ -121,7 +121,7 @@ $Router->post("/relationship/delete", "relationship/delete", return: JSON);
 $Router->get("/authentication/:type", "authentication/new", return: JSON);
 $Router->post("/authentication/create", "authentication/create", return: JSON);
 $Router->post("/authentication/update", "authentication/update", return: JSON);
-$Router->post("/authentication/validate", "authentication/validate", return: JSON);
+$Router->post("/authentication/delete", "authentication/delete", return: JSON);
 
 /**
  * @route /image

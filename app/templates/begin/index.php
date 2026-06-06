@@ -6,6 +6,7 @@
  */
 
 use Heiakim\Model\Authentication;
+use Heiakim\Model\Connection;
 
 /**
  * @var ?string
@@ -18,11 +19,6 @@ $token = filter_var($GLOBALS["route_param_token"], FILTER_SANITIZE_SPECIAL_CHARS
 $name = filter_input(INPUT_GET, "name", FILTER_SANITIZE_SPECIAL_CHARS);
 
 /**
- * @var ?int
- */
-$connection_id = filter_input(INPUT_GET, "connection_id", FILTER_VALIDATE_INT);
-
-/**
  * @var Authentication
  */
 $Authentication = Authentication::where("token", $token)
@@ -32,6 +28,11 @@ $Authentication = Authentication::where("token", $token)
 if (!$Authentication) :
   include UNAVAILABLE;
 else :
+
+  /**
+   * @var ?Connection
+   */
+  $Connection = $Authentication->connection;
 
   # + Snow.
   include SNOW;
@@ -56,27 +57,51 @@ else :
         <div fl fldircol gap=smol>
           <div input has-icon material>
             <mi midler>sticker</mi>
-            <input autofocus enter-submitable required tabindex=1 type="text" name="name" placeholder="Username" autocomplete="false" value="<?= $name ?: "" ?>" />
+            <input autofocus enter-submitable required tabindex=1 type="text"
+              name="name" placeholder="Username" autocomplete="false"
+              value="<?= $name ?: "" ?>" />
           </div>
 
           <div input has-icon material>
             <mi midler>key_vertical</mi>
-            <input enter-submitable required tabindex=2 autocomplete=new-password type="password" name="password" placeholder="Password" autocomplete="false" />
+            <input enter-submitable required tabindex=2 autocomplete=new-password
+              type="password" name="password" placeholder="Password"
+              autocomplete="false" />
+          </div>
+        </div>
+
+        <?php
+
+        $email = $Connection?->provider_user_email ?? $Authentication->email ?? "";
+        $email_from_text = $Connection ? "From " . $Connection->provider : "From step before";
+
+        ?>
+
+        <div fl fldircol gap=smol>
+          <?php if ($email) : ?>
+            <p text smol bold ttup><?= $email_from_text ?></p>
+          <?php endif ?>
+          <div input has-icon material <?= $email ? "disabled" : "" ?>>
+            <mi midler>alternate_email</mi>
+            <input enter-submitable required tabindex=2 autocomplete=new-password
+              type="email" name="email" placeholder="E-mail address"
+              value="<?= $email ?>" autocomplete="false" />
           </div>
         </div>
 
         <tipp-box rounded background=slighter>
           <mi>privacy_tip</mi>
-          <p text std>This combination of a username and password will be used to log into your <?= APP_NAME; ?> account</p>
+          <p text std>
+            We need a <strong>valid email address</strong> in case you lose your password or want to authorize any access to your account later.</p>
         </tipp-box>
 
-        <input type=hidden name=connection_id value="<?= $connection_id ?>" />
         <input type=hidden name=token value="<?= $token; ?>" />
 
         <div fl jucsb alic gap>
           <mbutton material size=mid tabindex=4 background=clean
-            data-action="authentication:delete"
-            data-token="<?= $token; ?>">
+            request="authentication:delete"
+            data-token="<?= $token; ?>"
+            shadow-submit redirect="/">
             <p text std>Cancel</p>
           </mbutton>
 

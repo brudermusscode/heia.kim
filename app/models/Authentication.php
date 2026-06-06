@@ -10,6 +10,7 @@ use Heiakim\Mail\Mail;
 use Heiakim\Trait\HasDefaultUser;
 use Heiakim\Model\User;
 use Heiakim\Validate\Validate;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Authentication extends Justin
@@ -132,6 +133,14 @@ class Authentication extends Justin
     )
       ? $this->error("<strong>We had trouble sending a mail.</strong> Try again!")
       : $this->success("<strong>A code has been sent to your e-mail address.</strong> Be sure to check your spam folder, too!");
+  }
+
+  /**
+   * @return HasOne<Connection>
+   */
+  public function connection()
+  {
+    return $this->hasOne(Connection::class, "authentication_token", "token");
   }
 
   /**

@@ -4,11 +4,10 @@ namespace Heiakim\Controller;
 
 use Heiakim\Controller\Controller;
 use Heiakim\Http\Request;
+use Heiakim\Utils\Utils;
+use Heiakim\Registry\ApiConnectionRegistry;
 use Heiakim\Model\Authentication;
 use Heiakim\Model\ConnectionOsu;
-use Heiakim\Registry\ApiConnectionRegistry;
-use Heiakim\Trait\IsConnectionProvider;
-use Heiakim\Utils\Utils;
 
 class ConnectionsController extends Controller
 {
@@ -74,8 +73,8 @@ class ConnectionsController extends Controller
     if (CurrentUser->exists)
       $Connection->associate(CurrentUser);
 
-    # Create a new Authentication so the ProviderUser can create a real
-    # User in the next step.
+    # Create a new Authentication so the ProviderUser can create a real User in the
+    # next step.
     $Authentication = Authentication::create([
       "email" => $Connection->email,
       "user_id" => $Connection->user_id,
@@ -84,6 +83,10 @@ class ConnectionsController extends Controller
       "code" => Utils::random_numeric_token(4),
       "remote_address" => Request::get_remote_address(),
     ]);
+
+    # Set the token from Authentication to the Connection to authenticate the User
+    # in the next step.
+    $Connection->associate($Authentication);
 
     # Prepare the redirect URL.
     $redirect = "/begin/" . $Authentication->token . (

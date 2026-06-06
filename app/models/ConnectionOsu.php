@@ -196,7 +196,9 @@ class ConnectionOsu extends Connection
       "provider_user_id" => $ProviderUser->id
     ])
       ->whereNull("user_id")
-      ->first() ?? self::make();
+      ->first()
+      ?? self::make();
+
     $Connection->access_token = $response->access_token;
     $Connection->refresh_token = $response->refresh_token;
     $Connection->expires_at = Time::add($response->expires_in);
@@ -209,13 +211,14 @@ class ConnectionOsu extends Connection
     # Evaluate if the user is a legit player by checkeing their rank against the top
     # 1000 players on the public osu! leaderboards.
     foreach (new ApiOsu()->rulesets as $ruleset) {
-      $user_ids = $this->redis()->sMembers(ApiRegistry::$redis_map["osu!"]["ranking"] . ":$ruleset");
+      $user_ids = $this->redis()
+        ->sMembers(ApiRegistry::$redis_map["osu!"]["ranking"] . ":$ruleset");
 
       # Continue, if there is nothing cached which should not happen 😃.
       if (!$user_ids) continue;
 
       foreach ($user_ids as $user) {
-        if ((int) $user === $Connection->provider_user_id) {
+        if ((int) $user === (int) $Connection->provider_user_id) {
           $Connection->is_legit = 1;
           break;
         }

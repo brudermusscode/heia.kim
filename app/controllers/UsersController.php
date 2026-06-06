@@ -26,8 +26,8 @@ class UsersController extends Controller
     /**
      * @var Authentication
      */
-    $Authentication =
-      Authentication::where("token", $this->params->token)
+    $Authentication = Authentication::with("connection")
+      ->where("token", $this->params->token)
       ->whereNull("deleted_at")
       ->first();
 
@@ -40,6 +40,11 @@ class UsersController extends Controller
 
     # Create a new User.
     $User = (new User)->new($this->params);
+
+    # Update the Connection, if one exists.
+    $Authentication->connection()->associate($User);
+
+    pdie($Authentication->connection()->first());
 
     # Delete the Authentication.
     $Authentication->delete();
