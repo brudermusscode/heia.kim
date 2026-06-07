@@ -114,6 +114,8 @@ export const request = (element) => {
   let formdata = new FormData();
   let query = "?";
   let redirect_from_data = element.hasAttribute("redirect-from-data");
+  let redirect_on_error = element.getAttribute("redirect-on-error");
+  let responder = element.getAttribute("responder");
 
   for (let date in element.dataset) {
     if (date === "action" || date === "method") continue;
@@ -129,12 +131,23 @@ export const request = (element) => {
     method: method,
     data: method === "POST" ? formdata : null,
     success: function (data) {
-      console.log(data, redirect_from_data);
+      // When a responder should always be shown.
+      if (responder === "") Frontend.create_responder(data);
+
+      // When a responder should only show on error.
+      if (responder === "error" && !data.status) Frontend.create_responder(data);
+
+      // If an error happened and the redirect on error is set.
+      if (!data.status && redirect_on_error) {
+        return Page.get(redirect_on_error);
+      }
 
       if (data.status) {
-        console.log("good");
+        // When a responder should only be shown on success.
+        if (responder === "success") Frontend.create_responder(data);
+
+        // Redirect the user from a link in data object.
         if (redirect_from_data && data.data.redirect) {
-          console.log("replacing");
           window.location.replace(data.data.redirect);
         }
       }

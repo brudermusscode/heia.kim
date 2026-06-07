@@ -30,6 +30,11 @@ header[begin] {
   }
 }
 
+content[min-full] {
+  min-height: 100vh;
+  padding-block: 24px 62px;
+}
+
 content[begin] {
   min-height: calc(100vh - $header-disguised-height);
   align-items: center;
