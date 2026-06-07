@@ -8,6 +8,7 @@ use Heiakim\Utils\Utils;
 use Heiakim\Registry\ApiConnectionRegistry;
 use Heiakim\Model\Authentication;
 use Heiakim\Model\ConnectionOsu;
+use Heiakim\Model\User;
 
 class ConnectionsController extends Controller
 {
@@ -81,6 +82,13 @@ class ConnectionsController extends Controller
     # ? ---------------------------------------
     # ? From here only when a new user signs up.
 
+    # Set a variable to tell the frontend, whether the username from the vendor's user
+    # is in use in our app already.
+    $name_in_use =
+      User::where("name", $Connection->provider_user_nickname)
+      ->orWhere("safe_name", $Connection->provider_user_nickname)
+      ->exists();
+
     # Create a new Authentication so the ProviderUser can create a real User in the
     # next step.
     $Authentication = Authentication::create([
@@ -100,8 +108,11 @@ class ConnectionsController extends Controller
     # Prepare the redirect URL.
     $redirect = "/begin/" . $Authentication->token . (
       # Append the username.
-      $Connection->provider_user_nickname ? "?name=" . $Connection->provider_user_nickname : ""
-    );
+      $Connection->provider_user_nickname
+      ? "?name=" . $Connection->provider_user_nickname
+      : "?cool=1"
+      # Append name in use.
+    ) . ($name_in_use ? "&name_in_use=1" : "");
 
     return success(data: [
       "Connection" => $Connection,

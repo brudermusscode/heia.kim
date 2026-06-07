@@ -78,7 +78,7 @@ class Connection extends Justin
       !empty($ProviderUser->email)
       && User::where("email", $ProviderUser->email)->first()
     )
-      return die(error("<strong>The e-mail address belongs to a User already.</strong> " . $this->dd["LOST_CREDENTIALS_RESET"]));
+      return die(error("<strong>The e-mail address is not available.</strong> " . $this->dd["LOST_CREDENTIALS_RESET"]));
 
     # If a Connection already exists, the User or another one has already connected
     # the vendor's user account.

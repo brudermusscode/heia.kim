@@ -19,6 +19,11 @@ $token = filter_var($GLOBALS["route_param_token"], FILTER_SANITIZE_SPECIAL_CHARS
 $name = filter_input(INPUT_GET, "name", FILTER_SANITIZE_SPECIAL_CHARS);
 
 /**
+ * @var bool
+ */
+$name_in_use = filter_input(INPUT_GET, "name_in_use", FILTER_VALIDATE_BOOL);
+
+/**
  * @var Authentication
  */
 $Authentication = Authentication::where("token", $token)
@@ -42,24 +47,29 @@ else :
 
   <form data-form="user:create">
     <content begin minlineauto std fl fldircol jucsb alic gap>
-      <div fl alic fldircol jucc color=light tac>
-        <p text wide bold>Almost done</p>
-        <p text std>Your account needs some personalization</p>
-      </div>
-
       <div filled=lighter elevated fl fldircol gap rounded=wide p42>
-        <div fl jucc alic gap mt mb=smol+>
-          <picture circled size=wider>
-            <img src="<?= AVATAR . "/0.jpg"; ?>" loading=lazy />
-          </picture>
+
+        <div>
+          <p text wide bold>Almost done</p>
+          <p text std>Your account needs some personalization</p>
         </div>
+
+        <?php
+
+        # + Name is in use.
+        if ($name && $name_in_use) : ?>
+          <tipp-box rounded background=slight-red color=dark-red>
+            <mi>sentiment_dissatisfied</mi>
+            <p text std>Your name <strong><?= $name ?></strong> is in use already, sorry my friend!</p>
+          </tipp-box>
+        <?php endif; ?>
 
         <div fl fldircol gap=smol>
           <div input has-icon material>
             <mi midler>sticker</mi>
             <input autofocus enter-submitable required tabindex=1 type="text"
               name="name" placeholder="Username" autocomplete="false"
-              value="<?= $name ?: "" ?>" />
+              value="<?= $name && !$name_in_use ? $name : "" ?>" />
           </div>
 
           <div input has-icon material>
@@ -69,6 +79,8 @@ else :
               autocomplete="false" />
           </div>
         </div>
+
+        <divide horiz></divide>
 
         <?php
 
@@ -105,7 +117,7 @@ else :
             <p text std>Cancel</p>
           </mbutton>
 
-          <mbutton submit-closest tabindex=3 material icon-only size=wide
+          <mbutton submit-closest tabindex=3 material icon-only size=mid rounded=smol+
             background=green color=light>
             <mi>arrow_forward</mi>
           </mbutton>

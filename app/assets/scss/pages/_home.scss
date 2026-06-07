@@ -15,56 +15,51 @@ content[home] {
 
   @media screen and (max-width: 800px) {
     padding-inline: 0.4em;
-    gap: 1.2em;
   }
 
   [inr] {
-    border-radius: 38px;
-    padding-inline: 8.2em;
-    display: flex;
-    justify-content: center;
     position: relative;
-    top: 0;
+    border-radius: 38px;
+    padding-inline: 0;
+    justify-content: center;
+    gap: 12em;
+    overflow: hidden;
 
     @include themed() {
       background: t(box2);
     }
 
-    .home_content__inr_main {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      height: 100%;
-      max-width: 92em;
-      position: relative;
-      z-index: 20;
-    }
-
-    @media screen and (max-width: 1020px) {
-      padding-inline: 2.4em;
-
-      .home_content__inr_main {
-        justify-content: center;
-      }
-    }
-
-    .spaced_flex {
-      display: flex;
-      flex: 1;
-      width: 100%;
-      flex-direction: column;
-      justify-content: center;
-    }
-
     .big_title {
-      font-size: 12.8em;
-      line-height: 0.88em;
+      font-size: 24em;
+      line-height: 0.88;
       font-weight: 900;
       letter-spacing: -0.04em;
 
+      @media screen and (max-width: 3000px) {
+        font-size: 18em;
+      }
+
+      @media screen and (max-width: 2300px) {
+        font-size: 14em;
+      }
+
+      @media screen and (max-width: 1920px) {
+        font-size: 12em;
+      }
+
+      @media screen and (max-width: 1500px) {
+        font-size: 8em;
+      }
+
+      @media screen and (max-width: 650px) {
+        font-size: 5.8em;
+      }
+
+      @media screen and (max-width: 480px) {
+        font-size: 3.8em;
+      }
+
       .text-carousel {
-        /* font-size: */
         display: flex;
         justify-content: flex-start;
 
@@ -77,90 +72,74 @@ content[home] {
           &:after {
             content: "";
             display: block;
+            position: absolute;
             height: 74%;
-            width: 6px;
+            width: 8px;
             border-radius: 12px;
             opacity: 0;
+            right: -6px;
+            top: 50%;
+            margin-top: -12px;
+            translate: 0 -50%;
+            transition: $trans-cubic;
+            animation: blinkCursor 0.72s step-end infinite;
 
             @include themed() {
               background: t(text);
             }
 
-            position: absolute;
-            right: 0;
-            top: 50%;
-            translate: 0 -50%;
-            animation: blinkCursor 0.7s step-end infinite;
+            @keyframes blinkCursor {
+              from,
+              to {
+                opacity: 0;
+              }
+
+              50% {
+                opacity: 0.4;
+              }
+            }
           }
-        }
-      }
-
-      @media screen and (max-width: 1620px) {
-        font-size: 9.2em;
-      }
-
-      @media screen and (max-width: 1450px) {
-        font-size: 8.2em;
-      }
-
-      @media screen and (max-width: 1200px), screen and (max-height: 800px) {
-        font-size: 5.8em;
-      }
-
-      @media screen and (max-width: 700px), screen and (max-height: 570px) {
-        font-size: 4.8em;
-      }
-
-      @media screen and (max-width: 450px) {
-        font-size: 54px;
-      }
-    }
-
-    .lottie {
-      dotlottie-player {
-        height: 500px;
-        width: 500px;
-
-        @media screen and (max-width: 1450px), screen and (max-height: 900px) {
-          height: 400px;
-          width: 400px;
-        }
-
-        @media screen and (max-width: 1260px), screen and (max-height: 640px) {
-          height: 300px;
-          width: 300px;
-        }
-
-        @media screen and (max-width: 1020px), screen and (max-height: 500px) {
-          display: none;
         }
       }
     }
 
-    @keyframes blinkCursor {
-      from,
-      to {
-        opacity: 0;
+    dotlottie-wc {
+      height: 1200px;
+      width: 1200px;
+      margin-left: 12em;
+      margin-right: -12em;
+
+      @media screen and (max-width: 3000px) {
+        height: 920px;
+        width: 920px;
+        margin-left: 8em;
       }
 
-      50% {
-        opacity: 1;
+      @media screen and (max-width: 2300px) {
+        height: 700px;
+        width: 700px;
       }
-    }
 
-    @media (min-width: 675px) {
-      @media (max-height: 582px) {
-        @media (max-width: 1020px) {
-          .big_title {
-            display: flex;
-            gap: 0.1em;
-            justify-content: center;
-          }
+      @media screen and (max-width: 1920px) {
+        height: 580px;
+        width: 580px;
+        margin-left: 4em;
+        margin-right: -8em;
+      }
 
-          .actions {
-            justify-content: center;
-          }
-        }
+      @media screen and (max-width: 1500px) {
+        height: 400px;
+        width: 400px;
+        margin-left: 8em;
+        margin-right: -6em;
+      }
+
+      @media screen and (max-width: 1200px) {
+        margin-left: 2em;
+      }
+
+      @media screen and (max-width: 1000px) {
+        display: none;
       }
     }
   }
