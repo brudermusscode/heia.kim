@@ -27,11 +27,10 @@ include SNOW; ?>
     <sign-container fl fldircol gap=mid>
       <box-model filled=lighter class="sign_container__inr" elevated fl fldircol rounded=wide>
         <bm-inr size=wide fl fldircol gap>
-          <div fl fldircol gap=smolest mb>
+          <div fl fldircol gap=smolest>
             <h2 text wider bold><?= __("Sign up") ?></h2>
             <p text std><?= __("Begin your journey on") ?> <?= APP_NAME; ?></p>
           </div>
-
 
           <!--- OAuth2 sign up --->
           <div fl gap=smol>

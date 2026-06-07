@@ -38,122 +38,117 @@ include SNOW; ?>
         </picture>
       </div>
 
-      <box-model filled=lighter class="sign_container__inr" elevated rounded=wide>
-        <bm-inr size=wide fl fldircol gap>
-          <div fl fldircol gap=smolest>
-            <h2 text wider bold><?= __("Login") ?></h2>
-            <section>
-              <p text std><?= __("Resume your journey on") ?> <?= APP_NAME; ?></p>
-            </section>
-          </div>
+      <div filled=lighter elevated rounded=wide p42 fl fldircol gap>
+        <div fl fldircol gap=smolest>
+          <h2 text wider bold><?= __("Login") ?></h2>
+          <section>
+            <p text std><?= __("Resume your journey on") ?> <?= APP_NAME; ?></p>
+          </section>
+        </div>
 
-          <div fl gap=smol>
-            <?php
+        <!--- OAuth2 sign up --->
+        <div fl gap=smol>
+          <?php
 
-            # + osu!
-            if (
-              USER_COMEBACK && USER_COMEBACK->osu
-              || !USER_COMEBACK && Feature::is_enabled("connect_osu")
-            ) : ?>
+          # + osu!
+          if (
+            USER_COMEBACK && USER_COMEBACK->osu
+            || !USER_COMEBACK && Feature::is_enabled("connect_osu")
+          ) : ?>
 
-              <mbutton flexone
-                <?= (USER_COMEBACK && USER_COMEBACK->connections->count() < 2) ? "has-icon=left" : "has-tooltip=bottom"; ?>
-                material ripple-effect size=mid background="osu-pink" data-action="vendors:login" data-vendor=osu color=light>
-                <i text wider class="osu-icon osu-outlined"></i>
-                <?php if (USER_COMEBACK && USER_COMEBACK->connections->count() < 2) { ?>
-                  <p text>Login with <strong>osu!</strong></p>
-                <?php } else { ?>
-                  <div ttooltip>
-                    <p text bold>osu!</p>
-                  </div>
-                <?php } ?>
-              </mbutton>
+            <mbutton flexone
+              <?= (USER_COMEBACK && USER_COMEBACK->connections->count() < 2) ? "has-icon=left" : "has-tooltip=bottom"; ?>
+              material ripple-effect size=mid background="osu-pink" color=light>
+              <i text wider class="osu-icon osu-outlined"></i>
+              <?php if (USER_COMEBACK && USER_COMEBACK->connections->count() < 2) { ?>
+                <p text>Login with <strong>osu!</strong></p>
+              <?php } else { ?>
+                <div ttooltip>
+                  <p text bold>osu!</p>
+                </div>
+              <?php } ?>
+            </mbutton>
 
-            <?php endif;
+          <?php endif;
 
-            # + Discord
-            if (
-              USER_COMEBACK && USER_COMEBACK->discord
-              || !USER_COMEBACK && Feature::is_enabled("connect_discord")
-            ) :
-              echo <<<TEXT
-                <mbutton has-tooltip=bottom flexone material ripple-effect  size=mid background="discord-blue" data-action="vendors:login" data-vendor=discord color=white>
-                  <i class="ri-discord-fill"></i>
-                  <div ttooltip>
-                    <p text bold>Discord</p>
-                  </div>
-                </mbutton>
-              TEXT;
-            endif;
+          # + Discord
+          if (
+            USER_COMEBACK && USER_COMEBACK->discord
+            || !USER_COMEBACK && Feature::is_enabled("connect_discord")
+          ) : ?>
+            <mbutton has-tooltip=bottom flexone material ripple-effect size=mid background="discord-blue" color=white>
+              <i class="ri-discord-fill"></i>
+              <div ttooltip>
+                <p text bold>Discord</p>
+              </div>
+            </mbutton>
+          <?php endif;
 
-            # + Google
-            if (
-              USER_COMEBACK && USER_COMEBACK->google
-              || !USER_COMEBACK && Feature::is_enabled("connect_google")
-            ) :
-              echo <<<TEXT
-                <mbutton has-tooltip=bottom no-delay flexone material ripple-effect  size=mid background="invert" data-action="vendors:login" data-vendor=google color=invert>
-                  <i class="ri-google-fill"></i>
-                  <div ttooltip>
-                    <p text bold>Google</p>
-                  </div>
-                </mbutton>
-              TEXT;
-            endif; ?>
-          </div>
+          # + Google
+          if (
+            USER_COMEBACK && USER_COMEBACK->google
+            || !USER_COMEBACK && Feature::is_enabled("connect_google")
+          ) : ?>
+            <mbutton has-tooltip=bottom no-delay flexone material ripple-effect size=mid background="invert" color=invert>
+              <i class="ri-google-fill"></i>
+              <div ttooltip>
+                <p text bold>Google</p>
+              </div>
+            </mbutton>
+          <?php endif; ?>
+        </div>
 
-          <div class=divider></div>
+        <div class=divider></div>
 
-          <?php if (Feature::is_enabled("login")) { ?>
+        <?php if (Feature::is_enabled("login")) { ?>
 
-            <form data-form="session:create" fl fldircol gap>
-              <div fl fldircol gap>
-                <div fl fldircol gap=smol+>
-                  <div fl fldircol gap=smol>
-                    <div input material has-icon>
-                      <mi midler>sticker</mi>
-                      <input required autofocus enter-submitable type="text" name="login"
-                        placeholder="Username/E-Mail" />
-                    </div>
-
-                    <div input material has-icon>
-                      <mi midler>key_vertical</mi>
-                      <input required enter-submitable type="password" name="password"
-                        placeholder="<?= __("Password") ?>" />
-                    </div>
+          <form data-form="session:create" fl fldircol gap>
+            <div fl fldircol gap>
+              <div fl fldircol gap=smol+>
+                <div fl fldircol gap=smol>
+                  <div input material has-icon>
+                    <mi midler>sticker</mi>
+                    <input required autofocus enter-submitable type="text" name="login"
+                      placeholder="Username/E-Mail" />
                   </div>
 
-                  <div fl jucstart>
-                    <a href="/password-reset" color=company>
-                      <p text><?= __("Reset Password") ?></p>
-                    </a>
+                  <div input material has-icon>
+                    <mi midler>key_vertical</mi>
+                    <input required enter-submitable type="password" name="password"
+                      placeholder="<?= __("Password") ?>" />
                   </div>
                 </div>
 
-                <div fl jucsb mt>
-                  <a href="/register">
-                    <mbutton outlined ripple-effect material size=mid>
-                      Create account
-                    </mbutton>
+                <div fl jucstart>
+                  <a href="/password-reset" color=company>
+                    <p text><?= __("Reset Password") ?></p>
                   </a>
-
-                  <mbutton ripple-effect submit-closest icon-only material size=mid rounded=smol
-                    background=green color=light>
-                    <mi>arrow_forward</mi>
-                  </mbutton>
                 </div>
               </div>
-            </form>
 
-          <?php } else { ?>
+              <div fl jucsb mt>
+                <a href="/register">
+                  <mbutton outlined ripple-effect material size=mid>
+                    Create account
+                  </mbutton>
+                </a>
 
-            <div tac>
-              <p text std><?= __("The login per e-mail or username has temporarily been disabled.") ?></p>
+                <mbutton ripple-effect submit-closest icon-only material size=mid rounded=smol
+                  background=green color=light>
+                  <mi>arrow_forward</mi>
+                </mbutton>
+              </div>
             </div>
+          </form>
 
-          <?php } ?>
-        </bm-inr>
-      </box-model>
+        <?php } else { ?>
+
+          <div tac>
+            <p text std><?= __("The login per e-mail or username has temporarily been disabled.") ?></p>
+          </div>
+
+        <?php } ?>
+      </div>
 
       <?php
 

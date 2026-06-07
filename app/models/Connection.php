@@ -10,6 +10,7 @@ use Heiakim\Justin;
 use Heiakim\Trait\IsConnectionProvider;
 use Heiakim\Http\CURL;
 use Heiakim\Registry\ApiRegistry;
+use Heiakim\Utils\Utils;
 
 class Connection extends Justin
 {
@@ -85,5 +86,58 @@ class Connection extends Justin
       ],
       // debug: true,
     );
+  }
+
+  /**
+   * Generates the link to the vendor's API where the user has to authorize their ac-
+   * count.
+   *
+   * @return string
+   */
+  public function generate_link()
+  {
+
+    $api = $this->api();
+    $callback = $this->credentials["callback"][current_env()]["connect"];
+    $return = $api["user-auth"]["endpoint"]
+      . "?client_id=" . $this->credentials["client_id"]
+      . "&response_type=" . $api["user-auth"]["response_type"]
+      . "&redirect_uri=" . $callback
+      . "&state=" . Utils::random_alpha_token(124)
+      . "&scope=" . implode(" ", $this->scopes());
+
+    return $return;
+  }
+
+  /**
+   * Fetches a new access_token for a vendor's user on their api. We always need a
+   * code for this as we fetch with user specific grant.
+   *
+   * @param string $code
+   * @param string $action
+   * @return object
+   *
+   * NOTE: Will die on error.
+   */
+  public function get_access_token(
+    string $code,
+    string $action = "connect"
+  ) {
+
+    $api = $this->api();
+    $response = static::request(
+      api: $api["user-access"]["endpoint"],
+      data: [
+        "code" => $code,
+        "grant_type" => $api["user-access"]["grant_type"],
+        "redirect_uri" => $this->credentials["callback"][current_env()][$action],
+      ],
+    );
+
+    # cURL request failed based on no access token is given?
+    if (empty($response->access_token))
+      die(error("!INVALID_API_CALL"));
+
+    return $response;
   }
 }

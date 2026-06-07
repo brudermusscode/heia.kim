@@ -22,10 +22,10 @@ class ApiDiscord extends ApiProvider
    */
   public static array $api = [
     "general" => [
-      "endpoint" => "https://osu.ppy.sh/api/v2",
+      "endpoint" => "https://discord.com/api/v10",
     ],
     "auth" => [
-      "endpoint" => "https://discord.com/oauth2/token",
+      "endpoint" => "https://discord.com/api/oauth2/token",
       "grant_type" => "client_credentials",
     ],
     "user-auth" => [
@@ -33,11 +33,11 @@ class ApiDiscord extends ApiProvider
       "response_type" => "code",
     ],
     "user-access" => [
-      "endpoint" => "https://discord.com/oauth2/token",
+      "endpoint" => "https://discord.com/api/oauth2/token",
       "grant_type" => "authorization_code"
     ],
     "user-refresh-access" => [
-      "endpoint" => "https://discord.com/oauth2/token",
+      "endpoint" => "https://discord.com/api/oauth2/token",
       "grant_type" => "refresh_token",
     ],
   ];
@@ -86,7 +86,7 @@ class ApiDiscord extends ApiProvider
           'Content-Type: application/x-www-form-urlencoded',
         ],
       ],
-      debug: true,
+      // debug: true,
     );
 
     # cURL request failed based on no access token is given?

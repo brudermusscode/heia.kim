@@ -22,59 +22,14 @@ class ConnectionOsu extends Connection
   protected const string PROVIDER = "osu!";
 
   /**
-   * Generates the link to the vendor's API where the user has to authorize their ac-
-   * count.
-   *
-   * @return string
    * @see https://osu.ppy.sh/docs/#authorization-code-grant
+   * generate_link();
    */
-  public function generate_link()
-  {
-
-    $api = $this->api();
-    $callback = $this->credentials["callback"][current_env()]["connect"];
-    $return = $api["user-auth"]["endpoint"]
-      . "?client_id=" . $this->credentials["client_id"]
-      . "&response_type=" . $api["user-auth"]["response_type"]
-      . "&redirect_uri=" . $callback
-      . "&state=" . Utils::random_alpha_token(124)
-      . "&scope=" . implode(" ", $this->scopes());
-
-    return $return;
-  }
 
   /**
-   * Fetches a new access_token for a vendor's user on their api. We always need a
-   * code for this as we fetch with user specific grant.
-   *
-   * @param string $code
-   * @param string $action
-   * @return object
    * @see https://osu.ppy.sh/docs/#authorization-code-grant
-   *
-   * NOTE: Will die on error.
+   * get_access_token();
    */
-  public function get_access_token(
-    string $code,
-    string $action = "connect"
-  ) {
-
-    $api = $this->api();
-    $response = static::request(
-      api: $api["user-access"]["endpoint"],
-      data: [
-        "code" => $code,
-        "grant_type" => $api["user-access"]["grant_type"],
-        "redirect_uri" => $this->credentials["callback"][current_env()][$action],
-      ],
-    );
-
-    # cURL request failed based on no access token is given?
-    if (empty($response->access_token))
-      die(error("!INVALID_API_CALL"));
-
-    return $response;
-  }
 
   /**
    * Based on a refresh_token being set on this instance, refreshes the access token
