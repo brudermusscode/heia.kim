@@ -6,11 +6,8 @@
 
 namespace Heiakim\Model;
 
-use Heiakim\Model\Vendor\Discord;
-use Heiakim\Registry\ApiRegistry;
 use Heiakim\Time\Time;
 use Heiakim\Trait\IsConnectionProvider;
-use Heiakim\Utils\Utils;
 use Heiakim\Http\CURL;
 
 class ConnectionDiscord extends Connection
@@ -18,7 +15,7 @@ class ConnectionDiscord extends Connection
   use IsConnectionProvider;
 
   /**
-   * @see https://osu.ppy.sh
+   * @see https://discord.com
    */
   protected const string PROVIDER = "discord";
 
@@ -29,6 +26,7 @@ class ConnectionDiscord extends Connection
 
   /**
    * @see https://docs.discord.com/developers/topics/oauth2#authorization-code-grant
+   *
    * get_access_token();
    */
 
@@ -47,11 +45,10 @@ class ConnectionDiscord extends Connection
     if (!$this->refresh_token)
       return false;
 
-    $api = $this->api();
-    $this->request(
-      api: $api["user-refresh-access"]["endpoint"],
+    $response = $this->post(
+      url: $this->api()["user-refresh-access"]["endpoint"],
       data: [
-        "grant_type" => $api["user-refresh-access"]["grant_type"],
+        "grant_type" => $this->api()["user-refresh-access"]["grant_type"],
         "refresh_token" => $this->refresh_token,
       ],
     );
@@ -148,23 +145,18 @@ class ConnectionDiscord extends Connection
    *
    * @param ?string $access_token
    * @return ?object
-   * @see https://osu.ppy.sh/docs/#account
+   * @see https://docs.discord.com/developers/resources/user#get-current-user
    *
    * NOTE: Will die on error.
    */
   public function provider_user(?string $access_token = null)
   {
 
-    $api = $this->api();
-    $response = CURL::start(
-      url: $api["general"]["endpoint"] . "/users/@me",
-      type: "GET",
-      options: [
-        CURLOPT_HTTPHEADER => [
-          'Accept: application/json',
-          'Content-Type: application/x-www-form-urlencoded',
-          'Authorization: Bearer ' . ($this->access_token ?? $access_token),
-        ],
+    # Make a request to get user information.
+    $response = $this->get(
+      url: $this->api()["general"]["endpoint"] . "/users/@me",
+      headers: [
+        'Authorization: Bearer ' . ($this->access_token ?? $access_token),
       ],
     );
 

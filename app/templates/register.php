@@ -60,17 +60,18 @@ include SNOW; ?>
                   <p text bold>Discord</p>
                 </div>
               </mbutton>
-            <?php endif;
-
-            # + Google
-            if (Feature::is_enabled("connect_google")) : ?>
-              <mbutton has-tooltip=bottom no-delay flexone material ripple-effect size=mid background="invert" data-action="vendors:google,auth,create" color=invert>
-                <i class="ri-google-fill"></i>
-                <div ttooltip>
-                  <p text bold>Google</p>
-                </div>
-              </mbutton>
             <?php endif; ?>
+
+            <mbutton
+              <?= !Feature::is_enabled("connect_github") ? "disabled" : "" ?>
+              data-action="connection:start"
+              data-provider="github"
+              has-tooltip=bottom no-delay flexone material ripple-effect size=mid background="invert" color=invert>
+              <i class="ri-github-fill"></i>
+              <div ttooltip>
+                <p text bold>GitHub</p>
+              </div>
+            </mbutton>
           </div>
 
           <div class=divider></div>

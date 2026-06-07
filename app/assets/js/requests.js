@@ -132,7 +132,7 @@ export const request = (element) => {
     data: method === "POST" ? formdata : null,
     success: function (data) {
       // When a responder should always be shown.
-      if (responder === "") Frontend.create_responder(data);
+      if (responder !== null && responder === "") Frontend.create_responder(data);
 
       // When a responder should only show on error.
       if (responder === "error" && !data.status) Frontend.create_responder(data);
@@ -148,7 +148,7 @@ export const request = (element) => {
 
         // Redirect the user from a link in data object.
         if (redirect_from_data && data.data.redirect) {
-          window.location.replace(data.data.redirect);
+          Page.get(data.data.redirect);
         }
       }
     },

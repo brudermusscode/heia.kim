@@ -19,6 +19,7 @@ class CURL
     string $type = "POST",
     string|array $data = [],
     array $options = [],
+    array $headers = [],
     bool $debug = false
   ) {
 
@@ -32,33 +33,44 @@ class CURL
     # Start cURL request.
     $curl = curl_init($url);
 
-    # Set options.
-    curl_setopt_array($curl, $options);
-
     # For POST request, append the $data to the postfields.
-    if ($data && $type === "POST") {
-      curl_setopt($curl, CURLOPT_POST, true);
-      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    if ($type === "POST") {
+      $options[CURLOPT_POST] = true;
+      $options[CURLOPT_POSTFIELDS] = $data;
     }
 
     # Always return the response from the request.
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $options[CURLOPT_RETURNTRANSFER] = true;
+
+    # Set a valid user-agent.
+    $options[CURLOPT_USERAGENT] = "heia.kim/1.0 (+https://www.heia.kim)";
+
+    # Set verbose output for debug mode.
+    // if ($debug)
+    $options[CURLOPT_VERBOSE] = false;
 
     # For development environment without SSL, we need to disable
     # SSL specific validations for cURL requests.
     if (current_env() === "dev") {
-      curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-      curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+      $options[CURLOPT_SSL_VERIFYPEER] = false;
+      $options[CURLOPT_SSL_VERIFYHOST] = false;
     }
 
+    # Set headers if any are given.
+    if ($headers)
+      $options[CURLOPT_HTTPHEADER] = $headers;
+
+    # Set options.
+    curl_setopt_array($curl, $options);
+
+    # Execute it!
     $response = curl_exec($curl);
-    $response = json_decode($response);
 
     # Dump error code and message if debug is enabled.
     if ($debug)
       var_dump(curl_errno($curl), curl_error($curl));
 
-    return is_object($response) ? $response : null;
+    return json_decode($response);
   }
 
   /**

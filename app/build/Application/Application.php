@@ -182,7 +182,7 @@ class Application
       "This feature is currently disabled. Please wait for it to be up again.",
 
       # ? API/Vendor/OAuth
-      "API_CONNECTED_ALREADY" => "<strong>hihi, you have already connected your account through this third party!</strong> 🙂",
+      "API_CONNECTED_ALREADY" => "<strong>This user is connected already!</strong>",
 
       "INVALID_API_CALL" => "<strong>Call to third party's API was scuffed.</strong>",
 

@@ -20,7 +20,7 @@ class ApiOsu extends ApiProvider
   protected const PROVIDER = "osu!";
 
   /**
-   * osu! API specifications.
+   * @see https://osu.ppy.sh/docs/#authentication
    */
   public static array $api = [
     "general" => [

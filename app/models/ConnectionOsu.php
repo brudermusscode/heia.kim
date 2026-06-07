@@ -177,16 +177,11 @@ class ConnectionOsu extends Connection
   public function provider_user(?string $access_token = null)
   {
 
-    $api = $this->api();
-    $response = CURL::start(
-      url: $api["general"]["endpoint"] . "/me",
-      type: "GET",
-      options: [
-        CURLOPT_HTTPHEADER => [
-          'Accept: application/json',
-          'Content-Type: application/x-www-form-urlencoded',
-          'Authorization: Bearer ' . ($this->access_token ?? $access_token),
-        ],
+    # Make a request to get user information.
+    $response = $this->get(
+      url: $this->api()["general"]["endpoint"] . "/me",
+      headers: [
+        'Authorization: Bearer ' . ($this->access_token ?? $access_token),
       ],
     );
 

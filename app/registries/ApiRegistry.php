@@ -2,8 +2,9 @@
 
 namespace Heiakim\Registry;
 
-use Heiakim\Model\ApiDiscord;
 use Heiakim\Model\ApiOsu;
+use Heiakim\Model\ApiDiscord;
+use Heiakim\Model\ApiGithub;
 
 abstract class ApiRegistry
 {
@@ -15,7 +16,7 @@ abstract class ApiRegistry
   public static array $map = [
     "osu!" => \Heiakim\Model\ApiOsu::class,
     "discord" => \Heiakim\Model\ApiDiscord::class,
-    "google" => \Heiakim\Model\ApiDiscord::class,
+    "github" => \Heiakim\Model\ApiGithub::class,
   ];
 
   /**
@@ -29,7 +30,7 @@ abstract class ApiRegistry
 
   /**
    * @param string $key
-   * @return class-string<ApiOsu|ApiDiscord>
+   * @return class-string<ApiOsu|ApiDiscord|ApiGithub>
    *
    * NOTE: Will die when no class was found in mapping.
    */

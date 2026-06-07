@@ -33,7 +33,7 @@ $state = filter_input(INPUT_GET, "state", FILTER_SANITIZE_SPECIAL_CHARS);
     </div>
   </div>
 
-  <request action="connection:create" method="POST" redirect-from-data redirect-on-error="/register" responder
+  <request action="connection:create" method="POST" redirect-from-data redirect-on-error="/register" responder=error
     data-provider="<?= $provider ?>"
     data-code="<?= $code ?>"
     data-state="<?= $state ?>"></request>

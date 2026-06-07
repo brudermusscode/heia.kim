@@ -69,8 +69,12 @@ class Connection extends Justin
    * @param array $data
    * @return ?object
    */
-  public static function request(string $api, array $data)
-  {
+  public static function request(
+    string $api,
+    string $type = "POST",
+    array $data = [],
+    array $headers = []
+  ) {
 
     $c = new static()->credentials;
 
@@ -78,13 +82,72 @@ class Connection extends Justin
     $data["client_id"] = $c["client_id"];
     $data["client_secret"] = $c["client_secret"];
 
+    # Preconfigure headers.
+    $headers[] = "Accept: application/json";
+    $headers[] = "Content-Type: application/x-www-form-urlencoded";
+
     return CURL::start(
       url: $api,
+      type: $type,
       data: $data,
-      options: [
-        CURLOPT_HTTPHEADER => $c["authorization_headers"],
-      ],
-      // debug: true,
+      headers: $headers,
+    );
+  }
+
+  /**
+   * Making a POST request to a given API endpoint.
+   *
+   * @param string $url
+   * @param array $data
+   * @param array $headers
+   * @return ?object
+   */
+  public function post(
+    string $url,
+    array $data = [],
+    array $headers = [],
+  ) {
+
+    # Preconfigure the data array with client id and secret.
+    $data["client_id"] = $this->credentials["client_id"];
+    $data["client_secret"] = $this->credentials["client_secret"];
+
+    # Preconfigure headers.
+    $headers[] = "Accept: application/json";
+    $headers[] = "Content-Type: application/x-www-form-urlencoded";
+
+    return CURL::start(
+      url: $url,
+      type: "POST",
+      data: $data,
+      headers: $headers,
+    );
+  }
+
+
+  /**
+   * Making a POST request to a given API endpoint.
+   *
+   * @param string $url
+   * @param array $data
+   * @param array $headers
+   * @return ?object
+   */
+  public function get(
+    string $url,
+    array $data = [],
+    array $headers = [],
+  ) {
+
+    # Preconfigure headers.
+    $headers[] = "Accept: application/json";
+    $headers[] = "Content-Type: application/x-www-form-urlencoded";
+
+    return CURL::start(
+      url: $url,
+      type: "GET",
+      data: $data,
+      headers: $headers,
     );
   }
 
@@ -97,11 +160,10 @@ class Connection extends Justin
   public function generate_link()
   {
 
-    $api = $this->api();
-    $callback = $this->credentials["callback"][current_env()]["connect"];
-    $return = $api["user-auth"]["endpoint"]
+    $callback = _env("SERVER_ADDRESS") . "/connect/" . static::PROVIDER;
+    $return = $this->api()["user-auth"]["endpoint"]
       . "?client_id=" . $this->credentials["client_id"]
-      . "&response_type=" . $api["user-auth"]["response_type"]
+      . "&response_type=" . $this->api()["user-auth"]["response_type"]
       . "&redirect_uri=" . $callback
       . "&state=" . Utils::random_alpha_token(124)
       . "&scope=" . implode(" ", $this->scopes());
@@ -124,19 +186,23 @@ class Connection extends Justin
     string $action = "connect"
   ) {
 
-    $api = $this->api();
-    $response = static::request(
-      api: $api["user-access"]["endpoint"],
-      data: [
-        "code" => $code,
-        "grant_type" => $api["user-access"]["grant_type"],
-        "redirect_uri" => $this->credentials["callback"][current_env()][$action],
-      ],
+    # Build dataset.
+    $data = [];
+    $data["code"] = $code;
+    $data["redirect_uri"] = _env("SERVER_ADDRESS") . "/$action/" . static::PROVIDER;
+
+    # Apply a grant_type if one is set in specifications.
+    if ($this->api()["user-access"]["grant_type"] ?? false)
+      $data["grant_type"] = $this->api()["user-access"]["grant_type"];
+
+    $response = $this->post(
+      url: $this->api()["user-access"]["endpoint"],
+      data: $data,
     );
 
-    # cURL request failed based on no access token is given?
+    # No access token given?
     if (empty($response->access_token))
-      die(error("!INVALID_API_CALL"));
+      return die(error("Could not retreive access token from " . static::PROVIDER . " api."));
 
     return $response;
   }
