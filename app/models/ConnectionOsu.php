@@ -158,7 +158,7 @@ class ConnectionOsu extends Connection
       ->whereNotNull("user_id")
       ->first()
     )
-      die(error("!API_CONNECTED_ALREADY"));
+      return die(error("!API_CONNECTED_ALREADY"));
 
     /**
      * @var self

@@ -7,53 +7,6 @@ use Heiakim\Utils\Utils;
 class Discord extends Vendor implements VendorInterface
 {
 
-  public ?string $access_token = null;
-
-  public ?string $refresh_token = null;
-
-  public ?object $user = null;
-
-  public ?object $auth = null;
-
-  /**
-   * @param ?object $auth
-   * @return void
-   */
-  public function __construct(?object $auth = null)
-  {
-    $this->credentials = $this->oauth_credentials("discord");
-
-    if ($auth && isset($auth->access_token, $auth->refresh_token)) {
-      $this->access_token = $auth->access_token;
-      $this->refresh_token = $auth->refresh_token;
-      $this->auth = $auth;
-      $this->user = $this->get_user();
-    }
-  }
-
-  /**
-   * @return void
-   */
-  public function get_client() {}
-
-  /**
-   * @param ?object $params
-   * @return object
-   */
-  public function get_auth_uri(?object $params = null)
-  {
-    $redirect_uri = $this->credentials[current_env()]["return_uris"]["connect"];
-    $return = $this->credentials["auth_url"]
-      . "?response_type=code"
-      . "&client_id=" . $this->credentials["client_id"]
-      . "&scope=" . $this->credentials["scope"]
-      . "&state=" . Utils::random_alpha_token(124)
-      . "&redirect_uri=" . $redirect_uri
-      . "&prompt=consent";
-
-    return request_success(data: $return);
-  }
-
   /**
    * @param object $param
    * @return string|self
