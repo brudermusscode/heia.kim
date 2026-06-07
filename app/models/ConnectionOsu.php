@@ -32,6 +32,13 @@ class ConnectionOsu extends Connection
    */
 
   /**
+   * @method new();
+   * $response->access_token
+   * $response->refresh_token
+   * $response->expires_in
+   */
+
+  /**
    * Based on a refresh_token being set on this instance, refreshes the access token
    * by starting a new cURL request to the osu! API and sets them on this instance.
    *
@@ -73,89 +80,6 @@ class ConnectionOsu extends Connection
     $this->save();
 
     return $this;
-  }
-
-  /**
-   * @param object $params
-   * @return self
-   *
-   * NOTE: Will die on error.
-   */
-  public function new(object $params)
-  {
-
-    /**
-     * @var object
-     */
-    $response = $this->get_access_token(
-      code: $params->code,
-      action: "connect",
-    );
-
-    /**
-     * $response->access_token
-     * $response->refresh_token
-     * $response->expires_in
-     */
-
-    /**
-     * @var object
-     */
-    $ProviderUser = $this->provider_user($response->access_token);
-
-    # If a Connection already exists, the User or another one has already connected
-    # the vendor's user account.
-    if (
-      self::where([
-        "provider" => static::PROVIDER,
-        "provider_user_id" => $ProviderUser->id
-      ])
-      ->whereNotNull("user_id")
-      ->first()
-    )
-      return die(error("!API_CONNECTED_ALREADY"));
-
-    /**
-     * @var self
-     */
-    $Connection = self::where([
-      "provider" => static::PROVIDER,
-      "provider_user_id" => $ProviderUser->id
-    ])
-      ->whereNull("user_id")
-      ->first()
-      ?? self::make();
-
-    $Connection->access_token = $response->access_token;
-    $Connection->refresh_token = $response->refresh_token;
-    $Connection->expires_at = Time::add($response->expires_in);
-    $Connection->provider = static::PROVIDER;
-    $Connection->provider_user_id = $ProviderUser->id;
-    $Connection->provider_user_email = null;
-    $Connection->provider_user_nickname = $ProviderUser->username;
-    $Connection->is_legit = 0;
-
-    # Evaluate if the user is a legit player by checkeing their rank against the top
-    # 1000 players on the public osu! leaderboards.
-    foreach (ApiOsu::$rulesets as $ruleset) {
-      $user_ids = $this->redis()
-        ->sMembers(ApiRegistry::$redis_map["osu!"]["ranking"] . ":$ruleset");
-
-      # Continue, if there is nothing cached which should not happen 😃.
-      if (!$user_ids) continue;
-
-      foreach ($user_ids as $user) {
-        if ((int) $user === (int) $Connection->provider_user_id) {
-          $Connection->is_legit = 1;
-          break;
-        }
-      }
-    }
-
-    # Save!
-    $Connection->save();
-
-    return $Connection;
   }
 
   /**

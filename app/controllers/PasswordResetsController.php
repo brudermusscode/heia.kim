@@ -23,17 +23,15 @@ class PasswordResetsController extends Controller
   public function create()
   {
 
-    /**
-     * Append the mail to the params object if a user is logged in
-     * right now.
-     */
-    if (CurrentUser)
-      $this->params["mail"] = CurrentUser->email;
-
     $this->validate_params(
-      strict: ["mail"],
+      strict: ["email"],
       optional: ["token", "password"],
     );
+
+    # Starting password resets from an existing and logged in account, we can append
+    # the current email address of the User.
+    if (CurrentUser->exists)
+      $this->params->email = CurrentUser->email ?? $this->params->email;
 
     return (new PasswordReset)->new($this->params);
   }
@@ -46,30 +44,27 @@ class PasswordResetsController extends Controller
   public function update()
   {
 
-    /**
-     * Append the mail to the params object if a user is logged in
-     * right now.
-     */
-    if (CurrentUser)
-      $this->params->mail = CurrentUser->email;
-
     $this->validate_params(
       strict: ["token", "password"],
       optional: ["mail"],
     );
 
+    # Starting password resets from an existing and logged in account, we can append
+    # the current email address of the User.
+    if (CurrentUser->exists)
+      $this->params->email = CurrentUser->email ?? $this->params->email;
+
     /**
      * @var ?PasswordReset
      */
-    $Reset = PasswordReset::where("token", $this->params->token)
+    $PasswordReset = PasswordReset::with("user")
+      ->where("token", $this->params->token)
       ->first();
 
-    /**
-     * Reset doesn't exist?
-     */
-    if (!$Reset)
-      return $this->error();
+    # Token is invalid thus no PasswordReset was found?
+    if (!$PasswordReset)
+      return error();
 
-    return $Reset->edit($this->params);
+    return $PasswordReset->edit($this->params);
   }
 }

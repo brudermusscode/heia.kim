@@ -6,6 +6,7 @@ use Heiakim\Justin;
 
 class Feature extends Justin
 {
+
   /**
    * @param string $name
    * @return bool

@@ -22,86 +22,25 @@ class ConnectionGithub extends Connection
 
   /**
    * @see https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#1-request-a-users-github-identity
-   * generate_link();
+   * @method generate_link();
    */
 
   /**
    * @see https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#2-users-are-redirected-back-to-your-site-by-github
-   * get_access_token();
+   * @method get_access_token();
+   */
+
+  /**
+   * @method new();
+   * $response->access_token
+   * $response->token_type
+   * $response->scope
    */
 
   /**
    * NOTE: Not needed, as tokens do not expire, unless we revoke them manually.
+   * @method refresh_access_token();
    */
-  public function refresh_access_token() {}
-
-  /**
-   * @param object $params
-   * @return self
-   *
-   * NOTE: Will die on error.
-   */
-  public function new(object $params)
-  {
-
-    /**
-     * @var object
-     */
-    $response = $this->get_access_token(
-      code: $params->code,
-      action: "connect",
-    );
-
-    /**
-     * $response->access_token
-     * $response->token_type
-     * $response->scope
-     */
-
-    /**
-     * @var object
-     */
-    $ProviderUser = $this->provider_user($response->access_token);
-
-    # If a Connection already exists, the User or another one has already connected
-    # the vendor's user account.
-    if (
-      self::where([
-        "provider" => static::PROVIDER,
-        "provider_user_id" => $ProviderUser->id
-      ])
-      ->whereNotNull("user_id")
-      ->first()
-    )
-      return die(error("!API_CONNECTED_ALREADY"));
-
-    /**
-     * @var self
-     */
-    $Connection = self::where([
-      "provider" => static::PROVIDER,
-      "provider_user_id" => $ProviderUser->id
-    ])
-      ->whereNull("user_id")
-      ->first()
-      ?? self::make();
-
-    $Connection->access_token = $response->access_token;
-    $Connection->refresh_token = $response->refresh_token ?? null;
-    $Connection->expires_at = !empty($response->expires_in)
-      ? Time::add($response->expires_in)
-      : null;
-    $Connection->provider = static::PROVIDER;
-    $Connection->provider_user_id = $ProviderUser->id;
-    $Connection->provider_user_email = $ProviderUser->email ?? null;
-    $Connection->provider_user_nickname = $ProviderUser->username;
-    $Connection->is_legit = 0;
-
-    # Save!
-    $Connection->save();
-
-    return $Connection;
-  }
 
   /**
    * @param object $params
@@ -115,7 +54,7 @@ class ConnectionGithub extends Connection
    *
    * @param ?string $access_token
    * @return ?object
-   * @see
+   * @see https://docs.github.com/en/rest/users/users
    *
    * NOTE: Will die on error.
    */

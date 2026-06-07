@@ -48,54 +48,33 @@ include SNOW; ?>
 
         <!--- OAuth2 sign up --->
         <div fl gap=smol>
-          <?php
+          <mbutton
+            <?= !Feature::is_enabled("connect_osu") ? "disabled" : "" ?>
+            flexone has-tooltip=bottom material ripple-effect size=mid
+            background="osu-pink" color=light>
+            <i text wider class="osu-icon osu-outlined"></i>
+            <div ttooltip>
+              <p text bold>osu!</p>
+            </div>
+          </mbutton>
 
-          # + osu!
-          if (
-            USER_COMEBACK && USER_COMEBACK->osu
-            || !USER_COMEBACK && Feature::is_enabled("connect_osu")
-          ) : ?>
+          <mbutton
+            <?= !Feature::is_enabled("connect_discord") ? "disabled" : "" ?>
+            has-tooltip=bottom flexone material ripple-effect size=mid background="discord-blue" color=white>
+            <i class="ri-discord-fill"></i>
+            <div ttooltip>
+              <p text bold>Discord</p>
+            </div>
+          </mbutton>
 
-            <mbutton flexone
-              <?= (USER_COMEBACK && USER_COMEBACK->connections->count() < 2) ? "has-icon=left" : "has-tooltip=bottom"; ?>
-              material ripple-effect size=mid background="osu-pink" color=light>
-              <i text wider class="osu-icon osu-outlined"></i>
-              <?php if (USER_COMEBACK && USER_COMEBACK->connections->count() < 2) { ?>
-                <p text>Login with <strong>osu!</strong></p>
-              <?php } else { ?>
-                <div ttooltip>
-                  <p text bold>osu!</p>
-                </div>
-              <?php } ?>
-            </mbutton>
-
-          <?php endif;
-
-          # + Discord
-          if (
-            USER_COMEBACK && USER_COMEBACK->discord
-            || !USER_COMEBACK && Feature::is_enabled("connect_discord")
-          ) : ?>
-            <mbutton has-tooltip=bottom flexone material ripple-effect size=mid background="discord-blue" color=white>
-              <i class="ri-discord-fill"></i>
-              <div ttooltip>
-                <p text bold>Discord</p>
-              </div>
-            </mbutton>
-          <?php endif;
-
-          # + Google
-          if (
-            USER_COMEBACK && USER_COMEBACK->google
-            || !USER_COMEBACK && Feature::is_enabled("connect_google")
-          ) : ?>
-            <mbutton has-tooltip=bottom no-delay flexone material ripple-effect size=mid background="invert" color=invert>
-              <i class="ri-google-fill"></i>
-              <div ttooltip>
-                <p text bold>Google</p>
-              </div>
-            </mbutton>
-          <?php endif; ?>
+          <mbutton
+            <?= !Feature::is_enabled("connect_github") ? "disabled" : "" ?>
+            has-tooltip=bottom no-delay flexone material ripple-effect size=mid background="invert" color=invert>
+            <i class="ri-github-fill"></i>
+            <div ttooltip>
+              <p text bold>GitHub</p>
+            </div>
+          </mbutton>
         </div>
 
         <div class=divider></div>

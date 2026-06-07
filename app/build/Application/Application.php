@@ -153,6 +153,8 @@ class Application
 
       "UNAVAILABLE_ASK_SUPPORT" => "If it's not there, $discord_link_channel",
 
+      "LOST_CREDENTIALS_RESET" => "If you have lost your credentials, try to <a href='/password-reset'>reset your password &nbsp; <i class='ri-link-unlink'></i></a>.",
+
       "ONLY_STAFF" => "Please open a support ticket on our <a extern target='_blank' href='" . $env->DISCORD_INVITE . "'>Discord &#160; <i class='ri-link-unlink'></i></a> using the '# Support'-channel and tell us where this error happened.",
 
       "ONE_USER_POLICY" => $env->APP_NAME . " follows a one account per human policy. If you have signed up already, you are risking to get restricted in your gameplay.",

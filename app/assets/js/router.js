@@ -82,20 +82,13 @@ export const routes = {
 
   login: {
     hide_header: true,
-    disguised: true,
-    execute_once: async () => {
-      let shift_title = document.body.querySelector(".login__title");
-      if (shift_title) Utils.shift_text(shift_title, 3000);
-    },
   },
 
   register: {
     hide_header: true,
-    disguised: true,
   },
 
   "password-reset": {
-    disguised: true,
     hide_header: true,
   },
 

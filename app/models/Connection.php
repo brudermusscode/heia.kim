@@ -10,6 +10,7 @@ use Heiakim\Justin;
 use Heiakim\Trait\IsConnectionProvider;
 use Heiakim\Http\CURL;
 use Heiakim\Registry\ApiRegistry;
+use Heiakim\Time\Time;
 use Heiakim\Utils\Utils;
 
 class Connection extends Justin
@@ -38,6 +39,104 @@ class Connection extends Justin
     $this->credentials = oauth_credentials(static::PROVIDER);
 
     return parent::__construct();
+  }
+
+  /**
+   * @param object $params
+   * @return self
+   *
+   * NOTE: Will die on error.
+   */
+  public function new(object $params)
+  {
+
+    /**
+     * @var object
+     */
+    $response = $this->get_access_token(
+      code: $params->code,
+      action: "connect",
+    );
+
+    /**
+     * $response->access_token
+     * $response->refresh_token
+     * $response->expires_in
+     */
+
+    /**
+     * @var object
+     */
+    $ProviderUser = $this->provider_user($response->access_token);
+
+    /**
+     * Check, if a user with the given email address exists already. This could indi-
+     * cate the user having either lost their credentials or trying to create a second
+     * account on purpose.
+     */
+    if (
+      !empty($ProviderUser->email)
+      && User::where("email", $ProviderUser->email)->first()
+    )
+      return die(error("<strong>The e-mail address belongs to a User already.</strong> " . $this->dd["LOST_CREDENTIALS_RESET"]));
+
+    # If a Connection already exists, the User or another one has already connected
+    # the vendor's user account.
+    if (
+      self::where([
+        "provider" => static::PROVIDER,
+        "provider_user_id" => $ProviderUser->id
+      ])
+      ->whereNotNull("user_id")
+      ->first()
+    )
+      return die(error("!API_CONNECTED_ALREADY"));
+
+    /**
+     * @var self
+     */
+    $Connection = self::where([
+      "provider" => static::PROVIDER,
+      "provider_user_id" => $ProviderUser->id
+    ])
+      ->whereNull("user_id")
+      ->first()
+      ?? self::make();
+
+    $Connection->access_token = $response->access_token;
+    $Connection->refresh_token = $response->refresh_token ?? null;
+    $Connection->expires_at = !empty($response->expires_in)
+      ? Time::add($response->expires_in)
+      : null;
+    $Connection->provider = static::PROVIDER;
+    $Connection->provider_user_id = $ProviderUser->id;
+    $Connection->provider_user_email = $ProviderUser->email ?? null;
+    $Connection->provider_user_nickname = $ProviderUser->username;
+    $Connection->is_legit = 0;
+
+    # Evaluate if the user is a legit player by checkeing their rank against the top
+    # 1000 players on the public osu! leaderboards.
+    if (static::PROVIDER === "osu!") {
+      foreach (ApiOsu::$rulesets as $ruleset) {
+        $user_ids = $this->redis()
+          ->sMembers(ApiRegistry::$redis_map["osu!"]["ranking"] . ":$ruleset");
+
+        # Continue, if there is nothing cached which should not happen 😃.
+        if (!$user_ids) continue;
+
+        foreach ($user_ids as $user) {
+          if ((int) $user === (int) $Connection->provider_user_id) {
+            $Connection->is_legit = 1;
+            break;
+          }
+        }
+      }
+    }
+
+    # Save!
+    $Connection->save();
+
+    return $Connection;
   }
 
   /**

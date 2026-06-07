@@ -21,13 +21,19 @@ class ConnectionDiscord extends Connection
 
   /**
    * @see https://docs.discord.com/developers/topics/oauth2#authorization-code-grant
-   * generate_link();
+   * @method generate_link();
    */
 
   /**
    * @see https://docs.discord.com/developers/topics/oauth2#authorization-code-grant
-   *
-   * get_access_token();
+   * @method get_access_token();
+   */
+
+  /**
+   * @method new();
+   * $response->access_token
+   * $response->refresh_token
+   * $response->expires_in
    */
 
   /**
@@ -71,72 +77,6 @@ class ConnectionDiscord extends Connection
     $this->save();
 
     return $this;
-  }
-
-  /**
-   * @param object $params
-   * @return self
-   *
-   * NOTE: Will die on error.
-   */
-  public function new(object $params)
-  {
-
-    /**
-     * @var object
-     */
-    $response = $this->get_access_token(
-      code: $params->code,
-      action: "connect",
-    );
-
-    /**
-     * $response->access_token
-     * $response->refresh_token
-     * $response->expires_in
-     */
-
-    /**
-     * @var object
-     */
-    $ProviderUser = $this->provider_user($response->access_token);
-
-    # If a Connection already exists, the User or another one has already connected
-    # the vendor's user account.
-    if (
-      self::where([
-        "provider" => static::PROVIDER,
-        "provider_user_id" => $ProviderUser->id
-      ])
-      ->whereNotNull("user_id")
-      ->first()
-    )
-      return die(error("!API_CONNECTED_ALREADY"));
-
-    /**
-     * @var self
-     */
-    $Connection = self::where([
-      "provider" => static::PROVIDER,
-      "provider_user_id" => $ProviderUser->id
-    ])
-      ->whereNull("user_id")
-      ->first()
-      ?? self::make();
-
-    $Connection->access_token = $response->access_token;
-    $Connection->refresh_token = $response->refresh_token;
-    $Connection->expires_at = Time::add($response->expires_in);
-    $Connection->provider = static::PROVIDER;
-    $Connection->provider_user_id = $ProviderUser->id;
-    $Connection->provider_user_email = $ProviderUser->email;
-    $Connection->provider_user_nickname = $ProviderUser->username;
-    $Connection->is_legit = 0;
-
-    # Save!
-    $Connection->save();
-
-    return $Connection;
   }
 
   /**

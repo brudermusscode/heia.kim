@@ -34,33 +34,27 @@ include SNOW; ?>
 
           <!--- OAuth2 sign up --->
           <div fl gap=smol>
-            <?php
+            <mbutton
+              <?= !Feature::is_enabled("connect_osu") ? "disabled" : "" ?>
+              data-action="connection:start"
+              data-provider="osu!"
+              has-tooltip=bottom flexone material ripple-effect size=mid background="osu-pink" color=light>
+              <i text wider class="osu-icon osu-outlined"></i>
+              <div ttooltip>
+                <p text bold>osu!</p>
+              </div>
+            </mbutton>
 
-            # + osu!
-            if (Feature::is_enabled("connect_osu")) : ?>
-              <mbutton
-                data-action="connection:start"
-                data-provider="osu!"
-                has-tooltip=bottom flexone material ripple-effect size=mid background="osu-pink" color=light>
-                <i text wider class="osu-icon osu-outlined"></i>
-                <div ttooltip>
-                  <p text bold>osu!</p>
-                </div>
-              </mbutton>
-            <?php endif;
-
-            # + Discord
-            if (Feature::is_enabled("connect_discord")) : ?>
-              <mbutton
-                data-action="connection:start"
-                data-provider="discord"
-                has-tooltip=bottom flexone material ripple-effect size=mid background="discord-blue" color=white>
-                <i class="ri-discord-fill"></i>
-                <div ttooltip>
-                  <p text bold>Discord</p>
-                </div>
-              </mbutton>
-            <?php endif; ?>
+            <mbutton
+              <?= !Feature::is_enabled("connect_discord") ? "disabled" : "" ?>
+              data-action="connection:start"
+              data-provider="discord"
+              has-tooltip=bottom flexone material ripple-effect size=mid background="discord-blue" color=white>
+              <i class="ri-discord-fill"></i>
+              <div ttooltip>
+                <p text bold>Discord</p>
+              </div>
+            </mbutton>
 
             <mbutton
               <?= !Feature::is_enabled("connect_github") ? "disabled" : "" ?>

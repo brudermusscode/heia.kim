@@ -43,8 +43,8 @@ class Controller
         $this->params["files"][$key] = $file;
     }
 
-    # Append the CurrentUser so it's available everyhwere.
-    $this->params["CurrentUser"] = CurrentUser;
+    # Append the CurrentUser so it's available everyhwere, only if it exists.
+    $this->params["CurrentUser"] = CurrentUser->exists ? CurrentUser : null;
   }
 
   /**
