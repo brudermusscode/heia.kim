@@ -111,7 +111,7 @@ class ConnectionOsu extends Connection
 
     # Reponse has no user id and thus failed?
     if (empty($response->id))
-      die(error("!INVALID_API_CALL"));
+      die(error("Could not fetch user of provider " . static::PROVIDER));
 
     return $response;
   }

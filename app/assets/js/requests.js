@@ -113,9 +113,11 @@ export const request = (element) => {
   let method = element.getAttribute("method") ?? "GET";
   let formdata = new FormData();
   let query = "?";
-  let redirect_from_data = element.hasAttribute("redirect-from-data");
+  let redirect_from_data = element.getAttribute("redirect-from-data");
   let redirect_on_error = element.getAttribute("redirect-on-error");
   let responder = element.getAttribute("responder");
+  let audio_success = element.getAttribute("audio-success");
+  let audio_error = element.getAttribute("audio-error");
 
   for (let date in element.dataset) {
     if (date === "action" || date === "method") continue;
@@ -134,21 +136,30 @@ export const request = (element) => {
       // When a responder should always be shown.
       if (responder !== null && responder === "") Frontend.create_responder(data);
 
-      // When a responder should only show on error.
-      if (responder === "error" && !data.status) Frontend.create_responder(data);
+      // ? Error.
+      if (!data.status) {
+        // When a responder should only show on error.
+        if (responder === "error") Frontend.create_responder(data);
 
-      // If an error happened and the redirect on error is set.
-      if (!data.status && redirect_on_error) {
-        return Page.get(redirect_on_error);
+        // Play success audio!
+        if (audio_error !== null) Audio.play(`[${audio_error}]`);
+
+        if (redirect_on_error) return Page.get(redirect_on_error);
       }
 
-      if (data.status) {
+      // ? Success
+      else {
+        // Play success audio!
+        if (audio_success !== null) Audio.play(`[${audio_success}]`);
+
         // When a responder should only be shown on success.
         if (responder === "success") Frontend.create_responder(data);
 
         // Redirect the user from a link in data object.
-        if (redirect_from_data && data.data.redirect) {
-          Page.get(data.data.redirect);
+        if (redirect_from_data !== null && data.data.redirect) {
+          redirect_from_data === "full"
+            ? window.location.replace(data.data.redirect)
+            : Page.get(data.data.redirect);
         }
       }
     },

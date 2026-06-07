@@ -13,12 +13,11 @@ $(document).on("click", "[data-action='connection:start']", function (e) {
   e.preventDefault();
   Frontend.load();
 
+  if (!this.dataset.provider || !this.dataset.callAction) return;
+
   let formdata = new FormData();
-  let provider = this.dataset.provider;
-
-  formdata.append("provider", provider);
-
-  if (!provider) return;
+  formdata.append("provider", this.dataset.provider);
+  formdata.append("action", this.dataset.callAction);
 
   $.ajax({
     url: "/connection/start",

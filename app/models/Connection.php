@@ -25,6 +25,14 @@ class Connection extends Justin
   protected const string PROVIDER = "";
 
   /**
+   * Actions to trigger like signing up or logging back in.
+   */
+  protected array $actions = [
+    "connect",
+    "reconnect"
+  ];
+
+  /**
    * Client credentials like app id & secret.
    */
   protected ?array $credentials = null;
@@ -135,6 +143,53 @@ class Connection extends Justin
 
     # Save!
     $Connection->save();
+
+    return $Connection;
+  }
+
+  /**
+   * Retrieves an access token and fetches user information to confirm that the vendor
+   * user is signed up to our application.
+   *
+   * @param object $params
+   * @return static
+   *
+   * NOTE: Will die on error.
+   */
+  public function reconnect(object $params)
+  {
+
+    /**
+     * @var object
+     */
+    $response = $this->get_access_token(
+      code: $params->code,
+      action: "reconnect",
+    );
+
+    /**
+     * $response->access_token
+     * $response->refresh_token
+     * $response->expires_in
+     */
+
+    /**
+     * @var object
+     */
+    $ProviderUser = $this->provider_user($response->access_token);
+
+    /**
+     * @var ?static
+     */
+    $Connection = static::with("user")
+      ->where([
+        "provider" => static::PROVIDER,
+        "provider_user_id" => $ProviderUser->id
+      ])
+      ->whereNotNull("user_id")
+      ->first()
+      # If no Connection is found, die and tell the User to register first.
+      ?? die(error("<strong>You have not signed up yet!</strong> <a href='/register'>Do here</a>, my friend."));
 
     return $Connection;
   }
@@ -251,15 +306,30 @@ class Connection extends Justin
   }
 
   /**
+   * @return void
+   *
+   * NOTE: Will die one error.
+   */
+  public function action_invalid(string $action)
+  {
+    if (!in_array($action, $this->actions))
+      die(error("<strong>Invalid action called!</strong>"));
+  }
+
+  /**
    * Generates the link to the vendor's API where the user has to authorize their ac-
    * count.
    *
+   * @param string $action
    * @return string
    */
-  public function generate_link()
+  public function generate_link(string $action = "connect")
   {
 
-    $callback = _env("SERVER_ADDRESS") . "/connect/" . static::PROVIDER;
+    # Die immediately if an invalid action has been called.
+    $this->action_invalid($action);
+
+    $callback = _env("SERVER_ADDRESS") . "/$action/" . static::PROVIDER;
     $return = $this->api()["user-auth"]["endpoint"]
       . "?client_id=" . $this->credentials["client_id"]
       . "&response_type=" . $this->api()["user-auth"]["response_type"]
@@ -284,6 +354,9 @@ class Connection extends Justin
     string $code,
     string $action = "connect"
   ) {
+
+    # Die immediately if an invalid action has been called.
+    $this->action_invalid($action);
 
     # Build dataset.
     $data = [];

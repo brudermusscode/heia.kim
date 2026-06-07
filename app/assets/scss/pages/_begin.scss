@@ -6,7 +6,11 @@ body[register],
 body[login],
 body[connect],
 body[password-reset] {
-  background: $dark;
+  background: #1f1f1f !important;
+
+  .snow {
+    background: white;
+  }
 
   main {
     padding: 0;

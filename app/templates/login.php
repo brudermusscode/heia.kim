@@ -46,10 +46,12 @@ include SNOW; ?>
           </section>
         </div>
 
-        <!--- OAuth2 sign up --->
         <div fl gap=smol>
           <mbutton
             <?= !Feature::is_enabled("connect_osu") ? "disabled" : "" ?>
+            data-action="connection:start"
+            data-provider="osu!"
+            data-call-action="reconnect"
             flexone has-tooltip=bottom material ripple-effect size=mid
             background="osu-pink" color=light>
             <i text wider class="osu-icon osu-outlined"></i>
@@ -60,6 +62,9 @@ include SNOW; ?>
 
           <mbutton
             <?= !Feature::is_enabled("connect_discord") ? "disabled" : "" ?>
+            data-action="connection:start"
+            data-provider="discord"
+            data-call-action="reconnect"
             has-tooltip=bottom flexone material ripple-effect size=mid background="discord-blue" color=white>
             <i class="ri-discord-fill"></i>
             <div ttooltip>
@@ -69,6 +74,9 @@ include SNOW; ?>
 
           <mbutton
             <?= !Feature::is_enabled("connect_github") ? "disabled" : "" ?>
+            data-action="connection:start"
+            data-provider="github"
+            data-call-action="reconnect"
             has-tooltip=bottom no-delay flexone material ripple-effect size=mid background="invert" color=invert>
             <i class="ri-github-fill"></i>
             <div ttooltip>

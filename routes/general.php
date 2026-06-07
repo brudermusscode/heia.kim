@@ -35,13 +35,10 @@ $Router->post("/password-reset/update", "password-reset/update", return: "JSON")
 # ? Connections
 $Router->post("/connection/start", "connection/start", return: "JSON");
 $Router->post("/connection/create", "connection/create", return: "JSON");
-// $Router->post("/connection/delete", "connection/delete", return: "JSON");
-// $Router->post("/connection/update", "connection/update", return: "JSON");
+$Router->post("/connection/reconnect", "connection/reconnect", return: "JSON");
 $Router->get("/connect/:provider", "connection/index", title: function ($params) {
   return "Connect your " . $params["provider"] . " to " . APP_NAME . "!";
 });
-
-
-
-// rewrite ^/register/with/(.*) /yield.php?page=register&sub=with-api&api=$1&$query_string last;
-// rewrite ^/login/with/(.*) /yield.php?page=login&sub=with-api&api=$1&$query_string last;
+$Router->get("/reconnect/:provider", "connection/login", title: function ($params) {
+  return "Login with your " . $params["provider"];
+});

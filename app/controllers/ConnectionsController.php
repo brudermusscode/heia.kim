@@ -7,7 +7,10 @@ use Heiakim\Http\Request;
 use Heiakim\Utils\Utils;
 use Heiakim\Registry\ApiConnectionRegistry;
 use Heiakim\Model\Authentication;
+use Heiakim\Model\ConnectionDiscord;
+use Heiakim\Model\ConnectionGithub;
 use Heiakim\Model\ConnectionOsu;
+use Heiakim\Model\Session;
 use Heiakim\Model\User;
 
 class ConnectionsController extends Controller
@@ -24,7 +27,7 @@ class ConnectionsController extends Controller
   {
 
     $this->validate_params(
-      strict: ["provider"],
+      strict: ["provider", "action"],
       optional: [],
     );
 
@@ -38,21 +41,22 @@ class ConnectionsController extends Controller
 
     $ProviderClass = ApiConnectionRegistry::ClassOrDie($this->params->provider);
 
-    return success(data: ["link" => new $ProviderClass()->generate_link()]);
+    return success(data: [
+      "link" => new $ProviderClass()->generate_link(action: $this->params->action)
+    ]);
   }
 
   /**
    * Creates a new instance of an existing class of a given provider by utili-
    * zing the received code from authentication screen of the third party.
    *
-   * @return object
+   * @return string
    */
   public function create()
   {
 
     $this->validate_params(
       strict: ["provider", "code", "state"],
-      optional: ["scope"],
     );
 
     # CurrentUser has a provider of this type connected already?
@@ -66,7 +70,7 @@ class ConnectionsController extends Controller
     $ProviderClass = ApiConnectionRegistry::ClassOrDie($this->params->provider);
 
     /**
-     * @var ConnectionOsu
+     * @var ConnectionOsu|ConnectionDiscord|ConnectionGithub
      */
     $Connection = new $ProviderClass()->new($this->params);
 
@@ -117,6 +121,41 @@ class ConnectionsController extends Controller
     return success(data: [
       "Connection" => $Connection,
       "redirect" => $redirect,
+    ]);
+  }
+
+  /**
+   * Handles the login action.
+   *
+   * @return string
+   */
+  public function reconnect()
+  {
+
+    $this->validate_params(
+      strict: ["provider", "code", "state"],
+    );
+
+    # CurrentUser has a provider of this type connected already?
+    if (
+      CurrentUser->connections()
+      ->where("provider", $this->params->provider)
+      ->first()
+    )
+      return error("!API_CONNECTED_ALREADY");
+
+    $ProviderClass = ApiConnectionRegistry::ClassOrDie($this->params->provider);
+
+    /**
+     * @var ConnectionOsu|ConnectionDiscord|ConnectionGithub
+     */
+    $Connection = new $ProviderClass()->reconnect($this->params);
+
+    # Create a new Session!
+    new Session()->new($Connection->user);
+
+    return success(data: [
+      "redirect" => "/home",
     ]);
   }
 
