@@ -1,0 +1,48 @@
+@use "../abstract" as *;
+
+ajax-response {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 100%;
+  left: 0;
+  height: 0%;
+  width: 100%;
+  z-index: 1001;
+
+  &[success] {
+    background: rgba(37, 241, 71, 0.24);
+  }
+
+  &[error] {
+    background: rgba(237, 29, 92, 0.24);
+  }
+
+  &[success],
+  &[error] {
+    backdrop-filter: blur(4px);
+  }
+
+  &[active] {
+    animation: ajax-response 0.8s $cubic forwards;
+
+    @keyframes ajax-response {
+      from {
+        height: 0%;
+        top: 100%;
+        opacity: 1;
+      }
+
+      50% {
+        height: 100%;
+        top: 0;
+      }
+
+      to {
+        height: 0%;
+        top: 0;
+        // opacity: 0;
+      }
+    }
+  }
+}

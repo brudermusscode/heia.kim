@@ -43,16 +43,15 @@ export const close_search = async () => {
 };
 
 $(function () {
+  //
+
   /**
-   * ? Keyboard Shortcuts
+   * @event keyup
    */
   $(document).on("keyup", function (e) {
     if (e.key.toLowerCase() == "escape") {
       document.activeElement.blur();
-      // close_search();
       close_comments();
-
-      return;
     }
   });
 
@@ -61,15 +60,12 @@ $(function () {
    */
   // TODO: DRY code opening non ajax popups.
   $(document).on("click", "[data-action='filters:open']", function (e) {
-    let overlay = new Overlay(null, true);
     let filters = document.find("filters");
 
-    filters ? overlay.append(filters.innerHTML) : overlay.close();
-  });
+    if (!filters) return;
 
-  /**
-   * ? Search
-   */
+    new Overlay(filters.innerHTML);
+  });
 
   $(document).on(
     "submit",
@@ -117,7 +113,7 @@ $(function () {
       });
 
       __infinite_scroll.reached_full_end = false;
-    }
+    },
   );
 
   /**
@@ -175,7 +171,7 @@ $(function () {
     let audio = document.createElement("audio");
     audio.setAttribute(
       "src",
-      __osu.beatmap_preview_url + "/preview/" + set_id + ".mp3"
+      __osu.beatmap_preview_url + "/preview/" + set_id + ".mp3",
     );
     __main.appendChild(audio);
 
@@ -215,23 +211,19 @@ $(function () {
    * Search on recently/popular click.
    */
   // TODO: Repair clicking recent searches.
-  $(document).on(
-    "click",
-    '[data-action="beatmaps:search,recent"]',
-    function (e) {
-      let form = document.body.querySelector('[data-form="beatmaps:search"]');
-      let query_input = form.querySelector("input[name=query]");
-      let query = this.querySelector("input[name=query]").value;
-      let input = this.closest("[search]").querySelector(
-        'input[data-action="beatmaps:search"]'
-      );
+  $(document).on("click", '[data-action="beatmaps:search,recent"]', function (e) {
+    let form = document.body.querySelector('[data-form="beatmaps:search"]');
+    let query_input = form.querySelector("input[name=query]");
+    let query = this.querySelector("input[name=query]").value;
+    let input = this.closest("[search]").querySelector(
+      'input[data-action="beatmaps:search"]',
+    );
 
-      input.value = query_input.value = query;
-      input.focus();
-      document.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter" }));
-      close_search();
-    }
-  );
+    input.value = query_input.value = query;
+    input.focus();
+    document.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter" }));
+    close_search();
+  });
 
   /**
    * ? Comments
@@ -283,9 +275,7 @@ $(function () {
     let composer = this.closest("[composer]");
     let comments = this.closest("[comments-container]");
     let comments_scroll = comments.find("[get-scroll]");
-    let append_comment = comments.querySelector(
-      '[data-react="comments:create"]'
-    );
+    let append_comment = comments.querySelector('[data-react="comments:create"]');
     let empty = append_comment.find("[empty]");
 
     Frontend.load();
@@ -330,7 +320,7 @@ $(function () {
           document.body,
           data.data.message,
           "error",
-          "comments"
+          "comments",
         );
       }
     });
@@ -341,85 +331,79 @@ $(function () {
    *
    * @action GET
    */
-  $(document).on(
-    "click",
-    '[data-action="beatmaps:comments,open"]',
-    function (e) {
-      e.preventDefault();
+  $(document).on("click", '[data-action="beatmaps:comments,open"]', function (e) {
+    e.preventDefault();
 
-      let formdata = new FormData();
-      let set_id = this.dataset.id;
+    let formdata = new FormData();
+    let set_id = this.dataset.id;
+    let comments = document.querySelector("[comments-container]");
+    let has_info_winow = this.closest("[has-info-window]");
+
+    /**
+     * Hide the info window
+     */
+    if (has_info_winow) {
+      has_info_winow.removeAttribute("has-info-window");
+      Frontend.disable_info_window("beatmap_comments");
+    }
+
+    if (comments) {
+      close_comments();
+
+      return;
+    }
+
+    formdata.append("id", set_id);
+
+    Frontend.load();
+
+    axios.post(`/beatmapsets/comments`, formdata).then(async (data) => {
+      Frontend.unload();
+
+      document.querySelector("app").insertAdjacentHTML("beforeend", data.data.data);
+
+      Frontend.reload_images();
+
       let comments = document.querySelector("[comments-container]");
-      let has_info_winow = this.closest("[has-info-window]");
+      let composer = comments.find("[composer]");
+      let comments_scroll = comments.querySelector(".comments");
+      let textareas = document.querySelectorAll("textarea[auto-resize]");
 
       /**
-       * Hide the info window
+       * Calculate the full height for the comment window to attach to.
        */
-      if (has_info_winow) {
-        has_info_winow.removeAttribute("has-info-window");
-        Frontend.disable_info_window("beatmap_comments");
-      }
+      let comments_padding = window
+        .getComputedStyle(comments)
+        .getPropertyValue("padding-top");
+      let comments_height =
+        comments_scroll.querySelector("[get-height]").clientHeight;
+      let comments_newHeight =
+        composer.clientHeight +
+        comments_height +
+        parseInt(comments_padding.replace("px", "")) * 2;
 
-      if (comments) {
-        close_comments();
+      if (comments_newHeight > window.innerHeight)
+        comments_newHeight = window.innerHeight;
 
-        return;
-      }
+      comments.setAttribute("active", "");
+      comments.style.height = comments_newHeight + "px";
+      comments_scroll.scrollTop = comments_scroll.scrollHeight;
 
-      formdata.append("id", set_id);
+      /**
+       * Add blur event listeners for all textareas.
+       */
+      textareas.forEach((elem) => {
+        elem.addEventListener("input", (e) => {
+          if (elem.value.trim().length < 1) elem.style.height = "auto";
+          else elem.style.height = `${elem.scrollHeight}px`;
+        });
 
-      Frontend.load();
-
-      axios.post(`/beatmapsets/comments`, formdata).then(async (data) => {
-        Frontend.unload();
-
-        document
-          .querySelector("app")
-          .insertAdjacentHTML("beforeend", data.data.data);
-
-        Frontend.reload_images();
-
-        let comments = document.querySelector("[comments-container]");
-        let composer = comments.find("[composer]");
-        let comments_scroll = comments.querySelector(".comments");
-        let textareas = document.querySelectorAll("textarea[auto-resize]");
-
-        /**
-         * Calculate the full height for the comment window to attach to.
-         */
-        let comments_padding = window
-          .getComputedStyle(comments)
-          .getPropertyValue("padding-top");
-        let comments_height =
-          comments_scroll.querySelector("[get-height]").clientHeight;
-        let comments_newHeight =
-          composer.clientHeight +
-          comments_height +
-          parseInt(comments_padding.replace("px", "")) * 2;
-
-        if (comments_newHeight > window.innerHeight)
-          comments_newHeight = window.innerHeight;
-
-        comments.setAttribute("active", "");
-        comments.style.height = comments_newHeight + "px";
-        comments_scroll.scrollTop = comments_scroll.scrollHeight;
-
-        /**
-         * Add blur event listeners for all textareas.
-         */
-        textareas.forEach((elem) => {
-          elem.addEventListener("input", (e) => {
-            if (elem.value.trim().length < 1) elem.style.height = "auto";
-            else elem.style.height = `${elem.scrollHeight}px`;
-          });
-
-          elem.addEventListener("blur", (e) => {
-            elem.closest("[composer]").removeAttribute("active");
-          });
+        elem.addEventListener("blur", (e) => {
+          elem.closest("[composer]").removeAttribute("active");
         });
       });
-    }
-  );
+    });
+  });
 
   /** ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */
   /** ,,,,,,,,,,,,,,,,,,,,,,, REQUESTS ,,,,,,,,,,,,,,,,,,,,,,, */
@@ -466,7 +450,7 @@ $(function () {
               document.body,
               data.message,
               data.status ? "success" : "error",
-              "settings"
+              "settings",
             );
         },
         error: function (data) {
@@ -475,7 +459,7 @@ $(function () {
             document.body,
             data.statusText,
             "error",
-            "settings"
+            "settings",
           );
         },
       });

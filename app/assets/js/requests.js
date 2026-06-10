@@ -4,6 +4,38 @@ import * as Audio from "./audio";
 import Overlay from "./elements/Overlay";
 
 /**
+ * Fetches content from a given URL and appends it to a new Overlay.
+ *
+ * @param {string} url
+ * @param {string} query
+ */
+export const get = (url, query) => {
+  let timeout = 0;
+
+  // Remove a current overlay.
+  if (__page.overlay) {
+    __page.overlay.delete();
+    timeout = 100;
+  }
+
+  Frontend.load();
+
+  setTimeout(() => {
+    $.ajax({
+      url: url + (query ? query : ""),
+      method: "GET",
+      success: function (data) {
+        Frontend.unload();
+
+        if (data.status) {
+          new Overlay(data.data);
+        } else Frontend.ajax_response("error");
+      },
+    });
+  }, timeout);
+};
+
+/**
  * Create a new ajax request. This will push the request to the global active request
  * array and make it available throughout the website.
  */
@@ -18,62 +50,11 @@ export const queue = (options) => {
 };
 
 /**
- * @param {string} href
- * @param {Element} append_to
- * @param {boolean} show_responder
- * @param {boolean} overlay
- * @returns {}
+ * @param {HTMLElement} element
+ * @param {string} baseUrl
+ * @param {string} prefix
+ * @returns string
  */
-const get_content = async (href, append_to, show_responder, overlay) => {
-  if (__page.is_loading) return;
-
-  Frontend.load();
-
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url: href,
-      method: "GET",
-      contentType: false,
-      processData: false,
-      success: function (data) {
-        Frontend.unload();
-
-        if (data.status) {
-          if (!data.data) return resolve(data);
-
-          if (show_responder !== undefined && show_responder === "success")
-            Frontend.create_responder(data.message, "succes");
-
-          if (overlay) {
-            let overlay = new Overlay();
-            overlay.append(data.data);
-            overlay.overlay.find("[autofocus]")?.focus();
-          } else if (append_to) {
-            append_to.insertAdjacentHTML("beforeend", data.data);
-            append_to.find("[autofocus]")?.focus();
-          } else {
-            __main.insertAdjacentHTML("beforeend", data.data);
-            __main.find("[autofocus]")?.focus();
-          }
-          Frontend.reload_images();
-        } else {
-          if (show_responder !== undefined && show_responder === "error")
-            Frontend.create_responder(data.message, "error");
-        }
-
-        if (show_responder !== undefined && show_responder === "always")
-          Frontend.create_responder(data.message, data.status ? "success" : "error");
-
-        resolve(data);
-      },
-      error: function (data) {
-        Frontend.ajax_error(data);
-        reject(data);
-      },
-    });
-  });
-};
-
 const construct_get_request_url = (
   element,
   baseUrl,
@@ -203,6 +184,8 @@ const SUBMIT_FORM_ATTRIBUTES = [
 ];
 
 $(function () {
+  //
+
   /**
    * Shadow submitting a form. It mimics the functionality of form[request="…"] when
    * submitted, but as a button, where the dataset entries are being converted to hid-
@@ -310,10 +293,8 @@ $(function () {
           Frontend.unload();
 
           if (data.status) {
-            /**
-             * Update anything that could have changed for the
-             * user in the ui through this request.
-             */
+            // Update anything that could have changed for the user in the ui through
+            // this request.
             if (update_user_references) Frontend.update_user_menu();
 
             /**
@@ -384,12 +365,17 @@ $(function () {
 
   /**
    * Open popups dynamically.
+   *
+   * @event click
+   * @this HTMLElement [request-get]
    */
   $(document).on("click", "[request-get]", function (e) {
     let href = this.getAttribute("request-get");
     let url = "/" + href.replaceAll(":", "/");
     let query = "?";
     let dataset_count = Object.keys(this.dataset).length;
+
+    console.log("????");
 
     /**
      * Construct the url query by iterating through all data
@@ -403,72 +389,10 @@ $(function () {
           this.dataset[key] +
           "&";
       }
-
-      query += "is_popup=kurwa";
-    } else query += "is_popup=kurwa";
-
-    Frontend.load(1000);
-
-    $.ajax({
-      url: url + query,
-      method: "GET",
-      success: function (data) {
-        Frontend.unload();
-
-        if (data.status) {
-          let overlay = new Overlay();
-          overlay.append(data.data);
-
-          setTimeout(() => {
-            overlay.overlay.find("[autofocus]")?.focus();
-          }, 400);
-        } else new Frontend.create_responder(data.message, "error");
-      },
-    });
-  });
-
-  /**
-   * Get content from some url and append it to the main container.
-   */
-  $(document).on("click", "[request-get-old]", async function (e) {
-    let append_to = eval(this.getAttribute("request-append-to"));
-    let show_responder = this.getAttribute("responder");
-    let url = "/" + this.getAttribute("request-get");
-    let overlay = this.hasAttribute("overlay");
-
-    if (append_to !== null && !(append_to instanceof Element)) return;
-
-    url = construct_get_request_url(this, url, "request-get-attribute-");
-
-    try {
-      let resolved = await get_content(url, append_to, show_responder, overlay);
-
-      if ((resolved.status && !resolved.data) || resolved.end === true) {
-        this.setAttribute("done", "");
-        this.disable();
-      }
-
-      if (!resolved.data) {
-        if (resolved.error || resolved.message)
-          create_responder(resolved.error || resolved.message);
-
-        return;
-      }
-    } catch (error) {
-      return create_responder(`An error occured: ${error}`, "error");
     }
 
-    // If offset and limit are set as attributes, we want to
-    // increase the offset by the limit. It's probably always
-    // fetching new data.
-    let limit = this.getAttribute("request-get-attribute-limit");
-    let offset = this.getAttribute("request-get-attribute-offset");
+    query += "is_popup=kurwa";
 
-    if (limit && offset) {
-      this.setAttribute(
-        "request-get-attribute-offset",
-        parseInt(offset) + parseInt(limit),
-      );
-    }
+    get(url, query);
   });
 });

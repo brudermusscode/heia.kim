@@ -1,3 +1,6 @@
+@forward "responder";
+@forward "ajax-response";
+@forward "prompt";
 @forward "animations";
 @forward "audio-player";
 @forward "backgrounds";
@@ -7,7 +10,7 @@
 @forward "colorizer";
 @forward "dropdown";
 @forward "elements";
-@forward "global_search";
+@forward "global-search";
 @forward "hover-menu";
 @forward "img";
 @forward "input";
@@ -19,8 +22,6 @@
 @forward "picture";
 @forward "premium_text";
 @forward "progress-bar";
-@forward "prompt";
-@forward "responder";
 @forward "score";
 @forward "scrollbars";
 @forward "select-model";

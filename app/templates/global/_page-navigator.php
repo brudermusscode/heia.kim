@@ -1,17 +1,11 @@
-<?php
-
-use Heiakim\Application\Cookie;
-use Heiakim\Application\CurrentUser;
-
-?>
-
 <page-navigator>
   <div fl fldircol gap>
     <picture pn-option quadrat style="height:3.4em;width:3.4em;" loading>
       <img src="<?= IMAGE . '/logo/painted/100.webp'; ?>" />
     </picture>
 
-    <mbutton pn-option size=mid rounded icon-only material background=complement data-action="search:open" color=white>
+    <mbutton request-get="search"
+      pn-option size=mid rounded icon-only material background=complement color=white>
       <i class=mi>search</i>
     </mbutton>
   </div>

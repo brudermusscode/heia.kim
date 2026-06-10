@@ -19,7 +19,14 @@ let scroll_interval;
  * reload parameter to true.
  */
 export const reload = (keep_overlays = false) => {
-  get(window.location.pathname + window.location.search, false, null, false, true, keep_overlays);
+  get(
+    window.location.pathname + window.location.search,
+    false,
+    null,
+    false,
+    true,
+    keep_overlays,
+  );
 };
 
 /**
@@ -54,7 +61,14 @@ export const get_route = (url) => {
  * @param {boolean} keep_overlays
  * @returns void
  */
-export const get = async (href, state = false, anchor = null, scroll_top = true, reload = false, keep_overlays = false) => {
+export const get = async (
+  href,
+  state = false,
+  anchor = null,
+  scroll_top = true,
+  reload = false,
+  keep_overlays = false,
+) => {
   /**
    * If the page is in loading state, return.
    */
@@ -81,7 +95,8 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
   /**
    * Prepare a reload.
    */
-  if (reload) url = url.concat(url.includes("?") ? "&reload=" : "?reload=") + random_string(8);
+  if (reload)
+    url = url.concat(url.includes("?") ? "&reload=" : "?reload=") + random_string(8);
 
   /**
    * Get the current route.
@@ -102,7 +117,8 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
    * and the destinated one are from the same oruigin page
    */
   let current_location_route = window.location.pathname.split("/").shift()[0];
-  let is_same_location = window.location.pathname.concat(window.location.search) == url;
+  let is_same_location =
+    window.location.pathname.concat(window.location.search) == url;
   let is_same_history_route = url == current_location_route;
 
   /**
@@ -115,7 +131,7 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
    * Create a new overlay only when the app is being initialized.
    * Otherwise there would be two overlays lingering.
    */
-  if (document.find("[loading-app]")) new Overlay(null, false);
+  if (document.find("[loading-app]")) new Overlay(null);
 
   /**
    * Begin the new page load.
@@ -132,13 +148,16 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
    * Profile Editor is only available on Desktop by now. Redirect
    * users that try to access it through a small device.
    */
-  if (Route.key == "editor" && (window.innerHeight < 400 || window.innerWidth < 1000)) {
+  if (
+    Route.key == "editor" &&
+    (window.innerHeight < 400 || window.innerWidth < 1000)
+  ) {
     Frontend.unload();
 
     console.log("Profile Editor only available on Desktop by now.");
 
     if (window.location.pathname.split("/")[1] !== "editor") {
-      Frontend.open_popup("/ui/unavailable?type=profileeditor");
+      Request.get("/ui/unavailable?type=profileeditor");
     } else get("/home");
     return;
   }
@@ -146,7 +165,9 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
   /**
    * Get CSRF token.
    */
-  const __csrf_token = document.find("head meta[name=csrf_token]")?.getAttribute("content");
+  const __csrf_token = document
+    .find("head meta[name=csrf_token]")
+    ?.getAttribute("content");
 
   $.ajax({
     url: url,
@@ -194,7 +215,8 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
       // title to the document.
       if (!state && !reload) {
         history.pushState(history_params, title, url);
-        document.title = title !== undefined && title !== null && title ? title : "Unknown Page";
+        document.title =
+          title !== undefined && title !== null && title ? title : "Unknown Page";
       }
 
       clearInterval(scroll_interval);
@@ -220,7 +242,8 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
       /**
        * Set header to scrolled.
        */
-      if (window.scrollY >= 20) document.find("[scroll-manipulated]")?.setAttribute("scrolled", "true");
+      if (window.scrollY >= 20)
+        document.find("[scroll-manipulated]")?.setAttribute("scrolled", "true");
 
       /**
        * Check for an exception and move it to a direct child of
@@ -251,7 +274,11 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
        * accessing a new page, which is determined by the body
        * carrying an attribute named after the route itself.
        */
-      if (typeof Route.execute_once === "function" && !document.body.hasAttribute(Route.key)) Route.execute_once(url);
+      if (
+        typeof Route.execute_once === "function" &&
+        !document.body.hasAttribute(Route.key)
+      )
+        Route.execute_once(url);
 
       // TODO: Implement execute() for always firing functions.
 
@@ -266,7 +293,14 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
       /**
        * Set route attributes.
        */
-      document.body.setAttribute(Route.key == "" ? "home" : Route.body_attribute !== undefined ? Route.body_attribute : Route.key, "");
+      document.body.setAttribute(
+        Route.key == ""
+          ? "home"
+          : Route.body_attribute !== undefined
+            ? Route.body_attribute
+            : Route.key,
+        "",
+      );
 
       /**
        * Free the clicking on other links by disabling page loading.
@@ -301,8 +335,14 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
        * Set any navigation button carrying the [page] attribute
        * with the name of the currently processed page to active.
        */
-      if (Route.mark) document.find_all(`[page="${Route.mark}"]`)?.forEach((button) => button.activate());
-      else document.find_all(`[page="${Route.key}"]`)?.forEach((button) => button.activate());
+      if (Route.mark)
+        document
+          .find_all(`[page="${Route.mark}"]`)
+          ?.forEach((button) => button.activate());
+      else
+        document
+          .find_all(`[page="${Route.key}"]`)
+          ?.forEach((button) => button.activate());
 
       // Set the current page to be marked.
       // __page.marked = Route.mark ? Route.mark : route;
@@ -321,7 +361,10 @@ export const get = async (href, state = false, anchor = null, scroll_top = true,
        */
       let page_navigator = main_container.find("page-navigator");
 
-      if ((Route.is_main_page && PreviousRoute.is_main_page) || Route.key === coming_from_path_split[1])
+      if (
+        (Route.is_main_page && PreviousRoute.is_main_page) ||
+        Route.key === coming_from_path_split[1]
+      )
         Frontend.just_show_navigation(page_navigator);
       else
         setTimeout(() => {
@@ -363,7 +406,13 @@ export const redirect = async () => {
   });
 };
 
-export const get_component = async (react, url, data = null, empty_container = false, where = "top") => {
+export const get_component = async (
+  react,
+  url,
+  data = null,
+  empty_container = false,
+  where = "top",
+) => {
   $.ajax({
     url: url,
     data: data,
@@ -371,7 +420,8 @@ export const get_component = async (react, url, data = null, empty_container = f
     processData: false,
     contentType: "JSON",
     success: function (data) {
-      if (!data.status) return new Responder.Responder().add(document.body, data.message, "error");
+      if (!data.status)
+        return new Responder.Responder().add(document.body, data.message, "error");
 
       if (empty_container) {
         react.innerHTML = data.data;
@@ -420,11 +470,16 @@ export const enable_scroll = () => {
   window.onscroll = function () {};
 };
 
-Utils.delegate(document, "click", "[data-action='legal:consent,forward']", function (e) {
-  let page = this.dataset.legalPage;
+Utils.delegate(
+  document,
+  "click",
+  "[data-action='legal:consent,forward']",
+  function (e) {
+    let page = this.dataset.legalPage;
 
-  Cookies.set("POLICIES_CONSENT_STEP", page, 365);
-});
+    Cookies.set("POLICIES_CONSENT_STEP", page, 365);
+  },
+);
 
 /**
  * Loads the policies consent page up, if the user was
@@ -435,8 +490,15 @@ Utils.delegate(document, "click", "[data-action='legal:consent,forward']", funct
 export const load_policies_consent_page = (accepts_policies = false) => {
   if (accepts_policies == 1) return false;
 
-  if (__current_user.id && !__current_user.privacy.accepts_policies && !window.location.pathname.includes("consent")) {
-    let consent_page = __current_user.privacy.policies_consent_page == "index" ? "" : "/" + __current_user.privacy.policies_consent_page;
+  if (
+    __current_user.id &&
+    !__current_user.privacy.accepts_policies &&
+    !window.location.pathname.includes("consent")
+  ) {
+    let consent_page =
+      __current_user.privacy.policies_consent_page == "index"
+        ? ""
+        : "/" + __current_user.privacy.policies_consent_page;
 
     get(`/legal/consent${consent_page}`);
 
@@ -446,23 +508,33 @@ export const load_policies_consent_page = (accepts_policies = false) => {
   return false;
 };
 
-Utils.delegate(document, "click", '[data-action="legal:consent,decide"] mbutton', function (e) {
-  let action = this.dataset.letAction;
-  let formdata = new FormData();
-  let accepts_policies = action == "decline" ? 0 : 1;
+Utils.delegate(
+  document,
+  "click",
+  '[data-action="legal:consent,decide"] mbutton',
+  function (e) {
+    let action = this.dataset.letAction;
+    let formdata = new FormData();
+    let accepts_policies = action == "decline" ? 0 : 1;
 
-  formdata.append("accepts_policies", accepts_policies);
+    formdata.append("accepts_policies", accepts_policies);
 
-  axios.post("/users/settings/privacy/edit", formdata).then((data) => {
-    Page.get("/home");
+    axios.post("/users/settings/privacy/edit", formdata).then((data) => {
+      Page.get("/home");
 
-    Cookies.remove("POLICIES_CONSENT_STEP");
-    Cookies.set("POLICIES_CONSENT", true, 365);
-    __current_user.privacy.accepts_policies = 1;
+      Cookies.remove("POLICIES_CONSENT_STEP");
+      Cookies.set("POLICIES_CONSENT", true, 365);
+      __current_user.privacy.accepts_policies = 1;
 
-    new Responder.Responder().add(document.body, data.data.message, data.data.status ? "success" : "error", "privacy");
-  });
-});
+      new Responder.Responder().add(
+        document.body,
+        data.data.message,
+        data.data.status ? "success" : "error",
+        "privacy",
+      );
+    });
+  },
+);
 
 export const random_string = (length) => {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

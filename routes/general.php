@@ -16,6 +16,8 @@ $Router->get("/home", "home/index", title: APP_NAME . " ~ " . _env("APP_SLOGAN")
 $Router->get("/home/:sub", "home/index", title: APP_NAME . " ~ " . _env("APP_SLOGAN"));
 $Router->get("/home/get-content/:file_name", "home/get-content/index", return: "JSON");
 $Router->get("/download", "download/index", title: "The easiest to setup with " . APP_NAME);
+$Router->get("/search", "components/search", return: "JSON");
+$Router->get("/get/search", "search/index", return: "JSON");
 
 # ? Register
 $Router->get("/register", "register", title: "Sign up to " . APP_NAME);

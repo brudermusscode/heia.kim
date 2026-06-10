@@ -214,7 +214,7 @@ class Profile extends Justin
     # Save it!
     $CurrentUser->profile->save();
 
-    $image_updated_message = " It can take some time for your new profile picture to show up. Pressing &nbsp; <span tag text smol bold>CTRL + F5</span> &nbsp; refreshes the cache of your browser. This way your image will be updated immediately.";
+    $image_updated_message = " Press &nbsp; <span tag text smol bold>CTRL + F5</span> &nbsp; to show your profile picture immediately. Otherwise it might take some time to show up.";
 
     return success("<strong>Freshly installed!</strong>" . (isset($image_updated) ? $image_updated_message : ""));
   }

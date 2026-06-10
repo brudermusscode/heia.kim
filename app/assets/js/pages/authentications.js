@@ -28,13 +28,13 @@ $(document).on("submit", '[data-form="authentication:create"]', function (e) {
 
       if (data.status) {
         if (type !== "user:create")
-          Frontend.open_popup(
+          Request.get(
             `/authentication/${type}` +
               (redirect ? `?redirect=${redirect}` : "") +
               (update_user_references
                 ? (redirect ? "&" : "?") + `update-user-references=1`
                 : ""),
-            false
+            false,
           );
         else Frontend.create_responder(data);
       } else {
@@ -50,50 +50,46 @@ $(document).on("submit", '[data-form="authentication:create"]', function (e) {
  * @action VALIDATE
  * @controller AuthenticationsController
  */
-$(document).on(
-  "submit",
-  '[data-form="authentications:validate"]',
-  function (e) {
-    e.preventDefault();
+$(document).on("submit", '[data-form="authentications:validate"]', function (e) {
+  e.preventDefault();
 
-    let formdata = new FormData(this);
-    let button = this;
+  let formdata = new FormData(this);
+  let button = this;
 
-    button.disable();
+  button.disable();
 
-    $.ajax({
-      url: "/authentication/validate",
-      method: "POST",
-      data: formdata,
-      processData: false,
-      contentType: false,
-      success: function (data) {
-        Frontend.unload();
+  $.ajax({
+    url: "/authentication/validate",
+    method: "POST",
+    data: formdata,
+    processData: false,
+    contentType: false,
+    success: function (data) {
+      Frontend.unload();
 
-        if (data.status) {
-          let type = formdata.get("type");
+      if (data.status) {
+        let type = formdata.get("type");
 
-          if (type == "delete_user")
-            setTimeout(() => {
-              window.location.replace("/");
-            }, 3000);
-          else if (type == "wipe_user") Page.get("/my/game");
-        } else {
-          button.enable();
-        }
+        if (type == "delete_user")
+          setTimeout(() => {
+            window.location.replace("/");
+          }, 3000);
+        else if (type == "wipe_user") Page.get("/my/game");
+      } else {
+        button.enable();
+      }
 
-        new Responder.Responder().add(
-          document.body,
-          data.message,
-          data.status ? "success" : "error"
-        );
-      },
-      error: function (data) {
-        Frontend.ajax_error(data);
-      },
-    });
-  }
-);
+      new Responder.Responder().add(
+        document.body,
+        data.message,
+        data.status ? "success" : "error",
+      );
+    },
+    error: function (data) {
+      Frontend.ajax_error(data);
+    },
+  });
+});
 
 /**
  * Delete authentication

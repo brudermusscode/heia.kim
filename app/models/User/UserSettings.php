@@ -8,11 +8,10 @@ use Heiakim\Model\User;
 use Heiakim\Utils\Utils;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
-use Intervention\Image\Interfaces\ImageInterface;
-use Intervention\Image\Interfaces\EncodedImageInterface;
-use DateTime;
 use Intervention\Image\Format;
 use Intervention\Image\Interfaces\ImageManagerInterface;
+use DateTime;
+use Heiakim\Validate\Validate;
 
 class UserSettings extends Justin
 {
@@ -66,8 +65,7 @@ class UserSettings extends Justin
   {
 
     # ? Profile Picture
-    if (!empty($params->files["image"]["tmp_name"]))
-      return $this->upload_profile_picture($params->files["image"]);
+    # Handled through Profiles.
 
     # Remove profile picture.
     if (isset($params->remove_current_profile_picture))
@@ -78,33 +76,16 @@ class UserSettings extends Justin
       $this->checked_notifications_at = date("Y-m-d H:i:s", time());
 
     # ? Birthday
-    if (isset($params->day, $params->month, $params->year) && !$this->birthday) {
-      $day = str_pad($params->day, 2, '0', STR_PAD_LEFT);
-      $month = str_pad($params->month, 2, '0', STR_PAD_LEFT);
-      $date_string = "{$params->year}-{$month}-{$day}";
+    if (
+      !empty($params->day)
+      && !empty($params->month)
+      && !empty($params->year)
 
-      $date_pattern = "/^\d{4}-\d{2}-\d{2}$/";
-
-      # Date pattern is valid?
-      if (!preg_match($date_pattern, $date_string))
-        return $this->error("<strong>Your birthday is of invalid format!</strong>");
-
-      $datetime = DateTime::createFromFormat("Y-m-d", $date_string);
-      $min_date = new DateTime("1960-01-01");
-      $max_date = new DateTime("2022-01-01");
-
-      # Too old for osu!?
-      if ($datetime < $min_date)
-        return $this->error("<strong>You are too old for osu!</strong> Spent the rest of your precious life with something else.");
-
-      # Too young for osu!?
-      if ($datetime > $max_date)
-        return $this->error("<strong>You are too young for osu!</strong> Go touch some grass.");
-
-      unset($params->day, $params->month, $params->year);
-
-      $this->birthday = $datetime->format("Y-m-d");
-    }
+      # Users can only change their birthday a specific amount of times.
+      && !$this->birthday
+      && ($Date = Validate::birthday($params->day, $params->month, $params->year))
+    )
+      $this->birthday = $Date->format("Y-m-d");
 
     # Begin a transaction! Nothing to leave behind.
     $this->db_transaction();
@@ -196,9 +177,7 @@ class UserSettings extends Justin
         ]);
       }
 
-      return success(
-        "<strong>Profile image updated!</strong> Press &nbsp; <span tag text smol bold>CTRL + F5</span> &nbsp; to show it immediately. Otherwise it might take some time."
-      );
+      return success();
     } catch (\Throwable $e) {
       Logger::to_file($e);
       die(error());
@@ -215,7 +194,7 @@ class UserSettings extends Justin
 
     # User has no profile picture set?
     if (count($all_files) < 1)
-      return $this->error("<strong>You have no profile picture set!</strong> You may want to upload one, so you can delete it.");
+      return error("<strong>You have no profile picture set!</strong> You may want to upload one, so you can delete it.");
 
     # Unlink all files.
     foreach ($all_files as $file)

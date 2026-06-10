@@ -33,8 +33,8 @@ import * as Updates from "./updates";
 import * as Feedback from "./feedback";
 
 import * as Element from "./elements";
+
 import * as Page from "./pages";
-import * as Vendor from "./vendor";
 
 /**
  * SCSS

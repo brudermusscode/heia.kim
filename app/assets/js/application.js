@@ -79,7 +79,10 @@ const init_application = async () => {
 
 export const get_cookie_domain = () => {
   let explode = window.location.hostname.split(".");
-  let cookie_domain = window.location.hostname === "localhost" ? window.location.hostname : explode.join(".");
+  let cookie_domain =
+    window.location.hostname === "localhost"
+      ? window.location.hostname
+      : explode.join(".");
 
   return cookie_domain;
 };
@@ -206,7 +209,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (e.key.toLowerCase() === "enter") e.preventDefault();
     if (
       e.key.toLowerCase() === "enter" &&
-      (e.target.tagName.toLowerCase() === "input" || e.target.tagName.toLowerCase() === "textarea") &&
+      (e.target.tagName.toLowerCase() === "input" ||
+        e.target.tagName.toLowerCase() === "textarea") &&
       e.target.hasAttribute("enter-submitable")
     ) {
       e.preventDefault();
@@ -279,7 +283,8 @@ $(document).on("click", "[submit-closest]", function (e) {
   form.appendChild(submit_button);
   form.querySelector("button[type='submit']").click();
 
-  if (this.hasAttribute("confirm-submit-button")) this.removeAttribute("submit-closest");
+  if (this.hasAttribute("confirm-submit-button"))
+    this.removeAttribute("submit-closest");
 });
 
 $(document).on("click", "[confirm-submit-button]", function (e) {
@@ -362,17 +367,28 @@ Utils.delegate(document, "click", '[data-action="cookies"]', async function (e) 
   Frontend.remove_header_notice(document.querySelector("[cookie-notice]"));
 });
 
-Utils.delegate(document, "click", '[action="privacy:cookie-consent"]', async function (e) {
-  if (Cookie.get("COOKIE_CONSENT") == "true") Cookie.set("COOKIE_CONSENT", false, 14);
-  else Cookie.set("COOKIE_CONSENT", true, 365);
-});
+Utils.delegate(
+  document,
+  "click",
+  '[action="privacy:cookie-consent"]',
+  async function (e) {
+    if (Cookie.get("COOKIE_CONSENT") == "true")
+      Cookie.set("COOKIE_CONSENT", false, 14);
+    else Cookie.set("COOKIE_CONSENT", true, 365);
+  },
+);
 
 /**
  * Copy to clipboard
  */
 let clipboard_copy = (text) => {
   navigator.clipboard.writeText(text).then(() => {
-    new Responder.Responder().add(document.body, "Copied to clipboard!", "success", "keyevent");
+    new Responder.Responder().add(
+      document.body,
+      "Copied to clipboard!",
+      "success",
+      "keyevent",
+    );
   });
 };
 
@@ -386,7 +402,9 @@ Utils.delegate(document, "click", "[clipboard-copy]", function (e) {
  */
 Utils.delegate(document, "click", '[data-action="scrollable-wrapper"]', function (e) {
   let direction = this.dataset.direction;
-  let $wrapper = this.closest('[data-structure="scrollable-wrapper"]').querySelector(".wrapper-inr");
+  let $wrapper = this.closest('[data-structure="scrollable-wrapper"]').querySelector(
+    ".wrapper-inr",
+  );
   let wrapper_max_scroll_width = $wrapper.scrollWidth - $wrapper.clientWidth;
 
   if (direction === "next") {
@@ -403,137 +421,20 @@ Utils.delegate(document, "click", '[data-action="scrollable-wrapper"]', function
 });
 
 /**
- * Show legal section language prompt
- *
- * When clicking on the legal section link for the first time, a
- * prompt for selecting the desired language will be shown
- */
-Utils.delegate(document, "click", '[action="legal:set-language"]', async function (e) {
-  if (Cookie.get("LEGAL_LANG")) return;
-  if (!Cookie.get("LEGAL_SEEN")) Cookie.set("LEGAL_SEEN", true, 361);
-
-  let main_menu_option = this.closest(".page");
-  let activations = main_menu_option.querySelectorAll("[active]");
-  let main_menu_option_extra = main_menu_option.querySelector(".hover_card");
-  let element_backup = document.querySelector("element-backup");
-
-  await activations.forEach((a) => {
-    a.removeAttribute("active");
-  });
-
-  main_menu_option.setAttribute("no-hover", true);
-  await Utils.sleep(400);
-  element_backup.innerHTML = main_menu_option_extra.innerHTML;
-  await Utils.sleep(100);
-  main_menu_option_extra.innerHTML = "";
-
-  const __legal_lang_card = `
-    <div class="hover_card__inr" text-only>
-      <label size="mid" normalize dark has-secondary bold mb="smol">
-        <p>Set your language</p>
-      </label>
-
-      <p text>Select the language, you want to view our legal section in.</p>
-
-      <div mt fl align-items=center justify-content=center gap=smol action="legal:set-language,confirm">
-        <mbutton data-let-action="en" background="dynamic" size="smol" has-icon material>
-          <p normalize-icon>
-            <img
-            src="/assets/images/country_flags/us.png"
-            style="width:1.4em;height:1.2em;margin-right:0.1em"
-            rounded=min
-            />
-          </p>
-          <p text std bold>English</p>
-        </mbutton>
-
-        <mbutton data-let-action="de" background="dynamic" size="smol" has-icon material>
-          <p normalize-icon>
-            <img
-            src="/assets/images/country_flags/de.png"
-            style="width:1.4em;height:1.2em;margin-right:0.1em"
-            rounded=min
-            />
-          </p>
-          <p text std bold>German</p>
-        </mbutton>
-      </div>
-    </div>
-    `;
-
-  await main_menu_option_extra.insertAdjacentHTML("afterbegin", __legal_lang_card);
-  main_menu_option_extra = main_menu_option.querySelector(".hover_card");
-  main_menu_option_extra.setAttribute("active", true);
-  activations = main_menu_option.querySelectorAll("[active]");
-
-  await Utils.sleep(100);
-  await activations.forEach((a) => {
-    a.setAttribute("active", true);
-  });
-
-  const images = main_menu_option_extra.querySelectorAll("img");
-  await Frontend.reload_images(images);
-
-  await main_menu_option.removeAttribute("no-hover");
-});
-
-/**
- * Set legal section language
- *
- * The user selected a language through the prompt popping up when
- * clicking on the legal section link for the first time
- */
-Utils.delegate(document, "click", '[action="legal:set-language,confirm"] mbutton', async function (e) {
-  if (Cookie.get("LEGAL_LANG")) return;
-
-  let action = this.dataset.letAction;
-  let menu_option = this.closest(".page");
-  let main_menu_option_extra = this.closest(".hover_card");
-  let element_backup = document.body.querySelector("element-backup");
-
-  menu_option.setAttribute("no-hover", true);
-  main_menu_option_extra.removeAttribute("active");
-
-  if (action === "de" || action === "en") Cookie.set("LEGAL_LANG", action, 365);
-  else Cookie.set("LEGAL_LANG", "en", 365);
-
-  menu_option.querySelector("a").setAttribute("page", "");
-  menu_option.querySelector("a").setAttribute("href", "/legal/" + action);
-
-  main_menu_option_extra.querySelectorAll("[active]").forEach((a) => {
-    a.setAttribute("active", false);
-  });
-
-  await Utils.sleep(100);
-
-  main_menu_option_extra.innerHTML = element_backup.innerHTML;
-  menu_option.removeAttribute("no-hover");
-
-  await Page.get("/legal/" + action);
-
-  menu_option.removeAttribute("no-hover");
-});
-
-/**
- * Enable or disable HTML elements
+ * @param {HTMLElement} element
+ * @returns void
  */
 export const disable = async (element) => {
   return element.setAttribute("disabled", "");
 };
 
+/**
+ * @param {HTMLElement} element
+ * @returns void
+ */
 export const enable = async (element) => {
   return element.removeAttribute("disabled");
 };
-
-/**
- * Resize textareas on input
- */
-$(function () {
-  $(document).on("input", "textarea[auto-resize]", function () {
-    this.style.height = "auto";
-    this.style.height = "calc(" + this.scrollHeight + "px)";
-  });
-});
 
 export const resize_textareas = () => {
   let textareas = document.find_all("textarea[auto-resize]");
@@ -544,8 +445,20 @@ export const resize_textareas = () => {
 };
 
 $(function () {
+  //
+
+  /**
+   * Resize textareas on input
+   * @event input
+   */
+  $(document).on("input", "textarea[auto-resize]", function () {
+    this.style.height = "auto";
+    this.style.height = "calc(" + this.scrollHeight + "px)";
+  });
+
   /**
    * Open file chooser
+   * @event click
    */
   $(document).on("click", "[select-choose-file]", function (e) {
     e.preventDefault();
@@ -604,7 +517,8 @@ $(function () {
       img.setAttribute("src", URL.createObjectURL(file));
 
       let computed_styles = window.getComputedStyle(picture);
-      let animation_duration_style = computed_styles.getPropertyValue("animation-duration");
+      let animation_duration_style =
+        computed_styles.getPropertyValue("animation-duration");
       let animation_duration = parseFloat(animation_duration_style.replace("s", ""));
       let milliseconds = animation_duration * 1000;
 
@@ -630,7 +544,10 @@ $(function () {
    * button that opens one.
    */
   $(document).on("click", function (e) {
-    if (!$(e.target).closest("[open-more-menu]").is("[open-more-menu]") && !$(e.target).closest("[menu-more]").is("[menu-more]"))
+    if (
+      !$(e.target).closest("[open-more-menu]").is("[open-more-menu]") &&
+      !$(e.target).closest("[menu-more]").is("[menu-more]")
+    )
       Frontend.close_jump_menus();
   });
 
@@ -668,77 +585,88 @@ $(function () {
    * @action CREATE
    * @controller ReactionsController
    */
-  Utils.delegate(document, "click", '[data-action="reactions:create"] [emoji]', function (e) {
-    let reactions = this.closest("[reactions-window]") || this.closest("[reactions-outer]");
-    let reaction = this.dataset.reaction;
-    let form = reactions.find("form");
+  Utils.delegate(
+    document,
+    "click",
+    '[data-action="reactions:create"] [emoji]',
+    function (e) {
+      let reactions =
+        this.closest("[reactions-window]") || this.closest("[reactions-outer]");
+      let reaction = this.dataset.reaction;
+      let form = reactions.find("form");
 
-    let id = form.find("input[name=reference_id]").value;
-    let reaction_input = form.find("input[name=reaction]");
-    let boxes = document.find_all(`[reactions-container][data-id="${id}"]`);
-    let add;
+      let id = form.find("input[name=reference_id]").value;
+      let reaction_input = form.find("input[name=reaction]");
+      let boxes = document.find_all(`[reactions-container][data-id="${id}"]`);
+      let add;
 
-    let already_reacted;
-    let count = 0;
-    let new_count;
+      let already_reacted;
+      let count = 0;
+      let new_count;
 
-    /**
-     * Update the reaction input value.
-     */
-    reaction_input.value = reaction;
+      /**
+       * Update the reaction input value.
+       */
+      reaction_input.value = reaction;
 
-    /**
-     * Get the FormData object with fresh form data.
-     */
-    let formdata = new FormData(reactions.find("form"));
+      /**
+       * Get the FormData object with fresh form data.
+       */
+      let formdata = new FormData(reactions.find("form"));
 
-    // console.log(box);
-    // return console.log(add);
+      // console.log(box);
+      // return console.log(add);
 
-    $.ajax({
-      url: "/reaction/create",
-      data: formdata,
-      method: "POST",
-      contentType: false,
-      processData: false,
-      success: function (data) {
-        Frontend.close_composer();
+      $.ajax({
+        url: "/reaction/create",
+        data: formdata,
+        method: "POST",
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          Frontend.close_composer();
 
-        if (data.status) {
-          boxes.forEach((box) => {
-            add = box;
-            already_reacted = add.find(`[data-reaction="${reaction}"]`);
+          if (data.status) {
+            boxes.forEach((box) => {
+              add = box;
+              already_reacted = add.find(`[data-reaction="${reaction}"]`);
 
-            /**
-             * User reacted already?
-             */
-            if (already_reacted) {
-              count = already_reacted.find("[count]");
+              /**
+               * User reacted already?
+               */
+              if (already_reacted) {
+                count = already_reacted.find("[count]");
 
-              if (already_reacted.hasAttribute("active")) {
-                new_count = parseInt(count.innerHTML) - 1;
+                if (already_reacted.hasAttribute("active")) {
+                  new_count = parseInt(count.innerHTML) - 1;
 
-                if (new_count === 0) already_reacted.remove();
-                else {
+                  if (new_count === 0) already_reacted.remove();
+                  else {
+                    count.innerHTML = new_count;
+                    already_reacted.unactivate();
+                  }
+                } else {
+                  new_count = parseInt(count.innerHTML) + 1;
                   count.innerHTML = new_count;
-                  already_reacted.unactivate();
+                  already_reacted.activate();
                 }
               } else {
-                new_count = parseInt(count.innerHTML) + 1;
-                count.innerHTML = new_count;
-                already_reacted.activate();
+                add.insertAdjacentHTML("afterbegin", data.data);
               }
-            } else {
-              add.insertAdjacentHTML("afterbegin", data.data);
-            }
-          });
-        }
-      },
-      error: function (data) {
-        new Responder.Responder().add(document.body, data.message, "error", "users");
-      },
-    });
-  });
+            });
+          }
+        },
+        error: function (data) {
+          new Responder.Responder().add(
+            document.body,
+            data.message,
+            "error",
+            "users",
+          );
+        },
+      });
+    },
+  );
 
   /**
    * Open the reactions window.
@@ -786,7 +714,8 @@ $(function () {
     /**
      * Remove the locale query param, if it exists.
      */
-    if (current_url.includes("&lang=")) current_url = current_url.replace(/&lang=[^&]*/, "");
+    if (current_url.includes("&lang="))
+      current_url = current_url.replace(/&lang=[^&]*/, "");
 
     /**
      * Redirect the user to the current page with the new locale
@@ -795,31 +724,35 @@ $(function () {
     return window.location.replace(current_url.concat(`&lang=${locale}`));
   });
 
-  $(document).on("click", "[choose-drop-file] [choose], [choose-drop-file] [change]", function (e) {
-    let chooser = this.closest("[choose-drop-file]");
-    let input = chooser.find("input[type=file]");
-    let video = chooser.find("video");
+  $(document).on(
+    "click",
+    "[choose-drop-file] [choose], [choose-drop-file] [change]",
+    function (e) {
+      let chooser = this.closest("[choose-drop-file]");
+      let input = chooser.find("input[type=file]");
+      let video = chooser.find("video");
 
-    if (!input) return;
+      if (!input) return;
 
-    input.click();
+      input.click();
 
-    $(input).on("change", function (e) {
-      let file = this.files[0];
-      let source = video.find("source") ?? document.createElement("source");
+      $(input).on("change", function (e) {
+        let file = this.files[0];
+        let source = video.find("source") ?? document.createElement("source");
 
-      source.src = URL.createObjectURL(file);
+        source.src = URL.createObjectURL(file);
 
-      if (!video.find("source")) {
-        video.innerHTML = "";
-        video.appendChild(source);
-      }
+        if (!video.find("source")) {
+          video.innerHTML = "";
+          video.appendChild(source);
+        }
 
-      video.load();
+        video.load();
 
-      chooser.activate();
-    });
-  });
+        chooser.activate();
+      });
+    },
+  );
 
   $(document).on("click", "[choose-drop-file] [remove]", function (e) {
     let chooser = this.closest("[choose-drop-file]");

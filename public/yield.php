@@ -2,129 +2,84 @@
 
 require_once dirname(__DIR__) . "/config/init.php";
 
-use Heiakim\Application\CurrentUser;
-use Heiakim\Application\Cookie;
-
 /**
- * Sanitizes the output for non DEV environments. Looks so cool
- * when going to the source code!
+ * @var string $_INCLUDE_TEMPLATE
  */
-if (PROD)
-  ob_start("sanitize_output");
 
-?>
+# Sanitize the output for non DEV environments. Looks cool 🙂
+if (PROD) ob_start("sanitize_output"); ?>
 
 <!DOCTYPE html>
 <html lang=en>
 
-<?php
-
-/**
- * Create the correct canocial for google by removing the query string.
- */
-$canonical = explode("?", $_SERVER["REQUEST_URI"]);
-$canonical = HOME_URL . ($canonical[0] ?? "");
-
-?>
-
 <head>
-  <meta charset="UTF-8" />
-
-  <link rel="canonical" href="<?= $canonical ?>" />
+  <link rel="canonical"
+    href="<?= HOME_URL . explode("?", $_SERVER["REQUEST_URI"])[0] ?>" />
   <link rel="home" href="<?= HOME_URL; ?>" />
 
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title><?= CURRENT_PAGE_TITLE ?></title>
-
-  <!--- Tell IE to render webpage for edge --->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="application-name" content="<?= APP_NAME; ?>">
   <meta name="keywords" content="<?= SEO_KEYWORDS; ?>" />
   <meta name="description" content="<?= SEO_DESCRIPTION; ?>" />
 
+  <title><?= CURRENT_PAGE_TITLE ?></title>
+
   <?php
 
-  /**
-   * All the requirements being inside the head just as
-   * JavaScript files abnd self written functionalities.
-   */
+  # + JS Functions and other definitions.
   include TEMPLATE . "/global/_yield-requires.php"; ?>
 </head>
 
-<body toggled="true" initialized="false" mobile="false" class="<?= APP->current_theme_class; ?>">
+<body toggled="true" initialized="false" mobile="false"
+  class="<?= APP->current_theme_class; ?>">
+
   <?php
 
-  // TODO: noscript tag.
-
-  /**
-   * Include basic matomo script for tracking users.
-   */
-  if (PROD)
-    include_once CONFIG . "/matomo.php"; ?>
+  # + Matomo in Production only.
+  if (PROD) include_once CONFIG . "/matomo.php"; ?>
 
   <page-loader visible=false loading>
-    <div material-bar-loader class="linear-progress-material" style="position:absolute;top:0;left:0;width:100vw;">
+    <div material-bar-loader class="linear-progress-material"
+      style="position:absolute;top:0;left:0;width:100vw;">
       <div class="bar bar1"></div>
       <div class="bar bar2"></div>
     </div>
   </page-loader>
+
+  <ajax-response></ajax-response>
 
   <animate-me></animate-me>
 
   <responder fl alic>
     <responder-bg></responder-bg>
     <responder-inr>
-      <p message text std>All right m8 it's all done cool thanks bye</p>
+      <p message text std></p>
       <mi close-responder>close</mi>
     </responder-inr>
   </responder>
 
   <?php
 
-  /**
-   * Call to join us with register options.
-   */
+  # + Join us banner with register options.
   if (!LOGGED) : ?>
     <join-now floating-action always rounded=wide filled=dark>
       <?php include TEMPLATE . "/global/_join_now.php"; ?>
     </join-now>
   <?php endif; ?>
 
-  <!-- include page loading extras on loadup -->
-  <loading-extras></loading-extras>
-
-  <!--- backup elements -->
-  <element-backup style="visibility:hidden;height:0px;width:0px;position:fixed;z-index:-1;overflow:hidden;">
-  </element-backup>
-
   <?php
 
-  /**
-   * The overlay being displayed when freshly starting up the page
-   */
+  # + App startup overlay.
   include_once TEMPLATE . "/global/_app_init_overlay.php";
 
-  /**
-   * Where all the dynamic content change magic happens! Include
-   * the current page's template. You should not add anything
-   * inside the <main></main> as it will be deleted when clicking
-   * on a new page.
-   */
+  # + Dynamic template being loaded from the Router.
   echo <<<HTML
     <main>
       $_INCLUDE_TEMPLATE
     </main>
   HTML; ?>
-
-  <script>
-    let __body = document.body;
-    let __main = document.find("main");
-    let __search_icon = document.find("[search-icon]");
-    let __sign_icon = document.find("[sign-up-icon]");
-    let __join_now = document.find("join-now");
-  </script>
-
 
   <audio fail-audio preload="auto">
     <source type="audio/mpeg" src="<?= SOUND; ?>/bruh.mp3">

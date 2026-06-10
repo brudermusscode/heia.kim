@@ -85,8 +85,7 @@ export const disguise = (Route, history_route_is_equal) => {
    * Set the disguised background color if.
    */
   let disguised = document.find("disguised");
-  if (!Route.disguised && !disguised)
-    document.body.removeAttribute("someone-else");
+  if (!Route.disguised && !disguised) document.body.removeAttribute("someone-else");
   else document.body.setAttribute("someone-else", true);
 
   /**
@@ -169,17 +168,13 @@ export const reload_images = () => load_images(document.find_all("img"));
 export const create_responder = (
   message,
   status = "error",
-  append_to = document.body
+  append_to = document.body,
 ) => {
-  if (
-    typeof message === "object" &&
-    message !== null &&
-    !Array.isArray(message)
-  )
+  if (typeof message === "object" && message !== null && !Array.isArray(message))
     new Responder.Responder().add(
       append_to,
       message?.message ?? "No message",
-      message?.status ? "success" : "error"
+      message?.status ? "success" : "error",
     );
   else new Responder.Responder().add(append_to, message, status);
 };
@@ -229,11 +224,7 @@ export const close_exception_overlay = () => {
  * @returns {void}
  */
 export const extract_exception = (from) => {
-  if (
-    from &&
-    !(from instanceof Element) &&
-    from.includes("exception-container")
-  )
+  if (from && !(from instanceof Element) && from.includes("exception-container"))
     document.body.insertAdjacentHTML("beforeend", from);
   else if (from && !(from instanceof Element)) return;
 
@@ -341,7 +332,7 @@ export const slide_in_prompt = (prompt) => {
   let prompt_header = prompt.find("[prompt-header]");
   let prompt_content = prompt.find("[prompt-content]");
   let prompt_content_margin = parseFloat(
-    window.getComputedStyle(prompt_content).marginBottom
+    window.getComputedStyle(prompt_content).marginBottom,
   );
 
   // Outer box exists, it's an inner prompt.
@@ -365,10 +356,7 @@ export const slide_in_prompt = (prompt) => {
   __prompt_animation_playing = true;
   prompt.activate();
   prompt.style.height =
-    prompt_content.clientHeight +
-    prompt_padding * 2 +
-    prompt_content_margin +
-    "px";
+    prompt_content.clientHeight + prompt_padding * 2 + prompt_content_margin + "px";
 
   outer_box?.activate();
   prompt.closest("[has-inner-prompt]")?.activate();
@@ -433,27 +421,19 @@ export const set_background_color = (color) => {
 };
 
 /**
- * Opens a popup dynamically.
+ * Animates the ajax response container based on the return of requests.
+ *
+ * @param {string} type
  */
-// TODO: Use request-get instead of this.
-export const open_popup = async (href, close = true) => {
-  if (__page.is_loading) return;
+export const ajax_response = (type = "success") => {
+  let container = document.find("ajax-response");
 
-  load();
+  container.setAttribute(type, true);
+  container.activate();
 
-  $.ajax({
-    url: href,
-    method: "GET",
-    success: function (data) {
-      unload();
-
-      if (data.status) {
-        let overlay = new Overlay(null, close);
-        overlay.append(data.data);
-      } else {
-        create_responder(data);
-      }
-    },
+  container.addEventListener("animationend", function (e) {
+    container.removeAttribute(type);
+    container.deactivate();
   });
 };
 
@@ -467,10 +447,8 @@ export const open_popup = async (href, close = true) => {
  */
 export const create_dynamic_responder = (data, responder) => {
   if (data.status)
-    if (responder === "success")
-      Frontend.create_responder(data.message, "success");
-    else if (responder === "error")
-      Frontend.create_responder(data.message, "error");
+    if (responder === "success") Frontend.create_responder(data.message, "success");
+    else if (responder === "error") Frontend.create_responder(data.message, "error");
 
   if (responder === "always")
     Frontend.create_responder(data.message, data.status ? "success" : "error");
@@ -774,9 +752,7 @@ $(function () {
     let component = document.find("ui-component[type=" + component_name + "]");
     let inr = component?.find("nc-inr");
     let buttons = component?.find_all("[data-category]");
-    let floating_buttons = component?.find_all(
-      "nc-tabs-floating nc-tab-option"
-    );
+    let floating_buttons = component?.find_all("nc-tabs-floating nc-tab-option");
     let toggle_user_menu = this.getAttribute("toggle-user-menu");
     let url = this.getAttribute("url");
     let button = this;
@@ -787,7 +763,7 @@ $(function () {
     if (!component) {
       Frontend.create_responder(
         "<strong>UI component not found 🥲</strong>",
-        "error"
+        "error",
       );
 
       return;
@@ -936,7 +912,7 @@ $(function () {
               document.body,
               data.message,
               "error",
-              "beatmaps"
+              "beatmaps",
             );
         },
         error: function (data) {
@@ -948,7 +924,7 @@ $(function () {
             document.body,
             data.statusText,
             "error",
-            "beatmaps"
+            "beatmaps",
           );
         },
       });
@@ -990,7 +966,7 @@ $(function () {
      * Set the new theme class.
      */
     body.classList.add(
-      "theme--" + current_theme + (__page.is_darkmode ? "" : "-dark")
+      "theme--" + current_theme + (__page.is_darkmode ? "" : "-dark"),
     );
 
     /**
@@ -1069,10 +1045,9 @@ $(function () {
         next.removeAttribute("disabled");
         previous.setAttribute("disabled", "");
       } else {
-        if (previous.hasAttribute("disabled"))
-          previous.removeAttribute("disabled");
+        if (previous.hasAttribute("disabled")) previous.removeAttribute("disabled");
       }
-    }
+    },
   );
 
   /**
@@ -1152,14 +1127,14 @@ $(function () {
     function (e) {
       close_exception_overlay();
       close_overlays();
-    }
+    },
   );
 
   /**
    * Open popups dynamically.
    */
   $(document).on("click", "[data-action='popup:open']", function (e) {
-    open_popup(this.dataset.href);
+    Request.get(this.dataset.href);
   });
 
   /**

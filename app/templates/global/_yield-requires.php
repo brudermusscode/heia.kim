@@ -1,7 +1,6 @@
 <?php
 
 use Heiakim\Application\Cookie;
-use Heiakim\Model\User;
 
 ?>
 
@@ -17,9 +16,16 @@ use Heiakim\Model\User;
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/assets/js/jquery371.js"></script>
 <script src="/assets/js/utility.js"></script>
-<script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js" type="module"></script>
+<script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js"
+  type="module"></script>
 
 <script>
+  let __body = document.body;
+  let __main = document.find("main");
+  let __search_icon = document.find("[search-icon]");
+  let __sign_icon = document.find("[sign-up-icon]");
+  let __join_now = document.find("join-now");
+
   let __project = {
     environment: "<?= _env("ENVIRONMENT"); ?>",
   };
@@ -32,6 +38,7 @@ use Heiakim\Model\User;
     theme: "<?= defined("APP") ? APP->current_theme ?? APP->main_theme : _env("THEME"); ?>",
     is_sounds_enabled: <?= defined("SOUNDS_ENABLED") && SOUNDS_ENABLED == 0 ? "0" : "1"; ?>,
     is_animations_enabled: <?= defined("ANIMATIONS_ENABLED") && ANIMATIONS_ENABLED == 0 ? "0" : "1"; ?>,
+    overlay: null,
   };
 
   // An object for handling request state.
@@ -46,7 +53,6 @@ use Heiakim\Model\User;
     reached_end: false,
     reached_full_end: false,
   };
-
 
   let __current_overlay = null;
   let __current_ui_component = null;

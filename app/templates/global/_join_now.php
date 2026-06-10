@@ -11,13 +11,11 @@
 
   <div fl gap=smoler alic>
     <?php if (USER_COMEBACK && USER_COMEBACK->osu || !USER_COMEBACK) { ?>
-      <mbutton material icon-only background=osu-pink color=light has-tooltip=top <?php
-
-                                                                                  echo USER_COMEBACK?->osu
-                                                                                    ? 'data-action="vendors:login" data-vendor=osu'
-                                                                                    : 'data-action="vendors:osu,auth,create"';
-
-                                                                                  ?>>
+      <mbutton material icon-only background=osu-pink color=light has-tooltip=top
+        <?= USER_COMEBACK?->osu
+          ? 'data-action="vendors:login" data-vendor=osu'
+          : 'data-action="vendors:osu,auth,create"';
+        ?>>
         <mi size=mid class="osu-icon osu-outlined"></mi>
         <div ttooltip>
           <p text bold>osu!</p>
@@ -26,13 +24,11 @@
     <?php } ?>
 
     <?php if (USER_COMEBACK && USER_COMEBACK->discord || !USER_COMEBACK) { ?>
-      <mbutton material icon-only background=discord-blue color=light has-tooltip=top <?php
-
-                                                                                      echo USER_COMEBACK?->discord
-                                                                                        ? 'data-action="vendors:login" data-vendor=discord'
-                                                                                        : 'data-action="vendors:discord,auth,create"';
-
-                                                                                      ?>>
+      <mbutton material icon-only background=discord-blue color=light has-tooltip=top
+        <?= USER_COMEBACK?->discord
+          ? 'data-action="vendors:login" data-vendor=discord'
+          : 'data-action="vendors:discord,auth,create"';
+        ?>>
         <mi size=midler class="ri-discord-fill"></mi>
         <div ttooltip>
           <p text bold>Discord</p>
@@ -41,13 +37,11 @@
     <?php } ?>
 
     <?php if (USER_COMEBACK && USER_COMEBACK->google || !USER_COMEBACK) { ?>
-      <mbutton material icon-only background=dark color=light has-tooltip=top <?php
-
-                                                                              echo USER_COMEBACK?->google
-                                                                                ? 'data-action="vendors:login" data-vendor=google'
-                                                                                : 'data-action="vendors:google,auth,create"';
-
-                                                                              ?>>
+      <mbutton material icon-only background=dark color=light has-tooltip=top
+        <?= USER_COMEBACK?->google
+          ? 'data-action="vendors:login" data-vendor=google'
+          : 'data-action="vendors:google,auth,create"';
+        ?>>
         <mi size=midler class="ri-google-fill"></mi>
         <div ttooltip>
           <p text bold>Google</p>

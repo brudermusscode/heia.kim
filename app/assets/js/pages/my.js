@@ -1,10 +1,16 @@
-import Overlay, { toggle } from "../elements/Overlay";
+import Overlay from "../elements/Overlay";
 import * as Responder from "../elements/responder";
 import * as Utils from "../utils";
 import * as Frontend from "../frontend";
 import * as Page from "../page";
 
 $(function () {
+  //
+
+  /**
+   * Toggle category in windowed User Manager.
+   * @event click
+   */
   $(document).on(
     "click",
     "[data-action='user-manager:category'] [data-category]",
@@ -20,7 +26,7 @@ $(function () {
         Frontend.close_ui_components();
         Frontend.create_responder(
           "<strong>Where is your user manager bro 🥲</strong>",
-          "error"
+          "error",
         );
 
         return;
@@ -53,7 +59,7 @@ $(function () {
           },
         });
       }, 100);
-    }
+    },
   );
 });
 
@@ -90,153 +96,11 @@ $(document).on("submit", '[data-form="users:appeal,create"]', function (e) {
       new Responder.Responder().add(
         document.body,
         data.message,
-        data.status ? "success" : "error"
+        data.status ? "success" : "error",
       );
     },
     error: function (data) {
       Frontend.ajax_error(data);
-    },
-  });
-});
-
-/**
- * Update user's current appeal
- *
- * @action UPDATE
- * @controller RestrictionAppealsController
- */
-$(document).on("submit", '[data-form="users:appeal,update"]', function (e) {
-  e.preventDefault();
-
-  let button = this.find("[submit-closest]");
-  let formdata = new FormData(this);
-
-  Frontend.load();
-  button.disable();
-
-  $.ajax({
-    url: "/restriction/appeal/edit",
-    data: formdata,
-    method: "POST",
-    processData: false,
-    contentType: false,
-    success: function (data) {
-      Frontend.unload();
-
-      if (data.status) {
-        Page.reload();
-      } else {
-        button.enable();
-      }
-
-      new Responder.Responder().add(
-        document.body,
-        data.message,
-        data.status ? "success" : "error"
-      );
-    },
-    error: function (data) {
-      Frontend.ajax_error(data);
-    },
-  });
-});
-
-/* ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */
-/* ,,,,,,,,,,,,,,,,,,,,,,,,,,, USER ,,,,,,,,,,,,,,,,,,,,,,,,,,, */
-/* ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */
-
-/**
- * ? UserSettings
- */
-
-/**
- * Remove current profile picture.
- *
- * @action UPDATE
- * @controller SettingsController
- * @namespace User
- */
-Utils.delegate(
-  document,
-  "click",
-  '[data-action="users:edit,image,remove"]',
-  function (e) {
-    if (this.hasAttribute("disabled")) return;
-
-    let box = this.closest("box-model");
-    let $trigger = document.querySelectorAll('[trigger="user:image,change"]');
-    let formdata = new FormData();
-    let button = this;
-
-    box.style.overflow = "hidden";
-    box.style.position = "relative";
-    let overlay = new Overlay(box, false);
-
-    formdata.append("remove_current_profile_picture", 1);
-
-    axios.post("/user/settings/edit", formdata).then(async (data) => {
-      overlay.delete();
-
-      if (data.data.status) {
-        $trigger.forEach((a) => {
-          a.setAttribute("src", data.data.full_image_path);
-        });
-
-        button.disable();
-      }
-
-      new Responder.Responder().add(
-        document.body,
-        data.data.message,
-        data.data.status ? "success" : "error",
-        "settings"
-      );
-    });
-  }
-);
-
-/**
- * Start e-mail verification
- *
- * @action CREATE
- * @controller UsersController
- */
-$(document).on("submit", '[data-form="users:email,create"]', function (e) {
-  e.preventDefault();
-
-  let button = this.find("[submit-closest]");
-  let formdata = new FormData(this);
-
-  Frontend.load();
-  button.disable();
-
-  $.ajax({
-    url: "/user/update",
-    data: formdata,
-    method: "POST",
-    contentType: false,
-    processData: false,
-    success: function (data) {
-      console.log(data);
-
-      Frontend.unload();
-
-      if (data.status) {
-        if (!data.verified)
-          Page.get(`/my/personal/mail/${encodeURIComponent(data.email)}`);
-        else {
-          Page.get(`/my/personal`);
-          new Responder.Responder().add(document.body, data.message, "success");
-        }
-      } else {
-        button.enable();
-        new Responder.Responder().add(document.body, data.message, "error");
-      }
-    },
-    error: function (data) {
-      Frontend.unload();
-      button.enable();
-      new Responder.Responder().add(document.body, data.message, "error");
     },
   });
 });
@@ -254,8 +118,7 @@ $(document).on("submit", '[data-form="users:email,create"]', function (e) {
 $(document).on("submit", '[data-form="users:scores,wipe"]', function (e) {
   e.preventDefault();
 
-  let button =
-    this.find("[confirm-submit-button]") ?? this.find("[submit-closest]");
+  let button = this.find("[confirm-submit-button]") ?? this.find("[submit-closest]");
   let formdata = new FormData();
 
   formdata.append("wipe", true);
@@ -270,7 +133,7 @@ $(document).on("submit", '[data-form="users:scores,wipe"]', function (e) {
       document.body,
       data.data.message,
       data.data.status ? "success" : "error",
-      "settings"
+      "settings",
     );
   });
 });
@@ -301,22 +164,20 @@ Utils.delegate(
 
       Frontend.load();
 
-      axios
-        .post(`/users/settings/privacy/edit`, formdata)
-        .then(async (data) => {
-          console.log(data.data);
-          Frontend.unload();
+      axios.post(`/users/settings/privacy/edit`, formdata).then(async (data) => {
+        console.log(data.data);
+        Frontend.unload();
 
-          if (!data.data.status)
-            new Responder.Responder().add(
-              document.body,
-              data.data.message,
-              "error",
-              "settings"
-            );
-        });
+        if (!data.data.status)
+          new Responder.Responder().add(
+            document.body,
+            data.data.message,
+            "error",
+            "settings",
+          );
+      });
     }, 100);
-  }
+  },
 );
 
 /* ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */
@@ -350,11 +211,11 @@ Utils.delegate(
             document.body,
             data.data.message,
             "error",
-            "settings"
+            "settings",
           );
       });
     }, 100);
-  }
+  },
 );
 
 /* ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */
