@@ -62,7 +62,8 @@ class ConnectionGithub extends Connection
   {
 
     $headers = [
-      'Authorization: Bearer ' . ($this->access_token ?? $access_token),
+      "Authorization: Bearer " . ($this->access_token ?? $access_token),
+      "X-GitHub-Api-Version: 2026-03-10",
     ];
 
     # First request to get user information.
@@ -89,6 +90,8 @@ class ConnectionGithub extends Connection
       url: $this->api()["general"]["endpoint"] . "/user/emails",
       headers: $headers,
     );
+
+    pdie($response);
 
     # Reponse has no user id and thus failed?
     if (empty($response))

@@ -61,10 +61,7 @@ class Connection extends Justin
     /**
      * @var object
      */
-    $response = $this->get_access_token(
-      code: $params->code,
-      action: "connect",
-    );
+    $response = $this->get_access_token(code: $params->code);
 
     /**
      * $response->access_token
@@ -162,10 +159,7 @@ class Connection extends Justin
     /**
      * @var object
      */
-    $response = $this->get_access_token(
-      code: $params->code,
-      action: "reconnect",
-    );
+    $response = $this->get_access_token(code: $params->code);
 
     /**
      * $response->access_token
@@ -214,6 +208,76 @@ class Connection extends Justin
   {
     return (ApiRegistry::$map[static::PROVIDER ?: $this->provider]::$api)
       ?? null;
+  }
+
+  /**
+   * Generates the link to the vendor's API where the user has to authorize their ac-
+   * count.
+   *
+   * @param string $action
+   * @return string
+   */
+  public function generate_link(string $action = "connect")
+  {
+
+    # Die immediately if an invalid action has been called.
+    $this->action_invalid($action);
+
+    $callback = _env("SERVER_ADDRESS") . "/connect/" . static::PROVIDER;
+    // $callback = "http://localhost/connect/" . static::PROVIDER;
+    $return = $this->api()["user-auth"]["endpoint"]
+      . "?client_id=" . $this->credentials["client_id"]
+      . "&response_type=" . $this->api()["user-auth"]["response_type"]
+      . "&redirect_uri=" . $callback
+      # Set the action to the state to identify what action was called later.
+      . "&state=" . base64_encode($action)
+      . "&scope=" . implode(" ", $this->scopes());
+
+    return $return;
+  }
+
+  /**
+   * Fetches a new access_token for a vendor's user on their api. We always need a
+   * code for this as we fetch with user specific grant.
+   *
+   * @param string $code
+   * @return object
+   *
+   * NOTE: Will die on error.
+   */
+  public function get_access_token(string $code)
+  {
+
+    # Build dataset.
+    $data = [];
+    $data["code"] = $code;
+    $data["redirect_uri"] = _env("SERVER_ADDRESS") . "/connect/" . static::PROVIDER;
+
+    # Apply a grant_type if one is set in specifications.
+    if ($this->api()["user-access"]["grant_type"] ?? false)
+      $data["grant_type"] = $this->api()["user-access"]["grant_type"];
+
+    $response = $this->post(
+      url: $this->api()["user-access"]["endpoint"],
+      data: $data,
+    );
+
+    # No access token given?
+    if (empty($response->access_token))
+      return die(error("Could not retreive access token from " . static::PROVIDER . " api."));
+
+    return $response;
+  }
+
+  /**
+   * @return void
+   *
+   * NOTE: Will die one error.
+   */
+  public function action_invalid(string $action)
+  {
+    if (!in_array($action, $this->actions))
+      die(error("<strong>Invalid action called!</strong>"));
   }
 
   /**
@@ -278,7 +342,6 @@ class Connection extends Justin
     );
   }
 
-
   /**
    * Making a POST request to a given API endpoint.
    *
@@ -303,79 +366,5 @@ class Connection extends Justin
       data: $data,
       headers: $headers,
     );
-  }
-
-  /**
-   * @return void
-   *
-   * NOTE: Will die one error.
-   */
-  public function action_invalid(string $action)
-  {
-    if (!in_array($action, $this->actions))
-      die(error("<strong>Invalid action called!</strong>"));
-  }
-
-  /**
-   * Generates the link to the vendor's API where the user has to authorize their ac-
-   * count.
-   *
-   * @param string $action
-   * @return string
-   */
-  public function generate_link(string $action = "connect")
-  {
-
-    # Die immediately if an invalid action has been called.
-    $this->action_invalid($action);
-
-    $callback = _env("SERVER_ADDRESS") . "/$action/" . static::PROVIDER;
-    $return = $this->api()["user-auth"]["endpoint"]
-      . "?client_id=" . $this->credentials["client_id"]
-      . "&response_type=" . $this->api()["user-auth"]["response_type"]
-      . "&redirect_uri=" . $callback
-      . "&state=" . Utils::random_alpha_token(124)
-      . "&scope=" . implode(" ", $this->scopes());
-
-    return $return;
-  }
-
-  /**
-   * Fetches a new access_token for a vendor's user on their api. We always need a
-   * code for this as we fetch with user specific grant.
-   *
-   * @param string $code
-   * @param string $action
-   * @return object
-   *
-   * NOTE: Will die on error.
-   */
-  public function get_access_token(
-    string $code,
-    string $action = "connect"
-  ) {
-
-    # Die immediately if an invalid action has been called.
-    $this->action_invalid($action);
-
-    # Build dataset.
-    $data = [];
-    $data["code"] = $code;
-    $data["redirect_uri"] = _env("SERVER_ADDRESS") . "/$action/" . static::PROVIDER;
-
-    # Apply a grant_type if one is set in specifications.
-    if ($this->api()["user-access"]["grant_type"] ?? false)
-      $data["grant_type"] = $this->api()["user-access"]["grant_type"];
-
-    $response = $this->post(
-      url: $this->api()["user-access"]["endpoint"],
-      data: $data,
-    );
-
-    # No access token given?
-    if (empty($response->access_token))
-      return die(error("Could not retreive access token from " . static::PROVIDER . " api."));
-
-    return $response;
   }
 }

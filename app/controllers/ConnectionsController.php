@@ -42,7 +42,7 @@ class ConnectionsController extends Controller
     $ProviderClass = ApiConnectionRegistry::ClassOrDie($this->params->provider);
 
     return success(data: [
-      "link" => new $ProviderClass()->generate_link(action: $this->params->action)
+      "link" => $ProviderClass->generate_link(action: $this->params->action)
     ]);
   }
 
@@ -72,7 +72,7 @@ class ConnectionsController extends Controller
     /**
      * @var ConnectionOsu|ConnectionDiscord|ConnectionGithub
      */
-    $Connection = new $ProviderClass()->new($this->params);
+    $Connection = $ProviderClass->new($this->params);
 
     # Associate an existing CurrentUser with the ProviderClass and return.
     if (CurrentUser->exists) {
@@ -149,7 +149,7 @@ class ConnectionsController extends Controller
     /**
      * @var ConnectionOsu|ConnectionDiscord|ConnectionGithub
      */
-    $Connection = new $ProviderClass()->reconnect($this->params);
+    $Connection = $ProviderClass->reconnect($this->params);
 
     # Create a new Session!
     new Session()->new($Connection->user);

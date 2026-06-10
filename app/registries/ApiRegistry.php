@@ -30,13 +30,14 @@ abstract class ApiRegistry
 
   /**
    * @param string $key
-   * @return class-string<ApiOsu|ApiDiscord|ApiGithub>
+   * @return ApiOsu|ApiDiscord|ApiGithub
    *
    * NOTE: Will die when no class was found in mapping.
    */
   public static function ClassOrDie(string $key)
   {
-    return static::$map[$key]
-      ?? die(error("Invalid connection provider."));
+    return !empty(static::$map[$key])
+      ? new static::$map[$key]
+      : die(error("Invalid connection provider."));
   }
 }

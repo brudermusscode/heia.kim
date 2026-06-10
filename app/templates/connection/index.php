@@ -3,50 +3,79 @@
 /**
  * @var string
  */
-$provider = filter_var($GLOBALS["route_param_provider"], FILTER_SANITIZE_SPECIAL_CHARS);
+$provider = filter_var($GLOBALS["route_param_provider"]);
 
 /**
  * @var string
  */
-$code = filter_input(INPUT_GET, "code", FILTER_SANITIZE_SPECIAL_CHARS);
+$code = filter_input(INPUT_GET, "code");
 
 /**
  * @var string
  */
-$state = filter_input(INPUT_GET, "state", FILTER_SANITIZE_SPECIAL_CHARS);
+$state = filter_input(INPUT_GET, "state");
 
-?>
+# Decode the state as it will contain our action to run in the following.
+$action = base64_decode($state);
 
-<content min-full fl fldircol alic jucc>
+# Build the attributes including values for the <request> element based ont the action
+# set in the state.
+$request = match ($action) {
+  "connect" => [
+    "action" => "connection:create",
+    "redirect-on-error" => "/register",
+    "redirect-from-data" => "",
+  ],
+  "reconnect" => [
+    "action" => "connection:reconnect",
+    "redirect-on-error" => "/login",
+    "redirect-from-data" => "full",
+    "audio-success" => "bell-highpitch-audio",
+    "audio-error" => "bell-negative-audio",
+  ],
+  default => null,
+};
 
-  <div>
-    <div style="height:180px;width:180px;">
-      <?php
+# Include unavailable template, if there is no valid action set.
+if (!$request) :
+  include UNAVAILABLE;
+else : ?>
 
-      # + Loading animation.
-      include TEMPLATE . "/global/_lottie-pixelghost.html"; ?>
-    </div>
-
-    <div material-bar-loader class="linear-progress-material" style="position:absolute;top:0;left:0;width:100vw;">
-      <div class="bar bar1"></div>
-      <div class="bar bar2"></div>
-    </div>
-  </div>
-
-  <request action="connection:create" method="POST" redirect-from-data redirect-on-error="/register" responder=error
+  <!--- The request validating code, state and action for the given provider. --->
+  <request
+    <?php foreach ($request as $attr => $value) : ?>
+    <?= "$attr=\"$value\"" ?>
+    <?php endforeach; ?>
     data-provider="<?= $provider ?>"
     data-code="<?= $code ?>"
-    data-state="<?= $state ?>"></request>
+    data-state="<?= $state ?>"
+    method="POST" responder=error>
+  </request>
 
-  <div dno>
-    <div fl fldircol alic jucc>
-      <p text bold mid>Success brother!</p>
-      <p text>… Redirecting you back in <span text bold color=company id="counter"></span> …</p>
+  <content min-full fl fldircol alic jucc>
+    <div>
+      <div style="height:180px;width:180px;">
+        <?php
+
+        # + Loading animation.
+        include TEMPLATE . "/global/_lottie-pixelghost.html"; ?>
+      </div>
+
+      <div material-bar-loader class="linear-progress-material" style="position:absolute;top:0;left:0;width:100vw;">
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+      </div>
     </div>
 
-    <!--<redirect to="/my/security/<?= $type ?>" delay=5000></redirect>-->
+    <div dno>
+      <div fl fldircol alic jucc>
+        <p text bold mid>Success brother!</p>
+        <p text>… Redirecting you back in <span text bold color=company id="counter"></span> …</p>
+      </div>
 
-    <!--<script>
+      <!--<redirect to="/my/security/<?= $type ?>" delay=5000></redirect>-->
+
+      <!--<script>
       let sec = 5
       let el = document.getElementById("counter")
 
@@ -58,6 +87,8 @@ $state = filter_input(INPUT_GET, "state", FILTER_SANITIZE_SPECIAL_CHARS);
         if (sec <= 0) clearInterval(timer)
       }, 1000)
     </script>-->
-  </div>
+    </div>
 
-</content>
+  </content>
+
+<?php endif; ?>
