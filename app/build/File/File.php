@@ -6,6 +6,7 @@ use ZipArchive;
 
 class File
 {
+
   public function download(string $file, string $download_loaction)
   {
     $file_basename = basename($file);

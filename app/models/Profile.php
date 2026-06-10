@@ -120,8 +120,8 @@ class Profile extends Justin
     $CurrentUser = $this->user;
 
     # ? Profile Picture.
-    if (!empty($params->files["tmp_name"])) {
-      $CurrentUser->settings->upload_profile_picture($params);
+    if (!empty($params->files["image"]["tmp_name"])) {
+      $CurrentUser->settings->upload_profile_picture($params->files["image"]);
       $image_updated = true;
     }
 
