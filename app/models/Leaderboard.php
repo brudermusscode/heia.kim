@@ -55,7 +55,7 @@ class Leaderboard extends Justin
     /**
      * @var Redis::connect
      */
-    $Redis = Redis::connect();
+    $Redis = $this->redis();
 
     $redis_key  = "bancho:leaderboard:$mode";
     $redis_key .= $country && !in_array($country, ["global", "xx"]) ? ':' . $country : '';

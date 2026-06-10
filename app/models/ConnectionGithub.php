@@ -91,8 +91,6 @@ class ConnectionGithub extends Connection
       headers: $headers,
     );
 
-    pdie($response);
-
     # Reponse has no user id and thus failed?
     if (empty($response))
       die(error("Could not receive user emails from " . static::PROVIDER . " api"));

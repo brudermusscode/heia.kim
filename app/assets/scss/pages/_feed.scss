@@ -265,6 +265,7 @@ feed {
   gap: 3.2em;
   max-width: $feed-width;
   margin: 3.2em auto;
+  padding-inline: calc($page-navigator-width + $main-distance) $main-distance;
 
   @media screen and (max-width: 800px) {
     padding-left: $feed-sidebar-width-smol;

@@ -1711,12 +1711,11 @@ class User extends Justin
    * possible gamemodes
    *
    * @param int $gumode The gamemode (optional)
-   * @return object Either all rankings or if gumode is set, just
-   *    the ranking as object for this specific mode
+   * @return object All rankings or just of one gumode
    */
   public function get_rankings(int $gumode)
   {
-    $Redis = Redis::connect();
+    $Redis = $this->redis();
     $return = (object) [];
     $country = $this->data()->country;
 
@@ -1740,12 +1739,11 @@ class User extends Justin
   }
 
   /**
-   * @param int
-   * @return object
+   * @return array
    */
   public function get_all_rankings()
   {
-    $Redis = Redis::connect();
+    $Redis = $this->redis();
     $return = [];
     $country = $this->data()->country;
 
@@ -1780,7 +1778,7 @@ class User extends Justin
    */
   public function get_rank_development(int $gumode)
   {
-    $Redis = Redis::connect();
+    $Redis = $this->redis();
     $country = $this->country;
 
     /**

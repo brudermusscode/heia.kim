@@ -1492,6 +1492,17 @@ divide {
   }
 }
 
+[divide="line"] {
+  height: 1px;
+  width: 100%;
+
+  &:not([background]) {
+    @include themed() {
+      background: t(slighter-hover);
+    }
+  }
+}
+
 [animation="premium"] {
   &:not([enabled])::before {
     content: "";

@@ -1,0 +1,157 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+.mobile_menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  z-index: $endless-z-index;
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+  }
+
+  @include themed() {
+    background: t(box);
+  }
+
+  .mobile_menu__inr {
+    display: flex;
+    justify-content: center;
+    gap: 0.8em;
+    padding-block: 0.8em;
+
+    @media screen and (max-width: 500px) {
+      gap: 0.2em;
+    }
+
+    a {
+      border-radius: 8px;
+      display: block;
+      line-height: 1em;
+      background: transparent;
+      cursor: pointer;
+      height: 3.4em;
+      width: 3.8em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @include themed() {
+        color: t(text);
+      }
+
+      &[active] {
+        @include themed() {
+          background: t(slight-hover);
+        }
+
+        .text {
+          font-weight: 700;
+          height: auto;
+          margin-top: 0;
+        }
+      }
+
+      &:hover {
+        @include themed() {
+          background: t(slight-hover);
+        }
+
+        .text {
+          font-size: 0.8em;
+          font-weight: 700;
+          height: auto;
+          margin-top: 0;
+        }
+      }
+
+      .text {
+        font-size: 0.8em;
+        overflow: hidden;
+        height: 0px;
+        margin-top: -0.4em;
+        transition: $trans-cubic;
+      }
+
+      i {
+        font-size: 1.4em;
+      }
+    }
+  }
+
+  &[size="smol"] {
+    .mobile_menu__inr {
+      gap: 0.2em;
+    }
+  }
+}
+
+.mobile_navigation {
+  @include themed() {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    z-index: 1002;
+    bottom: 0;
+    left: 0;
+    height: $mobile-nav-height;
+    width: 100%;
+    background: t(box2);
+
+    .mn__inr {
+      display: flex;
+      flex: 1;
+      justify-content: space-evenly;
+
+      .option {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+
+        &:hover {
+          mi {
+            background: t(slight-hover);
+          }
+        }
+
+        &:active {
+          mi {
+            background: t(hover);
+          }
+        }
+
+        mi {
+          width: 64px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 32px;
+        }
+
+        &[active] {
+          font-weight: 900;
+
+          mi {
+            background-color: t(active);
+          }
+        }
+      }
+
+      a[active] {
+        .option {
+          font-weight: 900;
+
+          mi {
+            background-color: t(active);
+          }
+        }
+      }
+    }
+  }
+}

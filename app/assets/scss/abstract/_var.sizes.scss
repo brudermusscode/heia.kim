@@ -61,4 +61,38 @@ $content-mid-size: 800px;
 $content-mid-plus-size: 900px;
 $content-wide-size: 1000px;
 
+$min-content-width: 20em;
+
+$main-full-width: 100%;
+$main-wide-width: 1800px;
+$main-mid-width: 1280px;
+$main-smol-width: 900px;
+$main-single-width: 480px;
+
+$main-header-height: 5em;
+$main-header-width: 102.4px;
+$main-distance: 2.4em;
+$main-distance-mobile: 0.4em;
+
+$sub-menu-width: 20em;
+$sub-menu-width-shrinked: 130px;
+
+$user-content-width: calc(1620px - $main-header-width);
+$artist-content-width: 1280px;
+
 $home-header-height: 6.2em;
+
+$page-navigator-width: 120px;
+$page-navigator-smol-width: 120px;
+$page-navigator-padding-left: calc($page-navigator-width + $main-distance);
+
+$sub-container-width: 28em;
+
+$mobile-nav-height: 80px;
+
+$score-header-heigth: 26em;
+
+$squad-content-width: 1820px;
+$squad-header-heigth: 26em;
+
+$full-header-width: calc(100vw - $page-navigator-width - 12px);

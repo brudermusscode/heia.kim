@@ -4,3 +4,6 @@
 + Remove class Heiakim\Application\Exception for more specific Heiakim\Exception\…
 + Make discord client credentials grant work (general api interactions)
 + Add new users to discord server automatically when using oauth2
+
+Profiles:
++ Headline fade optional

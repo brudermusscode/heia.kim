@@ -2,10 +2,73 @@
 @use "../base" as *;
 
 header {
-  $notification-window-width: 30em;
-
   &[full] {
     padding-left: calc($page-navigator-width + 1.2em);
+  }
+
+  &[top] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: $home-header-height;
+    z-index: 1000;
+
+    [inr] {
+      padding-inline: $main-distance;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      @media screen and (max-width: 1050px) {
+        padding-left: $main-distance;
+      }
+    }
+
+    .left {
+      display: flex;
+      gap: 1.2em;
+      align-items: center;
+
+      .logo {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0.8em;
+
+        .main__logo {
+          padding: 0;
+        }
+
+        p {
+          opacity: 0.6;
+        }
+      }
+
+      @media screen and (max-width: 1200px) {
+        gap: 1.2em;
+
+        .search {
+          margin-right: 0.4em;
+        }
+      }
+
+      @media screen and (max-width: 800px) {
+        flex: 1;
+        width: 100%;
+        justify-content: center;
+
+        .menu {
+          display: none;
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      gap: 0.8em;
+    }
   }
 
   &[main] {
@@ -239,35 +302,12 @@ header {
   overflow-x: visible;
 }
 
-.main__textline {
-  @include themed() {
-    background: rgba(255, 255, 255, 0.032);
-    color: white;
-  }
-
-  padding: 0.4em 0 0.4em;
-
-  @extend [tac], [mb];
-
-  p {
-    font-weight: 600;
-    font-size: 0.8em;
-    opacity: 0.6;
-  }
-}
-
-.main__logo,
-.main__user {
+.main__logo {
+  @extend [fl], [fldircol];
+  position: relative;
   width: 100%;
   padding: 1.2em 0;
-
-  @extend [fl], [fldircol];
-
   align-items: center;
-}
-
-.main__logo {
-  position: relative;
 
   picture {
     transition: $trans-cubic;
@@ -287,170 +327,6 @@ header {
     picture {
       transform: scale(0.52);
       opacity: 0.4;
-    }
-  }
-}
-
-.mobile_menu {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  z-index: $endless-z-index;
-  display: none;
-
-  @media screen and (max-width: 800px) {
-    display: block;
-  }
-
-  @include themed() {
-    background: t(box);
-  }
-
-  .mobile_menu__inr {
-    display: flex;
-    justify-content: center;
-    gap: 0.8em;
-    padding-block: 0.8em;
-
-    @media screen and (max-width: 500px) {
-      gap: 0.2em;
-    }
-
-    a {
-      border-radius: 8px;
-      display: block;
-      line-height: 1em;
-      background: transparent;
-      cursor: pointer;
-      height: 3.4em;
-      width: 3.8em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      @include themed() {
-        color: t(text);
-      }
-
-      &[active] {
-        @include themed() {
-          background: t(slight-hover);
-        }
-
-        .text {
-          font-weight: 700;
-          height: auto;
-          margin-top: 0;
-        }
-      }
-
-      &:hover {
-        @include themed() {
-          background: t(slight-hover);
-        }
-
-        .text {
-          font-size: 0.8em;
-          font-weight: 700;
-          height: auto;
-          margin-top: 0;
-        }
-      }
-
-      .text {
-        font-size: 0.8em;
-        overflow: hidden;
-        height: 0px;
-        margin-top: -0.4em;
-        transition: $trans-cubic;
-      }
-
-      i {
-        font-size: 1.4em;
-      }
-    }
-  }
-
-  &[size="smol"] {
-    .mobile_menu__inr {
-      gap: 0.2em;
-    }
-  }
-}
-
-header[top] {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: $home-header-height;
-  z-index: 1000;
-
-  [inr] {
-    padding-inline: $main-distance;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    @media screen and (max-width: 1050px) {
-      padding-left: $main-distance;
-    }
-  }
-
-  .left {
-    display: flex;
-    gap: 1.2em;
-    align-items: center;
-
-    .logo {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.8em;
-
-      .main__logo {
-        padding: 0;
-      }
-
-      p {
-        opacity: 0.6;
-      }
-    }
-
-    @media screen and (max-width: 1200px) {
-      gap: 1.2em;
-
-      .search {
-        margin-right: 0.4em;
-      }
-    }
-
-    @media screen and (max-width: 800px) {
-      flex: 1;
-      width: 100%;
-      justify-content: center;
-
-      .menu {
-        display: none;
-      }
-    }
-  }
-
-  .right {
-    display: flex;
-    gap: 0.8em;
-  }
-}
-
-[divide="line"] {
-  height: 1px;
-  width: 100%;
-
-  &:not([background]) {
-    @include themed() {
-      background: t(slighter-hover);
     }
   }
 }
