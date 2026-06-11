@@ -3,8 +3,6 @@
 namespace Heiakim\Model;
 
 use Heiakim\Justin;
-use Heiakim\Http\Request;
-use Heiakim\Database\Redis;
 use Heiakim\Database\Manager as DBM;
 use Heiakim\Model\Country;
 
@@ -30,6 +28,14 @@ class Leaderboard extends Justin
   public static $types = [
     "performance",
     "score",
+  ];
+
+  /**
+   * @var array
+   */
+  public static $models = [
+    "players",
+    "squads",
   ];
 
   /**

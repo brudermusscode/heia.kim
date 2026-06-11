@@ -2033,6 +2033,16 @@ mode-menu {
       width: 20em;
     }
   }
+
+  [column="smaller"] {
+    position: sticky;
+    top: 7.4em;
+    width: 18em;
+
+    @media screen and (max-width: $full-hd-max-width) {
+      width: 16em;
+    }
+  }
 }
 
 inline-navigator {
