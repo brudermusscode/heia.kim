@@ -2,13 +2,18 @@
 @use "../base" as *;
 
 global-search {
+  position: relative;
+  display: block;
+  padding-inline: $main-distance;
+  padding-block: 148px $main-distance;
+
   search {
     position: fixed;
     z-index: 200;
-    top: 2.4em;
+    top: calc($main-distance / 2);
     left: 50%;
     translate: -50% 0;
-    width: 100%;
+    width: calc(100% - $main-distance);
     max-width: $global-search-width;
     overflow: hidden;
 
@@ -22,15 +27,22 @@ global-search {
       border: none;
       outline: none;
       background: transparent;
-      margin-inline: -42px -162px;
-      padding-inline: 42px 182px;
+      margin-inline: -42px -202px;
+      padding-inline: 42px 222px;
       font-size: $font-size-midler;
+
+      @include themed() {
+        color: t(text);
+      }
     }
 
     .linear-progress-material {
       position: absolute;
-      bottom: 0;
-      width: 100%;
+      bottom: 8px;
+      left: 50%;
+      translate: -50% 0;
+      width: calc(100% - 48px);
+      border-radius: 12px;
       opacity: 0;
 
       &[active] {
@@ -42,7 +54,6 @@ global-search {
   search-results {
     position: relative;
     z-index: 0;
-    padding-top: 200px;
     width: 100%;
     max-width: $global-search-width;
     margin-inline: auto;

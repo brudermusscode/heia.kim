@@ -12,13 +12,15 @@ use Heiakim\Http\Request;
 ob_start(); ?>
 
 <global-search animation=fade-in>
-  <search fl alic elevated=smol rounded>
+  <search fl alic elevated rounded=mid+>
     <mi pinline42 mid>search</mi>
 
     <input search autofocus type-to-focus type="text" placeholder="<?= __("Search for players, beatmaps, squads") ?>...">
 
     <div fl alic gap=smol no-word-wrap>
-      <p background=slight rounded=smol pblock4 pinline8 text smol bold>Esc</p>
+      <p background=slight rounded=smol+ pblock6 pinline10 pr12 text smol bold fl alic gap=smol>
+        <mi>keyboard</mi> ESC
+      </p>
       <p text smol bold><?= __("to close") ?></p>
     </div>
 

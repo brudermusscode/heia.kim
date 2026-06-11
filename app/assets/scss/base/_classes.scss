@@ -134,12 +134,24 @@
     border-radius: 24px;
   }
 
+  &[rounded="mid+"] {
+    border-radius: 28px;
+  }
+
   &[rounded="wide"] {
     border-radius: 32px;
   }
 
   &[rounded="wider"] {
+    border-radius: 38px;
+  }
+
+  &[rounded="widerer"] {
     border-radius: 42px;
+  }
+
+  &[rounded="widest"] {
+    border-radius: 48px;
   }
 }
 
