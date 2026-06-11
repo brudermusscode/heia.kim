@@ -186,7 +186,7 @@ $PasswordChange = CurrentUser->password_changes()
       <p text bold><?= __("Add connection") ?></p>
 
       <div fl gap=smol>
-        <?php if (!CurrentUser->discord && Feature::is_enabled("connect_discord")) { ?>
+        <?php if (!CurrentUser->discord && Feature::enabled("connect_discord")) { ?>
           <mbutton material has-icon=left filled size=mid
             data-action="connect:start"
             data-type=discord>
@@ -195,7 +195,7 @@ $PasswordChange = CurrentUser->password_changes()
           </mbutton>
         <?php } ?>
 
-        <?php if (!CurrentUser->google && Feature::is_enabled("connect_google")) { ?>
+        <?php if (!CurrentUser->google && Feature::enabled("connect_google")) { ?>
           <mbutton material has-icon=left filled size=mid
             data-action="connect:start"
             data-type=google>
@@ -204,7 +204,7 @@ $PasswordChange = CurrentUser->password_changes()
           </mbutton>
         <?php } ?>
 
-        <?php if (!CurrentUser->osu && Feature::is_enabled("connect_osu")) { ?>
+        <?php if (!CurrentUser->osu && Feature::enabled("connect_osu")) { ?>
           <mbutton material has-icon=left filled size=mid
             data-action="connect:start"
             data-type=osu>

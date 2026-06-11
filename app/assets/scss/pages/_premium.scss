@@ -1,40 +1,9 @@
 @use "../abstract" as *;
 @use "../base" as *;
 
-.pricing_plans {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100svh;
-  width: 100%;
-  overflow: hidden;
-  overflow-y: auto;
-
-  @include themed() {
-    background: t(someone-else-bg);
-    color: $light;
-  }
-
-  // .stars {
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   height: 100svh;
-  //   width: 100vw;
-
-  //   .snow {
-  //     background: $light;
-  //   }
-  // }
-
-  @media screen and (max-height: 1100px) {
-    padding-block: 4.8em;
-    justify-content: flex-start;
-  }
+body[unlock] content {
+  padding-block: 82px 124px;
+  min-height: 100vh;
 }
 
 .pricing_plan {
@@ -51,43 +20,48 @@
   }
 
   .plan_header {
-    border-radius: 36px;
-    padding: 2.4em;
-    display: flex;
-    justify-content: flex-start;
-
     @include themed() {
       background: t(box-invert);
       color: t(text-invert);
     }
   }
 
-  .plan_content {
-    padding: 2.4em;
+  .price {
+    text-align: center;
+    font-size: 3.8em;
+    font-weight: 900;
+    line-height: 1.2em;
+    margin-bottom: 0.4em;
+  }
 
-    .price {
-      text-align: center;
-      font-size: 3.8em;
-      font-weight: 900;
-      line-height: 1.2em;
-      margin-bottom: 0.4em;
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 1.2em;
+    font-size: 1.2em;
+
+    &[error] {
+      mi {
+        background: $orange;
+
+        &::before {
+          content: "priority_high";
+        }
+      }
     }
 
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: $gap-smol;
+    mi {
+      background: $green;
+      color: $light;
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      font-size: 1.2em;
+      font-weight: 900;
 
-      .option {
-        display: flex;
-        align-items: center;
-        gap: 1.2em;
-        font-size: 1.2em;
-
-        .icon {
-          color: $green;
-          font-size: 1.6em;
-        }
+      &::before {
+        display: block;
+        content: "check";
       }
     }
   }

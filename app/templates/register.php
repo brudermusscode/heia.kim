@@ -35,7 +35,7 @@ include SNOW; ?>
           <!--- OAuth2 sign up --->
           <div fl gap=smol>
             <mbutton
-              <?= !Feature::is_enabled("connect_osu") ? "disabled" : "" ?>
+              <?= !Feature::enabled("connect_osu") ? "disabled" : "" ?>
               data-action="connection:start"
               data-provider="osu!"
               data-call-action="connect"
@@ -47,7 +47,7 @@ include SNOW; ?>
             </mbutton>
 
             <mbutton
-              <?= !Feature::is_enabled("connect_discord") ? "disabled" : "" ?>
+              <?= !Feature::enabled("connect_discord") ? "disabled" : "" ?>
               data-action="connection:start"
               data-provider="discord"
               data-call-action="connect"
@@ -59,7 +59,7 @@ include SNOW; ?>
             </mbutton>
 
             <mbutton
-              <?= !Feature::is_enabled("connect_github") ? "disabled" : "" ?>
+              <?= !Feature::enabled("connect_github") ? "disabled" : "" ?>
               data-action="connection:start"
               data-provider="github"
               data-call-action="connect"

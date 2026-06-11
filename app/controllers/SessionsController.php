@@ -17,7 +17,7 @@ class SessionsController extends Controller
   {
 
     # Feature disabled?
-    if (!Feature::is_enabled("login"))
+    if (!Feature::enabled("login"))
       return error("!FEATURE_DISABLED");
 
     $this->validate_params(

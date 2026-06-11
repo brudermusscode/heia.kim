@@ -58,7 +58,7 @@ if (CurrentUser->settings->account_wiped_at) {
 
   <?php if ($can_wipe && $wipes_left) : ?>
     <div fl justify-content=end gap>
-      <?php if (Feature::is_enabled("restart_journey")) : ?>
+      <?php if (Feature::enabled("restart_journey")) : ?>
         <input type=hidden name=type value=wipe_user />
         <mbutton background="besure" color=dark-orange size=mid has-icon=left material submit-closest>
           <mi>fingerprint</mi>

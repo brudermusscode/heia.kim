@@ -48,7 +48,7 @@ include SNOW; ?>
 
         <div fl gap=smol>
           <mbutton
-            <?= !Feature::is_enabled("connect_osu") ? "disabled" : "" ?>
+            <?= !Feature::enabled("connect_osu") ? "disabled" : "" ?>
             data-action="connection:start"
             data-provider="osu!"
             data-call-action="reconnect"
@@ -61,7 +61,7 @@ include SNOW; ?>
           </mbutton>
 
           <mbutton
-            <?= !Feature::is_enabled("connect_discord") ? "disabled" : "" ?>
+            <?= !Feature::enabled("connect_discord") ? "disabled" : "" ?>
             data-action="connection:start"
             data-provider="discord"
             data-call-action="reconnect"
@@ -73,7 +73,7 @@ include SNOW; ?>
           </mbutton>
 
           <mbutton
-            <?= !Feature::is_enabled("connect_github") ? "disabled" : "" ?>
+            <?= !Feature::enabled("connect_github") ? "disabled" : "" ?>
             data-action="connection:start"
             data-provider="github"
             data-call-action="reconnect"
@@ -87,7 +87,7 @@ include SNOW; ?>
 
         <div class=divider></div>
 
-        <?php if (Feature::is_enabled("login")) { ?>
+        <?php if (Feature::enabled("login")) { ?>
 
           <form data-form="session:create" fl fldircol gap>
             <div fl fldircol gap>

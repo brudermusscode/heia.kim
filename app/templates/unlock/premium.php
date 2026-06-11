@@ -1,38 +1,36 @@
 <?php
 
 use Heiakim\Time\Time;
-use Heiakim\Application\Application;
+use Heiakim\Application\Feature;
 
-$action = $get_params->action ?? "";
-$token = $get_params->token ?? "";
+/**
+ * @var string
+ */
+$action = filter_input(INPUT_GET, "action", FILTER_SANITIZE_SPECIAL_CHARS);
 
-if ($action == "success")
+/**
+ * @var string
+ */
+$token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_SPECIAL_CHARS);
+
+# + Success message.
+if ($action == "success") :
   include __DIR__ . "/_success.php";
-else if ($action == "error")
+
+# + Error message.
+elseif ($action == "error") :
   include __DIR__ . "/_error.php";
-else {
+
+# + Base view.
+else :
 
   $premium_time_left = Time::left(CurrentUser->donor_end) ?? null;
+  $premium_feature_enabled = Feature::enabled("buy_premium_feature");
 
-  /**
-   * Feature disabled?
-   */
-  $premium_feature_enabled = Application::get_features("buy_premium_feature")->active;
+  # + Snow.
+  include SNOW; ?>
 
-?>
-
-  <div class="pricing_plans">
-    <?php
-
-    if (ANIMATIONS_ENABLED) {
-      echo '<div class="stars">';
-      for ($i = 0; $i < 80; $i++)
-        echo '<div class="snow"></div>';
-      echo '</div>';
-    }
-
-    ?>
-
+  <content fl fldircol alic jucc>
     <div tac mb=wide>
       <p text wider>Unlock <strong><?= APP_SETTING->premium_feature_name; ?></strong></p>
       <p text midler>It's better than Tinder Gold.</p>
@@ -40,114 +38,87 @@ else {
 
     <box-model filled=lighter class="pricing_plan">
       <div class="plan_inr">
-        <div class="plan_header">
-          <div class="plan_header__text" fl alistart gap=smol+>
-            <i class=mi size=wide><?= PREMIUM_ICON; ?></i>
-            <div>
-              <p text wide bold>Essential</p>
-              <p text std><strong>1 month</strong> unlocked features</p>
-            </div>
+        <div class="plan_header" fl alistart gap=smol+ pinline42 pblock38 rounded=wide>
+          <mi wider mt4><?= PREMIUM_ICON; ?></mi>
+          <div>
+            <p text wide bold>Essential</p>
+            <p text std><strong>1 month</strong> unlocked features</p>
           </div>
         </div>
 
-        <div class="plan_content">
-          <div class="price">
-            <p><?= number_format(APP_SETTING->premium_feature_price, 2, ","); ?> €</p>
-          </div>
+        <div fl fldircol gap pinline42 pblock32>
+          <p tac text widest bold>
+            <?= number_format(APP_SETTING->premium_feature_price, 2, ","); ?> €</p>
 
-          <div class="options">
+          <div fl fldircol gap=smol>
             <div class="option">
-              <p class=icon>
-                <i class=mi size=mid>task_alt</i>
-              </p>
-              <p class=name>Custom profile headlines</p>
+              <mi></mi>
+              <p text>Custom profile headlines</p>
             </div>
             <div class="option">
-              <p class=icon>
-                <i class=mi size=mid>task_alt</i>
-              </p>
-              <p class=name>Unique Name Designs</p>
+              <mi></mi>
+              <p text>Unique Name Designs</p>
             </div>
             <div class="option">
-              <p class=icon>
-                <i class=mi size=mid>task_alt</i>
-              </p>
-              <p class=name>Added Name Change</p>
+              <mi></mi>
+              <p text>Added Name Change</p>
             </div>
             <div class="option">
-              <p class=icon>
-                <i class=mi size=mid>task_alt</i>
-              </p>
-              <p class=name>Added Account Wipe</p>
+              <mi></mi>
+              <p text>Added Account Wipe</p>
             </div>
             <div class="option">
-              <p class=icon>
-                <i class=mi size=mid>task_alt</i>
-              </p>
-              <p class=name>Upload GIFs</p>
+              <mi></mi>
+              <p text>Upload GIFs</p>
             </div>
-            <div class="option">
-              <?php if (!CurrentUser->discord) { ?>
-                <div has-tooltip=bottom>
-                  <p class=icon>
-                    <mi size=mid color=orange>error</mi>
-                  </p>
+            <div class="option" error>
+              <?php if (!CurrentUser->discord) : ?>
+                <div has-tooltip=bottom curpo>
+                  <mi></mi>
                   <div ttooltip>
-                    <p text bold>Requires a Discord connection</p>
+                    <p text>Requires a Discord connection</p>
                   </div>
                 </div>
                 <div fl alic gap=smol>
-                  <p class=name>Discord role</p>
-                  <a href="/my/security/discord" normal fl alic gap=smol>
-                    <p text fl alic gap=smol>Connect</p>
-                  </a>
+                  <p text>Role on Discord
+                    (<a href="/my/security/discord" normal>Connect</a>)</p>
                 </div>
-              <?php } else { ?>
-                <p class=icon>
-                  <i class=mi size=mid>task_alt</i>
-                </p>
-                <div>
-                  <p class=name>Discord role</p>
-                </div>
-              <?php } ?>
+              <?php else : ?>
+                <mi></mi>
+                <p text>Discord role</p>
+              <?php endif; ?>
 
             </div>
           </div>
 
-          <?php if ($premium_time_left) { ?>
-            <div class=info mt style=margin-bottom:-.4em; background=slighter rounded=wide pblock24 pinline24>
-              <div fl gap>
-                <p text mid normalize-icon>
-                  <i class=mi>tips_and_updates</i>
-                </p>
-                <p text smol>You still have <strong><?= $premium_time_left; ?></strong> of your
-                  <?= APP_SETTING->premium_feature_name; ?>. Buying more will be added on top.</p>
-              </div>
+          <?php if (!$premium_time_left) { ?>
+            <div class=info style=margin-bottom:-.4em; background=slighter rounded=wide pblock18 pinline24 pr18 fl gap=smol+>
+              <mi>tips_and_updates</mi>
+              <p text smol>You still have <strong><?= $premium_time_left; ?></strong> of your
+                <?= APP_SETTING->premium_feature_name; ?>. Buying more will be added on top.</p>
             </div>
           <?php } ?>
 
-          <div <?= $premium_time_left ? "mt=mid" : "mt=wide"; ?> fl jucc alic gap=smol+>
+          <div mt18 fl jucc alic gap=smol+>
             <a href="/home">
-              <mbutton background=clean material>
-                <div fl align-items=center gap=smol>
-                  <p text smol>Cancel</p>
-                </div>
-              </mbutton>
+              <mbutton background=clean material>Cancel</mbutton>
             </a>
-            <?php if ($premium_feature_enabled) { ?>
+            <?php if ($premium_feature_enabled) : ?>
               <form data-form="orders:paypal,create">
                 <input type=hidden name=months value=1 />
                 <mbutton size=mid background=slight-green color=dark-green has-icon material submit-closest>
-                  <p text>Donate with <strong><i class=ri-paypal-fill></i> PayPal</strong></p>
+                  <p text>Donate with &nbsp;
+                    <strong><i class=ri-paypal-fill style="font-size:18px;"></i> PayPal</strong>
+                  </p>
                 </mbutton>
               </form>
-            <?php } else { ?>
+            <?php else : ?>
               <mbutton size=std background=green has-icon material disabled>
                 <div fl align-items=center gap=smol>
                   <p text std color=white>Currently disabled</p>
                 </div>
               </mbutton>
-            <?php } ?>
+            <?php endif; ?>
           </div>
         </div>
 
@@ -156,6 +127,6 @@ else {
         </div>
       </div>
     </box-model>
-  </div>
+  </content>
 
-<?php } ?>
+<?php endif; ?>

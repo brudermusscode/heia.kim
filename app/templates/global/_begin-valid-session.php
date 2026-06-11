@@ -39,7 +39,7 @@ $user_signed_up_with_osu =
             <div class=divider dark></div>
           <?php } ?>
 
-          <?php if (Feature::is_enabled("login")) { ?>
+          <?php if (Feature::enabled("login")) { ?>
             <div fl fldircol gap=mid>
               <div fl fldircol gap=smol+>
                 <div fl gap=smol alic>

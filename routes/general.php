@@ -41,3 +41,6 @@ $Router->post("/connection/reconnect", "connection/reconnect", return: "JSON");
 $Router->get("/connect/:provider", "connection/index", title: function ($params) {
   return "Connect your " . $params["provider"] . " to " . APP_NAME . "!";
 });
+
+# ? Unlock
+$Router->get("/unlock/premium", "unlock/premium", title: "Unlock Premium+");
