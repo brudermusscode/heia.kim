@@ -1,8 +1,4 @@
-<div align-center-screen animation=fade-in>
-  <div tac>
-    <p text wider bold>
-      <i class=mi>error_outline</i>
-    </p>
-    <p text mid bold>Failed</p>
-  </div>
+<div align-center-screen animation=fade-in tac fl fldircol alic jucc gap>
+  <p text widestest>😵‍💫</p>
+  <p text mid bold>Oh nöö - error!</p>
 </div>

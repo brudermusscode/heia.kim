@@ -4,11 +4,12 @@
 body[unlock] content {
   padding-block: 82px 124px;
   min-height: 100vh;
+  max-width: 100vw;
+  padding-inline: $main-distance;
 }
 
 .pricing_plan {
   max-width: 28em;
-  min-width: 28em;
   border-radius: 38px;
 
   @include themed() {

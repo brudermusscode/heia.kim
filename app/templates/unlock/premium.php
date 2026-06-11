@@ -32,7 +32,8 @@ else :
 
   <content fl fldircol alic jucc>
     <div tac mb=wide>
-      <p text wider>Unlock <strong><?= APP_SETTING->premium_feature_name; ?></strong></p>
+      <p text wider trimt>
+        Unlock <strong><?= APP_SETTING->premium_feature_name; ?></strong></p>
       <p text midler>It's better than Tinder Gold.</p>
     </div>
 
