@@ -10,8 +10,8 @@ abstract class RedisRegistry
    */
   public static array $leaderboard_keys = [
     "osu!" => "osu!:leaderboard", // + gumode + country + scoring-type
-    "players" => "leaderboard", // + gumode + country + scoring-type
-    "players-climb" => "leaderboard:climb", // + gumode + country + scoring-type
+    "players" => "bancho:leaderboard", // + gumode + country + scoring-type
+    "players-climb" => "bancho:leaderboard:climb", // + gumode + country + scoring-type
     "squads" => "leaderboard:squads", // + mode + scoring-type
   ];
 

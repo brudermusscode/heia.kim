@@ -23,6 +23,7 @@ class Job extends Justin
     "class_name",
     "name",
     "description",
+    "updated_at",
   ];
 
   /**
@@ -36,7 +37,10 @@ class Job extends Justin
 
     # Throw an exception if the Job class is not filled into the database.
     if (!$JobClass)
-      throw new RuntimeException("No job found for class $class_name");
+      static::create([
+        "class_name" => $class_name,
+        "updated_at" => null,
+      ]);
 
     /**
      * @var Carbon

@@ -22,7 +22,6 @@ class ApiOsuCacheLeaderboard extends Job
     # Caching failed?
     if (!$Cache) {
       echo "failed!\n";
-
       return;
     }
 

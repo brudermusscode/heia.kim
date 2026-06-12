@@ -28,7 +28,9 @@ $LeaderboardUsers = $Leaderboard->view(
 $pcount = $LeaderboardUsers["count"];
 unset($LeaderboardUsers["count"]);
 
+# + No Players in this board.
 if (!$pcount) : ?>
+
   <box-model rounded=wide filled=lighter>
     <bm-inr p62>
       <div fl fldircol alic jucc gap>
@@ -42,31 +44,8 @@ if (!$pcount) : ?>
       </div>
     </bm-inr>
   </box-model>
-  <?php else :
 
-  # Best players being shown only on first page in a cooler manner.
-  if ($ppage === 1) : ?>
-    <div fl fldircol gap>
-      <div fl fldircol gap="smolest" title-inline>
-        <p text mid bold><?= __("The Best") ?></p>
-      </div>
-      <div best>
-        <?php
-
-        # #1, #2 & #3 player.
-        foreach ($LeaderboardUsers as $user_id => $pp) :
-          if ($leaderboard_counter == 3) break;
-
-          include __DIR__ . "/_player_first.php";
-
-          unset($LeaderboardUsers[$user_id]);
-          $leaderboard_counter++;
-        endforeach;
-
-        ?>
-      </div>
-    </div>
-  <?php endif; ?>
+<?php else : ?>
 
   <div fl fldircol gap>
     <div title-inline>
@@ -79,6 +58,7 @@ if (!$pcount) : ?>
 
       # All other players.
       foreach ($LeaderboardUsers as $user_id => $pp) {
+
         $performance = match ($type) {
           "performance" => number_format($pp),
           "score" => Utils::round_with_ending($pp),
@@ -102,8 +82,8 @@ if (!$pcount) : ?>
         $development = $User->get_rank_development($gumode);
 
         $development_by_country = match ($country) {
-          "global" => $development["global"][$type],
-          default  => $development["country"][$type],
+          "global" => $development->global->$type,
+          default  => $development->country->$type,
         };
 
         $development_options = [
@@ -140,7 +120,7 @@ if (!$pcount) : ?>
       ?>
 
         <box-model filled=lighter clickable rankings-user has-hover-menu rounded=wide posrel fl>
-          <?php include __DIR__ . "/_dropdown.php"; ?>
+          <?php include dirname(__DIR__) . "/_dropdown.php"; ?>
 
           <a link href="<?= $User->link(); ?>"></a>
 

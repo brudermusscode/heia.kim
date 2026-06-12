@@ -189,7 +189,7 @@ export const get = async (
       Frontend.toggle_floating_actions(Route.key);
       Frontend.disguise(Route, is_same_history_route);
       Frontend.get_content();
-      Frontend.update_user_menu();
+      if (reload) Frontend.update_user_menu();
       Frontend.reload_images();
 
       // Find [autofocus] and focus it.

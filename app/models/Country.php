@@ -5,6 +5,7 @@ namespace Heiakim\Model;
 use Heiakim\Application\Application;
 use Heiakim\Justin;
 use Heiakim\Model\User;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Locale;
 
 class Country extends Justin
@@ -18,11 +19,11 @@ class Country extends Justin
   ];
 
   /**
-   * @return User
+   * @return HasMany<User>
    */
-  public function user()
+  public function users()
   {
-    return $this->hasMany(User::class, "abbreviation", "country");
+    return $this->hasMany(User::class, "country", "abbreviation");
   }
 
   /**
@@ -34,6 +35,11 @@ class Country extends Justin
       : ($this->abbreviation == "hk" ? "Hong Kong" : Locale::getDisplayRegion("-" . strtoupper($this->abbreviation), LOCALE));
   }
 
+  /**
+   * @return void
+   *
+   * NOTE: Includes /helper/_image_country.php
+   */
   public function icon()
   {
     $country_abbreviation = $this->abbreviation;

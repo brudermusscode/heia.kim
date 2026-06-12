@@ -3,6 +3,8 @@
 require dirname(__DIR__) . "/vendor/autoload.php";
 
 use Heiakim\Job\ApiOsuCacheLeaderboard;
+use Heiakim\Job\CacheLeaderboard;
+use Heiakim\Job\CacheLeaderboardDevelopment;
 use Heiakim\Job\CreateDefaultProfile;
 use Heiakim\Job\Mailing\BirthdayWishes;
 use Heiakim\Job\Mailing\LongTimeNoSee;
@@ -18,6 +20,11 @@ new Heiakim\Database\Database;
 
 # Caches the official osu! leaderboards for any ruleset daily.
 ApiOsuCacheLeaderboard::run("+1 day");
+
+# Caches ranks to build a leaderboard which the game will add to in real time. It
+# should always be actual but we cache once a week to keep it real. It also caches
+# rank development (climb).
+CacheLeaderboard::run("+1 week");
 
 exit;
 
