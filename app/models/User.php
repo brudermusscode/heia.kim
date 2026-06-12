@@ -51,6 +51,7 @@ use Heiakim\Utils\Str;
 use DateTime;
 use Heiakim\Model\Squad\SquadPostAttachment;
 use Heiakim\Model\Squad\SquadPostVote;
+use Heiakim\Model\User\UserSettingsPremium;
 use Heiakim\Registry\RedisRegistry;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -1093,7 +1094,9 @@ class User extends Justin
     );
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> REQUESTS >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Requests ---------------------------------------
+  // ------------------------------------------------
 
   /**
    * @return ?BeatmapRequest
@@ -1103,18 +1106,24 @@ class User extends Justin
     return $this->hasMany(BeatmapRequest::class, "player_id", "id");
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> DISPLAY >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Display ----------------------------------------
+  // Template related things ------------------------
+  // ------------------------------------------------
 
   /**
-   * @return string
+   * @param int $gumode
+   * @param bool $big_cover
+   * @return void
+   *
+   * NOTE: Includes /helper/beatmaps/_cover.php
    */
   public function headline_cover(int $gumode = 0, bool $big_cover = false)
   {
+
     $big_cover ??= true;
 
-    /**
-     * User has set a custom headline?
-     */
+    # User has set a custom headline through premium settings?
     if ($this->premium && $this->premium->headline) {
       $beatmap_set_id = $this->premium->headline;
     } else {
@@ -1156,7 +1165,10 @@ class User extends Justin
   }
 
   /**
-   * @return include
+   * @param bool $gdpr
+   * @return void
+   *
+   * NOTE: Includes /helper/user/_image.php
    */
   public function image(bool $gdpr = true)
   {
@@ -1167,7 +1179,9 @@ class User extends Justin
     include ROOT . "/app/templates/helper/users/_image.php";
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> BIRTHDAY >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Birthday ---------------------------------------
+  // ------------------------------------------------
 
   /**
    * @return bool
@@ -1175,13 +1189,15 @@ class User extends Justin
   public function has_birthday()
   {
     $birthday = $this->settings?->birthday;
+
     return $birthday
       ? date("m-d", strtotime($birthday)) === date("m-d", time())
       : false;
   }
 
   /**
-   * @return ?Feedback
+   * @param string $year
+   * @return Collection<Feedback>
    */
   public function birthday_cheers(string $year)
   {
@@ -1195,6 +1211,10 @@ class User extends Justin
   }
 
   /**
+   * Checks if a Feedback from this User to another one exists in a specific year.
+   *
+   * @param User $User
+   * @param string $year
    * @return bool
    */
   public function cheered_for_birthday(User $User, string $year)
@@ -1204,23 +1224,25 @@ class User extends Justin
       "reference_id" => $User->id,
       "type" => "birthday_cheer",
       ["created_at", "LIKE", "%$year%"],
-    ])->exists();
+    ])
+      ->exists();
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> ORDERS >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Orders -----------------------------------------
+  // ------------------------------------------------
 
   /**
-   * @return ?Order
+   * @return HasMany<Order>
    */
   public function orders()
   {
     return $this->hasMany(Order::class);
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> RELATIONS >>>>>>>>>>>>>>>>>>>>>>>>>
 
   /**
-   * @return ?Search
+   * @return HasMany<Search>
    */
   public function searches()
   {
@@ -1228,17 +1250,15 @@ class User extends Justin
   }
 
   /**
-   * @return ?Comments
+   * @return HasMany<Comment>
    */
   public function comments()
   {
     return $this->hasMany(Comment::class);
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> PINS >>>>>>>>>>>>>>>>>>>>>>>>>
-
   /**
-   * @return ?UserPin
+   * @return HasMany<UserPin>
    */
   public function pins()
   {
@@ -1246,39 +1266,31 @@ class User extends Justin
   }
 
   /**
+   * Checks if a given instance of a class has been pinned by the User.
+   *
    * @param Score|Beatmap $Reference
-   * @return ?Score|Beatmap
+   * @return Score|Beatmap|null
    */
   public function has_pinned(Score|Beatmap $Reference)
   {
-    /**
-     * @var int
-     */
-    $id = $Reference->id;
-
-    if ($Reference instanceof Score) {
-      $Reference = $this->pins()->where("type", "score");
-    } elseif ($Reference instanceof Beatmap) {
-      $Reference = $this->pins()->where("type", "beatmap");
-    }
-
-    return $Reference->where("reference_id", $id)->first();
+    return $this->pins()
+      ->where([
+        "type" => strtolower(class_basename($Reference)),
+        "reference_id" => $Reference->id
+      ])
+      ->first();
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> REPORTS >>>>>>>>>>>>>>>>>>>>>>>>>
-
   /**
-   * @return ?Report
+   * @return HasMany<Report>
    */
   public function reports()
   {
     return $this->hasMany(Report::class);
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> CHANGES >>>>>>>>>>>>>>>>>>>>>>>>>
-
   /**
-   * @return ?Change
+   * @return HasMany<Change>
    */
   public function changes()
   {
@@ -1286,23 +1298,25 @@ class User extends Justin
   }
 
   /**
-   * @return ?Change
+   * @return HasMany<Change>
    */
   public function name_changes()
   {
-    return $this->hasMany(Change::class)->where("type", "name");
+    return $this->hasMany(Change::class)
+      ->where("type", "name");
   }
 
   /**
-   * @return ?Change
+   * @return HasMany<Change>
    */
   public function password_changes()
   {
-    return $this->hasMany(Change::class)->where("type", "password");
+    return $this->hasMany(Change::class)
+      ->where("type", "password");
   }
 
   /**
-   * @return ?PasswordReset
+   * @return HasMany<PasswordReset>
    */
   public function password_resets()
   {
@@ -1310,15 +1324,12 @@ class User extends Justin
   }
 
   /**
-   * @return ?Image
+   * @return HasMany<Image>
    */
   public function images()
   {
-    return $this->hasMany(Image::class)->where(
-      "type",
-      "LIKE",
-      "%__user__%"
-    );
+    return $this->hasMany(Image::class)
+      ->where("type", "LIKE", "%__user__%");
   }
 
   /**
@@ -1330,15 +1341,19 @@ class User extends Justin
    *
    * NOTE: Might die on error.
    */
-  public static function verify_login(string $login, string $password, bool $die = false)
-  {
+  public static function verify_login(
+    string $login,
+    string $password,
+    bool $die = false
+  ) {
 
     /**
      * @var User
      */
     $User = self::where(function ($q) use ($login) {
       $q->where("name", $login)->orWhere("email", $login);
-    })->first();
+    })
+      ->first();
 
     # No user found?
     if (!$User)
@@ -1351,19 +1366,16 @@ class User extends Justin
     return $User;
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> PRIVILEGES >>>>>>>>>>>>>>>>>>>>>>>>>
-
   /**
    * @return ?Privilege[]
    */
   public function privileges()
   {
+
     $privileges = [];
 
-    /**
-     * User is not yet verified and just has privileges of 0.
-     */
-    if ($this->priv == 0) {
+    # User is not yet verified (priv === 0).
+    if ((int) $this->priv === 0) {
       return [
         (object) [
           "privilege" => Privilege::UNVERIFIED,
@@ -1377,9 +1389,7 @@ class User extends Justin
     foreach (Privilege::cases() as $bits => $Privilege) {
       $display = $Privilege->get_display();
 
-      /**
-       * Any other case.
-       */
+      # Any other case.
       if (($this->priv & $Privilege->value) !== 0) {
         $privileges[] = (object) [
           "privilege" => $Privilege,
@@ -1394,79 +1404,55 @@ class User extends Justin
   }
 
   /**
-   * @var Privilege $Privileges
+   * @param Privilege $Privileges
    * @return object
    */
   public function add_privileges(Privilege ...$Privileges)
   {
-    /**
-     * @var int
-     */
+
     $updated_privs = $this->priv;
 
     foreach ($Privileges as $Privilege) {
-      /**
-       * User has privileges already?
-       */
-      if ($this->has_privileges_of($Privilege)) {
-        continue;
-      }
 
-      /**
-       * Add it up!
-       */
+      # User has privileges already?
+      if ($this->has_privileges_of($Privilege))
+        continue;
+
+      # Add it up!
       $updated_privs += $Privilege->value;
     }
 
-    /**
-     * Update it, if it's not the same as before!
-     */
-    if ($this->priv !== $updated_privs) {
-      $this->update([
-        "priv" => $updated_privs,
-      ]);
-    }
+    # Update it!
+    $this->update(["priv" => $updated_privs]);
 
-    return $this->success("<strong>Privileges updated!</strong>");
+    return success("<strong>Privileges updated!</strong>");
   }
 
   /**
-   * @var Privilege $Privileges
+   * @param Privilege $Privileges
    * @return object
    */
   public function remove_privileges(Privilege ...$Privileges)
   {
-    /**
-     * @var int
-     */
+
     $updated_privs = $this->priv;
 
     foreach ($Privileges as $Privilege) {
-      if ($Privilege == Privilege::UNRESTRICTED) {
-        if (!$this->has_privileges_of($Privilege)) {
-          /**
-           * User has privileges already?
-           */
+
+      # Continue, if the User is not UNRESTRICTED.
+      if ($Privilege === Privilege::UNRESTRICTED) {
+        if (!$this->has_privileges_of($Privilege))
           continue;
-        }
       }
 
-      /**
-       * Add it up!
-       */
+      # Substract it!
       $updated_privs -= $Privilege->value;
     }
 
-    /**
-     * Update it, if it's not the same as before!
-     */
-    if ($this->priv !== $updated_privs) {
-      $this->update([
-        "priv" => $updated_privs,
-      ]);
-    }
+    # Update it
+    $this->update(["priv" => $updated_privs]);
 
-    return $this->success("<strong>Privileges updated!</strong>");
+    return success("<strong>Privileges updated!</strong>");
   }
 
   /**
@@ -1623,9 +1609,7 @@ class User extends Justin
     $Redis = $this->redis();
     $country = $this->country;
 
-    /**
-     * Global backup
-     */
+    # Global backup.
     $redis_key = RedisRegistry::$leaderboard_keys["players-climb"];
     $old_rank_global = $Redis->zrevrank("$redis_key:$gumode", $this->id);
     $old_rank_score_global = $Redis->zrevrank(
@@ -1642,9 +1626,7 @@ class User extends Justin
       $this->id
     );
 
-    /**
-     * Current rankings
-     */
+    # Current rankings.
     $redis_key = RedisRegistry::$leaderboard_keys["players"];
     $current_rank_global = $Redis->zrevrank(
       "$redis_key:$gumode",
@@ -1693,15 +1675,14 @@ class User extends Justin
    */
   public function create_profile()
   {
-    return $this->profile()->create([
-      "sections_visibility" => Arr::to_json(
-        Profile::$sections_visibility
-      ),
-    ]);
+    return $this->profile()
+      ->create([
+        "sections_visibility" => json_encode(Profile::$sections_visibility),
+      ]);
   }
 
   /**
-   * @return Profile
+   * @return HasOne<Profile>
    */
   public function profile()
   {
@@ -1709,10 +1690,14 @@ class User extends Justin
   }
 
   /**
+   * Profile parts are saved as JSON encoded strings. This function will decode them
+   * and return objects.
+   *
    * @return object
    */
   public function decoded_profile()
   {
+
     $Profile = $this->profile;
     $sections = json_decode($Profile->sections_visibility ?? "{}", true);
     $tabs = json_decode($Profile->tabs_visibility ?? "{}", true);
@@ -1725,7 +1710,7 @@ class User extends Justin
   }
 
   /**
-   * @return Session
+   * @return HasMany<Session>
    */
   public function sessions()
   {
@@ -1733,7 +1718,7 @@ class User extends Justin
   }
 
   /**
-   * @return Stat
+   * @return HasMany<Stat>
    */
   public function stats()
   {
@@ -1741,7 +1726,7 @@ class User extends Justin
   }
 
   /**
-   * @return StatDevelopment
+   * @return HasMany<StatDevelopment>
    */
   public function stat_development()
   {
@@ -1749,31 +1734,32 @@ class User extends Justin
   }
 
   /**
-   * @return User\UserSettings
+   * @return HasOne<UserSettings>
    */
   public function settings()
   {
-    return $this->hasOne(User\UserSettings::class);
+    return $this->hasOne(UserSettings::class);
   }
 
   /**
-   * @return User\UserSettingsPrivacy
+   * @return HasOne<UserSettingsPrivacy>
    */
   public function privacy()
   {
-    return $this->hasOne(User\UserSettingsPrivacy::class);
+    return $this->hasOne(UserSettingsPrivacy::class);
   }
 
   /**
-   * @return bool Whether or not
+   * @return bool
    */
   public function has_accepted_privacy_policies()
   {
-    return $this->privacy->accepts_policies;
+    return $this->privacy?->accepts_policies;
   }
 
   /**
    * Getter for user's status on bancho.
+   * TODO: Rename this as it's not bancho, but our own system. Bancho is osu!
    */
   public function get_bancho_game_status()
   {
@@ -1814,25 +1800,24 @@ class User extends Justin
   // ------------------------------------------------
   // Authorization ----------------------------------
   // ------------------------------------------------
-  //
+
   /**
    * @param Image $Content
    * @param bool $die_on_error
    * @return bool
+   *
+   * NOTE: Will die on error.
    */
   public function authorize_content_touch(
     Image $Content,
     $die_on_error = true
   ) {
+
     $authorized = $this->is_super_user() || $this->is($Content->user);
 
     return $die_on_error
-      ? (!$authorized
-        ? die(request_error("!NO_PERMISSIONS"))
-        : true)
-      : (!$authorized
-        ? false
-        : true);
+      ? (!$authorized ? die(error("!NO_PERMISSIONS")) : true)
+      : (!$authorized ? false : true);
   }
 
   // ------------------------------------------------
@@ -1840,11 +1825,11 @@ class User extends Justin
   // ------------------------------------------------
 
   /**
-   * @return User\UserSettingsPremium
+   * @return HasOne<UserSettingsPremium>
    */
   public function premium()
   {
-    return $this->hasOne(User\UserSettingsPremium::class);
+    return $this->hasOne(UserSettingsPremium::class);
   }
 
   /**
@@ -1861,10 +1846,11 @@ class User extends Justin
    */
   public function give_premium(string $datetime)
   {
+
     $current_premium_time = max($this->donor_end, time());
     $future_end_time = strtotime($datetime, $current_premium_time);
 
-    # Update the User.
+    # Update it.
     $this->update([
       "donor_end" => $future_end_time,
     ]);
@@ -1875,8 +1861,6 @@ class User extends Justin
 
     # Add supporter privileges.
     $this->add_privileges(Privilege::SUPPORTER);
-
-    return;
   }
 
   /**
@@ -1886,6 +1870,7 @@ class User extends Justin
    */
   public function name()
   {
+
     if (!$this->is_premium()) {
       return $this->name;
     } else {
@@ -1929,7 +1914,8 @@ class User extends Justin
   public function unread_notifications_count()
   {
 
-    $last_checked = $this->settings->checked_notifications_at ?? "2000-01-01 01:01:01";
+    $last_checked = $this->settings->checked_notifications_at
+      ?? "2000-01-01 01:01:01";
 
     return $this->notifications()
       ->where("created_at", ">", $last_checked)
@@ -1941,7 +1927,7 @@ class User extends Justin
   // ------------------------------------------------
 
   /**
-   * @return ?Squad
+   * @return BelongsTo<Squad>
    */
   public function squad()
   {
@@ -1969,6 +1955,7 @@ class User extends Justin
   /**
    * @param string $type
    * @param string $section
+   * @param ?Squad $in
    * @return ?bool
    */
   public function sqcan(string $type, string $section, ?Squad $in = null)
@@ -1988,7 +1975,9 @@ class User extends Justin
   }
 
   /**
-   * @return ?Squad
+   * Returns just the clan_id.
+   *
+   * @return int
    */
   public function has_squad()
   {
@@ -1996,9 +1985,8 @@ class User extends Justin
   }
 
   /**
-   * Users can just join a new squad if they are free of a current
-   * squad, are not restricted in any way and if the squad is
-   * completly public.
+   * Users can just join a new squad if they are free of a current squad, are not re-
+   * stricted in any way and if the squad is completly public.
    *
    * @param Squad $Squad
    * @return bool
@@ -2322,6 +2310,32 @@ class User extends Justin
   }
 
   /**
+   * @return HasMany<Feedback>
+   */
+  public function favorite_beatmaps()
+  {
+    return $this->feedback()
+      ->where("type", "beatmap");
+  }
+
+  /**
+   * @return HasMany<Feedback>
+   */
+  public function favorite_artists()
+  {
+    return $this->feedback()
+      ->where("type", "artist");
+  }
+
+  /**
+   * @return HasMany<Reaction>
+   */
+  public function reactions()
+  {
+    return $this->hasMany(Reaction::class);
+  }
+
+  /**
    * @param string $type
    * @param int $reference_id
    * @return bool
@@ -2341,38 +2355,6 @@ class User extends Justin
     )->counter;
   }
 
-  /**
-   * @return HasMany<Reaction>
-   */
-  public function reactions()
-  {
-    return $this->hasMany(Reaction::class);
-  }
-
-  // ------------------------------------------------
-  // Beatmaps ---------------------------------------
-  // ------------------------------------------------
-
-  /**
-   * @return Feedback
-   */
-  public function favorite_beatmaps()
-  {
-    return $this->feedback()->where("type", "beatmap");
-  }
-
-  // ------------------------------------------------
-  // Artists ----------------------------------------
-  // ------------------------------------------------
-
-  /**
-   * @return Feedback
-   */
-  public function favorite_artists()
-  {
-    return $this->feedback()->where("type", "artist");
-  }
-
   // ------------------------------------------------
   // Scores -----------------------------------------
   // ------------------------------------------------
@@ -2386,7 +2368,7 @@ class User extends Justin
   }
 
   /**
-   * @return ?Score
+   * @return Collection<Score>
    */
   public function first_place_scores(
     ?int $gumode = null,
@@ -2464,6 +2446,9 @@ class User extends Justin
   // Mailing ----------------------------------------
   // ------------------------------------------------
 
+  /**
+   * @return HasMany<Mailing>
+   */
   public function mailings()
   {
     return $this->hasMany(Mailing::class);
