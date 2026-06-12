@@ -49,6 +49,7 @@ use Heiakim\Time\Time;
 use Heiakim\Utils\Arr;
 use Heiakim\Utils\Str;
 use DateTime;
+use Heiakim\Registry\RedisRegistry;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -2654,8 +2655,8 @@ TEXT;
     /**
      * Set new redis keys for leaderboard.
      */
-    $bancho_key = Leaderboard::$redis_keys["bancho"];
-    $heiakim_key = Leaderboard::$redis_keys["heiakim"];
+    $bancho_key = RedisRegistry::$leaderboard_keys["osu!"];
+    $heiakim_key = RedisRegistry::$leaderboard_keys["players"];
 
     foreach (Gamemode::$modes as $mode) {
       $Stat = $this->stats()->where("mode", $mode)->first();
@@ -2733,8 +2734,8 @@ TEXT;
     /**
      * Set new redis keys for leaderboard.
      */
-    $bancho_key = Leaderboard::$redis_keys["bancho"];
-    $heiakim_key = Leaderboard::$redis_keys["heiakim"];
+    $bancho_key = RedisRegistry::$leaderboard_keys["osu!"];
+    $heiakim_key = RedisRegistry::$leaderboard_keys["players"];
 
     foreach (Gamemode::$modes as $mode) {
       /**

@@ -7,13 +7,14 @@ use Heiakim\Justin;
 use Heiakim\Model\Gamemode;
 use Heiakim\Model\Leaderboard;
 use Heiakim\Model\User;
+use Heiakim\Registry\RedisRegistry;
 
 class RedisCacheLeaderboard extends Justin
 {
   public function execute()
   {
     $Redis = $this->redis();
-    $base_key = Leaderboard::$redis_keys["bancho"];
+    $base_key = RedisRegistry::$leaderboard_keys["osu!"];
 
     foreach (Gamemode::$modes as $mode) {
       /**

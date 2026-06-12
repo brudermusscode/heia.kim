@@ -10,6 +10,7 @@ use Heiakim\Model\Leaderboard;
 use Heiakim\Model\App\AppSettings;
 use Heiakim\Model\Country;
 use Heiakim\Model\User;
+use Heiakim\Registry\RedisRegistry;
 use Heiakim\Time\Time;
 
 class RedisCacheLeaderboardDevelopment extends Justin
@@ -43,7 +44,7 @@ class RedisCacheLeaderboardDevelopment extends Justin
     /**
      * @var string
      */
-    $redis_base_key = Leaderboard::$redis_keys["heiakim"];
+    $redis_base_key = RedisRegistry::$leaderboard_keys["players"];
 
     foreach (Gamemode::$modes as $mode) {
 

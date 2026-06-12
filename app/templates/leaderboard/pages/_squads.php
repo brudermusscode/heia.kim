@@ -3,6 +3,7 @@
 use Heiakim\Model\Gamemode;
 use Heiakim\Model\Leaderboard;
 use Heiakim\Model\Squad;
+use Heiakim\Registry\RedisRegistry;
 use Heiakim\Utils\Utils;
 
 /**
@@ -17,7 +18,7 @@ use Heiakim\Utils\Utils;
  */
 $Redis = $Leaderboard->redis();
 
-$rkey = Leaderboard::$redis_keys["squads"]
+$rkey = RedisRegistry::$leaderboard_keys["squads"]
   . ":$gumode"
   . ($type === "performance" ? "" : ":rscore");
 $ranks = $Redis->zrevrange($rkey, $offset, $offset + $limit, "withscores");
@@ -30,11 +31,12 @@ $count = 0;
     <p text mid bold><?= __("The Best") ?></p>
   </div>
   <div best>
-    <?php foreach ($ranks as $squad_id => $pp) {
+    <?php
 
-      /**
-       * Only show the first 3.
-       */
+    # Best squads.
+    foreach ($ranks as $squad_id => $pp) {
+
+      # Only show the first 3.
       if ($count == 3)
         break;
 

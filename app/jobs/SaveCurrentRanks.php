@@ -8,6 +8,7 @@ use Heiakim\Model\Gamemode;
 use Heiakim\Model\Leaderboard;
 use Heiakim\Model\User;
 use DateTime;
+use Heiakim\Registry\RedisRegistry;
 
 class SaveCurrentRanks extends Job
 {
@@ -45,7 +46,7 @@ class SaveCurrentRanks extends Job
       /**
        * @var string
        */
-      $redis_key  = Leaderboard::$redis_keys["bancho"] . ":$mode";
+      $redis_key  = RedisRegistry::$leaderboard_keys["osu!"] . ":$mode";
 
       /**
        * @var array

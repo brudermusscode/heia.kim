@@ -15,6 +15,7 @@ use Heiakim\Utils\Utils;
 use Heiakim\Model\Image;
 use Heiakim\Model\Squad\SquadRequest;
 use Heiakim\Model\Thread\Thread;
+use Heiakim\Registry\RedisRegistry;
 use Heiakim\Validate\Validate;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Interfaces\ImageInterface;
@@ -638,9 +639,9 @@ class Squad extends Justin
        * ? Cache
        */
       foreach (Gamemode::$modes as $gumode) {
-        $this->redis()->zrem(Leaderboard::$redis_keys["squads"] . ":$gumode", $this->id);
-        $this->redis()->zrem(Leaderboard::$redis_keys["squads"] . ":$gumode:tscore", $this->id);
-        $this->redis()->zrem(Leaderboard::$redis_keys["squads"] . ":$gumode:rscore", $this->id);
+        $this->redis()->zrem(RedisRegistry::$leaderboard_keys["squads"] . ":$gumode", $this->id);
+        $this->redis()->zrem(RedisRegistry::$leaderboard_keys["squads"] . ":$gumode:tscore", $this->id);
+        $this->redis()->zrem(RedisRegistry::$leaderboard_keys["squads"] . ":$gumode:rscore", $this->id);
       }
 
       /**
@@ -831,7 +832,7 @@ class Squad extends Justin
       /**
        * @var string
        */
-      $rkey = Leaderboard::$redis_keys["squads"] . ":$mode";
+      $rkey = RedisRegistry::$leaderboard_keys["squads"] . ":$mode";
 
       /**
        * Add all keys.
@@ -1190,9 +1191,9 @@ class Squad extends Justin
 
     foreach (Gamemode::$modes as $gumode) {
       $placements[$gumode] = (object) [
-        "performance" => $this->redis()->zrevrank(Leaderboard::$redis_keys["squads"] . ":$gumode", $this->id) + 1,
-        "ranked_score" => $this->redis()->zrevrank(Leaderboard::$redis_keys["squads"] . ":$gumode:rscore", $this->id) + 1,
-        "total_score" => $this->redis()->zrevrank(Leaderboard::$redis_keys["squads"] . ":$gumode:tscore", $this->id) + 1,
+        "performance" => $this->redis()->zrevrank(RedisRegistry::$leaderboard_keys["squads"] . ":$gumode", $this->id) + 1,
+        "ranked_score" => $this->redis()->zrevrank(RedisRegistry::$leaderboard_keys["squads"] . ":$gumode:rscore", $this->id) + 1,
+        "total_score" => $this->redis()->zrevrank(RedisRegistry::$leaderboard_keys["squads"] . ":$gumode:tscore", $this->id) + 1,
       ];
     }
 

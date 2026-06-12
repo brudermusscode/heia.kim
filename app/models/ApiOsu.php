@@ -10,6 +10,7 @@ use Heiakim\Exception\ApiException;
 use Heiakim\Registry\ApiRegistry;
 use Heiakim\Time\Time;
 use Heiakim\Http\CURL;
+use Heiakim\Registry\RedisRegistry;
 
 class ApiOsu extends ApiProvider
 {
@@ -115,7 +116,7 @@ class ApiOsu extends ApiProvider
   {
 
     try {
-      $redis_cache_key = ApiRegistry::$redis_map["osu!"]["ranking"];
+      $redis_cache_key = RedisRegistry::$api_keys["osu!"]["ranking"];
       $leaderboard = $this->leaderboard(count: $count);
 
       foreach ($leaderboard as $ruleset => $users) {

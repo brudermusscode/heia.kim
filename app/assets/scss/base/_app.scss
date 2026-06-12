@@ -2047,17 +2047,15 @@ mode-menu {
 
 inline-navigator {
   @include themed() {
-    content: "";
-
     &:not([fl]) {
       display: block;
     }
 
-    a,
-    in-option {
+    a {
       content: "";
       border-radius: 24px;
-      padding: 18px 24px;
+      padding-block: 16px;
+      padding-inline: 16px 24px;
       background: t(box3);
 
       &:hover {
@@ -2073,7 +2071,7 @@ inline-navigator {
         pointer-events: none !important;
         color: t(active-text);
 
-        in-o-icon {
+        icon {
           mi {
             color: t(text);
           }
@@ -2083,25 +2081,25 @@ inline-navigator {
           }
         }
       }
-    }
 
-    in-o-icon {
-      display: block;
-      content: "";
-      position: relative;
-      height: 40px;
-      width: 40px;
+      icon {
+        display: block;
+        content: "";
+        position: relative;
+        height: 40px;
+        width: 40px;
 
-      svg {
-        fill: t(box);
-      }
+        svg {
+          fill: t(box);
+        }
 
-      mi {
-        position: absolute;
-        z-index: 1;
-        top: 50%;
-        left: 50%;
-        translate: -50% -50%;
+        mi {
+          position: absolute;
+          z-index: 1;
+          top: 50%;
+          left: 50%;
+          translate: -50% -50%;
+        }
       }
     }
   }

@@ -57,11 +57,10 @@ $leaderboard_counter = 0;
 if ($model === "players")
   $Leaderboard->update_countries();
 
-
 # Build the link base.
 $base_url = "/leaderboard";
 $link_add_type = $type ? "/$type" : "";
-$link_add_country = $country ? "?country=$country" : "";
+$link_add_country = $country && $country !== "global" ? "?country=$country" : "";
 
 # Build pagination.
 $ppage  = filter_var($_GET["ppage"] ?? 1, FILTER_VALIDATE_INT);
@@ -84,32 +83,13 @@ include __DIR__ . "/_header.php"; ?>
     </div>
 
     <div column=large flexone fl fldircol gap=smol>
-      <?php if (!$LeaderboardUsers) : ?>
 
-        <box-model rounded=wide filled=lighter>
-          <bm-inr p62>
-            <div fl fldircol alic jucc gap>
-              <div circled style=min-height:4.2em;width:4.2em; filled fl alic jucc>
-                <i class=mi text wide>face</i>
-              </div>
-              <div tac>
-                <p text wide bold><?= __("Nothing") ?></p>
-                <p text std><?= __("There are no players on this board.") ?></p>
-              </div>
-            </div>
-          </bm-inr>
-        </box-model>
+      <?php
 
-      <?php else :
+      $file_path = __DIR__ . "/pages/_$model.php";
+      $file_exists = file_exists($file_path);
 
-        $file_path = __DIR__ . "/pages/_$model.php";
-        $file_exists = file_exists($file_path);
-
-        include $file_exists ? $file_path : __DIR__ . "/pages/_players.php";
-
-      ?>
-
-      <?php endif; ?>
+      include $file_exists ? $file_path : __DIR__ . "/pages/_players.php"; ?>
 
       <div fl jucc>
         <div fl gap=smol flex-wrap=wrap alic>

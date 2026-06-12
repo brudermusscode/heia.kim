@@ -20,15 +20,6 @@ abstract class ApiRegistry
   ];
 
   /**
-   * Mapping for redis keys.
-   */
-  public static array $redis_map = [
-    "osu!" => [
-      "ranking" => "osu!:ranking", # + osu,mania,taiko,fruits
-    ]
-  ];
-
-  /**
    * @param string $key
    * @return ApiOsu|ApiDiscord|ApiGithub
    *

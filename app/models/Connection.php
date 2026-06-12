@@ -10,6 +10,7 @@ use Heiakim\Justin;
 use Heiakim\Trait\IsConnectionProvider;
 use Heiakim\Http\CURL;
 use Heiakim\Registry\ApiRegistry;
+use Heiakim\Registry\RedisRegistry;
 use Heiakim\Time\Time;
 use Heiakim\Utils\Utils;
 
@@ -124,7 +125,7 @@ class Connection extends Justin
     if (static::PROVIDER === "osu!") {
       foreach (ApiOsu::$rulesets as $ruleset) {
         $user_ids = $this->redis()
-          ->sMembers(ApiRegistry::$redis_map["osu!"]["ranking"] . ":$ruleset");
+          ->sMembers(RedisRegistry::$api_keys["osu!"]["ranking"] . ":$ruleset");
 
         # Continue, if there is nothing cached which should not happen 😃.
         if (!$user_ids) continue;

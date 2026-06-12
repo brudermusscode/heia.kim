@@ -69,150 +69,93 @@ export const get = async (
   reload = false,
   keep_overlays = false,
 ) => {
-  /**
-   * If the page is in loading state, return.
-   */
   if (__page.is_loading && !reload) return;
   if (__page.current === "maintenance") return;
 
-  /**
-   * Cancel all queued requests.
-   */
+  // Abort all queued ajax requests.
   __request.queue.forEach((req) => req.abort());
   __request.queue = [];
 
+  const __csrf_token = document
+    .find("head meta[name=csrf_token]")
+    ?.getAttribute("content");
   let url = href;
-
   let main_container = document.body.querySelector("main");
   let title;
-
-  /**
-   * Serialize the route the user is coming from.
-   */
   let coming_from_path = window.location.pathname;
   let coming_from_path_split = coming_from_path.split("/");
 
-  /**
-   * Prepare a reload.
-   */
+  // Prepare a reload if set.
   if (reload)
     url = url.concat(url.includes("?") ? "&reload=" : "?reload=") + random_string(8);
 
   /**
-   * Get the current route.
+   * @var object
    */
   let Route = await get_route(url);
 
-  /**
-   * Create the object for the history.
-   */
   let history_params = {};
   history_params["href"] = url;
 
-  /**
-   * Check if the current location is the same as the
-   * requested url. Return nothing in this case. Defines a variable
-   * is_same_location to use around this function as well as a
-   * variable that just figures out if the current location
-   * and the destinated one are from the same oruigin page
-   */
+  // Compare the new loaction with the previous.
   let current_location_route = window.location.pathname.split("/").shift()[0];
   let is_same_location =
     window.location.pathname.concat(window.location.search) == url;
   let is_same_history_route = url == current_location_route;
 
-  /**
-   * Return nothing if the current location is the same as the
-   * requested one.
-   */
+  // Return early with nothing when it's the same page.
   if (!state && is_same_location) return;
 
-  /**
-   * Create a new overlay only when the app is being initialized.
-   * Otherwise there would be two overlays lingering.
-   */
-  if (document.find("[loading-app]")) new Overlay(null);
-
-  /**
-   * Begin the new page load.
-   */
+  // Set frontend state.
   Frontend.close_ui_components();
   Frontend.load(1000);
+  Frontend.scroll_to_top();
 
-  /**
-   * Scroll to the top if the param is set to true.
-   */
-  if (scroll_top) Frontend.scroll_to_top();
-
-  /**
-   * Profile Editor is only available on Desktop by now. Redirect
-   * users that try to access it through a small device.
-   */
+  // Profile Editor is only available on Desktop by now. Redirect users that try to
+  // access it through a small device.
   if (
     Route.key == "editor" &&
     (window.innerHeight < 400 || window.innerWidth < 1000)
   ) {
     Frontend.unload();
 
-    console.log("Profile Editor only available on Desktop by now.");
-
     if (window.location.pathname.split("/")[1] !== "editor") {
       Request.get("/ui/unavailable?type=profileeditor");
     } else get("/home");
+
     return;
   }
-
-  /**
-   * Get CSRF token.
-   */
-  const __csrf_token = document
-    .find("head meta[name=csrf_token]")
-    ?.getAttribute("content");
 
   $.ajax({
     url: url,
     method: "GET",
     success: async function (data) {
-      /**
-       * Close overlays if.
-       */
+      //
+
+      // Close all overlays if not set different.
       if (!keep_overlays) Frontend.close_overlays();
 
-      /**
-       * Scroll to the top.
-       */
-      if (scroll_top && !state) window.scrollTo(0, 0);
+      // Scroll to the top only when not going back in history.
+      // if (scroll_top && !state) window.scrollTo(0, 0);
 
-      /**
-       * Update the page global.
-       */
+      // Update __page global.
       __page.current = Route.key;
       __page.marked = Route.mark ? Route.mark : Route.key;
 
-      /**
-       * Update main content.
-       */
+      // Insert the new content to the <main>.
       main_container.innerHTML = data;
 
-      /**
-       * Extract the title.
-       * @var string
-       */
+      // Extract the title.
       title = main_container.find("title")?.innerHTML;
 
-      /**
-       * If a redirect exists, redirect to the page inside the to attribute.
-       */
+      // Fire of any redirect that could be found inside the document tree.
       await redirect();
 
-      // ! Make better -----------------------------------------------------------
       // Fire a request for any <request>-element.
       main_container.find_all("request")?.forEach((elem) => Request.request(elem));
 
-      // ! Please. -----------------------------------------------------------------
-
-      // Pushes the coming state to the browser history and sets a proper
-      // title to the document.
+      // Pushes the coming state to the browser history and sets a proper title to
+      // the document.
       if (!state && !reload) {
         history.pushState(history_params, title, url);
         document.title =
@@ -221,78 +164,52 @@ export const get = async (
 
       clearInterval(scroll_interval);
 
-      /**
-       * Stop playing audio.
-       */
+      // Stop playing any audio and reset the global.
       if (__current_audio_element) {
         __current_audio_element.pause();
         __current_audio_element.remove();
         __current_audio_element = null;
       }
 
-      /**
-       * For each page load, we need to reset the infinite scrolling variables
-       * to let the new page, if available, can access those freshly and calculate
-       * when to add new items
-       */
+      // For each page load, we need to reset the infinite scrolling variables to let
+      // the new page, if available, can access those freshly and calculate when to
+      // add new items
       __infinite_scroll.start = 0;
       __infinite_scroll.reached_end = false;
       __infinite_scroll.reached_full_end = false;
 
-      /**
-       * Set header to scrolled.
-       */
+      // Set the header to scroll manipulated if scroll top is higher than a given
+      // amount.
       if (window.scrollY >= 20)
         document.find("[scroll-manipulated]")?.setAttribute("scrolled", "true");
 
-      /**
-       * Check for an exception and move it to a direct child of
-       * the body to be present in the very foreground.
-       */
+      // Set frontend state.
+      Frontend.unload();
       Frontend.extract_exception(main_container);
-
-      /**
-       * Floating actions are UI elements that appear above the
-       * main content and mostly stay fixed in place to get the
-       * user to fire of certain actions like lgoin/sign-up. The
-       * toggle for showing or hiding is handled in this function.
-       */
       Frontend.toggle_floating_actions(Route.key);
-
-      /**
-       * Toggle disguised frontend visuals when set.
-       */
       Frontend.disguise(Route, is_same_history_route);
+      Frontend.get_content();
+      Frontend.update_user_menu();
+      Frontend.reload_images();
 
-      /**
-       * Autofocus any input that has the attribute.
-       */
+      // Find [autofocus] and focus it.
       if (document.find("[autofocus]")) document.find("[autofocus]").focus();
 
-      /**
-       * Execute once function will only be fired when first
-       * accessing a new page, which is determined by the body
-       * carrying an attribute named after the route itself.
-       */
+      // If set, execute a function only once in a Route main key.
       if (
         typeof Route.execute_once === "function" &&
         !document.body.hasAttribute(Route.key)
       )
         Route.execute_once(url);
 
-      // TODO: Implement execute() for always firing functions.
+      // If set, execute a function on any page load.
+      if (typeof Route.execute_always === "function") Route.execute_always(url);
 
-      /**
-       * Remove all route attributes from any section where it will be
-       * added to.
-       */
+      // Remove the Router key from body and set a new one based on the new page.
       Object.keys(Router.routes).forEach((index) => {
         document.body.removeAttribute(index);
       });
 
-      /**
-       * Set route attributes.
-       */
       document.body.setAttribute(
         Route.key == ""
           ? "home"
@@ -302,39 +219,18 @@ export const get = async (
         "",
       );
 
-      /**
-       * Free the clicking on other links by disabling page loading.
-       */
-      Frontend.unload();
-
-      /**
-       * Update the user menu on any reload.
-       */
-      if (reload) Frontend.update_user_menu();
-
-      /**
-       * Load dynamic content.
-       */
-      Frontend.get_content();
-
-      /**
-       * Eval all script tags inside the newly fetched content.
-       */
+      // Find all <script> elements and fire off their scripts -
       main_container.find_all("script").forEach((script) => {
         eval(script.innerHTML);
       });
 
-      /**
-       * Deactivate all main navigation buttons.
-       */
+      // Deactivates all [page] elements which are links/buttons to different pages
+      // and in the following, find the one that has been clicked and any that is e-
+      // qual to the one clicked..
       document.find_all("[page]").forEach((button) => {
         button.unactivate();
       });
 
-      /**
-       * Set any navigation button carrying the [page] attribute
-       * with the name of the currently processed page to active.
-       */
       if (Route.mark)
         document
           .find_all(`[page="${Route.mark}"]`)
@@ -344,23 +240,16 @@ export const get = async (
           .find_all(`[page="${Route.key}"]`)
           ?.forEach((button) => button.activate());
 
-      // Set the current page to be marked.
-      // __page.marked = Route.mark ? Route.mark : route;
-
-      // The previous Router, basically the router for the page
-      // the user is coming from.
       let PreviousRoute = Router.router(coming_from_path_split[1]);
 
-      /**
-       * Set the body to initialized.
-       */
+      // Body can be set to initialized here!
       document.body.setAttribute("initialized", true);
 
-      /**
-       * Slide in page navigation buttons.
-       */
       let page_navigator = main_container.find("page-navigator");
 
+      // Based on where we came from, we want to either just show the page navigator
+      // without any animations, or slide in when visiting a new main model page like
+      // squads
       if (
         (Route.is_main_page && PreviousRoute.is_main_page) ||
         Route.key === coming_from_path_split[1]
@@ -371,15 +260,8 @@ export const get = async (
           Frontend.slide_in_navigation(page_navigator);
         }, Settings.PAGE_NAVIGATOR_SHOW_DELAY);
 
-      /**
-       * Reinitialize all material buttons.
-       */
+      // Reinitialize all material buttons for a sleek animation when clicked.
       MaterialButton.init();
-
-      /**
-       * Reload all images.
-       */
-      Frontend.reload_images();
 
       return true;
     },

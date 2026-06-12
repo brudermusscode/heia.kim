@@ -12,17 +12,6 @@ class Leaderboard extends Justin
   public $timestamps = null;
 
   /**
-   * Redis keys to use for caching leaderboards
-   *
-   * @var array
-   */
-  public static $redis_keys = [
-    "bancho" => "bancho:leaderboard", // + $gumode + $country + $type (tscore, rscore, pp)
-    "squads" => "bancho:leaderboard:squads", // + mode + type (tscore, rscore, pp)
-    "heiakim" => "heiakim:leaderboard:development", // + $gumode + $country + $type (tscore, rscore, pp)
-  ];
-
-  /**
    * @var array
    */
   public static $types = [
