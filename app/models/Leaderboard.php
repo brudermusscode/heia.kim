@@ -5,38 +5,34 @@ namespace Heiakim\Model;
 use Heiakim\Justin;
 use Heiakim\Database\Manager as DBM;
 use Heiakim\Model\Country;
+use Heiakim\Registry\RedisRegistry;
+use Illuminate\Support\Collection;
 
 class Leaderboard extends Justin
 {
+
+  /**
+   * Set this class to have no database table associated with it.
+   */
   protected $table = null;
   public $timestamps = null;
 
-  /**
-   * @var array
-   */
-  public static $types = [
+  public static array $types = [
     "performance",
     "score",
   ];
 
-  /**
-   * @var array
-   */
-  public static $models = [
+  public static array $models = [
     "players",
     "squads",
   ];
 
-  /**
-   * @var array
-   */
-  public static $order = [
+  public static array $order = [
     "pp",
     "tscore",
     "rscore",
     "acc",
   ];
-
 
   /**
    * @param int $mode as gumode
@@ -45,14 +41,20 @@ class Leaderboard extends Justin
    * @param int $offset
    * @return array
    */
-  public function view(int $mode, string $country = "global", string $sort = "pp", $limit = 50, int $offset = 0)
-  {
+  public function view(
+    int $mode,
+    string $country = "global",
+    string $sort = "pp",
+    $limit = 50,
+    int $offset = 0
+  ) {
+
     /**
-     * @var Redis::connect
+     * @var \Redis
      */
     $Redis = $this->redis();
 
-    $redis_key  = "bancho:leaderboard:$mode";
+    $redis_key  = RedisRegistry::$leaderboard_keys["players"] . ":$mode";
     $redis_key .= $country && !in_array($country, ["global", "xx"]) ? ':' . $country : '';
     $redis_key .= $sort !== "pp" ? ":$sort" : "";
 
@@ -66,11 +68,12 @@ class Leaderboard extends Justin
   }
 
   /**
-   * @param int $mode The gumode 0-7
-   * @return mixed Object or null
+   * @param int $gumode
+   * @return mixed
    */
-  public static function get_countries(int $mode)
+  public static function get_countries(int $gumode)
   {
+
     return (new DBM)->select(
       "SELECT COUNT(country) count, country
       FROM users
@@ -79,28 +82,28 @@ class Leaderboard extends Justin
       AND stats.mode = ?
       and stats.acc > 0.000
       GROUP BY country ORDER BY country DESC",
-      [$mode],
+      [$gumode],
       true,
     );
   }
 
   /**
-   * @return object
+   * Adds newly discovered country abbreviations to the database.
+   *
+   * @return void
    */
   public function update_countries()
   {
+
     /**
-     * @var Users
+     * @var Collection<User>
      */
-    $Users = User::select("country")->groupBy("country")->get();
+    $Users = User::select("country")
+      ->groupBy("country")
+      ->get();
 
-    foreach ($Users as $User) {
+    foreach ($Users as $User)
       if (!Country::where("abbreviation", $User->country)->first())
-        Country::create([
-          "abbreviation" => $User->country,
-        ]);
-    }
-
-    return $this->success();
+        Country::create(["abbreviation" => $User->country]);
   }
 }

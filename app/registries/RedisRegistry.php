@@ -6,16 +6,17 @@ abstract class RedisRegistry
 {
 
   /**
-   * Keys for leaderboard specific keys.
+   * Leaderboard specific keys.
    */
   public static array $leaderboard_keys = [
-    "osu!" => "osu!:leaderboard", // + $gumode + $country + $type (tscore/rscore/pp)
-    "squads" => "leaderboard:squads", // + mode + type (tscore/rscore/pp)
-    "players" => "leaderboard:development", // + $gumode + $country + $type
+    "osu!" => "osu!:leaderboard", // + gumode + country + scoring-type
+    "players" => "leaderboard", // + gumode + country + scoring-type
+    "players-climb" => "leaderboard:climb", // + gumode + country + scoring-type
+    "squads" => "leaderboard:squads", // + mode + scoring-type
   ];
 
   /**
-   * Keys for API specific redis keys.
+   * API specific keys.
    */
   public static array $api_keys = [
     "osu!" => [

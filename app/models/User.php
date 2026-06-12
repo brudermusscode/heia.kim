@@ -49,9 +49,14 @@ use Heiakim\Time\Time;
 use Heiakim\Utils\Arr;
 use Heiakim\Utils\Str;
 use DateTime;
+use Heiakim\Model\Squad\SquadPostAttachment;
+use Heiakim\Model\Squad\SquadPostVote;
 use Heiakim\Registry\RedisRegistry;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 
 class User extends Justin
 {
@@ -190,226 +195,115 @@ class User extends Justin
 
   /**
    * @param object $params
-   * @return object
+   * @return string
    */
   public function edit(object $params)
   {
-    /**
-     * @var ?Change
-     */
-    $Change = null;
 
-    /**
-     * * Password
-     */
-    if (isset($params->password, $params->current_password)) {
-      $current_password = htmlspecialchars_decode($params->current_password);
-      $User = User::verify_login($this->name, $current_password);
-
-      /**
-       * Password is wrong?
-       */
-      if (!$User)
-        return $this->error("<strong>Your credentials seem to be wrong!</strong>");
-
-      /**
-       * Current set password is matching?
-       */
-      if ($params->current_password == $params->password)
-        return $this->error("<strong>This is your current password.</strong> Choose another one!");
-
-      /**
-       * @var string
-       */
-      $password = htmlspecialchars_decode($params->password);
-
-      /**
-       * Check all previous passwords.
-       */
-      foreach ($this->password_changes()->get() as $Change) {
-        if (
-          self::decrypt_password($password, $Change->previous_value)
-        ) {
-          return $this->error(
-            "<strong>You have used this password before.</strong> Please choose another one."
-          );
-        }
-      }
-
-      /**
-       * Password is of valid length?
-       */
-      if (Str::length($password, 6, 36)) {
-        return $this->error(
-          "<strong>Your password should be between 6 - 36 characters long.</strong>"
-        );
-      }
-
-      /**
-       * Encrypt password and add it to the params object.
-       */
-      $this->pw_bcrypt = self::encrypt_password($password);
-
-      /**
-       * Precreate a password change entry.
-       *
-       * @var Change
-       */
-      $Change = $this->changes()->make([
-        "type" => "password",
-        "previous_value" => $this->pw_bcrypt,
-        "updated_value" => $params->pw_bcrypt,
-        "updated_at" => null,
-      ]);
-    }
-
-    /**
-     * * Mail
-     */
-    if (isset($params->email)) {
-      /**
-       * Mail is invalid?
-       */
-      if (!filter_var($params->email, FILTER_VALIDATE_EMAIL)) {
-        return $this->error("<strong>Your mail is invalid</strong> 😆");
-      }
-
-      /**
-       * @var ?User
-       */
-      $UserWithMail = self::where("email", $params->email)->first();
-
-      if ($UserWithMail) {
-        return $this->error(
-          "<strong>This e-mail address is in use already.</strong>"
-        );
-      }
-
-      /**
-       * Set the new mail.
-       */
-      $this->email = $params->email;
-    }
-
-    /**
-     * ? Name
-     */
-    if (isset($params->name)) {
-      /**
-       * Has name changes left?
-       */
-      if ($this->settings->name_changes_left < 1) {
-        return request_error(
-          "<strong>No name changes left!</strong> " .
-            $this->dd["UNLOCK_MORE_WITH_PREMIUM"]
-        );
-      }
-
-      /**
-       * Is current name?
-       */
-      if ($this->name === $params->name) {
-        return request_error("<strong>This is your name!</strong>");
-      }
-
-      /**
-       * Validate the new name.
-       */
-      $this->validate_name($params->name, include_former_names: true);
-
-      /**
-       * Check if the user has had this name before. If not, we
-       * need to check further for other users that could have had
-       * this name.
-       *
-       * @var ?Change
-       */
-      $Change = $this->name_changes()
-        ->where("previous_value", $params->name)
-        ->first();
-
-      if (!$Change) {
-        /**
-         * @var ?Change
-         */
-        $Change = Change::where("type", "name")
-          ->where("previous_value", $params->name)
-          ->whereNot("user_id", $this->id)
-          ->first();
-
-        /**
-         * If a name change exists, this name is a former name of
-         * another player and thus is not available for the
-         * current user.
-         */
-        if ($Change) {
-          return $this->error(
-            "<strong>This name is not available!</strong> Please choose another one."
-          );
-        }
-      }
-
-      /**
-       * Set name & safe name.
-       */
-      $this->safe_name = self::create_safe_name($params->name);
-      $this->name = $params->name;
-
-      /**
-       * @var ?Change
-       */
-      $Change = $this->name_changes()->make([
-        "type" => "name",
-        "previous_value" => $this->name,
-        "updated_value" => $params->name,
-      ]);
-
-      /**
-       * Update settings and remove one name change.
-       */
-      $this->settings->name_changes_left =
-        $this->settings->name_changes_left - 1;
-
-      $return_msg = "<strong>Hello, $params->name!</strong>";
-    }
-
-    /**
-     * ? Preferred Gamemode
-     */
-    if (isset($params->mode, $params->mod)) {
-      $this->preferred_mode = Gamemode::get_gumode_as_int(
-        $params->mode,
-        $params->mod
-      );
-
-      unset($params->mode, $params->mod);
-    }
-
-    /**
-     * Begin database transaction.
-     */
+    # Begin database transaction.
     $this->db_transaction();
+
     try {
-      /**
-       * Save & commit!
-       */
+
+      $Change = null;
+
+      # ? Password
+      if (isset($params->password, $params->current_password)) {
+        $current_password = htmlspecialchars_decode($params->current_password);
+        $User = User::verify_login($this->name, $current_password);
+
+        # Could not verify login credentials?
+        if (!$User)
+          return error("<strong>Your credentials seem to be wrong!</strong>");
+
+        # Current set password is matching the old one?
+        if ($params->current_password === $params->password)
+          return error("<strong>This is your current password.</strong> Choose another one!");
+
+        # ? Password
+        # Need to decode special chars as the Controller will automatically
+        # encode everything.
+        $password = htmlspecialchars_decode($params->password);
+
+        # Check all previous passwords.
+        foreach ($this->password_changes()->get() as $Change) {
+          if (self::decrypt_password($password, $Change->previous_value)) {
+            return error(
+              "<strong>You have used this password before.</strong> Please choose another one."
+            );
+          }
+        }
+
+        $this->set_password_invalid($password);
+
+        /**
+         * @var Change
+         */
+        $Change = $this->changes()
+          ->make([
+            "type" => "password",
+            "previous_value" => $this->pw_bcrypt,
+            "updated_value" => $params->pw_bcrypt,
+            "updated_at" => null,
+          ]);
+      }
+
+      # ? Mail
+      $this->set_mail_invalid($params->email);
+
+      # ? Name
+      if (isset($params->name)) {
+
+        # No name changes left?
+        if ($this->settings->name_changes_left < 1)
+          return error(
+            "<strong>No name changes left!</strong> " .
+              $this->dd["UNLOCK_MORE_WITH_PREMIUM"]
+          );
+
+        $this->set_name_invalid($params->name);
+
+        /**
+         * @var Change
+         */
+        $Change = $this->name_changes()
+          ->make([
+            "type" => "name",
+            "previous_value" => $this->name,
+            "updated_value" => $params->name,
+          ]);
+
+        # Remove one name change.
+        $this->settings->decrement("name_changes_left");
+
+        $return_msg = "<strong>Hello, $params->name!</strong>";
+      }
+
+      # ? Preferred Gamemode
+      if (isset($params->mode, $params->mod)) {
+        $this->preferred_mode = Gamemode::get_gumode_as_int(
+          $params->mode,
+          $params->mod
+        );
+
+        unset($params->mode, $params->mod);
+      }
+
+      # Save anything & commit!
       $this->save();
       $this->settings->save();
       $Change?->save();
       $this->db_commit();
 
-      return request_success(
+      return success(
         $return_msg ??
           "<strong>Your information has been saved!</strong>"
       );
     } catch (\Exception $e) {
-      /**
-       * Log & rollback.
-       */
       Logger::to_file($e);
       $this->db_rollback();
 
-      return request_error();
+      return error();
     }
   }
 
@@ -419,6 +313,7 @@ class User extends Justin
    */
   public function remove(object $params)
   {
+
     /**
      * @var User
      */
@@ -429,197 +324,148 @@ class User extends Justin
      */
     $SquadUser = $CurrentUser->squad_user;
 
-    /**
-     * User is a squad owner?
-     * ! Error
-     */
+    # User is a squad owner?
     if ($SquadUser && $SquadUser->is_owner()) {
-      return $this->error(
+      return error(
         "<strong>Please transfer the ownership of your squad, before you delete your account.</strong>"
       );
     }
 
-    /**
-     * Begin new database transaction.
-     */
+    # Begin new database transaction.
     $this->db_transaction();
 
     try {
-      // ? Authentications
+
+      # ? Authentications
       $CurrentUser->authentications()->delete();
 
-      // ? Changes
+      # ? Changes
       $CurrentUser->changes()->delete();
 
-      // ? Squad
+      # ? Squad
       $CurrentUser->squad_requests()?->delete();
       $CurrentUser->squad_feed_item()?->delete();
       $SquadUser?->delete();
 
-      // ? Client hashes
+      # ? Client hashes
       $CurrentUser->client_hashes()->delete();
 
-      // ? Connect credentials
+      # ? Connect credentials
       $CurrentUser->connections()->delete();
 
-      // ? Favourites
+      # ? Favourites
       $CurrentUser->osu_favorites()->delete();
 
-      // ? Feedback
+      # ? Feedback
       $CurrentUser->feedback()->delete();
 
-      /**
-       * This will only delete images of type __user__. Squad
-       * images will still be available.
-       *
-       * ? Images
-       */
+      # ? Images
+      # This will only delete images of type __user__. Squad images will still be a-
+      # vailable.
       $CurrentUser->images()->delete();
 
-      // ? Ingame logins
+      # ? Ingame logins
       $CurrentUser->osu_ingame_logins()->delete();
 
-      // ? Mailings
+      # ? Mailings
       $CurrentUser->mailings()->delete();
 
-      // ? Manager
+      # ? Manager
       $CurrentUser->manager_authentications()->delete();
-
       $CurrentUser->manager_logs()->delete();
-
       $CurrentUser->manager_sessions()->delete();
-
       $CurrentUser->manager_user()->delete();
 
-      // ? Beatmap Requests
+      # ? Beatmap Requests
       $CurrentUser->beatmap_requests()->delete();
 
-      // ? Notifications
+      # ? Notifications
       $CurrentUser->notifications()->delete();
 
-      // ? Orders
-      $Orders = $CurrentUser->orders()->get();
-
-      foreach ($Orders as $Order) {
-        /**
-         * @var Order $Order
-         */
-
+      # ? Orders
+      $CurrentUser->orders->each(function (Order $Order) {
         $Order->paypal()->delete();
-      }
+        $Order->delete();
+      });
 
-      // ? Password Resets
+      # ? Password Resets
       $CurrentUser->password_resets()->delete();
 
-      // ? Profile
+      # ? Profile
       $CurrentUser->profile()->delete();
 
-      // ? Ratings
+      # ? Ratings
       $CurrentUser->osu_ratings()->delete();
 
-      // ? Reactions
+      # ? Reactions
       $CurrentUser->reactions()->delete();
 
-      // ? Relationships
-      $Relationships = Relationship::whereRaw("user1 = ? OR user2 = ?", [
-        $this->id,
-        $this->id,
-      ])->get();
+      # ? Relationships
+      Relationship::whereRaw("user1 = ? OR user2 = ?", [$this->id, $this->id])
+        ->get()
+        ?->each(fn(Relationship $R) => $R->delete());
 
-      foreach ($Relationships as $Relationship) {
-        $Relationship->delete();
-      }
-
-      // ? Reports
+      # ? Reports
       $CurrentUser->reports()->delete();
 
-      // ? Restrictions
+      # ? Restrictions
       $CurrentUser->restrictions()->delete();
 
+      # ? Appeals
       $CurrentUser->appeals()->delete();
 
-      // ? Scores
-      $Scores = $CurrentUser->scores();
-
-      foreach ($Scores->get() as $Score) {
-        /**
-         * @var Score $Score
-         */
-
+      # ? Scores
+      $CurrentUser->scores->each(function (Score $Score) {
         $Score->comments()->delete();
-
         $Score->reactions()->delete();
-
         $Score->thread_post_attachments()->delete();
-      }
+        $Score->delete();
+      });
 
-      $Scores->delete();
-
-      // ? Searches
+      # ? Searches
       $CurrentUser->searches()->delete();
 
-      // ? Sessions
+      # ? Sessions
       $CurrentUser->sessions()->delete();
 
-      // ? Stats
+      # ? Stats
       $CurrentUser->stats()->delete();
 
-      // ? Stat Developments
+      # ? Stat Developments
       $CurrentUser->stat_development()->delete();
 
-      // ? Threads
-      foreach ($CurrentUser->threads() as $Thread) {
-        $Posts = $Thread->posts();
-
-        /**
-         * Delete all attachments.
-         */
-        foreach ($Posts->get() as $Post) {
-          $Post->attachments()->delete();
-        }
-
-        /**
-         * Delete Posts & finally the Thread.
-         */
-        $Posts->delete();
+      # ? Threads
+      $CurrentUser->threads->each(function ($Thread) {
+        $Thread->posts->each(function ($Post) {
+          $Post->attachments->each->delete();
+          $Post->delete();
+        });
         $Thread->delete();
-      }
+      });
 
-      // ? Achievements
+      # ? Achievements
       $CurrentUser->achievements()->delete();
 
-      // ? Pins
+      # ? Pins
       $CurrentUser->pins()->delete();
 
-      // ? Settings
+      # ? Settings
       $CurrentUser->settings()->delete();
-
       $CurrentUser->privacy()->delete();
-
       $CurrentUser->premium()->delete();
 
-      /**
-       * ! DELETE THE USER OMG !
-       */
+      # ! DELETE THE USER OMG
       $CurrentUser->delete();
 
+      # Commit!
       $this->db_commit();
 
-      /**
-       * ? Success
-       */
-      return $this->success("<strong>See you l8er boi.</strong>");
+      return success("<strong>See you l8er boi.</strong>");
     } catch (\Exception $e) {
-      /**
-       * Log & Rollback 🤔.
-       */
       Logger::to_file($e);
       $this->db_rollback();
 
-      /**
-       * ! Error
-       */
-      return $this->error(
+      return error(
         "<strong>What happened?</strong> Something is wrong, definetely."
       );
     }
@@ -640,9 +486,11 @@ class User extends Justin
     # Trim the email string first.
     $email = trim($email);
 
+    # Mail is of invalid format?
     if (!filter_var($email, FILTER_VALIDATE_EMAIL))
       return die(error("<strong>Mail invalid!</strong>"));
 
+    # Mail exists on another User?
     if (self::where("email", $email)->exists())
       return die(error("<strong>You can't use this E-Mail brother!</strong>"));
 
@@ -744,9 +592,9 @@ class User extends Justin
   public function set_password_invalid(string $password, bool $die_on_error = true)
   {
 
-    # Set some validation if wanted. I think the user can decide
-    # for themselves, if their password should be secure or not.
-    # I don't see it as my task to force them 🙂
+    # Set some validation if wanted. I think the user can decide for themselves, if
+    # their password should be secure or not. I don't see it as my task to force them
+    # 🙂
 
     $this->pw_bcrypt = self::encrypt_password($password);
   }
@@ -756,12 +604,13 @@ class User extends Justin
    */
   public function create_default_profile()
   {
-    return $this->profile()->create([
-      "sections_visibility" => Arr::to_json(
-        Profile::$sections_visibility
-      ),
-      "tabs_visibility" => Arr::to_json(Profile::$tabs_visibility),
-    ]);
+    return $this->profile()
+      ->create([
+        "sections_visibility" => Arr::to_json(
+          Profile::$sections_visibility
+        ),
+        "tabs_visibility" => Arr::to_json(Profile::$tabs_visibility),
+      ]);
   }
 
   /**
@@ -769,8 +618,8 @@ class User extends Justin
    */
   public static function guest()
   {
+
     /**
-     * Create a new instance of this object.
      * @var User
      */
     $Instance = self::findOrNew(0);
@@ -794,7 +643,7 @@ class User extends Justin
    */
   public function owns(Image|Comment $Content)
   {
-    return $Content->user && $Content->user()->is($this);
+    return $Content->user?->is($this) ?? false;
   }
 
   /**
@@ -811,20 +660,24 @@ class User extends Justin
       !$this->has_accepted_privacy_policies();
   }
 
-    // ? >>>>>>>>>>>>>>>>> AUTHENTICATIONS >>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Authentications --------------------------------
+  // ------------------------------------------------
 
   /**
-   * @return ?Authentication
+   * @return HasMany<Authentication>
    */
   public function authentications()
   {
     return $this->hasMany(Authentication::class);
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> INGAME >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Ingame -----------------------------------------
+  // ------------------------------------------------
 
   /**
-   * @return ?ClientHash
+   * @return HasMany<ClientHash>
    */
   public function client_hashes()
   {
@@ -832,7 +685,7 @@ class User extends Justin
   }
 
   /**
-   * @return ?OsuFavorite
+   * @return HasMany<OsuFavorite>
    */
   public function osu_favorites()
   {
@@ -840,7 +693,7 @@ class User extends Justin
   }
 
   /**
-   * @return ?OsuIngameLogin
+   * @return HasMany<OsuIngameLogin>
    */
   public function osu_ingame_logins()
   {
@@ -848,7 +701,7 @@ class User extends Justin
   }
 
   /**
-   * @return ?OsuRating
+   * @return HasMany<OsuRating>
    */
   public function osu_ratings()
   {
@@ -856,17 +709,19 @@ class User extends Justin
   }
 
   /**
-   * @return ?Achievement
+   * @return HasMany<Achievement>
    */
   public function achievements()
   {
     return $this->hasMany(Achievement::class, "userid", "id");
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> MANAGER >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Manager ----------------------------------------
+  // ------------------------------------------------
 
   /**
-   * @return ?ManagerAuthentication
+   * @return HasMany<ManagerAuthentication>
    */
   public function manager_authentications()
   {
@@ -874,7 +729,7 @@ class User extends Justin
   }
 
   /**
-   * @return ?ManagerLog
+   * @return HasMany<ManagerLog>
    */
   public function manager_logs()
   {
@@ -882,7 +737,7 @@ class User extends Justin
   }
 
   /**
-   * @return ?ManagerSession
+   * @return HasMany<ManagerSession>
    */
   public function manager_sessions()
   {
@@ -890,17 +745,19 @@ class User extends Justin
   }
 
   /**
-   * @return ?ManagerUser
+   * @return HasOne<ManagerUser>
    */
   public function manager_user()
   {
     return $this->hasOne(ManagerUser::class);
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> THREADS >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Threads ----------------------------------------
+  // ------------------------------------------------
 
   /**
-   * @return ?Thread
+   * @return HasMany<Thread>
    */
   public function threads()
   {
@@ -908,21 +765,23 @@ class User extends Justin
   }
 
   /**
-   * @return ?ThreadPost
+   * @return HasMany<ThreadPost>
    */
   public function thread_posts()
   {
     return $this->hasMany(ThreadPost::class);
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> SSO >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // SSO --------------------------------------------
+  // ------------------------------------------------
 
   /**
    * @return bool
    */
   public function signed_up_through_sso()
   {
-    return $this->google || $this->discord || $this->osu;
+    return $this->github || $this->discord || $this->osu;
   }
 
   /**
@@ -942,6 +801,15 @@ class User extends Justin
   }
 
   /**
+   * @return HasOne<ConnectionOsu>
+   */
+  public function osu()
+  {
+    return $this->hasOne(ConnectionOsu::class)
+      ->where("provider", "osu!");
+  }
+
+  /**
    * @return HasOne<ConnectionDiscord>
    */
   public function discord()
@@ -951,27 +819,20 @@ class User extends Justin
   }
 
   /**
-   * @return HasOne<ConnectionGoogle>
+   * @return HasOne<ConnectionGithub>
    */
-  public function google()
+  public function github()
   {
-    return $this->hasOne(ConnectionGoogle::class)
-      ->where("provider", "google");
+    return $this->hasOne(ConnectionGithub::class)
+      ->where("provider", "github");
   }
 
-  /**
-   * @return HasOne<ConnectionOsu>
-   */
-  public function osu()
-  {
-    return $this->hasOne(ConnectionOsu::class)
-      ->where("provider", "osu!");
-  }
-
-    // ? >>>>>>>>>>>>>>>>>>> RESTRICTION SYSTEM >>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Restrictions -----------------------------------
+  // ------------------------------------------------
 
   /**
-   * @return ?Restriction
+   * @return HasMany<Restriction>
    */
   public function restrictions()
   {
@@ -998,24 +859,17 @@ class User extends Justin
 
   /**
    * @param object $params
-   * @return bool
+   * @return void
    */
   public function restrict(object $params)
   {
-    /**
-     * Remove cached data.
-     */
+
+    # Remove redis cached data.
     $this->remove_cached_data();
 
-    /**
-     * Remove unrestricted privileges. This will also update the
-     * frozen state.
-     */
+    # Remove unrestricted privileges. This will also update the frozen state.
     $this->remove_privileges(Privilege::UNRESTRICTED);
 
-    /**
-     * @var ?string
-     */
     $reason = !empty($params->reason) ? $params->reason : null;
 
     /**
@@ -1025,22 +879,20 @@ class User extends Justin
       ->create([
         "reason" => $reason,
         "updated_at" => null,
-      ])
-      ->fresh();
+      ]);
 
     /**
      * @var Notification
      */
-    $this->notifications()->create([
-      "type" => "__system__/restriction",
-      "reference_id" => null,
-      "reference_2_id" => $Restriction->id,
-      "updated_at" => null,
-    ]);
+    $this->notifications()
+      ->create([
+        "type" => "__system__/restriction",
+        "reference_id" => null,
+        "reference_2_id" => $Restriction->id,
+        "updated_at" => null,
+      ]);
 
-    /**
-     * Send mail if the user has one set.
-     */
+    # Send mail, if the user has one set.
     if ($this->email && $this->privacy && $this->privacy->mailing_account) {
       $app_url = _env("SERVER_ADDRESS");
 
@@ -1085,22 +937,22 @@ class User extends Justin
         $mail_body
       );
 
+      # Send it & create a new Mailing.
       if ((new Mail())->create($this->email, $mail_subject, $mail_body)) {
-        $this->mailings()->create([
-          "template" => $mail_template,
-          "email" => $this->email,
-          "subject" => $mail_subject,
-          "token" => $mail_token,
-          "updated_at" => null,
-        ]);
+        $this->mailings()
+          ->create([
+            "template" => $mail_template,
+            "email" => $this->email,
+            "subject" => $mail_subject,
+            "token" => $mail_token,
+            "updated_at" => null,
+          ]);
       }
     }
-
-    return true;
   }
 
   /**
-   * @return ?RestrictionAppeal
+   * @return HasMany<RestrictionAppeal>
    */
   public function appeals()
   {
@@ -1112,12 +964,9 @@ class User extends Justin
    */
   public function appeal_being_reviewed()
   {
-    /**
-     * User is not frozen nor restricted?
-     */
-    if (!$this->frozen_at || !$this->is_restricted()) {
+    # User is not frozen nor restricted?
+    if (!$this->frozen_at || !$this->is_restricted())
       return null;
-    }
 
     return $this->appeals()
       ->whereRaw("created_at > ?", $this->frozen_at)
@@ -1130,12 +979,9 @@ class User extends Justin
    */
   public function current_appeal()
   {
-    /**
-     * User is not restricted nor frozen?
-     */
-    if (!$this->frozen_at && !$this->is_restricted()) {
+    # User is not restricted nor frozen?
+    if (!$this->frozen_at && !$this->is_restricted())
       return null;
-    }
 
     return $this->appeals()
       ->whereRaw("created_at > ?", $this->frozen_at)
@@ -1149,12 +995,10 @@ class User extends Justin
    */
   public function current_appeal_declined()
   {
-    /**
-     * User is not restricted nor frozen?
-     */
-    if (!$this->frozen_at && !$this->is_restricted()) {
+
+    # User is not restricted nor frozen?
+    if (!$this->frozen_at && !$this->is_restricted())
       return null;
-    }
 
     return $this->appeals()
       ->whereRaw("updated_at > ? & status = 'DECLINED'", $this->frozen_at)
@@ -1163,19 +1007,16 @@ class User extends Justin
   }
 
   /**
+   * User is currently restricted and there is an appeal waiting for being processed
+   * by a staff member
+   *
    * @return ?RestrictionAppeal
    */
   public function current_appeal_after_restriction_waiting_period()
   {
-    /**
-     * User is currently restricted and there is an appeal waiting
-     * for being processed by a staff member?
-     */
-    if ($this->is_restricted() && $this->current_appeal()) {
-      return $this->current_appeal();
-    }
-
-    return null;
+    return $this->is_restricted() && $this->current_appeal()
+      ? $this->current_appeal()
+      : null;
   }
 
   /**
@@ -1183,12 +1024,10 @@ class User extends Justin
    */
   public function declined_live_play()
   {
-    /**
-     * User is frozen?
-     */
-    if (!$this->frozen_at) {
+
+    # User is frozen?
+    if (!$this->frozen_at)
       return null;
-    }
 
     return $this->appeals()
       ->whereRaw("created_at > ?", $this->frozen_at)
@@ -1202,12 +1041,10 @@ class User extends Justin
    */
   public function declined_appeal()
   {
-    /**
-     * User is frozen?
-     */
-    if (!$this->frozen_at) {
+
+    # User is frozen?
+    if (!$this->frozen_at)
       return null;
-    }
 
     return $this->appeals()
       ->whereRaw("created_at > ?", $this->frozen_at)
@@ -1217,25 +1054,18 @@ class User extends Justin
   }
 
   /**
-   * @return ?string Time left as a human readable string or null.
+   * Gets the time left for the lockage of a new appeal as a human readable string.
+   *
+   * @return ?string
    */
-  public function appeal_locked()
+  public function appeal_locked_for()
   {
-    /**
-     * User is not restricted?
-     */
-    if (!$this->is_restricted()) {
-      return false;
-    }
 
-    /**
-     * @var int
-     */
+    # User is not restricted?
+    if (!$this->is_restricted())
+      return null;
+
     $restrictions_count = $this->restrictions()->count();
-
-    /**
-     * @var string
-     */
     $interval = match ($restrictions_count) {
       1 => "+1 second",
       2 => "+5 seconds",
@@ -1245,7 +1075,9 @@ class User extends Justin
     /**
      * @var Restriction
      */
-    $Restriction = $this->restrictions()->latest()->first();
+    $Restriction = $this->restrictions()
+      ->latest()
+      ->first();
 
     /**
      * @var DateTime
@@ -1254,16 +1086,11 @@ class User extends Justin
       $interval
     );
 
-    /**
-     * @var ?string
-     */
-    $time_to_appeal_left = Time::left(
+    return Time::left(
       $appeal_ready_time->format("Y-m-d H:i:s"),
       exact_hours: false,
       full: false
     );
-
-    return $time_to_appeal_left;
   }
 
     // ? >>>>>>>>>>>>>>>>>>>>> REQUESTS >>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1652,7 +1479,7 @@ class User extends Justin
   }
 
   /**
-   * @var Privilege $Privilege
+   * @param Privilege $Privilege
    * @return bool
    */
   public function missing_privileges_of(Privilege $Privilege)
@@ -1661,22 +1488,21 @@ class User extends Justin
   }
 
   /**
-   * Allows certain roles and users to interact with
-   * everything.
+   * Allows certain roles and users to interact with everything.
    *
    * @return bool
    */
   public function is_super_user()
   {
-    return // $this->has_privileges_of(Privilege::COMMUNITY_MANAGER)
-      // ||
-      in_array($this->id, [3]);
+    return in_array($this->id, [3]);
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> COUNTRY >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Country ----------------------------------------
+  // ------------------------------------------------
 
   /**
-   * @return string The country string.
+   * @return string
    */
   public function country_string()
   {
@@ -1689,7 +1515,7 @@ class User extends Justin
   }
 
   /**
-   * @return Country
+   * @return BelongsTo<Country>
    */
   public function country()
   {
@@ -1697,7 +1523,9 @@ class User extends Justin
   }
 
   /**
-   * @return include /app/templates/helper/_image_country.php
+   * @return void
+   *
+   * NOTE: includes /app/templates/helper/_image_country.php
    */
   public function country_icon()
   {
@@ -1705,30 +1533,35 @@ class User extends Justin
     return include ROOT . "/app/templates/helper/_image_country.php";
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> RANKING >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Rankings ---------------------------------------
+  // ------------------------------------------------
 
   /**
-   * Fetches all rankings of this user from flobal to country and
-   * possible gamemodes
+   * Fetches all rankings of this user from flobal to country and possible gamemodes.
    *
-   * @param int $gumode The gamemode (optional)
-   * @return object All rankings or just of one gumode
+   * @param int $gumode
+   * @return object
    */
   public function get_rankings(int $gumode)
   {
+
+    /**
+     * @var \Redis
+     */
     $Redis = $this->redis();
     $return = (object) [];
     $country = $this->data()->country;
+    $redis_base_key = RedisRegistry::$leaderboard_keys["players"];
 
-    /**
-     * Build redis key.
-     */
+    # Build redis keys.
     $global_rank = $Redis->zrevrank(
-      "bancho:leaderboard:$gumode",
+      "$redis_base_key:$gumode",
       $this->id
     );
+
     $country_rank = $Redis->zrevrank(
-      "bancho:leaderboard:$gumode:$country",
+      "$redis_base_key:$gumode:$country",
       $this->id
     );
 
@@ -1740,25 +1573,31 @@ class User extends Justin
   }
 
   /**
-   * @return array
+   * @return object<object>
    */
   public function get_all_rankings()
   {
+
+    /**
+     * @var \Redis
+     */
     $Redis = $this->redis();
-    $return = [];
+    $return = (object) [];
     $country = $this->data()->country;
+    $redis_base_key = RedisRegistry::$leaderboard_keys["players"];
 
     foreach (Gamemode::$modes as $key => $gumode) {
       $global_rank = $Redis->zrevrank(
-        "bancho:leaderboard:$gumode",
-        $this->id
-      );
-      $country_rank = $Redis->zrevrank(
-        "bancho:leaderboard:$gumode:$country",
+        "$redis_base_key:$gumode",
         $this->id
       );
 
-      $return[$key] = [
+      $country_rank = $Redis->zrevrank(
+        "$redis_base_key:$gumode:$country",
+        $this->id
+      );
+
+      $return->$key = (object) [
         "mode" => $gumode,
         "global" => $global_rank !== null ? $global_rank + 1 : null,
         "country" => $country_rank !== null ? $country_rank + 1 : null,
@@ -1770,22 +1609,24 @@ class User extends Justin
   }
 
   /**
-   * Evaluates if the user has raised or dropped in ranks and
-   * gives the exact count.
+   * Evaluates if the user has raised or dropped in ranks and gives the exact count.
    *
-   * @param int $gumode The mode as gumode.
-   * @return object An object with the status whether dropped or
-   *    increased (or stagnated) and the amount in ranks.
+   * @param int $gumode
+   * @return object<object>
    */
   public function get_rank_development(int $gumode)
   {
+
+    /**
+     * @var \Redis
+     */
     $Redis = $this->redis();
     $country = $this->country;
 
     /**
      * Global backup
      */
-    $redis_key = "heiakim:leaderboard:development";
+    $redis_key = RedisRegistry::$leaderboard_keys["players-climb"];
     $old_rank_global = $Redis->zrevrank("$redis_key:$gumode", $this->id);
     $old_rank_score_global = $Redis->zrevrank(
       "$redis_key:$gumode:rscore",
@@ -1804,7 +1645,7 @@ class User extends Justin
     /**
      * Current rankings
      */
-    $redis_key = "bancho:leaderboard";
+    $redis_key = RedisRegistry::$leaderboard_keys["players"];
     $current_rank_global = $Redis->zrevrank(
       "$redis_key:$gumode",
       $this->id
@@ -1823,11 +1664,8 @@ class User extends Justin
       $this->id
     );
 
-    /**
-     * Compare rankings
-     */
-    return [
-      "global" => [
+    return (object) [
+      "global" => (object) [
         "performance" =>
         $current_rank_global !== null
           ? $current_rank_global - $old_rank_global
@@ -1837,7 +1675,7 @@ class User extends Justin
           ? $current_rank_score_global - $old_rank_score_global
           : null,
       ],
-      "country" => [
+      "country" => (object) [
         "performance" =>
         $current_rank_country !== null
           ? $current_rank_country - $old_rank_country
@@ -1939,6 +1777,7 @@ class User extends Justin
    */
   public function get_bancho_game_status()
   {
+
     $Bancho = (new Bancho())->request("v2/players/$this->id/status");
 
     if (!$Bancho || $Bancho->status == "error" || !$Bancho->status) {
@@ -1972,8 +1811,10 @@ class User extends Justin
     ]);
   }
 
-    // ? >>>>>>>>>>>>>>>>>>> AUTHORIZATION >>>>>>>>>>>>>>>>>>>>>
-
+  // ------------------------------------------------
+  // Authorization ----------------------------------
+  // ------------------------------------------------
+  //
   /**
    * @param Image $Content
    * @param bool $die_on_error
@@ -1994,7 +1835,9 @@ class User extends Justin
         : true);
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> PREMIUM >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Premium ----------------------------------------
+  // ------------------------------------------------
 
   /**
    * @return User\UserSettingsPremium
@@ -2005,7 +1848,7 @@ class User extends Justin
   }
 
   /**
-   * @return bool Whether or not
+   * @return bool
    */
   public function is_premium()
   {
@@ -2013,6 +1856,7 @@ class User extends Justin
   }
 
   /**
+   * @param string $datetime
    * @return void
    */
   public function give_premium(string $datetime)
@@ -2020,23 +1864,16 @@ class User extends Justin
     $current_premium_time = max($this->donor_end, time());
     $future_end_time = strtotime($datetime, $current_premium_time);
 
-    /**
-     * Update the user.
-     */
+    # Update the User.
     $this->update([
       "donor_end" => $future_end_time,
     ]);
 
-    /**
-     * Create premium settings.
-     */
-    if (!$this->premium) {
+    # Create UserSettingsPremium.
+    if (!$this->premium)
       $this->premium()->create();
-    }
 
-    /**
-     * Add supporter privileges to the user.
-     */
+    # Add supporter privileges.
     $this->add_privileges(Privilege::SUPPORTER);
 
     return;
@@ -2056,15 +1893,17 @@ class User extends Justin
 
       if ($premium_name_style) {
         return <<<TEXT
-    <span class="is-premium-name premium-txt-$premium_name_style">$this->name</span>
-TEXT;
+          <span class="is-premium-name premium-txt-$premium_name_style">$this->name</span>
+        TEXT;
       } else {
         return $this->name;
       }
     }
   }
 
-  // ? >>>>>>>>>>>>>>>>> NOTIFICATIONS >>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Notifications ----------------------------------
+  // ------------------------------------------------
 
   /**
    * @return HasMany<Notification>
@@ -2075,7 +1914,7 @@ TEXT;
   }
 
   /**
-   * @return void
+   * @return bool
    */
   public function touch_notifications()
   {
@@ -2097,7 +1936,9 @@ TEXT;
       ->count();
   }
 
-  // ? >>>>>>>>>>>>>>>>>>>>> SQUADS >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Squads -----------------------------------------
+  // ------------------------------------------------
 
   /**
    * @return ?Squad
@@ -2139,11 +1980,11 @@ TEXT;
    * Gets the SquadUser object for the current user, which holds
    * parameters just as privileges.
    *
-   * @return Squad\SquadUser
+   * @return HasOne<SquadUser>
    */
   public function squad_user()
   {
-    return $this->hasOne(Squad\SquadUser::class);
+    return $this->hasOne(SquadUser::class);
   }
 
   /**
@@ -2247,14 +2088,12 @@ TEXT;
   /**
    * Includes requests for joining and invites.
    *
-   * @return ?Squad\SquadRequest
+   * @return HasMany<SquadRequest>
    */
   public function squad_requests()
   {
-    return $this->hasMany(Squad\SquadRequest::class, "user_id")->orWhere(
-      "reference_id",
-      $this->id
-    );
+    return $this->hasMany(SquadRequest::class, "user_id")
+      ->orWhere("reference_id", $this->id);
   }
 
   /**
@@ -2271,6 +2110,10 @@ TEXT;
       !$User->is($this);
   }
 
+  /**
+   * @param Squad $Squad
+   * @return ?string
+   */
   public function available_action_for(Squad $Squad)
   {
     return match (!0) {
@@ -2285,25 +2128,32 @@ TEXT;
   }
 
   /**
-   * @return ?Squad\SquadRequest
+   * @param Squad $Squad
+   * @return ?SquadRequest
    */
   public function has_invite_from(?Squad $Squad)
   {
-    return $Squad?->invites()->where("reference_id", $this->id)->first();
-  }
-
-  /**
-   * @return ?Squad\SquadRequest
-   */
-  public function requested_to_join(Squad $Squad)
-  {
-    return SquadRequest::where("user_id", $this->id)
-      ->where("type", "join")
-      ->where("clan_id", $Squad->id)
+    return $Squad?->invites()
+      ->where("reference_id", $this->id)
       ->first();
   }
 
   /**
+   * @param Squad $Squad
+   * @return ?SquadRequest
+   */
+  public function requested_to_join(Squad $Squad)
+  {
+    return SquadRequest::where([
+      "user_id" => $this->id,
+      "type" => "join",
+      "clan_id" => $Squad->id,
+    ])
+      ->first();
+  }
+
+  /**
+   * @param Squad $Squad
    * @return ?SquadRequest
    */
   public function has_active_squad_request_for(Squad $Squad)
@@ -2315,64 +2165,52 @@ TEXT;
   }
 
   /**
-   * @return ?Squad\SquadFeedItem
+   * @return HasMany<SquadFeedItem>
    */
   public function squad_feed_item()
   {
-    return $this->hasMany(Squad\SquadFeedItem::class);
+    return $this->hasMany(SquadFeedItem::class);
   }
 
   /**
-   * @return ?Squad\SquadPost
+   * @return HasMany<SquadPost>
    */
   public function squad_post()
   {
-    return $this->hasMany(Squad\SquadPost::class);
+    return $this->hasMany(SquadPost::class);
   }
 
   /**
-   * @return ?Squad\SquadPostVote
+   * @return HasMany<SquadPostVote>
    */
   public function squad_post_votes()
   {
-    return $this->hasMany(Squad\SquadPostVote::class);
+    return $this->hasMany(SquadPostVote::class);
   }
 
   /**
-   * @return ?Squad\SquadPostComment
+   * @return HasMany<SquadPostComment>
    */
   public function squad_post_comments()
   {
-    return $this->hasMany(Squad\SquadPostComment::class);
+    return $this->hasMany(SquadPostComment::class);
   }
 
   /**
-   * Dynamically checks for a given content to have a vote on it.
-   * It evaluates the Content's source Model and checks
-   * specifically for it.
-   *
+   * @param SquadPost $Content
    * @return ?SquadPostVote
    */
   public function has_voted_for(SquadPost $Content)
   {
-    return
-      /**
-       * ? SquadPost
-       */
-      $Content instanceof SquadPost
-      ? $this->squad_post_votes()
+    return $this->squad_post_votes()
       ->where("post_id", $Content->id)
       ->whereNull("deleted_at")
-      ->first()
-      :
-      /**
-       * ? Add more as more will be added.
-       */
-      null;
+      ->first();
   }
 
   /**
-   * @return ?SquadPost
+   * @param SquadPost $Content
+   * @return ?SquadPostPollAnswer
    */
   public function has_answered_poll(SquadPost $Content)
   {
@@ -2383,12 +2221,13 @@ TEXT;
       ->first();
   }
 
-    // ? >>>>>>>>>>>>>>>>> FOLLOWER SYSTEM >>>>>>>>>>>>>>>>>>>>>
-    // * When a user starts following another user, the user making
-    // * the action will be user1!
+  // ------------------------------------------------
+  // Relationships ----------------------------------
+  // User making a request is user1 -----------------
+  // ------------------------------------------------
 
   /**
-   * @return ?Relationship
+   * @return BelongsToMany<Relationship>
    */
   public function followers()
   {
@@ -2403,7 +2242,7 @@ TEXT;
   }
 
   /**
-   * @return ?Relationship
+   * @return BelongsToMany<Relationship>
    */
   public function followings()
   {
@@ -2436,7 +2275,9 @@ TEXT;
   }
 
   /**
-   * @param User $User The User watching the profile.
+   * A string to determine which action to show for the User viewing a Profile.
+   *
+   * @param User $User
    * @return string
    */
   public function follow_action_display(User $User)
@@ -2446,41 +2287,34 @@ TEXT;
      */
     $viewing_self = $this->id === $User->id;
 
-    /**
-     * Viewing own profile?
-     */
+    # Viewing own profile?
     if ($viewing_self) {
       return "manage";
     }
 
-    /**
-     * User watching the profile is not following, but the user
-     * being watched does follow the one watching. Special case,
-     * show follow back!
-     */
+    # User watching the profile is not following, but the user being watched does fo-
+    # llow the one watching. Special case, show follow back!
     if ($this->follows($User) && !$User->follows($this)) {
       return "refollow";
     }
 
-    /**
-     * User watching the profile is not following.
-     */
+    # User watching the profile is not following.
     if (!$User->follows($this)) {
       return "follow";
     }
 
-    /**
-     * User watching the profile is following.
-     */
+    # User watching the profile is following.
     if ($User->follows($this)) {
       return "unfollow";
     }
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> FEEDBACK >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Feedback & Reactions ---------------------------
+  // ------------------------------------------------
 
   /**
-   * @return ?Feedback
+   * @return HasMany<Feedback>
    */
   public function feedback()
   {
@@ -2488,10 +2322,9 @@ TEXT;
   }
 
   /**
-   * Check if a given user has given feedback to this score.
-   *
-   * @param int $user_id The user id.
-   * @return boolean True of false.
+   * @param string $type
+   * @param int $reference_id
+   * @return bool
    */
   public function has_given_feedback_for(string $type, int $reference_id)
   {
@@ -2509,14 +2342,16 @@ TEXT;
   }
 
   /**
-   * @return ?Reaction
+   * @return HasMany<Reaction>
    */
   public function reactions()
   {
     return $this->hasMany(Reaction::class);
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> BATMAPS >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Beatmaps ---------------------------------------
+  // ------------------------------------------------
 
   /**
    * @return Feedback
@@ -2526,7 +2361,9 @@ TEXT;
     return $this->feedback()->where("type", "beatmap");
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> ARTISTS >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Artists ----------------------------------------
+  // ------------------------------------------------
 
   /**
    * @return Feedback
@@ -2536,10 +2373,12 @@ TEXT;
     return $this->feedback()->where("type", "artist");
   }
 
-    // ? >>>>>>>>>>>>>>>>>>>>> SCORES >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Scores -----------------------------------------
+  // ------------------------------------------------
 
   /**
-   * @return Score
+   * @return HasMany<Score>
    */
   public function scores()
   {
@@ -2557,35 +2396,28 @@ TEXT;
     int $offset = 0,
     bool $from_api = false
   ) {
+
     /**
-     * @var ?Score
+     * @var Collection<Score>
      */
     $Scores = $this->scores()
 
-      /**
-       * Only public columns.
-       */
+      # API: Only public columns.
       ->when($from_api, function ($q) {
         $q->select(ScoresGateway::$public_columns);
       })
 
-      /**
-       * Filter by gumode.
-       */
+      # Filter by gumode.
       ->when($gumode !== null, function ($q) use ($gumode) {
         $q->where("scores.mode", $gumode);
       })
 
-      /**
-       * Only loved and ranked scores.
-       */
+      # Only loved & ranked beatmaps.
       ->whereHas("beatmap", function ($q) {
         $q->whereIn("maps.status", [2, 5]);
       })
 
-      /**
-       * Filter out scores that are not first.
-       */
+      # Filter out all scores that are not the #1 for this User.
       ->join(
         $this->getConnection()->raw(
           "(SELECT map_md5, MAX(pp) as max_pp FROM scores GROUP BY map_md5) as max_scores"
@@ -2600,6 +2432,7 @@ TEXT;
         $this->getConnection()->raw("max_scores.max_pp")
       )
 
+      # Only submitted scores.
       ->whereIn("scores.status", [2])
       ->orderBy($order, $sort)
       ->limit($limit)
@@ -2627,22 +2460,27 @@ TEXT;
     return $Scores;
   }
 
-  // ? >>>>>>>>>>>>>>>>>>>>> MAILING >>>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Mailing ----------------------------------------
+  // ------------------------------------------------
 
   public function mailings()
   {
     return $this->hasMany(Mailing::class);
   }
 
-    // ? >>>>>>>>>>>>>>>>>> CACHED DATA >>>>>>>>>>>>>>>>>>>>>>>>
+  // ------------------------------------------------
+  // Redis Cache ------------------------------------
+  // ------------------------------------------------
 
   /**
-   * @return object
+   * @return void
    */
   public function refresh_cached_data()
   {
+
     /**
-     * @var \Predis\Client
+     * @var \Redis
      */
     $redis = $this->redis();
 
@@ -2651,10 +2489,6 @@ TEXT;
      */
     $Country = $this->country()->first();
     $country = $Country->abbreviation;
-
-    /**
-     * Set new redis keys for leaderboard.
-     */
     $bancho_key = RedisRegistry::$leaderboard_keys["osu!"];
     $heiakim_key = RedisRegistry::$leaderboard_keys["players"];
 
@@ -2669,16 +2503,12 @@ TEXT;
         $Stat = $Stat->fresh();
       }
 
-      /**
-       * Bancho
-       */
+      # Bancho.
       $redis->zadd("$bancho_key:$mode", $Stat->pp, $this->id);
       $redis->zadd("$bancho_key:$mode:rscore", $Stat->rscore, $this->id);
       $redis->zadd("$bancho_key:$mode:tscore", $Stat->tscore, $this->id);
 
-      /**
-       * Bancho country
-       */
+      # Bancho country.
       $redis->zadd("$bancho_key:$mode:$country", $Stat->pp, $this->id);
       $redis->zadd(
         "$bancho_key:$mode:$country:rscore",
@@ -2691,16 +2521,12 @@ TEXT;
         $this->id
       );
 
-      /**
-       * heia.kim
-       */
+      # heia.kim.
       $redis->zadd("$heiakim_key:$mode", $Stat->pp, $this->id);
       $redis->zadd("$heiakim_key:$mode:rscore", $Stat->rscore, $this->id);
       $redis->zadd("$heiakim_key:$mode:tscore", $Stat->tscore, $this->id);
 
-      /**
-       * Bancho country
-       */
+      # heia.kim country.
       $redis->zadd("$heiakim_key:$mode:$country", $Stat->pp, $this->id);
       $redis->zadd(
         "$heiakim_key:$mode:$country:rscore",
@@ -2716,12 +2542,13 @@ TEXT;
   }
 
   /**
-   * @return object
+   * @return void
    */
   public function remove_cached_data()
   {
+
     /**
-     * @var \Predis\Client
+     * @var \Redis
      */
     $redis = $this->redis();
 
@@ -2730,38 +2557,27 @@ TEXT;
      */
     $Country = $this->country()->first();
     $country = $Country->abbreviation;
-
-    /**
-     * Set new redis keys for leaderboard.
-     */
     $bancho_key = RedisRegistry::$leaderboard_keys["osu!"];
     $heiakim_key = RedisRegistry::$leaderboard_keys["players"];
 
     foreach (Gamemode::$modes as $mode) {
-      /**
-       * Bancho
-       */
+
+      # Bancho.
       $redis->zrem("$bancho_key:$mode", $this->id);
       $redis->zrem("$bancho_key:$mode:rscore", $this->id);
       $redis->zrem("$bancho_key:$mode:tscore", $this->id);
 
-      /**
-       * Bancho country
-       */
+      # Bancho country.
       $redis->zrem("$bancho_key:$mode:$country", $this->id);
       $redis->zrem("$bancho_key:$mode:$country:rscore", $this->id);
       $redis->zrem("$bancho_key:$mode:$country:tscore", $this->id);
 
-      /**
-       * heia.kim
-       */
+      # heia.kim.
       $redis->zrem("$heiakim_key:$mode", $this->id);
       $redis->zrem("$heiakim_key:$mode:rscore", $this->id);
       $redis->zrem("$heiakim_key:$mode:tscore", $this->id);
 
-      /**
-       * heia.kim country
-       */
+      # heia.kim country.
       $redis->zrem("$heiakim_key:$mode:$country", $this->id);
       $redis->zrem("$heiakim_key:$mode:$country:rscore", $this->id);
       $redis->zrem("$heiakim_key:$mode:$country:tscore", $this->id);
@@ -2773,67 +2589,19 @@ TEXT;
    */
   public function wipe()
   {
-    /**
-     * Remove cached data.
-     */
-    $this->remove_cached_data();
 
-    /**
-     * Begin a new database transaction.
-     */
+    # Begin a database transaction! Nothing to leave behind!
     $this->db_transaction();
 
     try {
-      /**
-       * Update stats.
-       */
-      $this->stats()->update([
-        "tscore" => 0,
-        "rscore" => 0,
-        "pp" => 0,
-        "plays" => 0,
-        "playtime" => 0,
-        "max_combo" => 0,
-        "total_hits" => 0,
-        "replay_views" => 0,
-        "xh_count" => 0,
-        "x_count" => 0,
-        "sh_count" => 0,
-        "s_count" => 0,
-        "a_count" => 0,
-        "acc" => 0.0,
-      ]);
 
-      /**
-       * Remove all stat developments.
-       */
+      $this->remove_cached_data();
+      $this->stats()->update(new Stat()->getAttributes());
       $this->stat_development()->delete();
-
-      /**
-       * Remove pins
-       */
       $this->pins()->delete();
+      $this->scores()->each(fn(Score $Score) => $Score->remove());
 
-      /**
-       * Delete all scores or roll everything back if one failed.
-       */
-      foreach ($this->scores as $Score) {
-        /**
-         * @var Score $Score
-         */
-
-        if (!$Score->remove()) {
-          $this->db_rollback();
-          return $this->error(
-            "<strong>Error while removing your scores.</strong> " .
-              $this->dd["TRY_OR_STAFF"]
-          );
-        }
-      }
-
-      /**
-       * Update settings.
-       */
+      # For any user that is not super, substract 1 account wipe left.
       if (!$this->is_super_user()) {
         $this->settings()->update([
           "account_wipes_left" =>
@@ -2842,30 +2610,23 @@ TEXT;
         ]);
       }
 
-      /**
-       * Commit all changes.
-       */
+      # Commit!
       $this->db_commit();
 
-      return $this->success(
-        "<strong>Wiped!</strong> Good luck on your new path, my friend."
-      );
+      return success("<strong>Wiped!</strong> Good luck on your new path, friend.");
     } catch (\Exception $e) {
-      /**
-       * Log & rollback.
-       */
       Logger::to_file($e);
       $this->db_rollback();
 
-      return $this->error($e);
+      return error($e->getMessage());
     }
   }
 
   /**
-   * Fetches the modes of the user having set scores in in the
-   * order descending from most played to less played.
+   * Fetches the modes of the user having set scores in in the order descending from
+   * most played to less played.
    *
-   * @return ?Score
+   * @return Collection<Score>
    */
   public function favorite_modes()
   {
@@ -2882,6 +2643,7 @@ TEXT;
    */
   public function top_scores_of_all_gumodes(bool $in_api = false)
   {
+
     $return = [];
 
     foreach (Gamemode::$modes as $key => $gumode) {
@@ -2906,16 +2668,15 @@ TEXT;
   }
 
   /**
-   * Fetches the most played beatmaps counted by played scores
-   * connected to beatmaps.
+   * Gets the most played beatmaps counted by related scores connected to them.
    *
-   * @param int $gumode The gulag mode.
-   * @param int $limit The fetch limit.
-   * @return object of Beatmaps or null.
+   * @param int $gumode
+   * @param int $limit
+   * @return Collection<Beatmap>
    */
   public function most_played_beatmaps(int $gumode = 0, int $limit = 20)
   {
-    $B = Beatmap::select("maps.*")
+    return Beatmap::select("maps.*")
       ->join("scores", "scores.map_md5", "=", "maps.md5")
       ->where("scores.mode", $gumode)
       ->where("scores.userid", $this->id)
@@ -2923,21 +2684,17 @@ TEXT;
       ->orderByRaw("COUNT(scores.id) DESC")
       ->limit($limit)
       ->get();
-
-    return $B;
   }
 
   /**
-   * Users can do some changes to their settings for just a set
-   * amount. This function checks, if the User has available a
-   * "change" to the given type.
+   * Users can do some changes to their settings for just a set amount. This function
+   * checks, if the User has available a "change" to the given type.
    *
    * @param string $of
    * @return ?int
    */
   public function changes_left(string $of)
   {
-
     $which = match ($of) {
       "name" => "name_changes_left",
       "birthday" => "birthday_changes_left",
@@ -2946,37 +2703,6 @@ TEXT;
     };
 
     return $which ? $this->settings->$which : null;
-  }
-
-  /**
-   * Checks a mails availability
-   *
-   * @param string $mail The mail to check for
-   * @return bool Whether or not it was successful
-   */
-  public static function mail_in_use(string $mail)
-  {
-    return User::where("email", $mail)->first();
-  }
-
-  /**
-   * Complete validation of mail including checks for:
-   * chars, availability
-   * @return bool
-   */
-  public function mail_usable(string $mail)
-  {
-    $mail = Request::escape_params(["email" => $mail]);
-
-    if (!Validate::mail($mail->email)) {
-      return false;
-    }
-
-    if (!self::mail_in_use($mail->email)) {
-      return false;
-    }
-
-    return true;
   }
 
   /**
@@ -2996,6 +2722,7 @@ TEXT;
   /**
    * @param string $password
    * @param string $hash
+   * @param bool $md5
    * @return bool
    */
   public static function decrypt_password(
@@ -3016,19 +2743,9 @@ TEXT;
     return $this->data()->priv > 2;
   }
 
-  /**
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,, VALIDATION ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   */
-
-  /**
-   * @return bool
-   */
-  public static function mail_has_valid_format(string $mail)
-  {
-    return filter_var($mail, FILTER_VALIDATE_EMAIL) !== false;
-  }
+  // ------------------------------------------------
+  // ------------------------------------------------
+  // ------------------------------------------------
 
   /**
    * Returns all the users being premium members.
@@ -3037,6 +2754,7 @@ TEXT;
    */
   public static function premium_members()
   {
-    return self::whereRaw("priv & ? != 0", [Privilege::SUPPORTER->value]);
+    return static::whereRaw("priv & ? != 0", [Privilege::SUPPORTER->value])
+      ->get();
   }
 }
