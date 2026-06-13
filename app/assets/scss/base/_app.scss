@@ -533,7 +533,7 @@ main {
   transition: none;
 
   @media screen and (max-width: $full-hd-max-width) {
-    padding-left: calc($page-navigator-smol-width);
+    padding-left: calc($page-navigator-width);
     padding-right: $main-distance;
   }
 
@@ -1874,108 +1874,6 @@ input[type="range"] {
           @extend [text], [smol];
         }
       }
-    }
-  }
-}
-
-mode-menu {
-  content: "";
-  display: block;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  z-index: $endless-z-index;
-
-  @media screen and (max-width: 800px) {
-    display: none;
-  }
-
-  [mm-mods] {
-    position: absolute;
-    bottom: 0.8em;
-    right: 0;
-    display: flex;
-    align-items: center;
-    gap: $gap-smoler;
-
-    p {
-      height: 24px;
-      padding-inline: 16px;
-      border-radius: 8px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-
-  [mm-menu] {
-    position: absolute;
-    bottom: 1.6em;
-    right: 2.4em;
-    z-index: 2;
-    top: initial;
-    transition: $trans-cubic;
-    min-width: 224px;
-    overflow: hidden;
-
-    &[active] {
-      bottom: 2.4em;
-    }
-
-    [jm-inr] {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding-block: 8px;
-    }
-  }
-
-  [mm-open] {
-    transition: $trans-cubic;
-    position: absolute;
-    bottom: 2.4em;
-    right: 2.4em;
-    overflow: hidden;
-
-    [mm-open-loading] {
-      position: absolute;
-      opacity: 0;
-      visibility: hidden;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      @include themed() {
-        background: t(hover-invert);
-      }
-    }
-
-    &:hover {
-      scale: 1.02;
-    }
-  }
-
-  &[inactive] {
-    [mm-open] {
-      bottom: -12em;
-    }
-  }
-
-  &[loading] {
-    [mm-open] {
-      [mm-open-loading] {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
-
-    * {
-      pointer-events: none;
     }
   }
 }

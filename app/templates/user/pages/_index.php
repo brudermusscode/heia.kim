@@ -18,13 +18,9 @@ $DecodedProfile = $User->decoded_profile();
 
 ?>
 
-
-<!--- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, SIDEBAR ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, --->
-
 <div page-structure=user>
 
+  <!--- Left content --->
   <div top-actions>
     <?php if (CurrentUser->sqcan_invite($User)) { ?>
       <form request="squad:request:create" reload responder=always>
@@ -79,17 +75,10 @@ $DecodedProfile = $User->decoded_profile();
       ?>
     </div>
 
-
-    <!--- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, MIDDLE ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, --->
-
+    <!--- Mid content --->
     <div column=large flexone fl fldircol gap=mid>
       <?php
 
-      /**
-       * @var int
-       */
       $fetch_limit = 7;
 
       /**
@@ -98,16 +87,11 @@ $DecodedProfile = $User->decoded_profile();
       $ProfileFirstColumn = $DecodedProfile->sections_visibility[1]
         ?? $Profile->sections_visibility[1];
 
-      /**
-       * Convention over configuration, huh? Thank you for this
-       * point of view, Rails. I love you.
-       */
+      # Convention over configuration, huh? Thank you for this point of view, Rails.
+      # I love you 🙂
       foreach ($ProfileFirstColumn as $object_name => $object_visibility) {
         $object_file_path = dirname(__DIR__) . "/objects/_$object_name.php";
 
-        /**
-         * Include the object file, if it exists.
-         */
         if (file_exists($object_file_path))
           include $object_file_path;
       }
@@ -115,11 +99,7 @@ $DecodedProfile = $User->decoded_profile();
       ?>
     </div>
 
-
-    <!--- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, SIDEBAR ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, --->
-
+    <!--- Right content --->
     <div column=small hide-tablet fl fldircol gap=mid>
 
       <?php

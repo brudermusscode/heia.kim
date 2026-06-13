@@ -270,6 +270,7 @@ export const ajax_error = (error) => {
 export const get_content = () => {
   let get_contents = document.find_all("get-content");
   let url;
+  let new_element;
 
   get_contents.forEach((element) => {
     url = element.getAttribute("from");
@@ -281,11 +282,15 @@ export const get_content = () => {
       method: "GET",
       success: function (data) {
         element.insertAdjacentHTML("afterend", data?.data ?? data);
+        new_element = element.nextElementSibling;
         element.remove();
 
-        Frontend.reload_images();
+        // Execute the JS code globally.
+        new_element.find_all("script")?.forEach((script) => {
+          $.globalEval(script.innerHTML);
+        });
 
-        $.globalEval($(element).find("script").text());
+        Frontend.reload_images();
       },
       error: function (error, status) {
         if (status !== "abort") Frontend.ajax_error(error);

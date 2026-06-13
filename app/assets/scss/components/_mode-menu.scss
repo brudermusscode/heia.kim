@@ -1,0 +1,104 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+mode-menu {
+  content: "";
+  display: block;
+  position: fixed;
+  bottom: $main-distance;
+  right: $main-distance;
+  z-index: $endless-z-index;
+
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
+
+  [mm-mods] {
+    position: absolute;
+    bottom: 0.8em;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: $gap-smoler;
+
+    p {
+      height: 24px;
+      padding-inline: 16px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  [mm-menu] {
+    position: absolute;
+    bottom: -1.2em;
+    right: 0;
+    z-index: 2;
+    top: initial;
+    transition:
+      bottom 0.2s $cubic,
+      height 0.2s $cubic,
+      opacity 0.2s $cubic;
+    min-width: 224px;
+    overflow: hidden;
+
+    &[active] {
+      bottom: 0;
+    }
+
+    [jm-inr] {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding-block: 8px;
+    }
+  }
+
+  [mm-open] {
+    transition: $trans-cubic;
+    overflow: hidden;
+
+    [mm-open-loading] {
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @include themed() {
+        background: t(hover-invert);
+      }
+    }
+
+    &:hover {
+      scale: 1.02;
+    }
+  }
+
+  &[inactive] {
+    [mm-open] {
+      bottom: -12em;
+    }
+  }
+
+  &[loading] {
+    [mm-open] {
+      [mm-open-loading] {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    * {
+      pointer-events: none;
+    }
+  }
+}

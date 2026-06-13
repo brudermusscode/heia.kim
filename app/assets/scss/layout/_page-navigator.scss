@@ -1,0 +1,93 @@
+@use "../abstract" as *;
+@use "../base" as *;
+
+page-navigator {
+  content: "";
+  position: fixed;
+  z-index: 2001; // 1 more than header.
+  top: 50%;
+  left: 0;
+  translate: 0 -50%;
+  width: $page-navigator-width;
+  height: 100svh;
+  padding-block: $main-distance;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  @include hide_mobile();
+
+  [pn-options] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    & > :first-child[pn-o-divider] {
+      display: none;
+    }
+
+    [pn-o-divider] {
+      height: 0.32em;
+      width: 0.32em;
+      margin-block: 0.4em;
+      border-radius: 50%;
+
+      @include themed() {
+        background: t(hover);
+      }
+    }
+  }
+
+  [pn-option] {
+    margin-left: -3.2em;
+    opacity: 0;
+    visibility: hidden;
+    transition: $trans-cubic;
+
+    [pn-o-button-off] {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      height: 0%;
+      width: 4px;
+      border-radius: 12px;
+      rotate: -45deg;
+
+      @include themed() {
+        border: 2px solid t(bg);
+        background: $red;
+      }
+    }
+
+    &[turned-off] {
+      color: $red;
+
+      [pn-o-button-off] {
+        width: 6px;
+        height: 80%;
+      }
+    }
+
+    &[slidin] {
+      visibility: visible;
+      opacity: 1;
+      margin-left: initial;
+    }
+
+    &[show] {
+      transition:
+        $trans-cubic,
+        margin-left 0s linear,
+        opacity 0s linear,
+        visibility 0s linear;
+      visibility: visible;
+      opacity: 1;
+      margin-left: initial;
+    }
+  }
+}

@@ -3,7 +3,7 @@
 
 user-menu {
   position: fixed;
-  bottom: calc($main-distance / 2);
+  bottom: $main-distance;
   left: 50%;
   translate: -50% 0;
   // margin-left: calc($page-navigator-width - 2 * $main-distance);

@@ -17,9 +17,8 @@ use Heiakim\Model\User;
  * @var bool $is_champion
  */
 
-?>
-
-<?php if (!$has_played) { ?>
+# + User has not yet played.
+if (!$has_played) : ?>
 
   <mbutton material has-icon=left has-icon=right size=mid tag filled>
     <mi>panorama_fish_eye</mi>
@@ -39,7 +38,10 @@ use Heiakim\Model\User;
     </div>
   </mbutton>
 
-<?php } else { ?>
+<?php
+
+# + User has played already.
+else : ?>
 
   <div fl alic gap=smol+ z>
     <div fl alic gap=smol has-tooltip=bottom z curwhat>
@@ -51,8 +53,10 @@ use Heiakim\Model\User;
     </div>
 
 
-    <?php if ($is_champion) { ?>
+    <?php
 
+    # + User is champion! (#1)
+    if ($is_champion) : ?>
 
       <mbutton material has-icon=left has-icon=right size=mid tag background=special color=light has-tooltip=bottom curwhat>
         <mi mid>globe</mi>
@@ -64,7 +68,10 @@ use Heiakim\Model\User;
         </div>
       </mbutton>
 
-    <?php } else { ?>
+    <?php
+
+    # + User achieved a normal rank.
+    else : ?>
 
       <mbutton material has-icon=left has-icon=left size=mid tag filled>
         <div fl alic gap=smol has-tooltip=bottom z curwhat>
@@ -104,9 +111,9 @@ use Heiakim\Model\User;
           <p>
             <?php
 
-            if ($rank_development["country"]["performance"] > 0)
+            if ($rank_development->country->performance > 0)
               echo '<mi color=red>trending_down</mi>';
-            else if ($rank_development["country"]["performance"] < 0)
+            else if ($rank_development->country->performance < 0)
               echo '<mi color=green>trending_up</mi>';
             else
               echo '<mi slight>remove</mi>';
@@ -122,7 +129,7 @@ use Heiakim\Model\User;
         </div>
       </mbutton>
 
-    <?php } ?>
+    <?php endif; ?>
   </div>
 
-<?php } ?>
+<?php endif; ?>

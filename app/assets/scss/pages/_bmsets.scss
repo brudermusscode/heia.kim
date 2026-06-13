@@ -20,7 +20,7 @@ $pb-smallest-size: 3.6em;
   transition: $trans-cubic;
 
   @media screen and (max-width: 1900px) {
-    left: $page-navigator-smol-width;
+    left: $page-navigator-width;
   }
 
   @media screen and (max-width: $mobile-max-width) {

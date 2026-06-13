@@ -3,6 +3,7 @@
 use Heiakim\Model\Gamemode;
 use Heiakim\Model\User;
 use Heiakim\Model\Score;
+use Illuminate\Support\Collection;
 
 /**
  * @var int
@@ -10,7 +11,7 @@ use Heiakim\Model\Score;
 $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
 
 /**
- * @var string
+ * @var int
  */
 $gumode = filter_input(INPUT_GET, "gumode", FILTER_VALIDATE_INT) ?? 0;
 
@@ -19,9 +20,7 @@ $gumode = filter_input(INPUT_GET, "gumode", FILTER_VALIDATE_INT) ?? 0;
  */
 $fetch_limit = 7;
 
-/**
- * Validate gumode.
- */
+# Validate gumode.
 if (!in_array($gumode, Gamemode::$modes))
   $gumode = 0;
 
@@ -35,16 +34,13 @@ $mode_mod = Gamemode::convert_gumode_to_mode_mod($gumode);
  */
 $User = User::find($id);
 
-/**
- * User doesn't exist?
- * ! Error
- */
+# User doesn't exist?
 if (!$User) :
   include GET_CONTENT_NOTHING;
 else :
 
   /**
-   * @var Score
+   * @var Collection<Score>
    */
   $Scores = $User->scores()
     ->with("beatmap")
@@ -53,12 +49,8 @@ else :
     ->limit($fetch_limit)
     ->get();
 
-  /**
-   * No scores found?
-   */
-  if (!$Scores->count()) {
-
-?>
+  # No scores found?
+  if (!$Scores->count()) : ?>
 
     <box-model rounded="wide" filled="lighter" p62 fl fldircol alic gap>
       <div style="height:4.2em;width:4.2em;" fl alic jucc circled filled>
@@ -70,31 +62,29 @@ else :
       </div>
     </box-model>
 
-  <?php } else { ?>
+  <?php else : ?>
 
     <div grid-repeat gap=smol>
       <?php
 
-      foreach ($Scores as $key => $Score) {
+      # + Include all Scores.
+      foreach ($Scores as $key => $Score) :
         if ($key == ($fetch_limit - 1)) break;
 
         include TEMPLATE . "/score/_score.php";
-      }
-
-      ?>
+      endforeach; ?>
     </div>
 
-    <?php if ($Scores->count() > ($fetch_limit - 1)) { ?>
+    <?php if ($Scores->count() > ($fetch_limit - 1)) : ?>
       <div fl jucc mt=smol>
-        <a href="<?= "/u/$User->id/$mode_mod->mode/$mode_mod->mod/recent"; ?>">
+        <a href="<?= "/u/$User->id/$mode_mod->mode/$mode_mod->mod/performances-recent"; ?>">
           <mbutton material ripple-effect filled=lighter has-icon=right>
             <p text smol bold ttup><?= __("Show more") ?></p>
             <mi>east</mi>
           </mbutton>
         </a>
       </div>
-    <?php } ?>
+    <?php endif; ?>
 
-<?php }
-
+<?php endif;
 endif;

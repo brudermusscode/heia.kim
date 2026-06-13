@@ -14,7 +14,7 @@ global-search {
     left: 50%;
     translate: -50% 0;
     width: calc(100% - $main-distance);
-    max-width: $global-search-width;
+    max-width: 680px;
     overflow: hidden;
 
     @include themed() {
