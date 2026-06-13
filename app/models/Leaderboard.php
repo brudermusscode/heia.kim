@@ -162,7 +162,7 @@ class Leaderboard extends Justin
 
         # ? Country specific.
         foreach (
-          $climb ? Country::all() : Leaderboard::countries($mode) as $country
+          $climb ? Country::all() : Leaderboard::countries($mode) as $Country
         ) {
 
           /**
@@ -172,12 +172,13 @@ class Leaderboard extends Justin
             ->select('users.id as user_id', 'users.country', 'tscore', 'rscore', 'pp')
             ->where('mode', '=', $mode)
             ->where('users.priv', '>', 2)
-            ->where('users.country', '=', $country->country)
+            ->where('users.country', '=', $Country->abbreviation)
             ->where('stats.pp', '>', 0)
             ->where('stats.acc', '>', 0.000)
             ->orderByDesc('stats.pp')
             ->get();
 
+          # Continue if no Users have been found for this country abbreviation.
           if (!$Users) continue;
 
           foreach ($Users as $User) {

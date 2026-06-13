@@ -1,12 +1,14 @@
 <page-navigator>
   <div fl fldircol gap>
-    <picture pn-option quadrat style="height:3.4em;width:3.4em;" loading>
-      <img src="<?= IMAGE . '/logo/painted/100.webp'; ?>" />
-    </picture>
+    <a href="/">
+      <picture pn-option quadrat style="height:3.4em;width:3.4em;" loading>
+        <img hover-zoom src="<?= IMAGE . '/logo/painted/100.webp'; ?>" />
+      </picture>
+    </a>
 
     <mbutton request-get="search"
       pn-option size=mid rounded icon-only material background=complement color=white>
-      <i class=mi>search</i>
+      <i class=mi>explore</i>
     </mbutton>
   </div>
 

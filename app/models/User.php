@@ -1551,8 +1551,8 @@ class User extends Justin
       $this->id
     );
 
-    $return->global = $global_rank !== null ? $global_rank + 1 : null;
-    $return->country = $country_rank !== null ? $country_rank + 1 : null;
+    $return->global = $global_rank !== false ? $global_rank + 1 : null;
+    $return->country = $country_rank !== false ? $country_rank + 1 : null;
     $return->development = $this->get_rank_development($gumode);
 
     return $return;

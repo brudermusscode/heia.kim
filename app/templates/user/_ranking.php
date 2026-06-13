@@ -21,19 +21,19 @@ use Heiakim\Model\User;
 if (!$has_played) : ?>
 
   <mbutton material has-icon=left has-icon=right size=mid tag filled>
-    <mi>panorama_fish_eye</mi>
+    <mi>domino_mask</mi>
     <p text bold smol ttup trimt>Never played</p>
 
     <div dot-divider></div>
 
     <div fl alic gap=smol>
-      <?php if ($User->country == "xx") { ?>
-        <mi>circle</mi>
-      <?php } else { ?>
+      <?php if ($User->country == "xx") : ?>
+        <mi>domino_mask</mi>
+      <?php else : ?>
         <picture size=smol circled>
           <?php $User->country()->first()->icon(); ?>
         </picture>
-      <?php } ?>
+      <?php endif; ?>
       <p text smol bold ttup><?= $User->country_string(); ?></p>
     </div>
   </mbutton>

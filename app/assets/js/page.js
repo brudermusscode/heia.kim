@@ -221,7 +221,6 @@ export const get = async (
 
       // Find all <script> elements and fire off their scripts -
       main_container.find_all("script").forEach((script) => {
-        console.log(script);
         eval(script.innerHTML);
       });
 

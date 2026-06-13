@@ -1,8 +1,11 @@
 <?php
 
+use Heiakim\Model\User;
+
 /**
  * @var User $User
  */
+
 
 $current_relationship_action ??= "follow";
 

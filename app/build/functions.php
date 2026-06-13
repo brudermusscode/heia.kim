@@ -387,7 +387,7 @@ function image(string $path)
 /**
  * @param mixed $parameter
  * @param string|array $case
- * @return void
+ * @return string
  */
 function display_active(mixed $parameter, mixed $case = null)
 {

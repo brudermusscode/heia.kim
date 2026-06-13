@@ -109,6 +109,14 @@ else :
      * @var object
      */
     $rankings = $User->get_rankings($gumode);
+    $rank_development = $rankings->development;
+    $has_played = $rankings->global !== null;
+    $is_champion = $rankings->global === 1;
+
+    # Determines, if the CurrentUser and the viewed User are both socially available
+    # to the rest of the community.
+    $both_sides_can_interact_socially =
+      !$User->is_socially_excluded() && !CurrentUser->is_socially_excluded();
 
     /**
      * @var Stat
@@ -133,28 +141,43 @@ else :
     /**
      * @var Profile
      */
-    $Profile = $User->profile ?? $User->create_profile();
+    $Profile = $User->profile;
 
     $base_url = "/u/$User->id";
 
+    # Editor mode is exactly the same structure than the User profile, but does not
+    # include some of the partials.
+    if (!IS_EDIT_MODE) {
+
+      # From the actual game.
+      // $bancho_status = $User->get_bancho_game_status();
+      // $is_online = $bancho_status->player_status->online ?? false;
+
+      # + Page navigator.
+      include_once __DIR__ . "/_page-navigator.php";
+
+      # + Mode menu to choose from.
+      include_once __DIR__ . "/_mode-menu.php";
+    }
+
+    # For when it's in Editor Mode.
+    else {
+
+      $User = CurrentUser;
+      $gumode = 0;
+      $is_my_profile = true;
+      $rankings = $User->get_rankings(0);
+    }
+
     # Add scores for our bot Aida. Should just happen once or can be uncommented to
     # redo it.
-    if (1 === 2)
-      include_once __DIR__ . "/Aida/_add_scores.php";
+    // include_once __DIR__ . "/Aida/_add_scores.php";
 
     # + User header.
     include_once __DIR__ . "/_header.php";
 
     # + Mobile menu on bottom.
-    include_once __DIR__ . "/_mobile_menu.php";
-
-    /**
-     * @var Collection<Stat>
-     */
-    $Statss = CurrentUser
-      ->stats()
-      ->selectRaw("mode, tscore, rscore, pp, acc")
-      ->get();
+    include_once __DIR__ . "/_mobile-menu.php";
 
     $file_path = __DIR__ . "/pages/_$sub_page.php";
 

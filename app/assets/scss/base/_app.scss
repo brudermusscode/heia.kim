@@ -1,6 +1,6 @@
 @use "../abstract" as *;
-@use "mixins" as *;
 @use "classes" as *;
+@use "mixins" as *;
 
 :root {
   // Theme
@@ -432,7 +432,7 @@ page-loader {
 
   &[loading] {
     transition: all 0.2s linear;
-    background: rgba(255, 255, 255, 0.68);
+    background: rgba(0, 0, 0, 0.68);
     z-index: $endless-z-index + 100;
   }
 

@@ -5,12 +5,20 @@ global-search {
   position: relative;
   display: block;
   padding-inline: $main-distance;
-  padding-block: 148px $main-distance;
+  padding-block: 188px $main-distance;
+
+  @media screen and (max-width: $tablet-max-width) {
+    padding-top: 148px;
+  }
+
+  @media screen and (max-width: $mobile-max-width) {
+    padding-top: 128px;
+  }
 
   search {
     position: fixed;
     z-index: 200;
-    top: calc($main-distance / 2);
+    top: calc($main-distance * 2);
     left: 50%;
     translate: -50% 0;
     width: calc(100% - $main-distance);
@@ -19,6 +27,17 @@ global-search {
 
     @include themed() {
       background: t(box3);
+    }
+
+    @media screen and (max-width: $tablet-max-width) {
+      top: $main-distance;
+    }
+
+    @media screen and (max-width: $mobile-max-width) {
+      top: 0;
+      border-radius: 0 !important;
+      width: 100%;
+      max-width: initial;
     }
 
     input[search] {

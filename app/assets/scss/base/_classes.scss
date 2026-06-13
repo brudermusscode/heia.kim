@@ -35,6 +35,14 @@
   }
 }
 
+[hover-zoom] {
+  transition: all 0.4s $cubic;
+
+  &:hover {
+    scale: 1.04;
+  }
+}
+
 [hoverable] {
   cursor: pointer;
 

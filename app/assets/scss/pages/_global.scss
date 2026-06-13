@@ -1,4 +1,5 @@
 @use "../abstract" as *;
+@use "../base" as *;
 
 [post-subcontent] {
   @include themed() {

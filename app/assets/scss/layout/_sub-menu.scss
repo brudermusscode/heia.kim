@@ -1,4 +1,5 @@
 @use "../abstract" as *;
+@use "../base" as *;
 
 @mixin shrinked-sub-menu {
   width: auto;
