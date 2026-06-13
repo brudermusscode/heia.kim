@@ -1,13 +1,19 @@
 <?php
 
+use Heiakim\Model\Squad;
 use Heiakim\Model\User;
 
 /**
  * @var User $User
  * @var ?Squad $Squad
+ * @var object $rankings
+ * @var object $rank_development
  * @var bool $is_my_profile
  * @var bool $has_played
  * @var int $gumode
+ * @var string $mode
+ * @var string $mod
+ * @var string $current_mod
  * @var bool $is_champion
  */
 
@@ -67,9 +73,9 @@ use Heiakim\Model\User;
           <p>
             <?php
 
-            if ($rank_development["global"]["performance"] > 0)
+            if ($rank_development->global->performance > 0)
               echo '<mi color=red>trending_down</mi>';
-            else if ($rank_development["global"]["performance"] < 0)
+            else if ($rank_development->global->performance < 0)
               echo '<mi color=green>trending_up</mi>';
             else
               echo '<mi slight>remove</mi>';
