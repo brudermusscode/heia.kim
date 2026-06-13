@@ -4,7 +4,6 @@ use Heiakim\Model\Gamemode;
 use Heiakim\Model\Profile;
 use Heiakim\Model\Stat;
 use Heiakim\Model\User;
-use Illuminate\Support\Collection;
 
 /**
  * @var int
@@ -54,8 +53,6 @@ elseif (!$User->privacy->is_public && !$bypass_restricted_screen) :
   include __DIR__ . "/_hidden.php";
 else :
 
-  $available = Gamemode::get_gamemode_possibilities();
-
   /**
    * Preferred gumode (mode + mod) as text strings.
    * @var object
@@ -79,7 +76,7 @@ else :
     include UNAVAILABLE;
   else :
 
-    # The :mode dynamic param is indeed dynamic here, as we determine in the follow-
+    # The dynamic :mode param is indeed dynamic here, as we determine in the follow-
     # ing, if the CurrentUser is viewing a sub page like photos or statistics or a
     # page of more scores/beatmaps like top scores, first scores and recent scores.
     # In the end, we keep only the $sub_page variable to include a corresponding tem-
@@ -157,7 +154,8 @@ else :
       include_once __DIR__ . "/_page-navigator.php";
 
       # + Mode menu to choose from.
-      include_once __DIR__ . "/_mode-menu.php";
+      if (!$is_sub_page)
+        include_once __DIR__ . "/_mode-menu.php";
     }
 
     # For when it's in Editor Mode.
