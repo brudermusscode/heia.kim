@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Support\Collection;
 use Heiakim\Model\Gamemode;
 use Heiakim\Model\User;
 use Heiakim\Model\Score;
-use Illuminate\Support\Collection;
 
 /**
  * @var int
@@ -77,7 +77,7 @@ else :
 
     <?php if ($Scores->count() > ($fetch_limit - 1)) : ?>
       <div fl jucc mt=smol>
-        <a href="<?= "/u/$User->id/$mode_mod->mode/$mode_mod->mod/performances-recent"; ?>">
+        <a href="<?= "/u/$User->id/performances-recent/$mode_mod->mode/$mode_mod->mod"; ?>">
           <mbutton ripple-effect filled=lighter has-icon=right>
             <p text smol bold ttup><?= __("Show more") ?></p>
             <mi>east</mi>

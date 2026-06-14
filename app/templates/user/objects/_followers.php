@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Collection;
 use Heiakim\Enum\Privilege;
 use Heiakim\Model\User;
 
@@ -13,10 +14,10 @@ use Heiakim\Model\User;
  */
 $object_visibility ??= 1;
 
-if ($object_visibility) {
+if ($object_visibility) :
 
   /**
-   * @var ?User
+   * @var Collection<User>
    */
   $Followers = $User->followers()
     ->whereRaw("(priv & ?) != 0", [Privilege::UNRESTRICTED->value])
@@ -31,8 +32,8 @@ if ($object_visibility) {
   <div fl fldircol gap=smoler>
     <div fl jucsb alic>
       <div fl gap=smoler>
-        <p text midler bold>Followers &middot; </p>
-        <p text midler color=company><?= $Followers->count(); ?></p>
+        <p text bold ttup>Followers &nbsp;&middot;&nbsp; </p>
+        <p text color=company><?= $Followers->count(); ?></p>
       </div>
       <?php if ($Followers->count()) { ?>
         <mbutton icon-only mr=smol hoverable>
@@ -41,25 +42,22 @@ if ($object_visibility) {
       <?php } ?>
     </div>
 
-    <?php if (!$Followers->count()) { ?>
+    <?php if (!$Followers->count()) : ?>
 
-      <box-model rounded=mid outlined p32 fl fldircol alic gap mt=smol>
-        <div style="height:3.2em;width:3.2em;" fl alic jucc circled filled>
-          <mi mid>call_received</mi>
-        </div>
-        <div tac>
-          <p text bold midler>Nothing</p>
-        </div>
+      <box-model rounded=mid outlined pblock42 fl fldircol alic gap=smol mt=smol>
+        <mbutton mid tag filled icon-only>
+          <mi>call_received</mi>
+        </mbutton>
+        <p text bold midler tac>Nothing</p>
       </box-model>
 
-    <?php } else { ?>
+    <?php else : ?>
       <div fl fldircol>
         <?php
 
-        foreach ($Followers->take(5) as $Follower) {
-          /**
-           * Don't show the user if they are restricted.
-           */
+        foreach ($Followers->take(5) as $Follower) :
+
+          # Don't show the user if he is restricted.
           if ($Follower->is_restricted()) continue;
 
         ?>
@@ -73,15 +71,15 @@ if ($object_visibility) {
             </div>
           </a>
 
-        <?php } ?>
+        <?php endforeach; ?>
 
-        <?php if ($User->followers->count() > 5) { ?>
+        <?php if ($User->followers->count() > 5) : ?>
           <mbutton smol filled=lighter has-icon=right dno>
             <p text smol bold>+<?= $Followers->count() - 5; ?></p>
             <mi>east</mi>
           </mbutton>
-        <?php } ?>
+        <?php endif; ?>
       </div>
-    <?php } ?>
+    <?php endif; ?>
   </div>
-<?php } ?>
+<?php endif; ?>

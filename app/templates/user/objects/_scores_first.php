@@ -16,8 +16,8 @@ $object_visibility ??= 1;
 
 if ($object_visibility && $has_played) { ?>
   <div fl fldircol gap=smol+>
-    <div fl fldircol alistart gap=smoler title-inline>
-      <p text bold mid><?= __("First places") ?></p>
+    <div fl alic gap=smol+ title-inline>
+      <p text bold ttup><?= __("First places") ?></p>
       <div fl alic gap=smoler>
         <p text smol bold filled=darker pinline12 pblock6 rounded=wide>🏅 Ranked</p>
         <p text smol bold filled=darker pinline12 pblock6 rounded=wide>❤️ Loved</p>

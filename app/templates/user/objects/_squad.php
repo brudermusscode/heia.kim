@@ -16,7 +16,7 @@ use Heiakim\Model\Squad;
  */
 $object_visibility ??= 1;
 
-if ($User->squad && $object_visibility) { ?>
+if ($User->squad && $object_visibility) : ?>
   <div fl fldircol gap=smol>
     <div fl jucsb alic>
       <div fl gap=smoler>
@@ -32,4 +32,4 @@ if ($User->squad && $object_visibility) { ?>
     </div>
     <?php include TEMPLATE . "/squad/_squad_small_outlined.php"; ?>
   </div>
-<?php } ?>
+<?php endif; ?>

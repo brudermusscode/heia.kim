@@ -100,7 +100,7 @@ else :
 
     <?php if ($Beatmaps->count() > ($fetch_limit - 1)) { ?>
       <div fl jucc mt=smol>
-        <a href="<?= "/u/$User->id/$mode_mod->mode/$mode_mod->mod/beatmaps"; ?>">
+        <a href="<?= "/u/$User->id/beatmaps/$mode_mod->mode/$mode_mod->mod"; ?>">
           <mbutton ripple-effect filled=lighter has-icon=right>
             <p text smol bold ttup><?= __("Show more") ?></p>
             <mi>east</mi>

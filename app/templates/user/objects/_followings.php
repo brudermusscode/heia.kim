@@ -32,8 +32,8 @@ if ($object_visibility) {
   <div fl fldircol gap=smoler>
     <div fl jucsb alic>
       <div fl gap=smoler>
-        <p text midler bold>Following &middot; </p>
-        <p text midler color=company><?= $Following->count(); ?></p>
+        <p text bold ttup>Following &nbsp;&middot;&nbsp; </p>
+        <p text color=company><?= $Following->count(); ?></p>
       </div>
       <?php if ($Following->count()) { ?>
         <mbutton icon-only mr=smol hoverable>
@@ -44,14 +44,18 @@ if ($object_visibility) {
 
     <?php if (!$Following->count()) { ?>
 
-      <box-model rounded=mid outlined p32 fl fldircol alic gap mt=smol>
-        <div style="height:3.2em;width:3.2em;" fl alic jucc circled filled>
-          <mi mid>call_made</mi>
-        </div>
+      <box-model rounded=mid outlined pblock42 fl fldircol alic gap=smol mt=smol>
+        <mbutton mid tag filled icon-only>
+          <mi>call_made</mi>
+        </mbutton>
         <div tac>
           <p text bold midler>No one</p>
-          <?php if ($is_my_profile) : ?>
-            <a href="/leaderboard" normal>Find players to follow</a>
+
+          <?php
+
+          # Show a button to find new people if the viewing User is the User viewed.
+          if (!$is_my_profile) : ?>
+            <a disbl mt2 href="/leaderboard" normal>Find players to follow</a>
           <?php endif; ?>
         </div>
       </box-model>

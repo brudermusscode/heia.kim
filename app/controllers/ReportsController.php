@@ -9,8 +9,6 @@ class ReportsController extends Controller
 {
 
   /**
-   * POST
-   *
    * @return string
    */
   public function create()
@@ -21,17 +19,31 @@ class ReportsController extends Controller
       optional: ["user_notification"],
     );
 
-    /**
-     * User logged in?
-     */
-    $this->authorize();
+    $this->authorize(respect_social_exclusion: true);
 
-    /**
-     * Append user notification if not set.
-     */
-    if (!isset($this->params->user_notification))
-      $this->params->user_notification = 0;
+    # Reference object exists?
+    $Reference = Report::find_reference_or_die(
+      $this->params->report_type,
+      $this->params->reference_id
+    );
 
-    return (new Report)->new($this->params);
+    # Create a Report.
+    $Report = CurrentUser->reports()->make();
+    $Report->reference_id = $Reference->id;
+    $Report->report_type = $this->params->report_type;
+    $Report->comment_string = $this->params->comment_string;
+    $Report->user_notification = !empty($this->params->user_notification) ? 1 : 0;
+    $Report->save();
+
+    # Create notification if set.
+    if ($this->params->user_notification)
+      CurrentUser->notifications()
+        ->create([
+          "type" => $Report->notification_type(),
+          "reference_id" => $Reference->id,
+          "updated_at" => null,
+        ]);
+
+    return success("<strong>Your report has been created!</strong> Thank you for your effort to keep this a fun place 🙂");
   }
 }

@@ -1,5 +1,26 @@
 <?php
 
+use Heiakim\Model\Squad;
+use Heiakim\Model\User;
+
+/**
+ * @var User $User
+ * @var ?Squad $Squad
+ * @var object $rankings
+ * @var object $rank_development
+ * @var string $base_url
+ * @var string $sub_page
+ * @var string $more
+ * @var string $current_mod
+ * @var string $mode
+ * @var string $mod
+ * @var int $gumode
+ * @var bool $is_champion
+ * @var bool $is_my_profile
+ * @var bool $has_played
+ * @var bool $both_sides_can_interact_socially
+ */
+
 $Beatmaps = $User->most_played_beatmaps($gumode, 18);
 
 ?>
@@ -7,12 +28,7 @@ $Beatmaps = $User->most_played_beatmaps($gumode, 18);
 <div style=margin-top:22em; content-width=wider fl fldircol gap=smol+>
 
   <div fl gap alic title-inline>
-    <a href="<?= "/u/$User->id/$mode/$current_mod"; ?>">
-      <mbutton mid outlined icon-only>
-        <mi size=midler>arrow_back</mi>
-      </mbutton>
-    </a>
-    <p text bold mid style=line-height:1.6em;>Beatmaps</p>
+    <p text bold ttup>Beatmaps</p>
   </div>
 
   <div class="beatmaps" grid-repeat gap=smol clear-flex style=padding-top:0;>

@@ -20,12 +20,8 @@ $object_visibility ??= 1;
 
 if ($object_visibility && $has_played) { ?>
 
-  <div fl fldircol gap=smoler>
-    <div fl jucsb alic>
-      <div fl gap="smoler">
-        <p text midler bold>Ranking graph</p>
-      </div>
-    </div>
+  <div fl fldircol gap=smol+>
+    <p text bold ttup title-inline>Rank history</p>
     <get-content mt=smol flexone from="/user/get-content/ranking-graph?id=<?= $User->id; ?>&gumode=<?= $gumode; ?>">
       <div style="width:100%;" fl jucc alic>
         <div dynamic-color class="dot-container">

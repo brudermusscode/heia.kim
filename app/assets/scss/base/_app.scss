@@ -1925,7 +1925,7 @@ input[type="range"] {
   [column="small"] {
     position: sticky;
     top: 7.4em;
-    width: 22.8em;
+    width: 320px;
 
     @media screen and (max-width: $full-hd-max-width) {
       width: 20em;
@@ -1935,7 +1935,7 @@ input[type="range"] {
   [column="smaller"] {
     position: sticky;
     top: 7.4em;
-    width: 18em;
+    width: 280px;
 
     @media screen and (max-width: $full-hd-max-width) {
       width: 16em;

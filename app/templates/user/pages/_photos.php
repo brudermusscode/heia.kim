@@ -1,6 +1,27 @@
 <?php
 
+use Illuminate\Support\Collection;
+use Heiakim\Model\User;
+use Heiakim\Model\Squad;
 use Heiakim\Model\Image;
+
+/**
+ * @var User $User
+ * @var ?Squad $Squad
+ * @var object $rankings
+ * @var object $rank_development
+ * @var string $base_url
+ * @var string $sub_page
+ * @var string $more
+ * @var string $current_mod
+ * @var string $mode
+ * @var string $mod
+ * @var int $gumode
+ * @var bool $is_champion
+ * @var bool $is_my_profile
+ * @var bool $has_played
+ * @var bool $both_sides_can_interact_socially
+ */
 
 ?>
 
@@ -9,10 +30,8 @@ use Heiakim\Model\Image;
 
     <?php
 
-    /**
-     * Photos tab disabled?
-     */
-    if (!$Profile->bool_value("tabs_visibility", "photos") && !$is_my_profile) { ?>
+    # Photos tab disabled?
+    if (!$Profile->bool_value("tabs_visibility", "photos") && !$is_my_profile) : ?>
 
       <box-model rounded="wide" filled="lighter" p62 fl fldircol alic gap>
         <div style="height:4.2em;width:4.2em;" fl alic jucc circled filled>
@@ -25,22 +44,18 @@ use Heiakim\Model\Image;
         </div>
       </box-model>
 
-    <?php
-
-    } else {
-
-    ?>
+    <?php else : ?>
 
       <?php
 
       /**
-       * @var ?Image
+       * @var Collection<Image>
        */
       $Images = $User->images()
         ->orderBy("created_at", "DESC")
         ->get();
 
-      if (!$Images->count()) { ?>
+      if (!$Images->count()) : ?>
 
         <box-model rounded="wide" filled="lighter" p62 fl fldircol alic gap>
           <div style="height:4.2em;width:4.2em;" fl alic jucc circled filled>
@@ -62,24 +77,18 @@ use Heiakim\Model\Image;
               </a>
             </div>
           <?php } ?>
-
         </box-model>
 
-      <?php } else { ?>
+      <?php else : ?>
 
         <image-gallery ovhid rounded=mid>
           <ig-wrapper>
 
-            <?php foreach ($Images as $Image) {
+            <?php foreach ($Images as $Image) :
 
-              /**
-               * @var string
-               */
               $imagePath = AVATAR_HISTORY_DIR . "/$Image->url";
 
-              /**
-               * File is missing?
-               */
+              # File is missing?
               if (!file_exists($imagePath)) : ?>
                 <ig-object posrel filled=lighter rounded animation=fade-in fl fldircol alic jucc gap=smol pblock42>
                   <mi size=wide>sentiment_worried</mi>
@@ -128,20 +137,14 @@ use Heiakim\Model\Image;
                   <img src="<?= AVATAR_HISTORY . "/$Image->url"; ?>" clickable />
                 </ig-object>
 
-            <?php
-              endif;
-            }
-            ?>
+            <?php endif;
+            endforeach; ?>
 
           </ig-wrapper>
         </image-gallery>
 
-    <?php
-
-      } // end if images count
-    } // end if photos disabled
-
-    ?>
+    <?php endif;
+    endif; ?>
 
   </div>
 </div>

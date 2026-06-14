@@ -1108,7 +1108,7 @@ $(function () {
    * Inner prompts are elements that should be opened at the same
    * place of the clicked element to open it, like a popup.
    */
-  $(document).on("click", "[open-inner-prompt]", async function (e) {
+  $(document).on("click", "[open-inner-prompt]", function (e) {
     if (__prompt_animation_playing) return;
 
     let prompt_outer = this.closest("[has-inner-prompt]");
@@ -1117,9 +1117,9 @@ $(function () {
     let prompt = prompt_outer.find("[inner-prompt]");
 
     if (prompt_outer && !prompt_outer.hasAttribute("active")) {
-      await slide_in_prompt(prompt);
+      slide_in_prompt(prompt);
     } else {
-      await slide_out_prompt(prompt);
+      slide_out_prompt(prompt);
     }
   });
 

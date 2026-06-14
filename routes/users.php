@@ -8,9 +8,6 @@ use Heiakim\Model\User;
  * @var Router $Router
  */
 
-/**
- * @route /u
- */
 $Router->get(
   "/u/:id",
   "user/show",
@@ -25,7 +22,7 @@ $Router->get(
   }
 );
 $Router->get(
-  "/u/:id/:mode",
+  "/u/:id/:sub",
   "user/show",
   constraints: [
     "id" => "\d+",
@@ -37,19 +34,7 @@ $Router->get(
   }
 );
 $Router->get(
-  "/u/:id/photos",
-  "user/show",
-  constraints: [
-    "id" => "\d+",
-  ],
-  title: function ($params) {
-    $User = User::find($params["id"]);
-
-    return "Photos Gallery × " . $User->name . " on " . APP_NAME;
-  }
-);
-$Router->get(
-  "/u/:id/:mode/:mod",
+  "/u/:id/:sub/:mode",
   "user/show",
   constraints: [
     "id" => "\d+",
@@ -61,7 +46,7 @@ $Router->get(
   }
 );
 $Router->get(
-  "/u/:id/:mode/:mod/:more",
+  "/u/:id/:sub/:mode/:mod",
   "user/show",
   constraints: [
     "id" => "\d+",

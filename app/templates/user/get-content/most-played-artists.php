@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Collection;
 use Heiakim\Model\User;
 use Heiakim\Model\Artist;
 use Heiakim\Model\Gamemode;
@@ -8,20 +9,24 @@ use Heiakim\Model\Gamemode;
  * @var int
  */
 $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
+
+/**
+ * @var int
+ */
 $gumode = filter_input(INPUT_GET, "gumode", FILTER_VALIDATE_INT) ?? 0;
+
+/**
+ * @var int
+ */
 $limit = filter_input(INPUT_GET, "limit", FILTER_VALIDATE_INT) ?? 24;
 
 $fetch_limit = 7;
 
-/**
- * Limit in range?
- */
+# Limit in range?
 if ($limit > 24 || $limit < 1)
   $limit = 24;
 
-/**
- * Validate gumode.
- */
+# Validate gumode.
 if (!in_array($gumode, Gamemode::$modes))
   $gumode = 0;
 
@@ -40,16 +45,13 @@ $User = User::find($id);
  */
 $is_my_profile = $User->is(CurrentUser);
 
-/**
- * User doesn't exist?
- * ! Error
- */
+# User doesn't exist?
 if (!$User) :
   include GET_CONTENT_NOTHING;
 else :
 
   /**
-   * @var Artist
+   * @var Collection<Artist>
    */
   $Artists = Artist::join('maps', 'artists.name', '=', 'maps.artist')
     ->join('scores', 'scores.map_md5', '=', 'maps.md5')
@@ -64,38 +66,35 @@ else :
 
   <div fl fldircol gap=smoler>
     <div fl jucsb alic>
-      <div fl gap=smoler>
-        <p text midler bold>Artists &middot; </p>
-        <p text midler color=company><?= number_format($Artists->count()); ?></p>
+      <div fl gap=smoler title-inline>
+        <p text bold ttup>Artists &nbsp;&middot;&nbsp; </p>
+        <p text color=company><?= number_format($Artists->count()); ?></p>
       </div>
       <?php if ($Artists->count()) { ?>
         <mbutton icon-only mr=smol hoverable>
-          <mi size=midler>stars</mi>
+          <mi size=midler>artist</mi>
         </mbutton>
       <?php } ?>
     </div>
 
-    <?php if (!$Artists->count()) { ?>
+    <?php if (!$Artists->count()) : ?>
 
-      <box-model rounded=mid outlined p32 fl fldircol alic gap mt=smol>
-        <div style="height:3.2em;width:3.2em;" fl alic jucc circled filled>
-          <mi mid>artist</mi>
-        </div>
+      <box-model rounded=mid outlined pblock42 fl fldircol alic gap=smol mt=smol>
+        <mbutton mid tag filled icon-only>
+          <mi>artist</mi>
+        </mbutton>
         <div tac>
           <p text bold midler>Empty m8</p>
-          <?php if ($is_my_profile) : ?>
-            <a href="/beatmaps" normal text>Discover beatmaps</a>
+          <?php if (!$is_my_profile) : ?>
+            <a disbl mt2 href="/beatmaps" normal text>Discover beatmaps</a>
           <?php endif; ?>
         </div>
       </box-model>
 
-
-    <?php } else { ?>
+    <?php else : ?>
 
       <div fl fldircol>
-        <?php
-
-        foreach ($Artists->take($limit) as $key => $Artist) {
+        <?php foreach ($Artists->take($limit) as $key => $Artist) :
 
           /**
            * @var Artist $Artist
@@ -113,10 +112,10 @@ else :
               </div>
             </div>
           </a>
-        <?php } ?>
+        <?php endforeach; ?>
       </div>
 
-    <?php } ?>
+    <?php endif; ?>
   </div>
 
 <?php endif;

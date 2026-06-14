@@ -41,8 +41,9 @@ use Heiakim\Model\Squad;
 
         <?php if (!$is_my_profile && !in_array($User->id, [1, 2, 3, 4, 8])) { ?>
           <mbutton icon-only posrel background=unfollow color=dark-red has-tooltip=bottom
-            data-action="popup:open"
-            data-href="/report/new?type=user&id=<?= $User->id; ?>">
+            request-get="report:new"
+            data-type="user"
+            data-id="<?= $User->id; ?>">
             <mi>campaign</mi>
             <div ttooltip>
               <p text bold>Report</p>
@@ -96,15 +97,3 @@ use Heiakim\Model\Squad;
     </div>
   </div>
 </header>
-
-<?php
-
-# + Actions floating shown on mobile devices.
-if (VERIFIED && !$User->is_restricted() && !$is_my_profile) {
-  $current_relationship_action = $User->follow_action_display(CurrentUser);
-
-?>
-  <div floating-action>
-    <?php include TEMPLATE . "/user/_relationship_actions_large.php"; ?>
-  </div>
-<?php } ?>

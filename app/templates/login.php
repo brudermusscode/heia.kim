@@ -53,7 +53,7 @@ include SNOW; ?>
             data-provider="osu!"
             data-call-action="reconnect"
             flexone has-tooltip=bottom background="osu-pink" color=light>
-            <i text wider class="osu-icon osu-outlined"></i>
+            <i text class="osu-icon osu-outlined"></i>
             <div ttooltip>
               <p text bold>osu!</p>
             </div>

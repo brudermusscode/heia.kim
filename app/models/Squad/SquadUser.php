@@ -1251,28 +1251,23 @@ class SquadUser extends Justin
   // TODO: Make section in can() optional.
   public function can(string $interaction, string $section, ?Squad $in = null)
   {
+
     $Privileges = $this->privileges();
 
-    /**
-     * Super user allowed to do anything.
-     */
+    # Super user allowed to do anything.
     if ($this->user->is_super_user())
       return true;
 
-    /**
-     * Check if the checked on user is in the squad given by the
-     * params. If not, return false. Only super users should be
-     * able to manage squads outside of their own, or without
-     * having any.
-     */
+    # Check if the checked on user is in the squad given by the params. If not, re-
+    # turn false. Only super users should be able to manage squads outside of their
+    # own, or without having any.
     if ($in && !$this->user->squad?->is($in))
       return false;
 
     if (is_array($Privileges) && count($Privileges) > 1) {
-      foreach ($Privileges as $Privilege) {
+      foreach ($Privileges as $Privilege)
         if (SquadGuard::can($interaction, $section, $Privilege->privilege))
           return true;
-      }
 
       return false;
     } else

@@ -186,7 +186,7 @@ box-model {
     align-items: center;
     gap: 12px;
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: $gap-std-plus;
 
     mi {
       @extend [mid];

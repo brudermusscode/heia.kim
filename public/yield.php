@@ -41,8 +41,7 @@ if (PROD) ob_start("sanitize_output"); ?>
   if (PROD) include_once CONFIG . "/matomo.php"; ?>
 
   <page-loader visible=false loading>
-    <div material-bar-loader class="linear-progress-material"
-      style="position:absolute;top:0;left:0;width:100vw;">
+    <div class="linear-progress-material" in-overlay>
       <div class="bar bar1"></div>
       <div class="bar bar2"></div>
     </div>

@@ -1,6 +1,5 @@
 <?php
 
-use Heiakim\Enum\Privilege;
 use Heiakim\Model\Gamemode;
 use Heiakim\Time\Time;
 

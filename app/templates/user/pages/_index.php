@@ -1,14 +1,24 @@
 <?php
 
 use Heiakim\Model\User;
-use Heiakim\Model\Stat;
-use Heiakim\Model\Profile;
+use Heiakim\Model\Squad;
 
 /**
  * @var User $User
- * @var Profile $Profile
- * @var Stat $Stats
- * @var bool IS_EDIT_MODE
+ * @var ?Squad $Squad
+ * @var object $rankings
+ * @var object $rank_development
+ * @var string $base_url
+ * @var string $sub_page
+ * @var string $more
+ * @var string $current_mod
+ * @var string $mode
+ * @var string $mod
+ * @var int $gumode
+ * @var bool $is_champion
+ * @var bool $is_my_profile
+ * @var bool $has_played
+ * @var bool $both_sides_can_interact_socially
  */
 
 /**
@@ -22,7 +32,10 @@ $DecodedProfile = $User->decoded_profile();
 
   <!--- Left content --->
   <div top-actions>
-    <?php if (CurrentUser->sqcan_invite($User)) { ?>
+    <?php
+
+    # + CurrentUser can invite this User.
+    if (CurrentUser->sqcan_invite($User)) : ?>
       <form request="squad:request:create" reload responder=always>
         <input type=hidden name=type value=invite />
         <input type=hidden name=user_id value=<?= $User->id; ?> />
@@ -31,25 +44,27 @@ $DecodedProfile = $User->decoded_profile();
           <p text bold>Invite to <?= CurrentUser->squad->name; ?></p>
         </mbutton>
       </form>
-    <?php } else
+      <?php else :
 
-    if (
-      ($Invitation = $User->has_invite_from(CurrentUser?->squad))
-      && CurrentUser->sqcan("coordinate", "users")
-    ) { ?>
-      <a href="/manage/squad/requests?tab=invites">
-        <mbutton mid submit-closest has-icon=left background=slight>
-          <mi class="loader-pulse posrel" fl alic jucc style="height:24px;width:24px;top:0;" mr=smol>
-            <span></span>
-          </mi>
-          <p text bold>Invitation pending</p>
-        </mbutton>
-      </a>
-    <?php } ?>
+      # + If there is an invitation pending.
+      if (
+        ($Invitation = $User->has_invite_from(CurrentUser?->squad))
+        && CurrentUser->sqcan("coordinate", "users")
+      ) : ?>
+        <a href="/manage/squad/requests?tab=invites">
+          <mbutton mid submit-closest has-icon=left background=slight>
+            <mi class="loader-pulse posrel" fl alic jucc style="height:24px;width:24px;top:0;" mr=smol>
+              <span></span>
+            </mi>
+            <p text bold>Invitation pending</p>
+          </mbutton>
+        </a>
+      <?php endif; ?>
+    <?php endif; ?>
   </div>
 
   <div column-wrapper>
-    <div column=small hide-mobile fl fldircol gap=mid>
+    <div column=smaller hide-mobile fl fldircol gap=mid>
       <?php
 
       /**
@@ -58,19 +73,15 @@ $DecodedProfile = $User->decoded_profile();
       $ProfileFirstColumn = $DecodedProfile->sections_visibility[0]
         ?? $Profile->sections_visibility[0];
 
-      /**
-       * Convention over configuration, huh? Thank you for this
-       * point of view, Rails. I love you.
-       */
-      foreach ($ProfileFirstColumn as $object_name => $object_visibility) {
+      # Convention over configuration, huh? Thank you for this point of view, Rails.
+      # I love you.
+      foreach ($ProfileFirstColumn as $object_name => $object_visibility) :
         $object_file_path = dirname(__DIR__) . "/objects/_$object_name.php";
 
-        /**
-         * Include the object file, if it exists.
-         */
+        # + Include the object file, if it exists.
         if (file_exists($object_file_path))
           include $object_file_path;
-      }
+      endforeach;
 
       ?>
     </div>
@@ -87,8 +98,6 @@ $DecodedProfile = $User->decoded_profile();
       $ProfileFirstColumn = $DecodedProfile->sections_visibility[1]
         ?? $Profile->sections_visibility[1];
 
-      # Convention over configuration, huh? Thank you for this point of view, Rails.
-      # I love you 🙂
       foreach ($ProfileFirstColumn as $object_name => $object_visibility) {
         $object_file_path = dirname(__DIR__) . "/objects/_$object_name.php";
 
@@ -104,10 +113,8 @@ $DecodedProfile = $User->decoded_profile();
 
       <?php
 
-      /**
-       * Birthday cheering button!
-       */
-      if ($User->has_birthday()) {
+      # Birthday cheering button!
+      if ($User->has_birthday()) :
 
         /**
          * @var bool
@@ -115,7 +122,9 @@ $DecodedProfile = $User->decoded_profile();
         $have_cheered = CurrentUser->cheered_for_birthday($User, date("y"));
 
       ?>
-        <box-model background=invert rounded=wide <?php if (!$have_cheered) echo "elevated=wide"; ?> style="background:url(<?= IMAGE . "/birthday-card.jpg"; ?>) center center no-repeat;background-size:cover;">
+        <box-model background=invert rounded=wide
+          <?php if (!$have_cheered) echo "elevated=wide"; ?>
+          style="background:url(<?= IMAGE . "/birthday-card.jpg"; ?>) center center no-repeat;background-size:cover;">
           <bm-inr size=std>
             <div background=invert p24 fl fldircol gap rounded=wide>
               <p text tac color=invert><strong>It's my birthday!</strong></p>
@@ -146,7 +155,7 @@ $DecodedProfile = $User->decoded_profile();
             </div>
           </bm-inr>
         </box-model>
-      <?php } ?>
+      <?php endif; ?>
 
       <?php
 
@@ -156,21 +165,13 @@ $DecodedProfile = $User->decoded_profile();
       $ProfileFirstColumn = $DecodedProfile->sections_visibility[2]
         ?? $Profile->sections_visibility[2];
 
-      /**
-       * Convention over configuration, huh? Thank you for this
-       * point of view, Rails. I love you.
-       */
-      foreach ($ProfileFirstColumn as $object_name => $object_visibility) {
+      foreach ($ProfileFirstColumn as $object_name => $object_visibility) :
         $object_file_path = dirname(__DIR__) . "/objects/_$object_name.php";
 
-        /**
-         * Include the object file, if it exists.
-         */
+        # Include the object file, if it exists.
         if (file_exists($object_file_path))
           include $object_file_path;
-      }
-
-      ?>
+      endforeach; ?>
     </div>
   </div>
 </div>

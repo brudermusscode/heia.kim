@@ -13,17 +13,17 @@ $id   = filter_var($GLOBALS["route_param_id"] ?? 0, FILTER_VALIDATE_INT);
 /**
  * @var string
  */
+$sub = $GLOBALS["route_param_sub"] ?? null;
+
+/**
+ * @var string
+ */
 $mode = $GLOBALS["route_param_mode"] ?? null;
 
 /**
  * @var string
  */
 $mod = $GLOBALS["route_param_mod"] ?? null;
-
-/**
- * @var string
- */
-$more = $GLOBALS["route_param_more"] ?? null;
 
 /**
  * @var bool
@@ -77,7 +77,7 @@ else :
     include UNAVAILABLE;
   else :
 
-    # The dynamic :mode param is indeed dynamic here, as we determine in the follow-
+    # The dynamic :sub param is indeed dynamic here, as we determine in the follow-
     # ing, if the CurrentUser is viewing a sub page like photos or statistics or a
     # page of more scores/beatmaps like top scores, first scores and recent scores.
     # In the end, we keep only the $sub_page variable to include a corresponding tem-
@@ -87,21 +87,14 @@ else :
       "overview",
       "photos",
       "statistics",
-    ];
-
-    # Determine, if a sub page is in view.
-    $is_sub_page = in_array($mode, $sub_pages);
-    $sub_page = $is_sub_page ? $mode : null;
-
-    $more_pages = [
       "beatmaps",
       "performances-top",
       "performances-first",
       "performances-recent",
     ];
 
-    # Determine, if a page from more is in view and set it to the $sub_page variable.
-    $sub_page ??= in_array($more, $more_pages) ? $more : "overview";
+    # Determine, what sub page is in view.
+    $sub_page = in_array($sub, $sub_pages) ? $sub : "overview";
 
     /**
      * @var object
@@ -154,8 +147,8 @@ else :
       # + Page navigator.
       include_once __DIR__ . "/_page-navigator.php";
 
-      # + Mode menu to choose from.
-      if (!$is_sub_page)
+      # + Mode menu should only be shown in sub pages that have scores to show.
+      if (!in_array($sub_page, ["photos"]))
         include_once __DIR__ . "/_mode-menu.php";
     }
 
@@ -175,8 +168,10 @@ else :
     # + User header.
     include_once __DIR__ . "/_header.php";
 
-    # + Mobile menu on bottom.
+    # + Navigation rail for mobile devices.
     include_once __DIR__ . "/_mobile-menu.php";
+
+    # TODO: Add relationship actions for mobile devices.
 
     $file_path = __DIR__ . "/pages/_$sub_page.php";
 

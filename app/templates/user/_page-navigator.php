@@ -113,7 +113,7 @@ use Heiakim\Model\Squad;
     </a>
 
     <?php if ($Profile->bool_value("tabs_visibility", "statistics")) { ?>
-      <a disabled pn-option href="<?= "$base_url/$mode/$current_mod/statistics"; ?>">
+      <a pn-option href="<?= "$base_url/statistics"; ?>">
         <mbutton mid icon-only background=clean has-tooltip=right
           <?php display_active($sub_page, "statistics") ?>>
           <mi>data_exploration</mi>

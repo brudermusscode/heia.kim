@@ -23,11 +23,7 @@ if ($object_visibility && $has_played) { ?>
 
 
   <div fl fldircol gap=smoler>
-    <div fl jucsb alic>
-      <div fl gap="smoler">
-        <p text midler bold>Statistics</p>
-      </div>
-    </div>
+    <p text bold ttup title-inline>Statistics</p>
     <box-model mt=smol user-stats fl alic outlined rounded=mid>
       <bm-inr size=midler flexone>
         <div fl fldircol gap=smol>

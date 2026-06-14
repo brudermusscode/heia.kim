@@ -1,8 +1,13 @@
 <?php
 
+use Heiakim\Model\Notification;
 use Heiakim\Time\Time;
 use Heiakim\Model\User;
 use Heiakim\Model\Report;
+
+/**
+ * @var Notification $Notification
+ */
 
 $ReferenceUser = $Notification->reference;
 

@@ -23,7 +23,8 @@ $Feed = new Feed(CurrentUser);
 
       <div fl gap fldircol>
         <div fl fldircol gap=smol>
-          <p style="line-height:.9;" text wide bold><?= __("Want to work with us?") ?></p>
+          <p style="line-height:.9;" text wide bold>
+            <?= __("Want to work with us?") ?></p>
           <p text>
             <?= __("Applications for <strong>Moderators</strong>, <strong>Assistants</strong> and <strong>Beatmap Nominators</strong> are open.") ?>
           </p>
@@ -38,7 +39,8 @@ $Feed = new Feed(CurrentUser);
         </div>
       </div>
 
-      <mbutton close filled=darker hoverable icon-only close-dialogue data-info-window="applications_open">
+      <mbutton close hoverable icon-only close-dialogue
+        data-info-window="applications_open">
         <mi size=midler>close</mi>
       </mbutton>
     </story-banner>

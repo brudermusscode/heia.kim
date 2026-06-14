@@ -7,8 +7,9 @@ use Heiakim\Enum\SquadPrivilege;
 
 class SquadGuard implements PermissionGuardInterface
 {
+
   /**
-   * Baba people - Can do all.
+   * Can do all.
    *
    * @var SquadPrivilege[]
    */
@@ -58,27 +59,23 @@ class SquadGuard implements PermissionGuardInterface
    */
   public static function can(string $interaction, string $section, $privilege)
   {
-    /**
-     * @var string
-     */
-    $default_return = self::return_with_error("Invalid section '$section' for interaction '$interaction'");
+
+    $default_return = "Invalid section '$section' for interaction '$interaction'";
 
     return match ($interaction) {
       "manage" => match ($section) {
         "squad" => in_array($privilege, self::GROUP_MANAGE_SQUAD),
         "users" => in_array($privilege, self::GROUP_MANAGE_USERS),
         "content" => in_array($privilege, self::GROUP_MANAGE_CONTENT),
-        default => $default_return,
+        default => self::return_with_error($default_return),
       },
 
       "coordinate" => match ($section) {
         "users" => in_array($privilege, self::GROUP_COORDINATE_USERS),
-        default => $default_return,
+        default => self::return_with_error($default_return),
       },
 
-      /**
-       * Log new exception for illegal interaction.
-       */
+      # Log new exception for illegal interaction.
       default => self::return_with_error("Invalid interaction '$interaction'"),
     };
   }

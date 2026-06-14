@@ -33,7 +33,7 @@ if ($Squad) {
 } else
   $has_clan = false;
 
-if ($has_clan) {
+if ($has_clan) :
   $squad_logo = $Squad->logo;
   $squad_headline = $Squad->headline;
 
@@ -65,45 +65,42 @@ if ($has_clan) {
     </div>
   </div>
 
-<?php
+  <?php else :
+  if ($is_my_profile) : ?>
 
-} else
-  if ($is_my_profile) {
-
-?>
-
-  <a href="/squads">
-    <box-model outlined mb=std clickable>
-      <div pblock48 pinline48>
-        <div fl fldircol gap>
-          <div fl gap align-items=center>
-            <p text std>
-              <i class="mi">west</i>
-            </p>
-            <p text mid>
-              <i class="mi">workspaces</i>
-            </p>
+    <a href="/squads">
+      <box-model outlined mb=std clickable>
+        <div pblock48 pinline48>
+          <div fl fldircol gap>
+            <div fl gap align-items=center>
+              <p text std>
+                <i class="mi">west</i>
+              </p>
+              <p text mid>
+                <i class="mi">workspaces</i>
+              </p>
+            </div>
+            <p text bold midler><?= __("Find a squad") ?></p>
+            <p text smol><?= __("Play together with your friends and climb the leaderboard") ?></p>
           </div>
-          <p text bold midler><?= __("Find a squad") ?></p>
-          <p text smol><?= __("Play together with your friends and climb the leaderboard") ?></p>
         </div>
-      </div>
-    </box-model>
-  </a>
+      </box-model>
+    </a>
 
-<?php } else { ?>
+  <?php else : ?>
 
-  <div fl justify-content=center mb style=display:none;>
-    <mbutton mid ripple-effect background=special clickable
-      data-action="squads:invite"
-      data-id="<?= $User->id; ?>">
-      <div fl gap=smol+ align-items=center color=special-text>
-        <p text mid>
-          <i class="mi">arrow_circle_left</i>
-        </p>
-        <p text std>Invite to squad</p>
-      </div>
-    </mbutton>
-  </div>
+    <div fl justify-content=center mb style=display:none;>
+      <mbutton mid ripple-effect background=special clickable
+        data-action="squads:invite"
+        data-id="<?= $User->id; ?>">
+        <div fl gap=smol+ align-items=center color=special-text>
+          <p text mid>
+            <i class="mi">arrow_circle_left</i>
+          </p>
+          <p text std>Invite to squad</p>
+        </div>
+      </mbutton>
+    </div>
 
-<?php } ?>
+  <?php endif; ?>
+<?php endif; ?>

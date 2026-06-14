@@ -12,9 +12,10 @@ overlay {
   opacity: 0;
   overflow: auto;
   overflow-x: hidden;
+  background-color: rgba(0, 0, 0, 0.84);
 
-  @include themed() {
-    background-color: t(hover-dark-invert);
+  .stars .snow {
+    background: white !important;
   }
 
   [o-closer] {
@@ -51,10 +52,6 @@ overlay {
     visibility: visible;
     opacity: 1;
     z-index: $endless-z-index + 2000;
-
-    @include themed() {
-      background: t(nav);
-    }
   }
 
   &[visible] {

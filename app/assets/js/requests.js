@@ -375,8 +375,6 @@ $(function () {
     let query = "?";
     let dataset_count = Object.keys(this.dataset).length;
 
-    console.log("????");
-
     /**
      * Construct the url query by iterating through all data
      * elements on the clicked element.
