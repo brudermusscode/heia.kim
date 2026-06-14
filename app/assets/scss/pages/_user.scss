@@ -451,8 +451,8 @@ sub-stick-menu {
 
 [editor-save] {
   position: fixed;
-  bottom: 2.4em;
-  right: 2.4em;
+  bottom: $main-distance;
+  right: $main-distance;
   animation: slide-in-bottom 0.4s $cubic forwards;
   transition: $trans-cubic;
   z-index: 2002;
@@ -474,11 +474,11 @@ sub-stick-menu {
 
   @keyframes slide-in-bottom {
     from {
-      bottom: -12em;
+      bottom: -112px;
     }
 
     to {
-      bottom: 2.4em;
+      bottom: $main-distance;
     }
   }
 }

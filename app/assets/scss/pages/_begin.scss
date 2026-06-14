@@ -1,23 +1,6 @@
 @use "../abstract" as *;
 @use "../base" as *;
 
-body[begin],
-body[register],
-body[login],
-body[connect],
-body[password-reset],
-body[unlock] {
-  background: #1f1f1f !important;
-
-  .snow {
-    background: white;
-  }
-
-  main {
-    padding: 0;
-  }
-}
-
 $header-disguised-height: 100px;
 
 header[begin] {

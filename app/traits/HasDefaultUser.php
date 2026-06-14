@@ -12,9 +12,8 @@ trait HasDefaultUser
   public function user()
   {
     return $this->belongsTo(User::class)
-      /**
-       * Default if the user has been deleted.
-       */
+
+      # Default if the user has been deleted.
       ->withDefault(function ($User) {
         $User->deleted = true;
         $User->id = 0;

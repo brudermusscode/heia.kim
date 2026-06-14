@@ -80,14 +80,14 @@ include TEMPLATE . "/global/_basic-header.php"; ?>
     # + Any other error.
     else : ?>
 
-      <div style="margin-bottom:-2.4em;height:300px;width:300px;">
+      <div style="margin-bottom:-2.4em;height:240px;width:240px;">
         <?php
 
         # + Ghost animation.
         include TEMPLATE . "/global/_lottie-pixelghost.html"; ?>
       </div>
 
-      <div mb=mid tac>
+      <div mb=mid tac color=invert>
         <p text bold wider>Huh?</p>
         <p text>You have entered an unknown path. Better return!</p>
       </div>

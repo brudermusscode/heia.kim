@@ -18,7 +18,7 @@ $base_url = "/legal";
 /**
  * The date displayed for the privacy policies last update
  */
-$privacy_last_updated = date("d. M Y", strtotime(APP_SETTING->privacy_policies_updated_at));
+$privacy_last_updated = date("d. M Y", strtotime(_env("PRIVACY_POLICIES_UPDATED_AT")));
 
 echo "<div class=legal>";
 

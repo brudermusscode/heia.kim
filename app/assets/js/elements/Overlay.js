@@ -2,7 +2,7 @@ import * as Frontend from "../frontend";
 import * as Request from "../requests";
 
 export default class Overlay {
-  constructor(data = null) {
+  constructor(data = null, to_overlay = false) {
     let overlay = document.createElement("overlay");
     let loader = `
     <overlay-loader class="linear-progress-material" in-overlay>
@@ -10,12 +10,22 @@ export default class Overlay {
       <div class="bar bar2"></div>
     </overlay-loader>`;
 
-    document.body.setAttribute("toggled", true);
-    document.body.prepend(overlay);
+    // Append a new overlay to a currently visible overlay, if one is existing.
+    if (to_overlay && __page.overlay) {
+      __page.overlay.insertAdjacentHTML("afterbegin", overlay);
+    }
+
+    // Create a new main overlay.
+    else {
+      document.body.setAttribute("toggled", true);
+      document.body.prepend(overlay);
+    }
+
     overlay.insertAdjacentHTML("afterbegin", loader);
 
     this.overlay = overlay;
     this.loader = overlay.find("overlay-loader");
+    this.locked = false;
 
     __page.overlay = this;
 
@@ -41,6 +51,20 @@ export default class Overlay {
       Frontend.reload_images();
       Frontend.slide_in_prompt(this.overlay.find("[prompt]"));
     }, 200);
+  }
+
+  /**
+   * Locks the overlay from being closed manually.
+   */
+  lock() {
+    this.locked = true;
+  }
+
+  /**
+   * Unlocks the overlay.
+   */
+  unlock() {
+    this.locked = false;
   }
 
   /**

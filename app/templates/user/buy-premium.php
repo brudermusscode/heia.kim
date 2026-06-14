@@ -38,9 +38,9 @@ ob_start();
 include SNOW; ?>
 
 <div style="min-height:100vh;" fl alic jucc>
-  <content smolplus>
+  <content smolplus pblock64>
 
-    <form data-form="orders:paypal,create">
+    <form data-action="order:create">
       <box-model prompt elevated rounded=wide filled=lighter>
         <div prompt-content>
 
@@ -52,10 +52,8 @@ include SNOW; ?>
           <div prompt-inner-content fl fldircol gap>
             <?php
 
-            /**
-             * Include the report banner if the current user wants to
-             * gift premium to someone else.
-             */
+            # Include the report banner if the current user wants to gift premium to
+            # someone else.
             if ($want_gift) :
               include TEMPLATE . "/user/_user_report.php";
             else :

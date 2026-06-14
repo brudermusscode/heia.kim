@@ -19,9 +19,7 @@ $object_visibility ??= 1;
 if ($User->squad && $object_visibility) : ?>
   <div fl fldircol gap=smol>
     <div fl jucsb alic>
-      <div fl gap=smoler>
-        <p text midler bold>Squad</p>
-      </div>
+      <p text bold ttup>Squad</p>
       <?php if ($is_my_profile) { ?>
         <a href="<?= $User->squad_settings_link(); ?>">
           <mbutton icon-only mr=smol hoverable>

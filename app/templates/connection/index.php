@@ -39,31 +39,30 @@ $request = match ($action) {
 # Include unavailable template, if there is no valid action set.
 if (!$request) :
   include UNAVAILABLE;
-else : ?>
+else :
 
-  <!--- The request validating code, state and action for the given provider. --->
-  <request
-    <?php foreach ($request as $attr => $value) : ?>
-    <?= "$attr=\"$value\"" ?>
-    <?php endforeach; ?>
-    data-provider="<?= $provider ?>"
-    data-code="<?= $code ?>"
-    data-state="<?= $state ?>"
-    method="POST" responder=error>
-  </request>
+  # Append shared keys with values to the request array.
+  $request["method"] = "POST";
+  $request["responder"] = "error";
+  $request["data-provider"] = $provider;
+  $request["data-code"] = $code;
+  $request["data-state"] = $state;
+
+  # Start the request.
+  include REQUEST; ?>
 
   <content min-full fl fldircol alic jucc>
+    <div material-bar-loader class="linear-progress-material">
+      <div class="bar bar1"></div>
+      <div class="bar bar2"></div>
+    </div>
+
     <div>
       <div style="height:180px;width:180px;">
         <?php
 
         # + Loading animation.
         include TEMPLATE . "/global/_lottie-pixelghost.html"; ?>
-      </div>
-
-      <div material-bar-loader class="linear-progress-material" style="position:absolute;top:0;left:0;width:100vw;">
-        <div class="bar bar1"></div>
-        <div class="bar bar2"></div>
       </div>
     </div>
 

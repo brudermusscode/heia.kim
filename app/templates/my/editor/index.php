@@ -3,9 +3,11 @@
 use Heiakim\Model\Profile;
 use Heiakim\Model\User;
 
-/**
- * @var bool IS_EDIT_MODE
- */
+$User = CurrentUser;
+$gumode = 0;
+$is_my_profile = true;
+$rankings = $User->get_rankings(0);
+
 
 /**
  * @var Profile
@@ -24,15 +26,12 @@ $available_columns = array_keys(Profile::$sections_visibility);
 
 ?>
 
-<!--- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, PROFILE EDITOR ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, --->
-
 <form data-form="profiles:edit" enctype="multipart/form-data">
 
   <div hidden submit-closest></div>
 
-  <mbutton wide data-action="profiles:edit" ovhid editor-save has-icon="left" elevated="mid" background="green" color="light">
+  <mbutton data-action="profiles:edit"
+    wide ovhid editor-save has-icon="left" elevated="mid" background="green" color="light">
     <div inner-loading-hidden>
       <div dynamic-color class="dot-container">
         <div class="dot-pulse"></div>
@@ -41,9 +40,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
       </div>
     </div>
     <mi>done_all</mi>
-    <div>
-      <p text bold>Keep changes</p>
-    </div>
+    <p text bold>Keep changes</p>
   </mbutton>
 
   <?php
@@ -182,10 +179,6 @@ $available_columns = array_keys(Profile::$sections_visibility);
   <div page-structure="user">
     <div column-wrapper>
 
-      <!--- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, SIDEBAR ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, --->
-
       <?php
 
       /**
@@ -220,10 +213,6 @@ $available_columns = array_keys(Profile::$sections_visibility);
 
       </div>
 
-
-      <!--- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, MIDDLE ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, --->
 
       <?php
 
@@ -260,10 +249,6 @@ $available_columns = array_keys(Profile::$sections_visibility);
       </div>
 
 
-      <!--- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, SIDEBAR ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, --->
-
       <?php
 
       /**
@@ -273,7 +258,8 @@ $available_columns = array_keys(Profile::$sections_visibility);
 
       ?>
 
-      <div editor-column=small editor-column-id=<?= $column_id; ?> style="position:sticky;top:7.4em;width:20em;" fl fldircol gap=mid>
+      <div editor-column=small editor-column-id="<?= $column_id; ?>"
+        style="position:sticky;top:7.4em;width:20em;" fl fldircol gap=mid>
 
         <?php
 

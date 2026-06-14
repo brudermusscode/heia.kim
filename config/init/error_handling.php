@@ -76,53 +76,45 @@ set_exception_handler(function ($ex) {
   $include_styles
 
   <exception-container>
-    <inside>
-      <container>
-        <p text wider semibold tac mb32>$type</p>
+    <mbutton wide close-overlay icon-only clickable
+      style="position:fixed;top:1.2em;right:1.2em;">
+      <mi wide>emoji_symbols</mi>
+    </mbutton>
 
-        <div class=inner rd38 p12>
-          <div p24 style="margin-bottom:-12px">
-            <div fl gap12 alic>
-              <mi>bug_report</mi>
-              <p text smol ttup bold>Description</p>
-            </div>
-          </div>
+    <inside fl fldircol gap=smol+>
+      <p text wide bold tac mb18>$type</p>
 
-          <div>
-            <div style="background: white;" pblock24 pinline28 rd24 mblock12>
-              <p text midler style="font-family:'Times New Roman', serif;">{$ex->getMessage()}</p>
-            </div>
-          </div>
+      <container elevated class=inner rounded=wide pinline12 pt18 pb12>
+        <div fl gap=smol alic title-inline>
+          <mi>bug_report</mi>
+          <p text smol ttup bold>Description</p>
+        </div>
 
-          <div class=bottom rd32 fl gap24 alic jucsb>
-            <p text>{$ex->getFile()}</p>
-            <p class=line text semibold>
-              <mi mid>water</mi>
-              &nbsp;:{$ex->getLine()}
-            </p>
+        <div>
+          <div style="background: white;" pblock24 pinline28 rd24 mblock12>
+            <p text midler style="font-family:'Times New Roman', serif;">{$ex->getMessage()}</p>
           </div>
+        </div>
+
+        <div class=bottom rd32 fl gap24 alic jucsb>
+          <p text>{$ex->getFile()}</p>
+          <p class=line text semibold>
+            <mi mid>water</mi>
+            &nbsp;:{$ex->getLine()}
+          </p>
         </div>
       </container>
 
-      <container>
-        <div style=background:#de4832;color:#ffecee; class=inner rd38 p32 gap12>
-          <div fl gap12 mb24 alic>
-            <mi>stacks</mi>
-            <p text smol ttup bold>Stacktrace</p>
-          </div>
-
-          <pre text smol>$stacktrace</pre>
-
+      <container elevated class=inner rd38 gap=smol fl fldircol gap=smol+
+          style=background:#de4832;color:#ffecee;>
+        <div fl gap=smol alic pt18 pinline32>
+          <mi>stacks</mi>
+          <p text smol ttup bold>Stacktrace</p>
         </div>
-      </container>
 
-      <p tac text smoler slight mt12>
-        <a extern target="_blank" href="https://www.freepik.com/free-vector/flat-design-no-data-illustration_47718913.htm#fromView=search&page=1&position=7&uuid=07584568-95ce-4056-9350-7732fa2d910d&query=flat+error">Images by freepik</a>
-      </p>
+        <pre text smol>$stacktrace</pre>
+      </container>
     </inside>
-
-
-    <exception-image style="background: url('/assets/images/bruder/exception.svg');"></exception-image>
   </exception-container>
   HTML;
 });

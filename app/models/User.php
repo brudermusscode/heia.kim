@@ -1228,10 +1228,6 @@ class User extends Justin
       ->exists();
   }
 
-  // ------------------------------------------------
-  // Orders -----------------------------------------
-  // ------------------------------------------------
-
   /**
    * @return HasMany<Order>
    */
@@ -1240,6 +1236,13 @@ class User extends Justin
     return $this->hasMany(Order::class);
   }
 
+  /**
+   * @return HasMany<Order>
+   */
+  public function gifted_orders()
+  {
+    return $this->hasMany(Order::class, "user_2_id", "id");
+  }
 
   /**
    * @return HasMany<Search>

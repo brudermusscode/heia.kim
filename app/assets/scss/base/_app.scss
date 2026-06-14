@@ -386,6 +386,34 @@ body {
   }
 }
 
+body[begin],
+body[register],
+body[login],
+body[connect],
+body[order],
+body[password-reset],
+body[loading],
+body[unlock] {
+  background: #1f1f1f !important;
+
+  [material-bar-loader] {
+    position: fixed;
+    top: $main-distance;
+    left: 0;
+    margin-inline: $main-distance;
+    width: calc(100vw - 2 * $main-distance);
+    border-radius: 24px;
+  }
+
+  .snow {
+    background: white;
+  }
+
+  main {
+    padding: 0;
+  }
+}
+
 app {
   position: absolute;
   top: 0;
@@ -458,10 +486,21 @@ exception-container {
   height: 100vh;
   width: 100vw;
   z-index: 2147483647;
-  backdrop-filter: blur(10px);
-  color: #fd221a;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.72);
+  color: $pink;
   font-size: 100%;
   overflow: hidden;
+
+  mbutton[close-overlay] {
+    position: absolute;
+    top: $main-distance;
+    right: $main-distance;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.12) !important;
+    color: $pink !important;
+    backdrop-filter: blur(12px);
+  }
 
   inside {
     overflow: scroll;
@@ -486,11 +525,13 @@ exception-container {
     width: 720px;
     position: relative;
     z-index: 1;
+    background: #ffecee;
+    color: #de4832;
 
-    .inner {
-      background: #ffecee;
-      color: #de4832;
-      box-shadow: var(--mio-theme-elevation-1);
+    pre {
+      overflow: auto;
+      padding-inline: 32px;
+      padding-block: 0 24px;
     }
 
     .bottom {

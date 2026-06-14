@@ -33,7 +33,7 @@ else :
   <content fl fldircol alic jucc>
     <div tac mb=wide>
       <p text wider trimt>
-        Unlock <strong><?= APP_SETTING->premium_feature_name; ?></strong></p>
+        Unlock <strong><?= PREMIUM_NAME; ?></strong></p>
       <p text midler>It's better than Tinder Gold.</p>
     </div>
 
@@ -49,7 +49,7 @@ else :
 
         <div fl fldircol gap pinline42 pblock32>
           <p tac text widest bold>
-            <?= number_format(APP_SETTING->premium_feature_price, 2, ","); ?> €</p>
+            <?= number_format(PREMIUM_PRICE, 2, ","); ?> €</p>
 
           <div fl fldircol gap=smol>
             <div class="option">
@@ -96,7 +96,7 @@ else :
             <div class=info style=margin-bottom:-.4em; background=slighter rounded=wide pblock18 pinline24 pr18 fl gap=smol+>
               <mi>tips_and_updates</mi>
               <p text smol>You still have <strong><?= $premium_time_left; ?></strong> of your
-                <?= APP_SETTING->premium_feature_name; ?>. Buying more will be added on top.</p>
+                <?= PREMIUM_NAME; ?>. Buying more will be added on top.</p>
             </div>
           <?php } ?>
 

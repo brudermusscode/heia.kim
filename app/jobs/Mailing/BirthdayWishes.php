@@ -6,6 +6,7 @@ use Heiakim\Job;
 use Heiakim\Model\User;
 use Heiakim\Utils\Utils;
 use Heiakim\Mail\Mail;
+use Heiakim\Model\Mailing;
 use Illuminate\Support\Carbon;
 
 class BirthdayWishes extends Job
@@ -99,7 +100,7 @@ class BirthdayWishes extends Job
          */
         $mail_body = str_replace('{current-date}', date("d. F Y"), $mail_body);
         $mail_body = str_replace('{username}', $User->name, $mail_body);
-        $mail_body = str_replace('{premium-feature-name}', $AppSettings->premium_feature_name, $mail_body);
+        $mail_body = str_replace('{premium-feature-name}', PREMIUM_NAME, $mail_body);
         $mail_body = str_replace('{discord-link}', _env("DISCORD_INVITE"), $mail_body);
         $mail_body = str_replace('{youtube-link}', "https://www.youtube.com/@heia.kimosu", $mail_body);
         $mail_body = str_replace('{profile-link}',  "$main_url/u/$User->id?mailing_token=$token", $mail_body);

@@ -5,6 +5,10 @@
 + Add new users to discord server automatically when using oauth2
 + Implement no-script tag in yield.php
 
+Routing:
++ Build in middleware
++ Use route path if template path is same (/user/create => user/create)
+
 Profiles:
 + Headline fade optional
 + Moving parts should not exchange with the part you drop it on

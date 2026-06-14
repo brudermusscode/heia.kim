@@ -12,10 +12,7 @@ use Heiakim\Model\Profile;
 ?>
 
 <div fl jucsb alic>
-  <div fl gap=smoler>
-    <p text midler bold><?= $Profile->get_object_title($object_name); ?></p>
-  </div>
-
+  <p text bold ttup title-inline><?= $Profile->get_object_title($object_name); ?></p>
   <toggle-switch toggled=<?= $object_visibility ? "true" : "false"; ?>>
     <div class="toggle_switch__inr">
       <div class="toggle_switch__switcher"></div>

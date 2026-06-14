@@ -40,9 +40,7 @@ if ($has_clan) :
 ?>
 
   <div fl fldircol gap=smol+>
-    <div title-inline>
-      <p text bold mid>Squad</p>
-    </div>
+    <p text bold ttup title-inline>Squad</p>
 
     <div class=squad_card>
       <a href="<?= "/squad/$Squad->id"; ?>">

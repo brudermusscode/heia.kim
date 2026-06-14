@@ -94,17 +94,20 @@ export const request = (element) => {
   let method = element.getAttribute("method") ?? "GET";
   let formdata = new FormData();
   let query = "?";
+  let close_tab = element.getAttribute("close-tab");
   let redirect_from_data = element.getAttribute("redirect-from-data");
   let redirect_on_error = element.getAttribute("redirect-on-error");
   let responder = element.getAttribute("responder");
   let audio_success = element.getAttribute("audio-success");
   let audio_error = element.getAttribute("audio-error");
+  let on_success = element.getAttribute("on-success");
 
   for (let date in element.dataset) {
     if (date === "action" || date === "method") continue;
+    let kebab_cased_key = date.replace(/[A-Z]/g, (date) => "_" + date.toLowerCase());
 
-    formdata.append(date, element.dataset[date]);
-    query += `${date}=${element.dataset[date]}&`;
+    formdata.append(kebab_cased_key, element.dataset[date]);
+    query += `${kebab_cased_key}=${element.dataset[date]}&`;
   }
 
   query = query.slice(0, -1);
@@ -126,10 +129,15 @@ export const request = (element) => {
         if (audio_error !== null) Audio.play(`[${audio_error}]`);
 
         if (redirect_on_error) return Page.get(redirect_on_error);
+
+        if (close_tab === "error") window.close();
       }
 
       // ? Success
       else {
+        // Execute JavaScript from attribute.
+        if (on_success !== null) $.globalEval(on_success);
+
         // Play success audio!
         if (audio_success !== null) Audio.play(`[${audio_success}]`);
 
@@ -142,6 +150,9 @@ export const request = (element) => {
             ? window.location.replace(data.data.redirect)
             : Page.get(data.data.redirect);
         }
+
+        // Close the current tab.
+        if (close_tab === "success" || close_tab !== null) window.close();
       }
     },
   });

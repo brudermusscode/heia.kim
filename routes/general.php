@@ -16,8 +16,13 @@ $Router->get("/home", "home/index", title: APP_NAME . " ~ " . _env("APP_SLOGAN")
 $Router->get("/home/:sub", "home/index", title: APP_NAME . " ~ " . _env("APP_SLOGAN"));
 $Router->get("/home/get-content/:file_name", "home/get-content/index", return: "JSON");
 $Router->get("/download", "download/index", title: "The easiest to setup with " . APP_NAME);
+$Router->get("/loading", "global/loading", title: "Bruder, kurz laden...");
+
+# ? Search
 $Router->get("/search", "components/search", return: "JSON");
 $Router->get("/get/search", "search/index", return: "JSON");
+$Router->post("/search/create", "search/create", return: "JSON");
+
 
 # ? Register
 $Router->get("/register", "register", title: "Sign up to " . APP_NAME);
@@ -42,5 +47,10 @@ $Router->get("/connect/:provider", "connection/index", title: function ($params)
   return "Connect your " . $params["provider"] . " to " . APP_NAME . "!";
 });
 
-# ? Unlock
+# ? Unlock & Orders
 $Router->get("/unlock/premium", "unlock/premium", title: "Unlock Premium+");
+$Router->get("/order/success", "order/success", title: "Success");
+$Router->get("/order/capture", "order/capture", return: "JSON");
+$Router->post("/order/create", "order/create", return: "JSON");
+$Router->post("/order/update", "order/update", return: "JSON");
+$Router->post("/order/delete", "order/delete", return: "JSON");

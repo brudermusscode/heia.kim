@@ -1,0 +1,10 @@
+ALTER TABLE web_settings
+  DROP COLUMN premium_feature_name,
+  DROP COLUMN premium_feature_price,
+  DROP COLUMN privacy_policies_updated_at,
+  DROP COLUMN ranked_updated_at,
+  DROP COLUMN currency,
+  DROP COLUMN metric,
+  DROP COLUMN version,
+  DROP COLUMN is_maintenance,
+  DROP COLUMN name;

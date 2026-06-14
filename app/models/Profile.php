@@ -271,7 +271,7 @@ class Profile extends Justin
       "scores_top" => __("Highest performances"),
       "scores_first" => __("First places"),
       "scores_recent" => __("Recent"),
-      "beatmaps_played" => __("Beatmaps, you play alot"),
+      "beatmaps_played" => __("Most played beatmaps"),
       "squad" => "Squad",
       "followers" => __("Followers"),
       "followings" => __("Following"),

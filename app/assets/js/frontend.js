@@ -6,9 +6,23 @@ import * as Responder from "./elements/responder.js";
 import * as Setting from "./settings.js";
 import * as MaterialButton from "./elements/mbutton.js";
 import * as Request from "./requests.js";
-import Overlay from "./elements/Overlay.js";
 
 let Cookie = require("js-cookie");
+
+$.ajaxSetup({
+  contentType: false,
+  processData: false,
+  error: function (error) {
+    Frontend.ajax_error(error);
+  },
+});
+
+/**
+ * Reloads the page.
+ */
+export const reload = () => {
+  return Page.reload();
+};
 
 /**
  * Sets the frontend to be loading.
@@ -177,6 +191,13 @@ export const create_responder = (
       message?.status ? "success" : "error",
     );
   else new Responder.Responder().add(append_to, message, status);
+};
+
+/**
+ * Short version to create a responder.
+ */
+export const respond = (message, status = "error", append_to = document.body) => {
+  create_responder(message, status, append_to);
 };
 
 /**
@@ -699,19 +720,15 @@ $(function () {
   MaterialButton.init();
 
   /**
-   * ? Keyboard Shortcuts
+   * @event keyup
    */
   $(document).on("keyup", function (e) {
-    if (!e.key) return;
-
-    /**
-     * ESC
-     */
     if (e.key.toLowerCase() === "escape") {
-      if (document.querySelector("overlay")) close_overlays();
-      close_ui_components();
+      // Close current overlay.
+      if (__page.overlay && !__page.overlay.locked) __page.overlay?.delete();
 
-      return;
+      // Close all ui components.
+      close_ui_components();
     }
   });
 
@@ -1104,9 +1121,11 @@ $(function () {
   });
 
   /**
-   * ? Inner prompts
-   * Inner prompts are elements that should be opened at the same
-   * place of the clicked element to open it, like a popup.
+   * Inner prompts are elements that should be opened at the same place of the click-
+   * ed element to open it, like a popup.
+   *
+   * @event click
+   * @this HTMLElement [open-inner-prompt]
    */
   $(document).on("click", "[open-inner-prompt]", function (e) {
     if (__prompt_animation_playing) return;
@@ -1124,16 +1143,16 @@ $(function () {
   });
 
   /**
-   * Close all overlays.
+   * Close a visible overlay. Respects exception-overlay as a seperate overlay.
+   *
+   * @event click
+   * @this HTMLELement [close-overlay]
    */
-  $(document).on(
-    "click",
-    '[close-overlay], [o-closer], [data-action="overlays:close"]',
-    function (e) {
-      close_exception_overlay();
-      close_overlays();
-    },
-  );
+  $(document).on("click", "[close-overlay]", function (e) {
+    if (this.closest("exception-container")) return close_exception_overlay();
+
+    __page.overlay?.delete();
+  });
 
   /**
    * Open popups dynamically.

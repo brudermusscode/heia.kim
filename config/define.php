@@ -15,8 +15,6 @@ define("PROD", current_env() === "prod");
 
 # Application.
 define("CURRENT_TIMESTAMP",  date("Y-m-d H:i:s", time()));
-define("APP_SETTING", (object) Setting::first()->getAttributes());
-define("APP_SLOGAN", ENV->APP_SLOGAN);
 define("SEO_DESCRIPTION", ENV->SEO_DESCRIPTION);
 define("SEO_KEYWORDS", ENV->SEO_KEYWORDS);
 define('APP', new Application);
@@ -35,9 +33,11 @@ define(false, 0);
 define(true, 1);
 
 # Uhm...
-define('APP_VERSION', ENV?->APP_VERSION);
-define('MAINTENANCE', ENV?->MAINTENANCE);
 define("APP_NAME", ENV?->APP_NAME);
+define("APP_SLOGAN", ENV?->APP_SLOGAN);
+define('APP_VERSION', ENV?->APP_VERSION);
+define("CURRENCY", ENV?->CURRENCY);
+define('MAINTENANCE', ENV?->MAINTENANCE);
 define("HOME_URL", ENV?->SERVER_ADDRESS);
 define("IMAGE", HOME_URL . "/assets/images");
 define("SCRIPT", HOME_URL . "/assets/js");
@@ -70,6 +70,7 @@ define("SIGN_UP_NOW", TEMPLATE . '/global/_join_now_inline.php');
 define("SNOW", TEMPLATE . '/global/_snow.php');
 define("DOTLOADER", COMPONENT . "/dot-loader.html");
 define("CIRLOADER", COMPONENT . "/circle-loader.html");
+define("REQUEST", TEMPLATE . "/global/_request.php");
 
 # Directory pathing from root.
 define("ASSET", ROOT . "/public/assets");
@@ -94,7 +95,7 @@ define(
 );
 define(
   "IS_MAINTENANCE",
-  APP_SETTING->is_maintenance
+  MAINTENANCE
     && CurrentUser->id !== 3
     && !defined("MAINTENANCE_ENABLED")
     && !BYPASS_MAINTENANCE
@@ -142,10 +143,11 @@ define('LEGAL_LANG', !empty($_COOKIE['LEGAL_LANG']) ? $_COOKIE['LEGAL_LANG'] : '
 define("INFO_WINDOWS", explode(",", Cookie::get("INFO_WINDOWS")));
 
 # Frontend settings.
-define("METRIC_NAME", APP_SETTING->metric);
+define("METRIC_NAME", ENV->METRIC_NAME);
 define("METRIC_ICON", "stylus_laser_pointer");
 define("PREMIUM_ICON", "workspace_premium");
-define("PREMIUM_NAME", APP_SETTING->premium_feature_name);
+define("PREMIUM_NAME", ENV->PREMIUM_NAME);
+define("PREMIUM_PRICE", ENV->PREMIUM_PRICE);
 define("PREMIUM_DISCORD_ROLE_ID", 1147920868907946045);
 define("EDITOR_ICON", "shape_line");
 define("ENABLE_ANIMATIONS", Cookie::exists("ANIMATIONS") && Cookie::get("ANIMATIONS") == 1 || !Cookie::exists("ANIMATIONS"));

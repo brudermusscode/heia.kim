@@ -62,8 +62,6 @@ $Router->get(
 /**
  * @route /user
  */
-// TODO: Build middleware.
-// TODO: Use route if path to template is same.
 $Router->post("/user/wipe", "user/wipe", return: JSON);
 $Router->post("/user/update", "user/update", return: JSON);
 $Router->post("/user/update/:var", "user/update", return: JSON);

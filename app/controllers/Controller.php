@@ -309,6 +309,6 @@ class Controller
       return error("Methode gibts nicht Bruder.");
     }
 
-    return new $ControllerName($_POST, $_FILES)->$method();
+    return new $ControllerName($_REQUEST, $_FILES)->$method();
   }
 }

@@ -1,5 +1,5 @@
 <div tac>
-  <p text bold wide><?= APP_SETTING->premium_feature_name; ?></p>
+  <p text bold wide><?= _env("PRIVACY_POLICIES_UPDATED_AT"); ?></p>
   <p text std><?= __("The awesome extra area, personally just for you!") ?></p>
 </div>
 

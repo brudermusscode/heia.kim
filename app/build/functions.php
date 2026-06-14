@@ -118,7 +118,7 @@ function sanitize_output($html)
  * Print out anything in nicley formatted pattern.
  *
  * @param mixed
- * @return string
+ * @return void
  */
 function pdie(mixed ...$a)
 {
@@ -130,11 +130,11 @@ function pdie(mixed ...$a)
 
   echo <<<HTML
   <exception-container>
-    <div o-closer hoverable circled style="position:fixed;top:1.2em;right:1.2em;">
-      <mi wide>close</mi>
-    </div>
+    <mbutton wide close-overlay icon-only clickable
+      style="position:fixed;top:1.2em;right:1.2em;">
+      <mi wide>emoji_symbols</mi>
+    </mbutton>
     <div p42 style="overflow:auto;max-height:100vh;">
-      <h1 text wider bold>pdie() returned</h1>
       <pre force-word-wrap>
   HTML;
 

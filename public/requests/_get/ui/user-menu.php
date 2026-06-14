@@ -48,7 +48,7 @@ $premium_time_left = Time::left($CurrentUser->donor_end)
       <!--- PREMIUM --->
       <?php if ($premium_time_left) { ?>
         <div pblock12>
-          <p text smol bold timestamp ttup><?= APP_SETTING->premium_feature_name; ?></p>
+          <p text smol bold timestamp ttup><?= PREMIUM_NAME; ?></p>
         </div>
 
         <a href="/my/premium">
