@@ -194,12 +194,12 @@ if (ANIMATIONS_ENABLED) {
       </div>
 
       <div prompt-actions>
-        <mbutton material close-overlay background=clean>
+        <mbutton close-overlay background=clean>
           <p text>Cancel</p>
         </mbutton>
 
         <div rounded=wide has-tooltip=bottom dno>
-          <mbutton size=mid background=invert color=invert size=std material icon-only tabindex=4 disabled>
+          <mbutton mid background=invert color=invert icon-only tabindex=4 disabled>
             <mi>attach_file_add</mi>
           </mbutton>
           <div ttooltip>
@@ -207,7 +207,7 @@ if (ANIMATIONS_ENABLED) {
           </div>
         </div>
 
-        <mbutton size=mid background=follow color=dark size=std material tabindex=3 submit-closest>
+        <mbutton mid background=follow color=dark tabindex=3 submit-closest>
           <p text bold><?= __("Ok, create it") ?></p>
         </mbutton>
       </div>

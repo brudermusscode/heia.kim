@@ -73,7 +73,8 @@ include SNOW; ?>
                   </p>
                 </div>
               </bm-inr>
-              <mbutton material curpo tag filled=lighter icon-only arrow-further="right" style="right:1.2em;">
+              <mbutton curpo tag filled=lighter icon-only arrow-further="right"
+                style="right:1.2em;">
                 <mi midler>east</mi>
               </mbutton>
             </box-model>
@@ -147,7 +148,7 @@ include SNOW; ?>
                         </div>
                       </div>
                     </toggle-switch>
-                    <mbutton size=std material icon-only hoverable expand-more-show has-tooltip=left>
+                    <mbutton icon-only hoverable expand-more-show has-tooltip=left>
                       <mi>info</mi>
                       <div ttooltip>
                         <p text bold>Show full description</p>
@@ -174,10 +175,10 @@ include SNOW; ?>
       </div>
 
       <div prompt-actions>
-        <mbutton material close-overlay>
+        <mbutton close-overlay>
           <p text>Cancel</p>
         </mbutton>
-        <mbutton size=mid material submit-closest>
+        <mbutton mid submit-closest>
           <p text std bold>Confirm</p>
         </mbutton>
       </div>

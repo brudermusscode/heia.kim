@@ -42,7 +42,7 @@ include PAGE_NAVIGATOR;
       </div>
 
       <a href="/home" sub>
-        <mbutton material size=mid icon-only background=slighter <?php if (!$sub) echo "active"; ?> has-tooltip=right>
+        <mbutton mid icon-only background=slighter <?php if (!$sub) echo "active"; ?> has-tooltip=right>
           <mi>browse</mi>
           <div ttooltip>
             <p text std bold>Feed - <?= __("What's new?") ?></p>
@@ -51,7 +51,7 @@ include PAGE_NAVIGATOR;
       </a>
 
       <a href="/home/beatmaps" sub>
-        <mbutton material size=mid icon-only background=slighter <?php if ($sub == "beatmaps") echo "active"; ?> has-tooltip=right>
+        <mbutton mid icon-only background=slighter <?php if ($sub == "beatmaps") echo "active"; ?> has-tooltip=right>
           <mi>web_stories</mi>
           <div ttooltip>
             <p text std bold><?= __("Favorite") ?> Beatmaps</p>
@@ -60,7 +60,7 @@ include PAGE_NAVIGATOR;
       </a>
 
       <a href="/home/artists" sub>
-        <mbutton material size=mid icon-only background=slighter <?php if ($sub == "artists") echo "active"; ?> has-tooltip=right>
+        <mbutton mid icon-only background=slighter <?php if ($sub == "artists") echo "active"; ?> has-tooltip=right>
           <mi>stars</mi>
           <div ttooltip>
             <p text std bold><?= __("Starred") ?> <?= __("Artists") ?></p>
@@ -142,7 +142,7 @@ include PAGE_NAVIGATOR;
       <?php } ?>
 
       <a href="/leaderboard">
-        <mbutton material size=mid icon-only outlined has-tooltip=right>
+        <mbutton mid icon-only outlined has-tooltip=right>
           <mi>add</mi>
           <div ttooltip>
             <p text std bold>Explore</p>

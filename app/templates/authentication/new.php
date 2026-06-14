@@ -97,7 +97,7 @@ ob_start();
         <mbutton material close-overlay>
           <p text>Cancel</p>
         </mbutton>
-        <mbutton background=slight has-icon=left material submit-closest size=mid>
+        <mbutton mid background=slight has-icon=left submit-closest>
           <mi>done_all</mi>
           <p text bold>Done</p>
         </mbutton>

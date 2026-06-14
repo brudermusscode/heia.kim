@@ -63,7 +63,7 @@ $Requests = $Squad
     <div box-floating-actions fl gap=smoler alic jucend>
       <form request="squad:request:delete" reload>
         <input type=hidden name=id value=<?= $Request->id; ?> />
-        <mbutton submit-closest material background=besure color=dark-orange size=std icon-only has-tooltip=bottom>
+        <mbutton submit-closest background=besure color=dark-orange icon-only has-tooltip=bottom>
           <mi>remove</mi>
           <div ttooltip>
             <p text bold>Cancel</p>

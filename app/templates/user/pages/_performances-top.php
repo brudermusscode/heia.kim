@@ -17,7 +17,7 @@ $Scores = $User->scores()
 
   <div fl gap alic title-inline>
     <a href="<?= "/u/$User->id/$mode/$current_mod"; ?>">
-      <mbutton size=mid outlined icon-only material>
+      <mbutton mid outlined icon-only>
         <mi size=midler>arrow_back</mi>
       </mbutton>
     </a>

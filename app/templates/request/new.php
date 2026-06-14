@@ -63,7 +63,7 @@ include SNOW; ?>
             </div>
 
             <div fl alic jucstart gap=smol+>
-              <mbutton material has-icon=left beatmap-difficulty-bg="<?= $Beatmap->turn_difficulty_to_text(); ?>">
+              <mbutton has-icon=left beatmap-difficulty-bg="<?= $Beatmap->turn_difficulty_to_text(); ?>">
                 <mi size=std>star</mi>
                 <p text><?= number_format($Beatmap->diff, 2, ",", "."); ?></p>
               </mbutton>
@@ -84,10 +84,10 @@ include SNOW; ?>
       </div>
 
       <div prompt-actions fl jucsb>
-        <mbutton close-overlay material background=clean color=dynamic>
+        <mbutton close-overlay background=clean color=dynamic>
           <p text>Cancel</p>
         </mbutton>
-        <mbutton size=mid background=besure color=dark-orange material tabindex=3 submit-closest>
+        <mbutton mid background=besure color=dark-orange tabindex=3 submit-closest>
           <p text bold><?= __("Submit") ?></p>
         </mbutton>
       </div>

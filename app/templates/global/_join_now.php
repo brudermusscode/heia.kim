@@ -11,7 +11,7 @@
 
   <div fl gap=smoler alic>
     <?php if (USER_COMEBACK && USER_COMEBACK->osu || !USER_COMEBACK) { ?>
-      <mbutton material icon-only background=osu-pink color=light has-tooltip=top
+      <mbutton icon-only background=osu-pink color=light has-tooltip=top
         <?= USER_COMEBACK?->osu
           ? 'data-action="vendors:login" data-vendor=osu'
           : 'data-action="vendors:osu,auth,create"';
@@ -24,7 +24,7 @@
     <?php } ?>
 
     <?php if (USER_COMEBACK && USER_COMEBACK->discord || !USER_COMEBACK) { ?>
-      <mbutton material icon-only background=discord-blue color=light has-tooltip=top
+      <mbutton icon-only background=discord-blue color=light has-tooltip=top
         <?= USER_COMEBACK?->discord
           ? 'data-action="vendors:login" data-vendor=discord'
           : 'data-action="vendors:discord,auth,create"';
@@ -37,7 +37,7 @@
     <?php } ?>
 
     <?php if (USER_COMEBACK && USER_COMEBACK->google || !USER_COMEBACK) { ?>
-      <mbutton material icon-only background=dark color=light has-tooltip=top
+      <mbutton icon-only background=dark color=light has-tooltip=top
         <?= USER_COMEBACK?->google
           ? 'data-action="vendors:login" data-vendor=google'
           : 'data-action="vendors:google,auth,create"';
@@ -62,13 +62,13 @@
 
     <?php if (USER_COMEBACK && filter_var(USER_COMEBACK->email, FILTER_VALIDATE_EMAIL)) { ?>
       <a href="/login">
-        <mbutton material icon-only background=dark color=white>
+        <mbutton icon-only background=dark color=white>
           <mi>login</mi>
         </mbutton>
       </a>
     <?php } else { ?>
       <a href="/register/email">
-        <mbutton material icon-only background=slight color=dynamic>
+        <mbutton icon-only background=slight color=dynamic>
           <mi>email</mi>
         </mbutton>
       </a>

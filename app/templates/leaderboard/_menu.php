@@ -84,7 +84,7 @@ if ($country !== "global") :
   <div fl fldircol gap=smol+>
     <p text bold>Country</p>
     <a href="<?= "$base_url/$model/$mode/$mod/$type"; ?>">
-      <mbutton material size=mid background="slight" has-icon=left active>
+      <mbutton mid background="slight" has-icon=left active>
         <mi>remove</mi>
         <picture size=smoler circled fl alic jucc>
           <?php $Country->icon(); ?>

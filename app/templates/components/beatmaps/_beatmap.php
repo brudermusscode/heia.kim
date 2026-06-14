@@ -122,7 +122,7 @@ $last_updated = Time::ago($Beatmap->last_update, true);
           ?>
 
           <?php if ($include_status && !$include_time_ago) { ?>
-            <mbutton material has-icon=left no-hover beatmap-state="<?= $Beatmap->status; ?>">
+            <mbutton has-icon=left no-hover beatmap-state="<?= $Beatmap->status; ?>">
               <i text midler class="osu-icon osu-<?= $icon; ?>"></i>
               <p text smol bold ttup><?= htmlspecialchars($Beatmap->status()); ?></p>
             </mbutton>

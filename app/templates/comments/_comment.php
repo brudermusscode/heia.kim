@@ -23,7 +23,7 @@ $is_new ??= false;
 <box-model comment data-id=<?= $Comment->id; ?> filled style=min-height:3.2em; <?php if ($is_new) echo "new-object"; ?>>
 
   <div object-actions menu-outer>
-    <mbutton open-more-menu icon-only material size=smol filled>
+    <mbutton smol open-more-menu icon-only filled>
       <mi>more_vert</mi>
     </mbutton>
 

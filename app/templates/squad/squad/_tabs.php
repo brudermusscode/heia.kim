@@ -16,7 +16,7 @@ $active_modes = $Squad->modes();
 
 <div fl jucc alic gap=smol>
   <a href="<?= "$base_url"; ?>">
-    <mbutton size=mid material filled has-icon=left show-text-active <?php display_active($page, "index"); ?>>
+    <mbutton mid filled has-icon=left show-text-active <?php display_active($page, "index"); ?>>
       <mi>stream</mi>
       <p text bold show-active>Feed</p>
     </mbutton>
@@ -24,7 +24,7 @@ $active_modes = $Squad->modes();
 
   <?php if ($active_modes->osu == 1) { ?>
     <a href="<?= "$base_url/osu"; ?>">
-      <mbutton size=mid material filled has-icon=left show-text-active <?php display_active($mode, "osu"); ?>>
+      <mbutton mid filled has-icon=left show-text-active <?php display_active($mode, "osu"); ?>>
         <mi class="osu-icon osu-vanilla"></mi>
         <p text bold show-active><?= __("Standard"); ?></p>
       </mbutton>
@@ -33,7 +33,7 @@ $active_modes = $Squad->modes();
 
   <?php if ($active_modes->ctb == 1) { ?>
     <a href="<?= "$base_url/ctb"; ?>">
-      <mbutton size=mid material filled has-icon=left show-text-active <?php display_active($mode, "ctb"); ?>>
+      <mbutton mid filled has-icon=left show-text-active <?php display_active($mode, "ctb"); ?>>
         <mi class="osu-icon osu-ctb"></mi>
         <p text bold show-active>Catch the Beat</p>
       </mbutton>
@@ -42,7 +42,7 @@ $active_modes = $Squad->modes();
 
   <?php if ($active_modes->taiko == 1) { ?>
     <a href="<?= "$base_url/taiko"; ?>">
-      <mbutton size=mid material filled has-icon=left show-text-active <?php display_active($mode, "taiko"); ?>>
+      <mbutton mid filled has-icon=left show-text-active <?php display_active($mode, "taiko"); ?>>
         <mi class="osu-icon osu-taiko"></mi>
         <p text bold show-active>Taiko</p>
       </mbutton>
@@ -51,7 +51,7 @@ $active_modes = $Squad->modes();
 
   <?php if ($active_modes->mania == 1) { ?>
     <a href="<?= "$base_url/mania"; ?>">
-      <mbutton size=mid material filled has-icon=left show-text-active <?php display_active($mode, "mania"); ?>>
+      <mbutton mid filled has-icon=left show-text-active <?php display_active($mode, "mania"); ?>>
         <mi class="osu-icon osu-mania"></mi>
         <p text bold show-active>Mania</p>
       </mbutton>

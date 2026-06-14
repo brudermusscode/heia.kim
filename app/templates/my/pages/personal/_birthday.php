@@ -43,7 +43,7 @@ $birthday_set = CurrentUser->settings->birthday;
         </div>
 
         <div fl justify-content=end gap>
-          <mbutton size=mid background=slight-green color=dark-green material confirm-submit-button tabindex=4>
+          <mbutton mid background=slight-green color=dark-green confirm-submit-button tabindex=4>
             <div action>
               <p text bold><?= __("Save") ?></p>
             </div>
@@ -62,7 +62,7 @@ $birthday_set = CurrentUser->settings->birthday;
         </div>
 
         <div fl justify-content=end gap>
-          <mbutton size=mid background=besure color=dark-orange material disabled>
+          <mbutton mid background=besure color=dark-orange disabled>
             <div action>
               <p text bold>Cool 🥰</p>
             </div>

@@ -185,7 +185,7 @@ if (!$Beatmap || !$Score) {
 
           <?php if (!$clean_appearance) { ?>
             <div data-action=" beatmap:set,play" data-set-id="<?= $Beatmap->set_id; ?>" active="false" dno>
-              <mbutton material filled=lighter icon-only>
+              <mbutton filled=lighter icon-only>
                 <mi>play_arrow</mi>
               </mbutton>
             </div>

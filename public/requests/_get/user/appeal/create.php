@@ -133,7 +133,7 @@ include SNOW;
                   <input type="text" value="<?= $Appeal->live_play_file; ?>" />
                 </div>
                 <a extern href="<?= $Appeal->live_play_file; ?>" target="_blank">
-                  <mbutton material size=mid outlined=darker circled icon-only has-tooltip=bottom>
+                  <mbutton mid outlined=darker circled icon-only has-tooltip=bottom>
                     <mi>play_arrow</mi>
                     <div ttooltip>
                       <p text bold>View in new tab</p>
@@ -147,12 +147,12 @@ include SNOW;
       </div>
 
       <div prompt-actions>
-        <mbutton material background=clean close-overlay>
+        <mbutton background=clean close-overlay>
           <p text>Cancel</p>
         </mbutton>
 
         <?php if ($is_editable) { ?>
-          <mbutton submit-closest size=mid material has-icon=left background=<?= $Appeal ? "refollow" : "follow"; ?> color=dark>
+          <mbutton mid submit-closest has-icon=left background=<?= $Appeal ? "refollow" : "follow"; ?> color=dark>
             <?php if ($Appeal) { ?>
               <mi>refresh</mi>
             <?php } else { ?>

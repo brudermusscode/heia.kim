@@ -22,7 +22,7 @@
     <p color=white style="opacity:.6;">Next up: <strong>Cookies</strong></p>
   </div>
   <a href="<?= "$base_url/consent/cookies"; ?>" sub>
-    <mbutton size=mid background=slight-green icon-only material data-action="legal:consent,forward"
+    <mbutton mid background=slight-green icon-only data-action="legal:consent,forward"
       data-legal-page="cookies">
       <mi>east</mi>
     </mbutton>

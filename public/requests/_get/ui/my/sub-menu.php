@@ -26,7 +26,7 @@ ob_start();
 ?>
 
 <toggle-sub-menu>
-  <mbutton icon-only size=mid material filled elevated>
+  <mbutton icon-only mid filled elevated>
     <i class="mi">menu</i>
   </mbutton>
 </toggle-sub-menu>

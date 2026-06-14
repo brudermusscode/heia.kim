@@ -57,7 +57,7 @@ $Scores = CurrentUser->scores()
 <div fl gap=smol style=z-index:1002;position:relative; disabled>
   <a sub href="<?= "$base_url/osu/$mod"; ?>">
     <div has-tooltip=bottom>
-      <mbutton <?= $mode == "osu" ? "active" : "background=slighter"; ?> icon-only size=mid material ripple-effect>
+      <mbutton mid <?= $mode == "osu" ? "active" : "background=slighter"; ?> icon-only ripple-effect>
         <i class="osu-icon osu-vanilla"></i>
       </mbutton>
 
@@ -69,7 +69,7 @@ $Scores = CurrentUser->scores()
 
   <a sub href="<?= "$base_url/taiko/vanilla"; ?>">
     <div has-tooltip=bottom>
-      <mbutton <?= $mode == "taiko" ? "active" : "background=slighter"; ?> icon-only size=mid material ripple-effect>
+      <mbutton mid <?= $mode == "taiko" ? "active" : "background=slighter"; ?> icon-only ripple-effect>
         <i class="osu-icon osu-taiko"></i>
       </mbutton>
 
@@ -81,7 +81,7 @@ $Scores = CurrentUser->scores()
 
   <a sub href="<?= "$base_url/ctb/vanilla"; ?>">
     <div has-tooltip=bottom>
-      <mbutton <?= $mode == "ctb" ? "active" : "background=slighter"; ?> icon-only size=mid material ripple-effect>
+      <mbutton mid <?= $mode == "ctb" ? "active" : "background=slighter"; ?> icon-only ripple-effect>
         <i class="osu-icon osu-ctb"></i>
       </mbutton>
 
@@ -93,7 +93,7 @@ $Scores = CurrentUser->scores()
 
   <a sub href="<?= "$base_url/mania/vanilla"; ?>">
     <div has-tooltip=bottom>
-      <mbutton <?= $mode == "mania" ? "active" : "background=slighter"; ?> icon-only size=mid material ripple-effect>
+      <mbutton mid <?= $mode == "mania" ? "active" : "background=slighter"; ?> icon-only ripple-effect>
         <i class="osu-icon osu-mania"></i>
       </mbutton>
 

@@ -46,7 +46,7 @@ $HighestRole = $CommentUser->squad_user->highest_privileges();
           &middot;
           <?php if ($CommentUser->squad_user->has_elevated_privileges()) { ?>
             <a href="<?= "$base_url/members"; ?>">
-              <mbutton material size=smol background=invert color=invert has-icon=left>
+              <mbutton smol background=invert color=invert has-icon=left>
                 <mi><?= $HighestRole->icon; ?></mi>
                 <p text bold><?= $HighestRole->name; ?></p>
               </mbutton>

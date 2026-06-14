@@ -51,7 +51,7 @@ else {
     <div threads style=flex:1; fl fldircol gap posrel>
       <div fl alic gap>
         <a href="<?= $base_url . "/threads"; ?>">
-          <mbutton material size=mid icon-only background=slighter>
+          <mbutton mid icon-only background=slighter>
             <i class="mi" size="std">arrow_back</i>
           </mbutton>
         </a>
@@ -155,7 +155,10 @@ else {
     <div style="min-width:20em;">
       <!-- <form data-form="threads:post,create,view"></form> -->
       <div fl jucc>
-        <mbutton background=refollow color=dark material rounded has-icon=left size=mid jucc fl alic data-action="get" data-href="/squad/thread/post/new?id=<?= $Thread->id; ?>" open-composer>
+        <mbutton mid background=refollow color=dark rounded has-icon=left jucc fl alic
+          data-action="get"
+          data-href="/squad/thread/post/new?id=<?= $Thread->id; ?>"
+          open-composer>
           <i class="mi" size="std">maps_ugc</i>
           <p text std bold><?= __("Answer") ?></p>
         </mbutton>

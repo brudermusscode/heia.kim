@@ -26,7 +26,7 @@ $DecodedProfile = $User->decoded_profile();
       <form request="squad:request:create" reload responder=always>
         <input type=hidden name=type value=invite />
         <input type=hidden name=user_id value=<?= $User->id; ?> />
-        <mbutton submit-closest material has-icon=left size=mid background=slight>
+        <mbutton mid submit-closest has-icon=left background=slight>
           <mi>north_east</mi>
           <p text bold>Invite to <?= CurrentUser->squad->name; ?></p>
         </mbutton>
@@ -38,7 +38,7 @@ $DecodedProfile = $User->decoded_profile();
       && CurrentUser->sqcan("coordinate", "users")
     ) { ?>
       <a href="/manage/squad/requests?tab=invites">
-        <mbutton submit-closest material has-icon=left size=mid background=slight>
+        <mbutton mid submit-closest has-icon=left background=slight>
           <mi class="loader-pulse posrel" fl alic jucc style="height:24px;width:24px;top:0;" mr=smol>
             <span></span>
           </mi>
@@ -127,7 +127,7 @@ $DecodedProfile = $User->decoded_profile();
                         <input type=hidden name=reference_id value=<?= $User->id; ?> />
                         <input type=hidden name=action value=thumb_up />
                         <input type=hidden name=type value=birthday_cheer />
-                        <mbutton submit-closest size=mid background=dynamic material has-icon=left>
+                        <mbutton mid submit-closest background=dynamic has-icon=left>
                           <p text mid>🎉</p>
                           <p counter text bold><?= $User->birthday_cheers(year: date("Y"))->count(); ?>
                           </p>
@@ -137,7 +137,7 @@ $DecodedProfile = $User->decoded_profile();
                     <p text color=invert smol tac slight>Send some wishes</p>
                   </div>
                 <?php } else { ?>
-                  <mbutton disabled size=mid background=dynamic material has-icon=left>
+                  <mbutton mid disabled background=dynamic has-icon=left>
                     <p text mid>🎉</p>
                     <p counter text bold><?= $User->birthday_cheers(year: date("Y"))->count(); ?></p>
                   </mbutton>

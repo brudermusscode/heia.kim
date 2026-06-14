@@ -75,7 +75,7 @@ use Heiakim\Model\User;
     </div>
   </jump-menu>
 
-  <mbutton mm-open size=wide has-icon=left elevated=mid material background=company color=light>
+  <mbutton wide mm-open has-icon=left elevated=mid background=company color=light>
     <div mm-open-loading>
       <?php include COMPONENT . "/dot-loader.html"; ?>
     </div>

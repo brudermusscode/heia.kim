@@ -6,7 +6,6 @@ button {
 }
 
 mbutton {
-  display: block;
   content: "";
   outline: none;
   border: none;
@@ -15,6 +14,9 @@ mbutton {
   cursor: pointer;
   position: relative;
   user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   * {
     @extend [no-word-wrap];
@@ -102,422 +104,467 @@ mbutton {
     }
   }
 
-  &[material] {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &[placeholder] {
+    opacity: 0 !important;
+  }
 
-    &[placeholder] {
-      opacity: 0 !important;
-    }
-
-    @include themed() {
-      &[background] {
-        &[background="clean"] {
-          background: transparent;
-
-          &:hover {
-            background: t(slighter-hover);
-          }
-
-          &[active] {
-            background: t(slight-hover);
-          }
-        }
-
-        &[background="slight"] {
-          background: t(slight-hover);
-
-          &:hover {
-            background: t(slighter-hover);
-          }
-        }
-
-        &[background="slighter"] {
-          background: t(slighter-hover);
-
-          &:hover {
-            background: t(slight-hover);
-          }
-        }
-      }
-
-      &[filled] {
-        &:hover {
-          background: t(box);
-        }
-
-        &[filled="lighter"]:hover {
-          background: t(box2);
-        }
-
-        &[filled="darker"]:hover {
-          background: t(box2);
-        }
-
-        &[filled="invert"] {
-          &:hover {
-            background: t(box-invert-hover);
-          }
-        }
-      }
-
-      &[hoverable] {
+  @include themed() {
+    &[background] {
+      &[background="clean"] {
         background: transparent;
-        box-shadow: none;
+
+        &:hover {
+          background: t(slighter-hover);
+        }
+
+        &[active] {
+          background: t(slight-hover);
+        }
+      }
+
+      &[background="slight"] {
+        background: t(slight-hover);
+
+        &:hover {
+          background: t(slighter-hover);
+        }
+      }
+
+      &[background="slighter"] {
+        background: t(slighter-hover);
 
         &:hover {
           background: t(slight-hover);
-          box-shadow: none;
-        }
-
-        &:active {
-          box-shadow: none;
-        }
-
-        &[hoverable="invert"] {
-          &:hover {
-            background: t(slight-hover-invert);
-          }
-        }
-
-        &[background="unfollow"] {
-          background: t(btn-unfollow);
-
-          &:hover {
-            background: t(btn-unfollow);
-            opacity: 0.8;
-          }
         }
       }
     }
+
+    &[filled] {
+      &:hover {
+        background: t(box);
+      }
+
+      &[filled="lighter"]:hover {
+        background: t(box2);
+      }
+
+      &[filled="darker"]:hover {
+        background: t(box2);
+      }
+
+      &[filled="invert"] {
+        &:hover {
+          background: t(box-invert-hover);
+        }
+      }
+    }
+
+    &[hoverable] {
+      background: transparent;
+      box-shadow: none;
+
+      &:hover {
+        background: t(slight-hover);
+        box-shadow: none;
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+
+      &[hoverable="invert"] {
+        &:hover {
+          background: t(slight-hover-invert);
+        }
+      }
+
+      &[background="unfollow"] {
+        background: t(btn-unfollow);
+
+        &:hover {
+          background: t(btn-unfollow);
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  &:not([rounded]) {
+    border-radius: 32px;
+  }
+
+  &[icon-only] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:not([rounded]) {
-      border-radius: 32px;
+      border-radius: 50%;
+    }
+  }
+
+  // ? Sizing
+  &[size="std"],
+  &[std],
+  &:not([smol], [smolplus], [std], [stdplus], [midler], [mid], [midplus], [wide]) {
+    height: $mbutton-std-size;
+    max-height: $mbutton-std-size;
+    min-height: $mbutton-std-size;
+
+    i:not([size]),
+    mi:not([size]) {
+      font-size: $font-size-midler;
+    }
+
+    &:not([icon-only]) {
+      padding-inline: 24px;
+    }
+
+    &[has-icon]:not([icon-only]) {
+      display: flex;
+      gap: 8px;
+
+      &[has-icon="left"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-std-size;
+            min-width: $mbutton-std-size;
+          }
+        }
+
+        padding-inline: 12px 24px;
+      }
+
+      &[has-icon="right"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-std-size;
+            min-width: $mbutton-std-size;
+          }
+        }
+
+        padding-inline: 24px 12px;
+      }
+    }
+
+    &[icon-only]:not([has-icon]) {
+      width: $mbutton-std-size;
+      max-width: $mbutton-std-size;
+      min-width: $mbutton-std-size;
+      padding: 0;
+    }
+  }
+
+  &[size="smol"],
+  &[smol] {
+    height: $mbutton-smol-size;
+    max-height: $mbutton-smol-size;
+    min-height: $mbutton-smol-size;
+
+    i,
+    mi {
+      font-size: $font-size-std;
+    }
+
+    &:not([icon-only]) {
+      padding-inline: 12px;
+    }
+
+    &[has-icon]:not([icon-only]) {
+      display: flex;
+      gap: 2px;
+
+      &[has-icon="left"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-smol-size;
+            min-width: $mbutton-smol-size;
+          }
+        }
+
+        padding-inline: 4px 12px;
+      }
+
+      &[has-icon="right"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-smol-size;
+            min-width: $mbutton-smol-size;
+          }
+        }
+
+        padding-inline: 12px 4px;
+      }
     }
 
     &[icon-only] {
+      width: $mbutton-smol-size;
+      max-width: $mbutton-smol-size;
+      min-width: $mbutton-smol-size;
+    }
+  }
+
+  &[size="std+"],
+  &[stdplus],
+  &[size="midler"],
+  &[midler] {
+    height: $mbutton-std-plus-size;
+    max-height: $mbutton-std-plus-size;
+    min-height: $mbutton-std-plus-size;
+
+    i:not([size]),
+    mi:not([size]) {
+      font-size: $font-size-midler-plus;
+    }
+
+    &:not([icon-only]) {
+      padding-inline: 24px;
+    }
+
+    &[has-icon]:not([icon-only]) {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      gap: 8px;
 
-      &:not([rounded]) {
-        border-radius: 50%;
+      &[has-icon="left"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-std-plus-size;
+            min-width: $mbutton-std-plus-size;
+          }
+        }
+
+        padding-inline: 12px 24px;
+      }
+
+      &[has-icon="right"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-std-plus-size;
+            min-width: $mbutton-std-plus-size;
+          }
+        }
+
+        padding-inline: 24px 12px;
       }
     }
 
-    /**
-     * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-     * ,,,,,,,,,,,,,,,,,,,,,,, SIZING ,,,,,,,,,,,,,,,,,,,,,,,,,
-     * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-     */
-    &[size="std"],
-    &:not([size]) {
-      height: $mbutton-std-size;
-      max-height: $mbutton-std-size;
-      min-height: $mbutton-std-size;
+    &[icon-only]:not([has-icon]) {
+      width: $mbutton-std-plus-size;
+      max-width: $mbutton-std-plus-size;
+      min-width: $mbutton-std-plus-size;
+      padding: 0;
+    }
 
-      i:not([size]),
-      mi:not([size]) {
-        font-size: $font-size-midler;
-      }
+    &[has-image] {
+      padding-left: 4px;
+      gap: 8px;
+    }
 
-      &:not([icon-only]) {
-        padding-inline: 24px;
-      }
+    &[image-only] {
+      padding: 4px;
+      gap: 0;
+    }
+  }
 
-      &[has-icon]:not([icon-only]) {
-        display: flex;
-        gap: 8px;
+  &[size="mid"],
+  &[mid] {
+    height: $mbutton-mid-size;
+    max-height: $mbutton-mid-size;
+    min-height: $mbutton-mid-size;
 
-        &[has-icon="left"] {
-          &[show-text-active] {
-            &:not([active]) {
-              padding-inline: 0;
-              width: $mbutton-std-size;
-              min-width: $mbutton-std-size;
-            }
+    i,
+    mi {
+      font-size: $font-size-mid;
+    }
+
+    &:not([icon-only]) {
+      padding-inline: 28px;
+    }
+
+    &[has-icon]:not([icon-only]) {
+      display: flex;
+      gap: 8px;
+
+      &[has-icon="left"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-mid-size;
+            min-width: $mbutton-mid-size;
           }
-
-          padding-inline: 12px 24px;
         }
 
-        &[has-icon="right"] {
-          &[show-text-active] {
-            &:not([active]) {
-              padding-inline: 0;
-              width: $mbutton-std-size;
-              min-width: $mbutton-std-size;
-            }
-          }
-
-          padding-inline: 24px 12px;
-        }
+        padding-inline: 20px 28px;
       }
 
-      &[icon-only]:not([has-icon]) {
-        width: $mbutton-std-size;
-        max-width: $mbutton-std-size;
-        min-width: $mbutton-std-size;
-        padding: 0;
+      &[has-icon="right"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-mid-size;
+            min-width: $mbutton-mid-size;
+          }
+        }
+
+        padding-inline: 28px 20px;
       }
     }
 
-    &[size] {
-      &[size="smol"] {
-        height: $mbutton-smol-size;
-        max-height: $mbutton-smol-size;
-        min-height: $mbutton-smol-size;
+    &[icon-only] {
+      width: $mbutton-mid-size;
+      max-width: $mbutton-mid-size;
+      min-width: $mbutton-mid-size;
+    }
+  }
 
-        i,
-        mi {
-          font-size: $font-size-std;
-        }
+  &[size="midplus"],
+  &[midplus] {
+    height: $mbutton-mid-plus-size;
+    max-height: $mbutton-mid-plus-size;
+    min-height: $mbutton-mid-plus-size;
 
-        &:not([icon-only]) {
-          padding-inline: 12px;
-        }
+    i,
+    mi {
+      font-size: $font-size-mid;
+    }
 
-        &[has-icon]:not([icon-only]) {
-          display: flex;
-          gap: 2px;
+    &:not([icon-only]) {
+      padding-inline: 28px;
+    }
 
-          &[has-icon="left"] {
-            &[show-text-active] {
-              &:not([active]) {
-                padding-inline: 0;
-                width: $mbutton-smol-size;
-                min-width: $mbutton-smol-size;
-              }
-            }
+    &[has-icon]:not([icon-only]) {
+      display: flex;
+      gap: 8px;
 
-            padding-inline: 4px 12px;
-          }
-
-          &[has-icon="right"] {
-            &[show-text-active] {
-              &:not([active]) {
-                padding-inline: 0;
-                width: $mbutton-smol-size;
-                min-width: $mbutton-smol-size;
-              }
-            }
-
-            padding-inline: 12px 4px;
+      &[has-icon="left"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-mid-size;
+            min-width: $mbutton-mid-size;
           }
         }
 
-        &[icon-only] {
-          width: $mbutton-smol-size;
-          max-width: $mbutton-smol-size;
-          min-width: $mbutton-smol-size;
-        }
+        padding-inline: 20px 28px;
       }
 
-      &[size="std+"],
-      &[size="midler"] {
-        height: $mbutton-std-plus-size;
-        max-height: $mbutton-std-plus-size;
-        min-height: $mbutton-std-plus-size;
-
-        i:not([size]),
-        mi:not([size]) {
-          font-size: $font-size-midler-plus;
-        }
-
-        &:not([icon-only]) {
-          padding-inline: 24px;
-        }
-
-        &[has-icon]:not([icon-only]) {
-          display: flex;
-          gap: 8px;
-
-          &[has-icon="left"] {
-            &[show-text-active] {
-              &:not([active]) {
-                padding-inline: 0;
-                width: $mbutton-std-plus-size;
-                min-width: $mbutton-std-plus-size;
-              }
-            }
-
-            padding-inline: 12px 24px;
-          }
-
-          &[has-icon="right"] {
-            &[show-text-active] {
-              &:not([active]) {
-                padding-inline: 0;
-                width: $mbutton-std-plus-size;
-                min-width: $mbutton-std-plus-size;
-              }
-            }
-
-            padding-inline: 24px 12px;
+      &[has-icon="right"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-mid-size;
+            min-width: $mbutton-mid-size;
           }
         }
 
-        &[icon-only]:not([has-icon]) {
-          width: $mbutton-std-plus-size;
-          max-width: $mbutton-std-plus-size;
-          min-width: $mbutton-std-plus-size;
-          padding: 0;
-        }
-
-        &[has-image] {
-          padding-left: 4px;
-          gap: 8px;
-        }
-
-        &[image-only] {
-          padding: 4px;
-          gap: 0;
-        }
-      }
-
-      &[size="mid"] {
-        height: $mbutton-mid-size;
-        max-height: $mbutton-mid-size;
-        min-height: $mbutton-mid-size;
-
-        i,
-        mi {
-          font-size: $font-size-mid;
-        }
-
-        &:not([icon-only]) {
-          padding-inline: 28px;
-        }
-
-        &[has-icon]:not([icon-only]) {
-          display: flex;
-          gap: 8px;
-
-          &[has-icon="left"] {
-            &[show-text-active] {
-              &:not([active]) {
-                padding-inline: 0;
-                width: $mbutton-mid-size;
-                min-width: $mbutton-mid-size;
-              }
-            }
-
-            padding-inline: 20px 28px;
-          }
-
-          &[has-icon="right"] {
-            &[show-text-active] {
-              &:not([active]) {
-                padding-inline: 0;
-                width: $mbutton-mid-size;
-                min-width: $mbutton-mid-size;
-              }
-            }
-
-            padding-inline: 28px 20px;
-          }
-        }
-
-        &[icon-only] {
-          width: $mbutton-mid-size;
-          max-width: $mbutton-mid-size;
-          min-width: $mbutton-mid-size;
-        }
-      }
-
-      &[size="wide"] {
-        height: $mbutton-wide-size;
-        max-height: $mbutton-wide-size;
-        min-height: $mbutton-wide-size;
-
-        &:not([rounded]) {
-          border-radius: 24px;
-        }
-
-        i,
-        mi {
-          font-size: 24px;
-        }
-
-        &:not([icon-only]) {
-          padding-inline: 38px;
-        }
-
-        &[has-icon]:not([icon-only]) {
-          display: flex;
-          gap: 10px;
-
-          &[has-icon="left"] {
-            padding-inline: 28px 38px;
-          }
-
-          &[has-icon="right"] {
-            padding-inline: 38px 28px;
-          }
-        }
-
-        &[icon-only] {
-          width: $mbutton-wide-size;
-          max-width: $mbutton-wide-size;
-          min-width: $mbutton-wide-size;
-        }
+        padding-inline: 28px 20px;
       }
     }
 
-    &[active] {
-      @include themed() {
-        background: t(active) !important;
-        color: t(active-text);
+    &[icon-only] {
+      width: $mbutton-mid-size;
+      max-width: $mbutton-mid-size;
+      min-width: $mbutton-mid-size;
+    }
+  }
 
-        &:hover {
-          background: t(active-hover) !important;
-        }
+  &[size="wide"],
+  &[wide] {
+    height: $mbutton-wide-size;
+    max-height: $mbutton-wide-size;
+    min-height: $mbutton-wide-size;
+
+    &:not([rounded]) {
+      border-radius: 24px;
+    }
+
+    i,
+    mi {
+      font-size: 24px;
+    }
+
+    &:not([icon-only]) {
+      padding-inline: 38px;
+    }
+
+    &[has-icon]:not([icon-only]) {
+      display: flex;
+      gap: 10px;
+
+      &[has-icon="left"] {
+        padding-inline: 28px 38px;
+      }
+
+      &[has-icon="right"] {
+        padding-inline: 38px 28px;
       }
     }
 
-    &:focus {
-      @include themed() {
-        outline: 4px solid t(active);
-      }
-
-      box-shadow: none;
+    &[icon-only] {
+      width: $mbutton-wide-size;
+      max-width: $mbutton-wide-size;
+      min-width: $mbutton-wide-size;
     }
+  }
 
-    &:hover {
-      outline: none;
-      box-shadow: var(--mio-theme-elevation-3);
+  &[active] {
+    @include themed() {
+      background: t(active) !important;
+      color: t(active-text);
 
-      &[elevated] {
-        box-shadow: var(--mio-theme-elevation-3);
-      }
-    }
-
-    &:active {
-      outline: none;
-      box-shadow: none;
-    }
-
-    &[no-hover-shadow] {
       &:hover {
-        box-shadow: none;
+        background: t(active-hover) !important;
       }
     }
+  }
 
-    &[no-hover] {
-      pointer-events: none;
+  &:focus {
+    @include themed() {
+      outline: 4px solid t(active);
     }
 
-    &[tag] {
-      &:not([has-tooltip]) {
-        cursor: default;
-        box-shadow: none;
-        pointer-events: none;
+    box-shadow: none;
+  }
 
-        &:hover {
-          scale: 1;
-          box-shadow: none;
-        }
+  &:hover {
+    outline: none;
+    box-shadow: var(--mio-theme-elevation-3);
+
+    &[elevated] {
+      box-shadow: var(--mio-theme-elevation-3);
+    }
+  }
+
+  &:active {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &[no-hover-shadow] {
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  &[no-hover] {
+    pointer-events: none;
+  }
+
+  &[tag] {
+    &:not([has-tooltip]) {
+      cursor: default;
+      box-shadow: none;
+      pointer-events: none;
+
+      &:hover {
+        scale: 1;
+        box-shadow: none;
       }
     }
   }

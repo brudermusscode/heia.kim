@@ -257,10 +257,10 @@ if (ANIMATIONS_ENABLED) {
       </div>
 
       <div prompt-actions>
-        <mbutton size=std material close-overlay>
+        <mbutton close-overlay>
           <p text>Cancel</p>
         </mbutton>
-        <mbutton size=mid background=slight size=mid material submit-closest>
+        <mbutton mid background=slight submit-closest>
           <p text std bold><?= __("Create it!") ?></p>
         </mbutton>
       </div>

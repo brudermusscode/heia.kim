@@ -71,7 +71,7 @@ ob_start();
         <input type=hidden name=reference_id value=<?= $id; ?> />
         <textarea enter-submitable rows="1" name=comment_string auto-resize placeholder="Write a comment..."></textarea>
         <div>
-          <mbutton submit-closest material icon-only filled=darker size=smol clickable>
+          <mbutton smol submit-closest icon-only filled=darker clickable>
             <div>
               <p text std>
                 <i class="mi">send</i>

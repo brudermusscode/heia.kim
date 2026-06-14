@@ -107,13 +107,13 @@ ob_start(); ?>
           </div>
 
           <div fl alic gap=smol>
-            <mbutton create-post="text" size=std icon-only filled=clean material has-tooltip=bottom>
+            <mbutton create-post="text" icon-only filled=clean has-tooltip=bottom>
               <mi size=midler>format_quote</mi>
               <div ttooltip>
                 <p text bold>Just text</p>
               </div>
             </mbutton>
-            <mbutton create-post="poll" size=std icon-only filled=clean material has-tooltip=bottom>
+            <mbutton create-post="poll" icon-only filled=clean has-tooltip=bottom>
               <mi size=midler>ballot</mi>
               <div ttooltip>
                 <p text bold>Poll</p>
@@ -137,21 +137,21 @@ ob_start(); ?>
               <div p-option fl alic gap=smol outlined=darker rounded=wider>
                 <mi size=mid slight></mi>
                 <input flexone type=text name=options[] placeholder="Yeah, let's go!" />
-                <mbutton delete-option size=std material icon-only background=slighter hoverable z>
+                <mbutton delete-option icon-only background=slighter hoverable z>
                   <mi size=midler></mi>
                 </mbutton>
               </div>
               <div p-option fl alic gap=smol outlined=darker rounded=wider>
                 <mi size=mid slight></mi>
                 <input flexone type=text name=options[] placeholder="Nah m8." />
-                <mbutton delete-option size=std material icon-only background=slighter hoverable z>
+                <mbutton delete-option icon-only background=slighter hoverable z>
                   <mi size=midler></mi>
                 </mbutton>
               </div>
             </div>
 
             <div w100 fl jucc>
-              <mbutton add-option has-icon=left size=std filled hoverable material>
+              <mbutton add-option has-icon=left filled hoverable>
                 <mi>add</mi>
                 <p text bold>Add option</p>
               </mbutton>
@@ -221,14 +221,14 @@ ob_start(); ?>
 
 
           <div fl aliend jucsb w100>
-            <mbutton material size=std tag filled=darker has-icon=left has-tooltip=bottom>
+            <mbutton tag filled=darker has-icon=left has-tooltip=bottom>
               <mi>vpn_lock</mi>
               <p text><?= $Squad->name ?></p>
               <div ttooltip>
                 <p text bold>Only visible to squad members</p>
               </div>
             </mbutton>
-            <mbutton material size=mid background=company color=company-text icon-only submit-closest>
+            <mbutton mid background=company color=company-text icon-only submit-closest>
               <mi>prompt_suggestion</mi>
             </mbutton>
           </div>

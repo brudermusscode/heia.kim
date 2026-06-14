@@ -97,7 +97,7 @@ include __DIR__ . "/_header.php";
   <filters>
     <div content-width=smoler style="height:100vh;" z fl fldircol jucc>
       <div fl justify-content=start mb>
-        <mbutton ripple-effect material overlay-close background=invert rounded=wide color=invert>
+        <mbutton ripple-effect overlay-close background=invert rounded=wide color=invert>
           <div fl align-items="center" gap="smol">
             <p text smol><strong>ESC</strong> <?= __("to close") ?></p>
           </div>
@@ -112,28 +112,28 @@ include __DIR__ . "/_header.php";
 
             <div fl gap=smol flex-wrap=wrap>
               <a sub href="<?= "$base_url/osu/$status/$order/$filter" . $append_query_string;  ?>">
-                <mbutton material has-icon=left filled=darker <?php if ($mode == "osu") echo "active"; ?> fl gap=smol alic>
+                <mbutton has-icon=left filled=darker <?php if ($mode == "osu") echo "active"; ?> fl gap=smol alic>
                   <i class="osu-icon osu-vanilla" text></i>
                   <p text std bold><?= __("Standard") ?></p>
                 </mbutton>
               </a>
 
               <a sub href="<?= "$base_url/taiko/$status/$order/$filter" . $append_query_string;  ?>">
-                <mbutton material has-icon=left filled=darker <?php if ($mode == "taiko") echo "active"; ?> fl gap=smol alic>
+                <mbutton has-icon=left filled=darker <?php if ($mode == "taiko") echo "active"; ?> fl gap=smol alic>
                   <i class="osu-icon osu-taiko" text></i>
                   <p text std bold>Taiko</p>
                 </mbutton>
               </a>
 
               <a sub href="<?= "$base_url/ctb/$status/$order/$filter" . $append_query_string;  ?>">
-                <mbutton material has-icon=left filled=darker <?php if ($mode == "ctb") echo "active"; ?> fl gap=smol alic>
+                <mbutton has-icon=left filled=darker <?php if ($mode == "ctb") echo "active"; ?> fl gap=smol alic>
                   <i class="osu-icon osu-ctb" text></i>
                   <p text std bold>Catch the Beat</p>
                 </mbutton>
               </a>
 
               <a sub href="<?= "$base_url/mania/$status/$order/$filter" . $append_query_string;  ?>">
-                <mbutton material has-icon=left filled=darker <?php if ($mode == "mania") echo "active"; ?> fl gap=smol alic>
+                <mbutton has-icon=left filled=darker <?php if ($mode == "mania") echo "active"; ?> fl gap=smol alic>
                   <i class="osu-icon osu-mania" text></i>
                   <p text std bold>Mania</p>
                 </mbutton>
@@ -146,31 +146,31 @@ include __DIR__ . "/_header.php";
 
             <div fl gap=smol flex-wrap=wrap>
               <a sub href="<?= "$base_url/$mode/ranked/$order/$filter" . $append_query_string;  ?>">
-                <mbutton material has-icon=left filled=darker <?php if ($status == "ranked") echo "active"; ?> fl gap=smol alic>
+                <mbutton has-icon=left filled=darker <?php if ($status == "ranked") echo "active"; ?> fl gap=smol alic>
                   <p text std bold>🏅 &nbsp;Ranked</p>
                 </mbutton>
               </a>
 
               <a sub href="<?= "$base_url/$mode/loved/$order/$filter" . $append_query_string;  ?>">
-                <mbutton material has-icon=left filled=darker <?php if ($status == "loved") echo "active"; ?> fl gap=smol alic>
+                <mbutton has-icon=left filled=darker <?php if ($status == "loved") echo "active"; ?> fl gap=smol alic>
                   <p text std bold>❤️ &nbsp;Loved</p>
                 </mbutton>
               </a>
 
               <a sub href="<?= "$base_url/$mode/approved/$order/$filter" . $append_query_string;  ?>">
-                <mbutton material has-icon=left filled=darker <?php if ($status == "approved") echo "active"; ?> fl gap=smol alic>
+                <mbutton has-icon=left filled=darker <?php if ($status == "approved") echo "active"; ?> fl gap=smol alic>
                   <p text std bold>✅ &nbsp;<?= __("Approved") ?></p>
                 </mbutton>
               </a>
 
               <a sub href="<?= "$base_url/$mode/qualified/$order/$filter" . $append_query_string;  ?>">
-                <mbutton material has-icon=left filled=darker <?php if ($status == "qualified") echo "active"; ?> fl gap=smol alic>
+                <mbutton has-icon=left filled=darker <?php if ($status == "qualified") echo "active"; ?> fl gap=smol alic>
                   <p text std bold>🔖 &nbsp;<?= __("Qualified") ?></p>
                 </mbutton>
               </a>
 
               <a sub href="<?= "$base_url/$mode/pending/$order/$filter" . $append_query_string;  ?>">
-                <mbutton material has-icon=left filled=darker <?php if ($status == "pending") echo "active"; ?> fl gap=smol alic>
+                <mbutton has-icon=left filled=darker <?php if ($status == "pending") echo "active"; ?> fl gap=smol alic>
                   <p text std bold>⏳ &nbsp;<?= __("Pending") ?></p>
                 </mbutton>
               </a>
@@ -182,25 +182,25 @@ include __DIR__ . "/_header.php";
 
             <div fl gap=smol flex-wrap=wrap>
               <a sub href="<?= "$base_url/$mode/$status/id/$filter" . $append_query_string;  ?>">
-                <mbutton material filled=darker <?php if (isset($_GET["order"]) && $order == "id") echo "active"; ?> fl gap=smol alic>
+                <mbutton filled=darker <?php if (isset($_GET["order"]) && $order == "id") echo "active"; ?> fl gap=smol alic>
                   <p text std bold><?= __("Newest") ?></p>
                 </mbutton>
               </a>
 
               <a sub href="<?= "$base_url/$mode/$status/title/$filter" . $append_query_string;  ?>">
-                <mbutton material filled=darker <?php if ($order == "title") echo "active"; ?> fl gap=smol alic>
+                <mbutton filled=darker <?php if ($order == "title") echo "active"; ?> fl gap=smol alic>
                   <p text std bold><?= __("Title") ?></p>
                 </mbutton>
               </a>
 
               <a sub href="<?= "$base_url/$mode/$status/artist/$filter" . $append_query_string;  ?>">
-                <mbutton material filled=darker <?php if ($order == "artist") echo "active"; ?> fl gap=smol alic>
+                <mbutton filled=darker <?php if ($order == "artist") echo "active"; ?> fl gap=smol alic>
                   <p text std bold><?= __("Artist") ?></p>
                 </mbutton>
               </a>
 
               <a sub href="<?= "$base_url/$mode/$status/plays/$filter" . $append_query_string;  ?>">
-                <mbutton material filled=darker <?php if ($order == "plays") echo "active"; ?> fl gap=smol alic>
+                <mbutton filled=darker <?php if ($order == "plays") echo "active"; ?> fl gap=smol alic>
                   <p text std bold><?= __("Most played") ?></p>
                 </mbutton>
               </a>
@@ -226,7 +226,7 @@ include __DIR__ . "/_header.php";
 
         ?>
         <a sub href="<?= $tv_size_filter_url; ?>">
-          <mbutton material has-icon=left filled=slight <?php if ($filter == "tvsize") echo "active"; ?> fl gap=smol alic>
+          <mbutton has-icon=left filled=slight <?php if ($filter == "tvsize") echo "active"; ?> fl gap=smol alic>
             <mi>history_toggle_off</mi>
             <p text bold><?= __("TV Size") ?></p>
           </mbutton>
@@ -238,7 +238,7 @@ include __DIR__ . "/_header.php";
 
         <?php if ($mode !== "all") { ?>
           <a sub href="<?= "$base_url/all/$status/$order/$filter" . $append_query_string;  ?>">
-            <mbutton material has-icon=left filled=slight active fl gap=smol alic>
+            <mbutton has-icon=left filled=slight active fl gap=smol alic>
               <mi>remove</mi>
               <p text bold><?= $mode_text; ?></p>
             </mbutton>
@@ -247,7 +247,7 @@ include __DIR__ . "/_header.php";
 
         <?php if ($status !== "all") { ?>
           <a sub href="<?= "$base_url/$mode/all/$order/$filter" . $append_query_string;  ?>">
-            <mbutton material has-icon=left filled=slight active fl gap=smol alic>
+            <mbutton has-icon=left filled=slight active fl gap=smol alic>
               <mi>remove</mi>
               <p text bold>
                 <?= ($status == "ranked" ? "🏅 &nbsp;" : ($status == "loved" ? "❤️ &nbsp;" : ($status == "approved" ? "✅ &nbsp;" : ($status == "pending" ? "⏳ &nbsp;" : "🔖 &nbsp;")))) . " " . $status_text; ?>
@@ -258,7 +258,7 @@ include __DIR__ . "/_header.php";
 
         <?php if (isset($_GET["order"])) { ?>
           <a sub href="<?= "$base_url/$mode/$status/all/$filter" . $append_query_string;  ?>">
-            <mbutton material has-icon=left filled=slight active fl gap=smol alic>
+            <mbutton has-icon=left filled=slight active fl gap=smol alic>
               <mi>remove</mi>
               <p text bold><?= $order_text; ?></p>
             </mbutton>
@@ -268,7 +268,7 @@ include __DIR__ . "/_header.php";
 
       <div fl gap=smol alic>
         <a data-action="filters:open">
-          <mbutton material has-icon=left filled=slight fl gap=smol alic>
+          <mbutton has-icon=left filled=slight fl gap=smol alic>
             <mi>filter_list</mi>
             <p text bold>Filter</p>
           </mbutton>

@@ -47,37 +47,36 @@ include SNOW; ?>
         </div>
 
         <div fl gap=smol>
-          <mbutton
+          <mbutton mid ripple-effect
             <?= !Feature::enabled("connect_osu") ? "disabled" : "" ?>
             data-action="connection:start"
             data-provider="osu!"
             data-call-action="reconnect"
-            flexone has-tooltip=bottom material ripple-effect size=mid
-            background="osu-pink" color=light>
+            flexone has-tooltip=bottom background="osu-pink" color=light>
             <i text wider class="osu-icon osu-outlined"></i>
             <div ttooltip>
               <p text bold>osu!</p>
             </div>
           </mbutton>
 
-          <mbutton
+          <mbutton mid ripple-effect
             <?= !Feature::enabled("connect_discord") ? "disabled" : "" ?>
             data-action="connection:start"
             data-provider="discord"
             data-call-action="reconnect"
-            has-tooltip=bottom flexone material ripple-effect size=mid background="discord-blue" color=white>
+            has-tooltip=bottom flexone background="discord-blue" color=white>
             <i class="ri-discord-fill"></i>
             <div ttooltip>
               <p text bold>Discord</p>
             </div>
           </mbutton>
 
-          <mbutton
+          <mbutton mid ripple-effect
             <?= !Feature::enabled("connect_github") ? "disabled" : "" ?>
             data-action="connection:start"
             data-provider="github"
             data-call-action="reconnect"
-            has-tooltip=bottom no-delay flexone material ripple-effect size=mid background="invert" color=invert>
+            has-tooltip=bottom no-delay flexone background="invert" color=invert>
             <i class="ri-github-fill"></i>
             <div ttooltip>
               <p text bold>GitHub</p>
@@ -115,12 +114,12 @@ include SNOW; ?>
 
               <div fl jucsb mt>
                 <a href="/register">
-                  <mbutton outlined ripple-effect material size=mid>
+                  <mbutton mid outlined ripple-effect>
                     Create account
                   </mbutton>
                 </a>
 
-                <mbutton ripple-effect submit-closest icon-only material size=mid rounded=smol
+                <mbutton mid ripple-effect submit-closest icon-only rounded=smol
                   background=green color=light>
                   <mi>arrow_forward</mi>
                 </mbutton>

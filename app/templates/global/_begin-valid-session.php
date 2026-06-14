@@ -47,7 +47,7 @@ $user_signed_up_with_osu =
                     <i class=mi size=std>password</i>
                     <input type="password" name="password" placeholder="<?= __("Password") ?>" enter-submitable />
                   </div>
-                  <mbutton ripple-effect submit-closest icon-only material size=mid background=follow color=dark-green>
+                  <mbutton mid ripple-effect submit-closest icon-only background=follow color=dark-green>
                     <mi>arrow_forward</mi>
                   </mbutton>
                 </div>

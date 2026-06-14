@@ -85,7 +85,7 @@ else :
             <div fl jucend>
               <form <?= !$is_current_session ? 'request="session:delete"' : 'data-form="session:delete"' ?> redirect="<?= $base_url ?>" responder>
                 <input type=hidden name=token value="<?= $Session->token; ?>" />
-                <mbutton material size=mid submit-closest has-icon=left background=unfollow color=dark-red>
+                <mbutton mid submit-closest has-icon=left background=unfollow color=dark-red>
                   <mi>logout</mi>
                   <p text bold><?= __("Logout") ?></p>
                 </mbutton>

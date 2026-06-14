@@ -93,13 +93,13 @@ ob_start();
       </div>
 
       <div fl jucsb alic>
-        <mbutton filled color=dynamic icon-only material has-tooltip=top disabled>
+        <mbutton filled color=dynamic icon-only has-tooltip=top disabled>
           <i class=mi size=std>attach_file_add</i>
           <div ttooltip>
             <p text std bold><?= __("Add attachments") ?></p>
           </div>
         </mbutton>
-        <mbutton filled color=dynamic material submit-closest>
+        <mbutton filled color=dynamic submit-closest>
           <i class=mi size=std>prompt_suggestion</i>
         </mbutton>
       </div>

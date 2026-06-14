@@ -69,7 +69,7 @@ ob_start();
     </div>
 
     <div prompt-actions>
-      <mbutton material background=clean close-overlay>
+      <mbutton background=clean close-overlay>
         <p text>Cancel</p>
       </mbutton>
       <div></div>

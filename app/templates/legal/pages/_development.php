@@ -15,14 +15,21 @@ include TEMPLATE . "/legal/_header.php";
       </picture>
     </div>
 
-    <p text smol bold ttup style=letter-spacing:.2em;><?= __("Development mode is on") ?></p>
+    <p text smol bold ttup style=letter-spacing:.2em;>
+      In development</p>
 
     <div fl fldircol gap>
       <h2>
         <?= __("It is only one guy, that is actively developing this website and it's components. It is nothing you should underestimate. It is a mountain full of work.") ?>
+
+        <?= __("One guy coding, many others caring!") ?>
       </h2>
-      <p text><?= __("We have started developing") ?> <?= APP_NAME; ?>
-        <?= __("from scratch and keep building it as you and all the other players are using it. This means, that we are constantly in <strong>development mode</strong> and are not yet at a point, where we could talk about something like a fulfilled <i>Version 1.0.0</i>.") ?>
+
+      <p text bold color=company>
+        A big thanks goes out to all the people caring for our Discord presence, like my brother Jonathan! A second big thanks goes out to all the people joining and actually playing on our server 🙂.
+      </p>
+
+      <p text><?= __("Me, Justin from Germany, has started developing {app-name} from scratch and I keep building it as you and all the other players are using it. This means, that we are constantly in <strong>development mode</strong> and are not yet at a point, where we could talk about something like a fulfilled <i>Version 1.0.0</i>. ") ?>
       </p>
 
       <p text>

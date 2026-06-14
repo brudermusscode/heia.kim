@@ -82,14 +82,14 @@ $Osu = CurrentUser->osu;
           <div fl jucend>
             <form request="connect:delete" redirect="<?= $base_url ?>">
               <input type=hidden name=type value=osu />
-              <mbutton material submit-closest background=unfollow color=dark-red>
+              <mbutton submit-closest background=unfollow color=dark-red>
                 <p text bold><?= __("Remove") ?></p>
               </mbutton>
             </form>
           </div>
         <?php else : ?>
           <div fl jucend>
-            <mbutton material background=follow color=dark-green
+            <mbutton background=follow color=dark-green
               data-action="connect:start"
               data-type=osu>
               <p text bold><?= __("Connect") ?></p>

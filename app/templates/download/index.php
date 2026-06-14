@@ -47,20 +47,20 @@ $from = filter_input(INPUT_GET, "from", FILTER_SANITIZE_SPECIAL_CHARS);
       <div fl gap=smol alic>
         <?php if (LOGGED) : ?>
           <a href="<?= CurrentUser->link(); ?>">
-            <mbutton material size=mid>
+            <mbutton mid>
               <p text>Later</p>
             </mbutton>
           </a>
         <?php else : ?>
           <a href="/">
-            <mbutton material size=mid>
+            <mbutton mid>
               <p text>Back</p>
             </mbutton>
           </a>
         <?php endif; ?>
 
         <a href="/Apps/Setup/heiakimSetup.exe" target="_blank" extern>
-          <mbutton has-icon=left material size=mid background=follow color=dark-green>
+          <mbutton mid has-icon=left background=follow color=dark-green>
             <mi>download</mi>
             <p text bold>Download</p>
           </mbutton>

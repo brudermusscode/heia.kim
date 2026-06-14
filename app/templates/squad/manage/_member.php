@@ -39,8 +39,8 @@ use Heiakim\Time\Time;
       <?php if (CurrentUser->squad_user->can("manage", "users")) { ?>
         <mbutton
           request-get="squad:get-content:manage:promote-user"
-          data-id=<?= $Member->id; ?>
-          outlined=darker size=std material icon-only filled=lighter has-tooltip=bottom>
+          data-id="<?= $Member->id; ?>"
+          outlined=darker icon-only filled=lighter has-tooltip=bottom>
           <mi bold>keyboard_double_arrow_up</mi>
           <div ttooltip>
             <p text bold>Promote</p>
@@ -59,8 +59,8 @@ use Heiakim\Time\Time;
         <?php if (!$Member->is_restricted()) { ?>
           <mbutton
             request-get="squad:get-content:manage:restrict-user"
-            data-id=<?= $User->id; ?>
-            size=std material icon-only background=besure color=dark-orange has-tooltip=bottom>
+            data-id="<?= $User->id; ?>"
+            icon-only background=besure color=dark-orange has-tooltip=bottom>
             <mi>front_hand</mi>
             <div ttooltip>
               <p text bold>Restrict</p>
@@ -71,7 +71,7 @@ use Heiakim\Time\Time;
             <input type=hidden name=id value=<?= $User->id; ?> />
             <input type=hidden name=clan_priv[<?= SquadPrivilege::MEMBER->value; ?>] value="1" />
             <input type=hidden name=clan_priv[<?= SquadPrivilege::UNRESTRICTED->value; ?>] value="1" />
-            <mbutton size=std material icon-only background=follow color=dark-green submit-closest has-tooltip=bottom>
+            <mbutton icon-only background=follow color=dark-green submit-closest has-tooltip=bottom>
               <mi>check</mi>
               <div ttooltip>
                 <p text bold>Set free</p>
@@ -101,13 +101,13 @@ use Heiakim\Time\Time;
 
               <div prompt-actions>
                 <div></div>
-                <mbutton material size=std background=slight submit-closest>
+                <mbutton background=slight submit-closest>
                   <p text bold>I am!</p>
                 </mbutton>
               </div>
             </div>
 
-            <mbutton open-inner-prompt size=std material icon-only background=unfollow color=dark-red has-tooltip=bottom>
+            <mbutton open-inner-prompt icon-only background=unfollow color=dark-red has-tooltip=bottom>
               <mi>remove</mi>
               <div ttooltip>
                 <p text bold>Remove</p>

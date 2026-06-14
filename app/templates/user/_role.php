@@ -27,14 +27,14 @@ use Heiakim\Enum\Privilege;
  */
 if ($User->id === 3) : ?>
   <a href="/legal/team">
-    <mbutton ovhid material has-icon=left animation="premium" background=special color=light>
+    <mbutton ovhid has-icon=left animation="premium" background=special color=light>
       <mi>keyboard</mi>
       <p text bold>Brudermusscode</p>
     </mbutton>
   </a>
 <?php elseif ($User->id === 4) : ?>
   <a href="/legal/team">
-    <mbutton ovhid material has-icon=left animation="premium" background=company color=company-text>
+    <mbutton ovhid has-icon=left animation="premium" background=company color=company-text>
       <mi>taunt</mi>
       <p text bold>Owner's group</p>
     </mbutton>
@@ -45,7 +45,7 @@ if ($User->id === 3) : ?>
    * Aida.
    */
 elseif ($User->id === 1) : ?>
-  <mbutton tag material has-icon=left posrel background=blue color=light>
+  <mbutton tag has-icon=left posrel background=blue color=light>
     <mi>smart_toy</mi>
     <p text bold>BOT</p>
   </mbutton>
@@ -105,7 +105,7 @@ else :
 
   ?>
 
-    <mbutton tag material has-icon=left background=<?= $background; ?> color=<?= $color; ?>>
+    <mbutton tag has-icon=left background=<?= $background; ?> color=<?= $color; ?>>
       <mi><?= $Role->icon; ?></mi>
       <p text bold><?= $Role->name; ?></p>
     </mbutton>

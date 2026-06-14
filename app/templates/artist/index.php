@@ -22,7 +22,7 @@ use Heiakim\Model\Artist;
       <div fl aliend jucsb>
         <div class=cs__label>
           <div fl gap=smol alic class=cs__label_title>
-            <mbutton material filled size=mid icon-only no-hover>
+            <mbutton mid filled icon-only no-hover>
               <mi mid>star</mi>
             </mbutton>
             <p text bold>Newcomer</p>
@@ -31,10 +31,10 @@ use Heiakim\Model\Artist;
 
         <div class="carousel-shelf-button-group">
           <div fl gap=smol>
-            <mbutton material icon-only outlined carousel-action=previous disabled>
+            <mbutton icon-only outlined carousel-action=previous disabled>
               <mi>west</mi>
             </mbutton>
-            <mbutton material icon-only outlined carousel-action=next>
+            <mbutton icon-only outlined carousel-action=next>
               <mi>east</mi>
             </mbutton>
           </div>
@@ -70,7 +70,7 @@ use Heiakim\Model\Artist;
       <div fl aliend jucsb>
         <div class=cs__label>
           <div fl gap=smol alic class=cs__label_title>
-            <mbutton material filled size=mid icon-only no-hover>
+            <mbutton mid filled icon-only no-hover>
               <mi mid>trending_up</mi>
             </mbutton>
             <p text bold><?= __("Most played") ?></p>
@@ -79,10 +79,10 @@ use Heiakim\Model\Artist;
 
         <div class="carousel-shelf-button-group">
           <div fl gap=smol>
-            <mbutton material icon-only outlined carousel-action=previous disabled>
+            <mbutton icon-only outlined carousel-action=previous disabled>
               <mi>west</mi>
             </mbutton>
-            <mbutton material icon-only outlined carousel-action=next>
+            <mbutton icon-only outlined carousel-action=next>
               <mi>east</mi>
             </mbutton>
           </div>

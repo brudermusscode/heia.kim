@@ -102,10 +102,11 @@ ob_start();
       </div>
 
       <div prompt-actions>
-        <mbutton material background=clean close-overlay>
+        <mbutton background=clean close-overlay>
           <p text>Cancel</p>
         </mbutton>
-        <mbutton material size=mid has-icon=left background=follow color=dark-green submit-closest>
+
+        <mbutton mid has-icon=left background=follow color=dark-green submit-closest>
           <mi class="ri-paypal-fill"></mi>
           <p text bold>Donate with PayPal</p>
         </mbutton>

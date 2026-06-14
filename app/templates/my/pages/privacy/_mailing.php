@@ -27,7 +27,7 @@ use Heiakim\Time\Time;
     <div fl fldircol gap=smol+>
       <div fl jucsb gap=smol+ alic>
         <p text bold midler>Newsletter</p>
-        <mbutton size=smol tag material filled=lighter has-icon=left>
+        <mbutton smol tag filled=lighter has-icon=left>
           <mi>event</mi>
           <p text smol>weekly</p>
         </mbutton>
@@ -59,7 +59,7 @@ use Heiakim\Time\Time;
     <div fl fldircol gap=smol+>
       <div fl jucsb gap=smol+ alic>
         <p text bold midler>Play reminder</p>
-        <mbutton size=smol tag material filled=lighter has-icon=left>
+        <mbutton smol tag filled=lighter has-icon=left>
           <mi>event</mi>
           <p text smol>monthly</p>
         </mbutton>
@@ -92,7 +92,7 @@ use Heiakim\Time\Time;
     <div fl fldircol gap=smol+>
       <div fl jucsb gap=smol+ alic>
         <p text bold midler>Birthday wishes</p>
-        <mbutton size=smol tag material filled=lighter has-icon=left>
+        <mbutton smol tag filled=lighter has-icon=left>
           <mi>event</mi>
           <p text smol>yearly</p>
         </mbutton>

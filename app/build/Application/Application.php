@@ -208,23 +208,33 @@ class Application
    * @return string
    */
   // TODO: Exchange braced variables in GET files.
-  public static function replace_braced_variables(string $template, array $dependencies)
-  {
+  public static function replace_braced_variables(
+    string $template,
+    array $dependencies = []
+  ) {
+
     $return = str_replace("{privacy-policy-link}", "<a href='/legal/privacy' normal>Privacy Policy</a>", $template);
     $return = str_replace("{profile-editor-link}", "<a href='/editor' normal>Profile Editor</a>", $template);
-    $return = str_replace("{discord-link}", "<a href='" . $dependencies["DISCORD"] . "' extern target='_blank' normal>Discord server</a>", $return);
-    $return = str_replace("{app-name}", $dependencies["APP_NAME"], $return);
-    $return = str_replace("{name-changes-count}", $dependencies["LOGGED"] ? $dependencies["CurrentUser"]?->settings->name_changes_left : 0, $return);
-    $return = str_replace("{wipes-left-count}", $dependencies["LOGGED"] ? $dependencies["CurrentUser"]?->settings->account_wipes_left : 0, $return);
+    $return = str_replace("{discord-link}", "<a href='" . _env("DISCORD_INVITE") . "' extern target='_blank' normal>Discord server</a>", $return);
+    $return = str_replace("{app-name}", APP_NAME, $return);
+    $return = str_replace(
+      "{name-changes-count}",
+      LOGGED ? CurrentUser?->settings->name_changes_left : 0,
+      $return
+    );
+    $return = str_replace(
+      "{wipes-left-count}",
+      LOGGED ? CurrentUser?->settings->account_wipes_left : 0,
+      $return
+    );
     $return = str_replace(
       "{last-wipe-ago}",
-      $dependencies["LOGGED"]
-        && $dependencies["CurrentUser"]?->settings->account_wiped_at
-        ? Time::ago($dependencies["CurrentUser"]?->settings->account_wiped_at, true)
+      LOGGED && CurrentUser?->settings->account_wiped_at
+        ? Time::ago(CurrentUser->settings->account_wiped_at, true)
         : "",
       $return
     );
-    $return = str_replace("{premium-feature-name}", $dependencies["PREMIUM_NAME"], $return);
+    $return = str_replace("{premium-feature-name}", PREMIUM_NAME, $return);
     $return = str_replace("{legal-applications-link}", '<a href="/legal/applications" normal>Applications page</a>', $return);
 
     return $return;

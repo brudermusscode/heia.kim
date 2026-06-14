@@ -43,7 +43,7 @@ $User = $Score->user;
                 <div count>
                   <p text std bold><?= $Score->feedback()->count(); ?></p>
                 </div>
-                <mbutton submit-closest icon-only size=std material background=slighter ripple-effect
+                <mbutton submit-closest icon-only background=slighter ripple-effect
                   <?php if ($Score->has_received_feedback_from(CurrentUser->id)) echo "active"; ?>>
                   <div>
                     <p>

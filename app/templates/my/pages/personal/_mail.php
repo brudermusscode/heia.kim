@@ -57,7 +57,7 @@ $email = !filter_var(CurrentUser->email, FILTER_VALIDATE_EMAIL) ? null : Current
         </div>
 
         <div fl justify-content=end gap>
-          <mbutton size=mid background=besure has-icon=left color=dark-orange material submit-closest tabindex=2>
+          <mbutton mid background=besure has-icon=left color=dark-orange submit-closest tabindex=2>
             <mi>fingerprint</mi>
             <p text bold>Request code</p>
           </mbutton>

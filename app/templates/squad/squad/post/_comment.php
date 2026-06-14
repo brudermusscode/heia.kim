@@ -51,7 +51,7 @@ $is_new ??= false;
 
             ?>
               <a href="<?= "$base_url/members"; ?>">
-                <mbutton material size=smol filled=darker has-icon=left>
+                <mbutton smol filled=darker has-icon=left>
                   <mi><?= $HighestRole->icon; ?></mi>
                   <p text bold><?= $HighestRole->name; ?></p>
                 </mbutton>
@@ -59,7 +59,7 @@ $is_new ??= false;
             <?php } ?>
 
             <div posrel menu-outer>
-              <mbutton material clean size=smol icon-only ripple-effect open-more-menu>
+              <mbutton smol clean icon-only ripple-effect open-more-menu>
                 <mi>more_vert</mi>
               </mbutton>
 

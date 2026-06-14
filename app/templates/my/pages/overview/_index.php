@@ -48,7 +48,7 @@ $premium_time_left = Time::left(CurrentUser->donor_end);
         </p>
       </div>
       <div fl jucend pblock12>
-        <mbutton data-category=security material filled>
+        <mbutton data-category=security filled>
           <p text bold><?= __("Manage settings") ?></p>
         </mbutton>
       </div>
@@ -71,7 +71,7 @@ $premium_time_left = Time::left(CurrentUser->donor_end);
         </p>
       </div>
       <div fl jucend pblock12>
-        <mbutton data-category=website data-sub=theme material filled>
+        <mbutton data-category=website data-sub=theme filled>
           <p text bold><?= __("Explore themes") ?></p>
         </mbutton>
       </div>

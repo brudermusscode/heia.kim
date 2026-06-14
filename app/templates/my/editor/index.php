@@ -32,7 +32,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
 
   <div hidden submit-closest></div>
 
-  <mbutton data-action="profiles:edit" ovhid editor-save size="wide" has-icon="left" elevated="mid" material background="green" color="light">
+  <mbutton wide data-action="profiles:edit" ovhid editor-save has-icon="left" elevated="mid" background="green" color="light">
     <div inner-loading-hidden>
       <div dynamic-color class="dot-container">
         <div class="dot-pulse"></div>
@@ -76,7 +76,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
 
     <div pn-options>
 
-      <mbutton pn-option size=mid material icon-only background=slight-green color=dark-green has-tooltip=right disabled>
+      <mbutton mid pn-option icon-only background=slight-green color=dark-green has-tooltip=right disabled>
         <mi>add</mi>
         <div ttooltip>
           <p text bold><?= __("Follow") ?>: Can't be disabled</p>
@@ -92,7 +92,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
 
       ?>
 
-      <mbutton pn-option material size=mid icon-only has-tooltip=right <?php display_disabled_if(!$User->is_premium()) ?>>
+      <mbutton mid pn-option icon-only has-tooltip=right <?php display_disabled_if(!$User->is_premium()) ?>>
         <div pn-o-button-off></div>
         <input type=hidden name="profile[<?= $wrapper; ?>][premium]" value=<?= $show_tab; ?> />
         <mi><?= PREMIUM_ICON; ?></mi>
@@ -105,7 +105,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
 
       <div pn-option pn-o-divider></div>
 
-      <mbutton disabled pn-option material icon-only size=mid background=clean has-tooltip=right>
+      <mbutton mid disabled pn-option icon-only background=clean has-tooltip=right>
         <mi>face</mi>
         <div ttooltip>
           <p text bold>Profile: Can't be disabled</p>
@@ -121,7 +121,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
 
       ?>
 
-      <mbutton pn-option material icon-only size=mid background=clean has-tooltip=right <?php display_disabled_if(!$show_tab, "turned-off"); ?>>
+      <mbutton mid pn-option icon-only background=clean has-tooltip=right <?php display_disabled_if(!$show_tab, "turned-off"); ?>>
         <div pn-o-button-off></div>
         <input type=hidden name="profile[<?= $wrapper; ?>][statistics]" value=<?= $show_tab; ?> />
         <mi>data_exploration</mi>
@@ -139,7 +139,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
 
       ?>
 
-      <mbutton pn-option material icon-only size=mid background=clean has-tooltip=right <?php display_disabled_if(!$show_tab, "turned-off"); ?>>
+      <mbutton mid pn-option icon-only background=clean has-tooltip=right <?php display_disabled_if(!$show_tab, "turned-off"); ?>>
         <div pn-o-button-off></div>
         <input type=hidden name="profile[<?= $wrapper; ?>][photos]" value=<?= $show_tab; ?> />
         <mi>photo_library</mi>
@@ -150,7 +150,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
 
       <div pn-option pn-o-divider></div>
 
-      <mbutton disabled pn-option size=mid material icon-only has-tooltip=right>
+      <mbutton mid disabled pn-option icon-only has-tooltip=right>
         <mi><?= EDITOR_ICON; ?></mi>
         <div ttooltip>
           <p text bold>Start Profile Editor: Can't be disabled</p>
@@ -159,7 +159,7 @@ $available_columns = array_keys(Profile::$sections_visibility);
     </div>
 
     <a pn-option href="<?= $User->link(); ?>">
-      <mbutton filled material icon-only size=mid>
+      <mbutton mid filled icon-only>
         <mi>arrow_back</mi>
       </mbutton>
     </a>

@@ -24,7 +24,7 @@ if ($User->squad && $object_visibility) { ?>
       </div>
       <?php if ($is_my_profile) { ?>
         <a href="<?= $User->squad_settings_link(); ?>">
-          <mbutton material icon-only mr=smol hoverable>
+          <mbutton icon-only mr=smol hoverable>
             <mi size=midler>edit</mi>
           </mbutton>
         </a>

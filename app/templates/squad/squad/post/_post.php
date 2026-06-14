@@ -196,7 +196,10 @@ $Attachment = $Post?->attachment?->reference();
           <?php if ($Post->enable_comments) { ?>
             <div fl alic gap>
               <div fl gap=smol alic has-tooltip=bottom>
-                <mbutton request-get="poster" request-get-attribute-type="squad_post_comment" request-get-attribute-id="<?= $Post->id; ?>" material filled size=std icon-only>
+                <mbutton filled icon-only
+                  request-get="poster"
+                  request-get-attribute-type="squad_post_comment"
+                  request-get-attribute-id="<?= $Post->id; ?>">
                   <mi>comment</mi>
                 </mbutton>
                 <p text bold> &middot; &nbsp;<span color=company comments-count><?= number_format($feedback->comments); ?></span></p>
@@ -206,7 +209,7 @@ $Attachment = $Post?->attachment?->reference();
               </div>
             </div>
           <?php } else { ?>
-            <mbutton disabled material tag size=std filled icon-only has-tooltip=bottom>
+            <mbutton disabled tag filled icon-only has-tooltip=bottom>
               <mi>comments_disabled</mi>
               <div ttooltip>
                 <p text bold>Comments are disabled</p>
@@ -220,7 +223,7 @@ $Attachment = $Post?->attachment?->reference();
               <?= ($Vote && $Vote->type === 1)
                 ? "active data-action=squad:post:vote:delete"
                 : "data-action=squad:post:vote:create"; ?>>
-              <mbutton material hoverable size=std icon-only>
+              <mbutton hoverable icon-only>
                 <mi size=mid>keyboard_arrow_up</mi>
               </mbutton>
             </div>
@@ -243,7 +246,7 @@ $Attachment = $Post?->attachment?->reference();
               <?= ($Vote && $Vote->type === -1)
                 ? "active data-action=squad:post:vote:delete"
                 : "data-action=squad:post:vote:create"; ?>>
-              <mbutton clean material hoverable size=std icon-only>
+              <mbutton clean hoverable icon-only>
                 <mi size=mid>keyboard_arrow_down</mi>
               </mbutton>
             </div>
@@ -308,7 +311,12 @@ $Attachment = $Post?->attachment?->reference();
         <?php if ($Comments->count() > $comments_start_count) { ?>
 
           <div fl jucc>
-            <mbutton fetch-more request-get-old="squads/post/comment/fetch" request-append-to="this.closest('[comments]').find('[c-inner]')" request-get-attribute-id="<?= $Post->id; ?>" request-get-attribute-limit=10 request-get-attribute-offset=<?= $comments_start_count; ?> size=std hoverable material outlined has-icon=left>
+            <mbutton fetch-more hoverable outlined has-icon=left
+              request-get-old="squads/post/comment/fetch"
+              request-append-to="this.closest('[comments]').find('[c-inner]')"
+              request-get-attribute-id="<?= $Post->id; ?>"
+              request-get-attribute-limit=10
+              request-get-attribute-offset="<?= $comments_start_count; ?>">
               <mi></mi>
               <p text bold></p>
             </mbutton>

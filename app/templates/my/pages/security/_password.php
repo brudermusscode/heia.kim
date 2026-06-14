@@ -39,14 +39,14 @@
 
           <div fl jucstart>
             <a request-get="user:get-content:password-reset-confirmation">
-              <mbutton material has-icon=left color=company no-hover-shadow hoverable>
+              <mbutton has-icon=left color=company no-hover-shadow hoverable>
                 <mi smol>help</mi> Don't know it?
               </mbutton>
             </a>
           </div>
 
           <div fl jucend gap mt>
-            <mbutton size=mid background=slight-green color=dark-green material submit-closest tabindex=3>
+            <mbutton mid background=slight-green color=dark-green submit-closest tabindex=3>
               <p text bold>Change password</p>
             </mbutton>
           </div>

@@ -69,7 +69,7 @@ else :
         <p text midler color=company><?= number_format($Artists->count()); ?></p>
       </div>
       <?php if ($Artists->count()) { ?>
-        <mbutton material icon-only mr=smol hoverable>
+        <mbutton icon-only mr=smol hoverable>
           <mi size=midler>stars</mi>
         </mbutton>
       <?php } ?>

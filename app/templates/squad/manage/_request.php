@@ -37,7 +37,7 @@ $User = $Request->user;
   <div box-floating-actions fl gap=smol alic jucend>
     <form request="squad:request:accept" reload>
       <input type=hidden name=id value="<?= $Request->id; ?>" />
-      <mbutton material submit-closest has-icon=left background=follow color=dark-green>
+      <mbutton submit-closest has-icon=left background=follow color=dark-green>
         <mi>done_all</mi>
         <p text bold>Accept</p>
       </mbutton>
@@ -45,7 +45,7 @@ $User = $Request->user;
     <div has-tooltip=bottom>
       <form request="squad:request:delete" reload>
         <input type=hidden name=id value="<?= $Request->id; ?>" />
-        <mbutton submit-closest background=besure color=dark-orange icon-only material>
+        <mbutton submit-closest background=besure color=dark-orange icon-only>
           <mi>remove</mi>
         </mbutton>
       </form>

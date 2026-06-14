@@ -73,7 +73,7 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
                     <p text wide bold><?= number_format($value); ?></p>
                     <p text smol><?= ucwords(str_replace("_", " ", $stat)); ?> Points</p>
                   </div>
-                  <mbutton material icon-only hoverable>
+                  <mbutton icon-only hoverable>
                     <mi size="midler">keyboard_arrow_down</mi>
                   </mbutton>
                 </div>
@@ -170,7 +170,7 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
               <?php if ($Squad->is_member(CurrentUser)) { ?>
                 <div fl justify-content=center>
                   <a href="/beatmaps">
-                    <mbutton material has-icon=left size=mid background=dynamic has-icon>
+                    <mbutton mid has-icon=left background=dynamic has-icon>
                       <mi>explore</mi>
                       <p text std bold><?= __("Explore beatmaps") ?></p>
                     </mbutton>
@@ -276,7 +276,7 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
             ?>
 
             <?php if ($Squad->members_count() > 5) { ?>
-              <mbutton material size=smol hoverable has-icon=right dno>
+              <mbutton smol hoverable has-icon=right dno>
                 <p text smol bold>+<?= $Squad->members_count() - 5; ?></p>
                 <mi>east</mi>
               </mbutton>

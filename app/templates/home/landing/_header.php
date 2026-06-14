@@ -18,29 +18,26 @@
       </div>
 
       <div class=menu fl alic gap=smol>
-        <mbutton hide-1200 ripple-effect background=complement icon-only material rounded color=white size=mid
-          data-action="search:open" has-tooltip=bottom>
-          <mi>search</mi>
-          <div ttooltip>
-            <p text bold><?= __("Press F to search") ?></p>
-          </div>
+        <mbutton mid request-get="search"
+          pn-option rounded icon-only background=complement color=white>
+          <i class=mi>explore</i>
         </mbutton>
 
         <div fl alic>
           <a href="/leaderboard">
-            <mbutton size=mid ripple-effect background="clean" material no-hover-shadow>
+            <mbutton mid ripple-effect background="clean" no-hover-shadow>
               <p text std bold><?= __("Rankings") ?></p>
             </mbutton>
           </a>
 
           <a href="/beatmaps">
-            <mbutton size=mid ripple-effect background="clean" material no-hover-shadow>
+            <mbutton mid ripple-effect background="clean" no-hover-shadow>
               <p text std bold>Beatmaps</p>
             </mbutton>
           </a>
 
           <a href="/squads">
-            <mbutton size=mid ripple-effect background="clean" material no-hover-shadow>
+            <mbutton mid ripple-effect background="clean" no-hover-shadow>
               <p text std bold>Squads</p>
             </mbutton>
           </a>
@@ -58,13 +55,13 @@
       </div>
 
       <a href="/login">
-        <mbutton ripple-effect background="clean" size=mid material>
+        <mbutton mid ripple-effect background="clean">
           <p text bold><?= __("Login") ?></p>
         </mbutton>
       </a>
 
       <a href="/register" hide-1000>
-        <mbutton ripple-effect background="yellow" size=mid has-icon=right material color="white">
+        <mbutton mid ripple-effect background=company has-icon=right color=light>
           <p text bold><?= __("Get started") ?></p>
           <mi>east</mi>
         </mbutton>

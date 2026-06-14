@@ -23,13 +23,13 @@ else {
 
     <div fl justify-content=start gap=smol mb>
       <a href="<?= "$base_url/requests"; ?>">
-        <mbutton filled=lighter size=mid material <?php display_active($tab, "index") ?>>
+        <mbutton mid filled=lighter <?php display_active($tab, "index") ?>>
           <p text><?= __("Requests") ?></p>
         </mbutton>
       </a>
 
       <a href="<?= "$base_url/requests?tab=invites"; ?>">
-        <mbutton filled=lighter size=mid material <?php display_active($tab, "invites") ?>>
+        <mbutton mid filled=lighter <?php display_active($tab, "invites") ?>>
           <p text><?= __("Invitations") ?></p>
         </mbutton>
       </a>

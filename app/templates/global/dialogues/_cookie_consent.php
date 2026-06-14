@@ -13,7 +13,7 @@
           <a href="/legal/privacy#cookies">
             <p text std color=yellow><?= __("Learn more") ?></p>
           </a>
-          <mbutton material data-action="cookies" data-decision="accept" background=green color=white>
+          <mbutton data-action="cookies" data-decision="accept" background=green color=white>
             <p text bold><?= __("Alright") ?>!</p>
           </mbutton>
         </div>

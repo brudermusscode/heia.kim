@@ -40,7 +40,9 @@ use Heiakim\Model\Squad;
         include __DIR__ . "/_role.php"; ?>
 
         <?php if (!$is_my_profile && !in_array($User->id, [1, 2, 3, 4, 8])) { ?>
-          <mbutton data-action="popup:open" data-href="/report/new?type=user&id=<?= $User->id; ?>" material icon-only posrel background=unfollow color=dark-red has-tooltip=bottom>
+          <mbutton icon-only posrel background=unfollow color=dark-red has-tooltip=bottom
+            data-action="popup:open"
+            data-href="/report/new?type=user&id=<?= $User->id; ?>">
             <mi>campaign</mi>
             <div ttooltip>
               <p text bold>Report</p>

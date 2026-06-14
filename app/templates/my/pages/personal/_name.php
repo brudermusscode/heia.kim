@@ -30,7 +30,7 @@ $name_changes_left = CurrentUser->changes_left("name");
     </div>
 
     <div fl justify-content=end gap>
-      <mbutton background=slight-green color=dark-green size=mid material confirm-submit-button>
+      <mbutton mid background=slight-green color=dark-green confirm-submit-button>
         <div action>
           <p text bold><?= __("Save") ?></p>
         </div>

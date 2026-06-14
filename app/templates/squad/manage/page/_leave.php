@@ -108,7 +108,7 @@ use Heiakim\Model\Squad\SquadUser;
           </tipp-box>
 
           <div fl jucend>
-            <mbutton background="besure" color=dark-orange size=mid has-icon=left material submit-closest>
+            <mbutton mid background="besure" color=dark-orange has-icon=left submit-closest>
               <mi>fingerprint</mi>
               <p text bold>Authenticate for leaving</p>
             </mbutton>

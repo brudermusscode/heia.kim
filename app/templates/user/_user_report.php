@@ -55,7 +55,8 @@ use Heiakim\Model\Squad;
             </div>
           </div>
         </div>
-        <mbutton material tag filled=lighter icon-only arrow-further=right style=right:1.2em;>
+        <mbutton tag filled=lighter icon-only arrow-further=right
+          style=right:1.2em;>
           <mi midler>east</mi>
         </mbutton>
       </div>

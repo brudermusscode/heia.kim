@@ -94,7 +94,8 @@ if ($has_clan) {
 <?php } else { ?>
 
   <div fl justify-content=center mb style=display:none;>
-    <mbutton ripple-effect size=mid material background=special clickable data-action="squads:invite"
+    <mbutton mid ripple-effect background=special clickable
+      data-action="squads:invite"
       data-id="<?= $User->id; ?>">
       <div fl gap=smol+ align-items=center color=special-text>
         <p text mid>

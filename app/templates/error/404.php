@@ -21,7 +21,7 @@ include TEMPLATE . "/global/_basic-header.php"; ?>
       <p text>You have entered an unknown path. Better return!</p>
     </div>
 
-    <mbutton material size=mid filled=lighter has-icon=left color=dynamic
+    <mbutton mid filled=lighter has-icon=left color=dynamic
       onclick="history.go(-1);">
       <mi>west</mi>
       <p text bold>Go back</p>

@@ -164,7 +164,7 @@ include SNOW;
                       <input type="text" value="<?= $Appeal->live_play_file; ?>" />
                     </div>
                     <a extern href="<?= $Appeal->live_play_file; ?>" target="_blank">
-                      <mbutton material size=mid outlined=darker circled icon-only>
+                      <mbutton mid outlined=darker circled icon-only>
                         <mi>play_arrow</mi>
                       </mbutton>
                     </a>
@@ -184,12 +184,12 @@ include SNOW;
       </div>
 
       <div prompt-actions>
-        <mbutton material background=clean close-overlay>
+        <mbutton background=clean close-overlay>
           <p text>Cancel</p>
         </mbutton>
 
         <?php if (!$reviewing_live_play) { ?>
-          <mbutton background=slight material size="mid" submit-closest>
+          <mbutton mid background=slight submit-closest>
             <p text bold>Submit</p>
           </mbutton>
         <?php } else echo "<div></div>"; ?>

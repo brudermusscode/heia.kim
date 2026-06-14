@@ -24,7 +24,7 @@ use Heiakim\Model\Squad;
 # + User has not yet played.
 if (!$has_played) : ?>
 
-  <mbutton material has-icon=left has-icon=right size=mid tag filled>
+  <mbutton mid has-icon=left has-icon=right tag filled>
     <mi>domino_mask</mi>
     <p text bold smol ttup trimt>Never played</p>
 
@@ -62,7 +62,7 @@ else : ?>
     # + User is champion! (#1)
     if ($is_champion) : ?>
 
-      <mbutton material has-icon=left has-icon=right size=mid tag background=special color=light has-tooltip=bottom curwhat>
+      <mbutton mid has-icon=left has-icon=right mid tag background=special color=light has-tooltip=bottom curwhat>
         <mi mid>globe</mi>
         <p text bold smol ttup>Champion</p>
         <div ttooltip>
@@ -77,7 +77,7 @@ else : ?>
     # + User achieved a normal rank.
     else : ?>
 
-      <mbutton material has-icon=left has-icon=left size=mid tag filled>
+      <mbutton mid has-icon=left has-icon=left tag filled>
         <div fl alic gap=smol has-tooltip=bottom z curwhat>
           <mi mid style=margin-left:-.2em;>globe</mi>
           <p text bold><?= $rankings->global; ?></p>

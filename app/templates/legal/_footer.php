@@ -16,13 +16,13 @@
 
       <div fl gap=smol flex-wrap=wrap alic>
         <a href="https://discord.gg/WYsnsUzYcR" extern target="_blank">
-          <mbutton size=mid has-icon=left filled=lighter material>
+          <mbutton mid has-icon=left filled=lighter>
             <i class="ri-discord-fill"></i>
             <p text std bold>@heia.kim</p>
           </mbutton>
         </a>
         <a href="https://www.youtube.com/@heia.kim_osu" extern target="_blank">
-          <mbutton size=mid has-icon=left filled=lighter material>
+          <mbutton mid has-icon=left filled=lighter>
             <i class="ri-youtube-fill"></i>
             <p text std bold>@heia.kim_osu</p>
           </mbutton>

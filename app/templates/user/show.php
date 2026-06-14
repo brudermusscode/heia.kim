@@ -60,10 +60,11 @@ else :
   $gumode_text = Gamemode::get_gumode_as_text($User->preferred_mode);
 
   # Use the mode set in GET or fallback to the Users preferred one.
-  $mode = $mode ?? $gumode_text->mode;
+  $mode ??= $gumode_text->mode;
 
   # Use the mod set in GET or fallback to the Users preferred one.
-  $mod = $current_mod = $mod_global = $mod ?? $gumode_text->mod;
+  $mod ??= $gumode_text->mod;
+  $current_mod = $mod;
 
   /**
    * From mode and mod above, get the gumode as an int.

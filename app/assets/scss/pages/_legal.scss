@@ -2,10 +2,14 @@
 @use "../base" as *;
 
 $main-legal-width: 1100px;
-$main-legal-header-height: calc(128px - 2.4em);
+$main-legal-header-height: 78px;
+
+body[legal] main {
+  padding: $main-distance;
+}
 
 .legal {
-  margin-top: $main-legal-header-height;
+  margin-top: $main-legal-header-height - 12px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -35,41 +39,15 @@ $main-legal-header-height: calc(128px - 2.4em);
   transition: all 0.1s linear;
   background: transparent;
   color: $light;
-
-  .legal__page_head__inr {
-    width: 100%;
-    max-width: $main-legal-width;
-    margin: 0 auto;
-    padding: 1.2em;
-    padding-inline: 2.4em;
-    transition: $trans-cubic;
-
-    .lphi_title {
-      gap: $gap-std;
-    }
-
-    @media screen and (max-width: 600px) {
-      padding-inline: 1.2em;
-
-      .lphi_title {
-        gap: $gap-smol-plus;
-      }
-
-      [title] {
-        font-size: 18px;
-      }
-
-      [slogan] {
-        font-size: 14px;
-      }
-    }
-  }
+  padding: 0 $main-distance;
+  height: $main-legal-header-height;
 
   &[scrolled="true"] {
+    box-shadow: var(--mio-theme-elevation-2);
+
     @include themed() {
       background: t(box);
       color: t(text);
-      box-shadow: var(--mio-theme-elevation-2);
     }
   }
 }
@@ -78,7 +56,7 @@ $main-legal-header-height: calc(128px - 2.4em);
   position: sticky;
   width: calc(100vw - 0.8em);
   margin-bottom: -3.8em;
-  top: 6.32em;
+  top: $main-legal-header-height - $main-distance;
   margin-left: calc(-1 * ($main-distance - 0.4em));
   transition: $trans-cubic;
   overflow: hidden;

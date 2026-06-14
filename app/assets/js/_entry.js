@@ -1,15 +1,9 @@
-/**
- * Vendor
- */
 const axios = require("axios");
 const jsCookie = require("js-cookie");
 
 window.axios = axios;
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-/**
- * Base
- */
 import * as App from "./application";
 import * as Settings from "./settings";
 import * as Router from "./router";
@@ -36,7 +30,5 @@ import * as Element from "./elements";
 
 import * as Page from "./pages";
 
-/**
- * SCSS
- */
-import "../scss/application.dev.scss";
+// Stylesheet entrypoint.
+import "../scss/application.scss";

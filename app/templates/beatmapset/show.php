@@ -103,7 +103,7 @@ else {
                 <div count>
                   <p text std bold><?= $Beatmap->feedback()->count(); ?></p>
                 </div>
-                <mbutton material submit-closest icon-only has-tooltip=bottom size=mid filled=lighter ripple-effect
+                <mbutton mid submit-closest icon-only has-tooltip=bottom filled=lighter ripple-effect
                   <?php if (LOGGED && CurrentUser->favorite_beatmaps()->where("reference_id",  $Beatmap->id)->first()) echo "active"; ?>>
                   <mi>kid_star</mi>
                   <div ttooltip>
@@ -125,8 +125,7 @@ else {
           ?>
 
           <div has-tooltip=bottom <?php if ($show_info_window) echo "has-info-window"; ?> disabled>
-            <mbutton data-action="beatmaps:comments,open" data-id=<?= $Set->id; ?> icon-only size=mid material
-              filled=lighter ripple-effect>
+            <mbutton mid data-action="beatmaps:comments,open" data-id=<?= $Set->id; ?> icon-only filled=lighter ripple-effect>
               <mi>forum</mi>
             </mbutton>
             <div ttooltip>
@@ -152,8 +151,7 @@ else {
           </div>
 
           <a extern href="<?= _env("BEATMAP_MIRROR") . "/api/d/$Set->id"; ?>">
-            <mbutton material size=mid background=slight-green color=dark-green icon-only ripple-effect
-              has-tooltip=bottom>
+            <mbutton mid background=slight-green color=dark-green icon-only ripple-effect has-tooltip=bottom>
               <mi>arrow_downward</mi>
               <div ttooltip>
                 <p text std bold><?= __("Download") ?></p>
@@ -163,7 +161,7 @@ else {
 
           <?php if (LOGGED) { ?>
             <div posrel menu-outer>
-              <mbutton material outlined size=mid icon-only ripple-effect open-more-menu has-tooltip=bottom>
+              <mbutton mid outlined icon-only ripple-effect open-more-menu has-tooltip=bottom>
                 <div notification-dot></div>
                 <mi>more_vert</mi>
                 <div ttooltip>
@@ -279,7 +277,7 @@ else {
             </div>
             <div fl justify-content="center">
               <a extern href="<?= _env("BEATMAP_MIRROR") . "/api/d/$set_id"; ?>">
-                <mbutton material size=mid has-icon=left background=follow color=dark-green>
+                <mbutton mid has-icon=left background=follow color=dark-green>
                   <mi>arrow_downward</mi>
                   <p text bold><?= __("Download") ?></p>
                 </mbutton>
@@ -409,7 +407,7 @@ else {
         <?php if ($Artists->count()) { ?>
           <div mt=smol fl justify-content=center>
             <a href="<?= "/artist/" . $Artists->first()->id; ?>">
-              <mbutton material ripple-effect filled=lighter has-icon=right>
+              <mbutton ripple-effect filled=lighter has-icon=right>
                 <p text smol bold ttup><?= __("More beatmaps") ?></p>
                 <mi>east</mi>
               </mbutton>

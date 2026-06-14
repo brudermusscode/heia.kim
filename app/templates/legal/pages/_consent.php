@@ -1,7 +1,7 @@
 <div content-width=smol fl fldircol gap>
   <div fl gap align-items=center style="gap:1.8em;">
     <a href="/legal/<?= LEGAL_LANG; ?>">
-      <mbutton outlined material icon-only size=mid color=light>
+      <mbutton mid outlined icon-only color=light>
         <mi size=mid>arrow_back</mi>
       </mbutton>
     </a>

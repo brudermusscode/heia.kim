@@ -36,7 +36,7 @@ $FavoriteArtists = CurrentUser->favorite_artists;
               </div>
               <div fl jucc gap=smol>
                 <a href="/artists">
-                  <mbutton material size=mid has-icon=left filled>
+                  <mbutton mid has-icon=left filled>
                     <mi>explore</mi>
                     <p text bold><?= __("Explore Artists") ?></p>
                   </mbutton>

@@ -31,14 +31,14 @@ $Feed = new Feed(CurrentUser);
 
         <div fl jucend>
           <a href="/legal/applications">
-            <mbutton material background=invert color=invert>
+            <mbutton background=invert color=invert>
               <p text bold><?= __("Apply now") ?></p>
             </mbutton>
           </a>
         </div>
       </div>
 
-      <mbutton close filled=darker material hoverable icon-only close-dialogue data-info-window="applications_open">
+      <mbutton close filled=darker hoverable icon-only close-dialogue data-info-window="applications_open">
         <mi size=midler>close</mi>
       </mbutton>
     </story-banner>
@@ -50,7 +50,7 @@ $Feed = new Feed(CurrentUser);
 <feed-section>
   <div class="feed_section__inr" fl fldircol gap>
     <div title-inline fl alic gap=smol+>
-      <mbutton material size=mid icon-only filled text midler>🏅</mbutton>
+      <mbutton mid icon-only filled text midler>🏅</mbutton>
       <div fl fldircol>
         <h2><?= __("Newly ranked") ?></h2>
         <p text slight>Beatmaps that have recently been set to ranked state. Playing these will help you rank up.</p>
@@ -71,7 +71,7 @@ $Feed = new Feed(CurrentUser);
 <feed-section>
   <div class="feed_section__inr" fl fldircol gap>
     <div title-inline fl alic gap=smol+>
-      <mbutton material size=mid icon-only filled text midler>❤️</mbutton>
+      <mbutton mid icon-only filled text midler>❤️</mbutton>
       <div fl fldircol>
         <h2><?= __("Newly loved") ?></h2>
         <p text slight>Beatmaps that are now featuring the loved state! Playing these won't help you rank up.</p>
@@ -102,14 +102,14 @@ $Feed = new Feed(CurrentUser);
 
         <div fl jucend>
           <a href="/legal/development">
-            <mbutton material background=invert color=invert>
+            <mbutton background=invert color=invert>
               <p text bold><?= __("Learn more") ?></p>
             </mbutton>
           </a>
         </div>
       </div>
 
-      <mbutton close filled=darker material hoverable icon-only close-dialogue data-info-window="open_development">
+      <mbutton close filled=darker hoverable icon-only close-dialogue data-info-window="open_development">
         <mi size=midler>close</mi>
       </mbutton>
     </story-banner>
@@ -121,7 +121,7 @@ $Feed = new Feed(CurrentUser);
 <feed-section>
   <div class="feed_section__inr" fl fldircol gap>
     <div title-inline fl alic gap=smol+>
-      <mbutton material size=mid icon-only filled text midler>
+      <mbutton mid icon-only filled text midler>
         <mi midler>trending_up</mi>
       </mbutton>
       <div fl fldircol>

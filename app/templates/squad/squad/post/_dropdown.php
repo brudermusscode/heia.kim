@@ -11,7 +11,7 @@ use Heiakim\Model\Squad\SquadFeedItem;
 ?>
 
 <div posrel menu-outer>
-  <mbutton material clean size=std icon-only ripple-effect open-more-menu>
+  <mbutton clean icon-only ripple-effect open-more-menu>
     <mi>page_info</mi>
   </mbutton>
 

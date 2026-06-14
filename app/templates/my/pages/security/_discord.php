@@ -93,7 +93,7 @@ $Discord = CurrentUser->discord;
           <div fl jucend>
             <form request="connect:delete" redirect="<?= $base_url ?>">
               <input type=hidden name=type value=discord />
-              <mbutton material submit-closest background=unfollow color=dark-red>
+              <mbutton submit-closest background=unfollow color=dark-red>
                 <p text bold><?= __("Remove") ?></p>
               </mbutton>
             </form>
@@ -109,7 +109,7 @@ $Discord = CurrentUser->discord;
           </div>
 
           <div fl jucend>
-            <mbutton material background=follow color=dark-green
+            <mbutton background=follow color=dark-green
               data-action="connect:start"
               data-type=discord>
               <p text bold><?= __("Connect") ?></p>

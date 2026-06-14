@@ -26,7 +26,9 @@ $PinnedThreads = $Squad->threads()
 
     <div style="width:20em;">
       <div fl jucc>
-        <mbutton material background=follow color=dark-green rounded=mid has-icon=left size=mid rounded=mid data-action="popup:open" data-href="/squad/thread/new">
+        <mbutton mid background=follow color=dark-green rounded=mid has-icon=left rounded=mid
+          data-action="popup:open"
+          data-href="/squad/thread/new">
           <i class=mi size=std>add</i>
           <p text std bold><?= __("Create new") ?></p>
         </mbutton>
@@ -51,7 +53,9 @@ $PinnedThreads = $Squad->threads()
             <p text std><?= __("Nobody has created a thread by now") ?></p>
           </div>
           <div fl justify-content=center>
-            <mbutton data-action="popup:open" data-href="/squad/thread/new" material has-icon=left size=mid background=dynamic>
+            <mbutton mid has-icon=left background=dynamic
+              data-action="popup:open"
+              data-href="/squad/thread/new">
               <mi>add</mi>
               <p text bold><?= __("Create new") ?></p>
             </mbutton>

@@ -1,18 +1,15 @@
 <?php
 
-use Heiakim\Database\Manager as DBM;
 use Heiakim\Enum\Privilege;
 use Heiakim\Model\User;
 use Heiakim\Time\Time;
-
-$db = new DBM;
+use Illuminate\Support\Collection;
 
 $legal_head_slogan = __("Behind the scenes");
 $legal_head_title  = __("The Team");
 
-include TEMPLATE . "/legal/_header.php";
-
-?>
+# + Easy legal heading.
+include TEMPLATE . "/legal/_header.php"; ?>
 
 <div class="legal__page_content__full" scroll-manipulated>
   <div class="legal__page_content__full_inr">
@@ -29,7 +26,6 @@ include TEMPLATE . "/legal/_header.php";
     </div>
   </div>
 </div>
-
 
 <div content-width=mid fl fldircol content-gap jucstretch>
   <div class="legal__page" first>
@@ -65,20 +61,14 @@ include TEMPLATE . "/legal/_header.php";
         <?php
 
         /**
-         * @var User
-         * Owner
+         * @var Collection<User>
          */
         $Users = User::whereIn("id", [3, 4])
           ->orderByDesc("priv")
           ->get();
 
-        foreach ($Users as $User) {
-          /**
-           * @var User $User
-           */
-
-        ?>
-
+        # + Owner.
+        foreach ($Users as $User) : ?>
           <a href="<?= $User->link(); ?>">
             <div class="timeline__items_option" has-tooltip clickable>
               <div class="timeline__items_option__inr">
@@ -89,33 +79,30 @@ include TEMPLATE . "/legal/_header.php";
                     </picture>
                   </div>
                   <div class=actions>
-                    <mbutton material size=mid filled=lighter icon-only>
+                    <mbutton mid filled=lighter icon-only>
                       <mi>arrow_forward</mi>
                     </mbutton>
                   </div>
                 </div>
                 <div class="name" mt=std>
                   <p text mid bold><?= $User->name(); ?></p>
-                  <p text smol slight><?= __("Member since") ?> <?= Time::ago($User->created_at); ?></p>
+                  <p text smol slight>
+                    <?= __("Member since") ?> <?= Time::ago($User->created_at); ?></p>
                 </div>
               </div>
             </div>
           </a>
-
-        <?php } ?>
-
+        <?php endforeach; ?>
       </div>
     </div>
   </div>
 
   <?php
 
-  foreach (Privilege::cases() as $key => $Privilege) {
+  foreach (Privilege::cases() as $key => $Privilege) :
     $privilege = $Privilege->get_display();
 
-    /**
-     * Skip these roles.
-     */
+    # Roles to be skipped.
     if (
       in_array(
         $Privilege,
@@ -129,9 +116,7 @@ include TEMPLATE . "/legal/_header.php";
         ]
       )
     )
-      continue;
-
-  ?>
+      continue; ?>
 
     <div class="timeline">
       <div class="timeline__item">
@@ -161,31 +146,23 @@ include TEMPLATE . "/legal/_header.php";
           $users_in_privilege = [];
 
           /**
-           * @var User
-           * Owner
+           * @var Collection<User>
            */
           $Users = User::where("priv", ">", 3)
             ->whereNotIn("id", [3, 4])
             ->orderByDesc("priv")
             ->get();
 
+          # Any other than owner.
           foreach ($Users as $User) {
-            /**
-             * @var User $User
-             */
 
-            /**
-             * Check if any user has this privilege.
-             */
+            # Check if any user has this privilege.
             foreach ($User->privileges() as $user_privilege)
               if ($user_privilege->privilege == $Privilege)
                 array_push($users_in_privilege, $User);
           }
 
-          /**
-           * Skip if no user has this privilege or display the
-           * according users with a foreach.
-           */
+          # Skip if no user has this privilege.
           if (!$users_in_privilege) {
             $discord_url = _env("DISCORD_INVITE");
             $text_for_none = __("No users in this role group");
@@ -201,12 +178,10 @@ include TEMPLATE . "/legal/_header.php";
                   </bm-inr>
                 </box-model>
               TEXT;
-          } else
-            foreach ($users_in_privilege as $User) {
-              $u = $User->data();
+          }
 
-          ?>
-
+          # Display the according users with a foreach.
+          else foreach ($users_in_privilege as $User) : ?>
             <a href="<?= "/u/$User->id"; ?>">
               <div class="timeline__items_option" has-tooltip clickable>
                 <div class="timeline__items_option__inr">
@@ -217,28 +192,23 @@ include TEMPLATE . "/legal/_header.php";
                       </picture>
                     </div>
                     <div class=actions>
-                      <mbutton material size=mid filled=lighter icon-only>
+                      <mbutton mid filled=lighter icon-only>
                         <mi>arrow_forward</mi>
                       </mbutton>
                     </div>
                   </div>
                   <div class="name" mt=std>
                     <p text mid bold><?= $User->name(); ?></p>
-                    <p text smol slight><?= __("Member since") ?> <?= Time::ago($User->created_at); ?></p>
+                    <p text smol slight>
+                      <?= __("Member since") ?> <?= Time::ago($User->created_at); ?>
+                    </p>
                   </div>
                 </div>
               </div>
             </a>
-
-          <?php
-
-            }
-
-          ?>
-
+          <?php endforeach; ?>
         </div>
       </div>
     </div>
-
-  <?php } ?>
+  <?php endforeach; ?>
 </div>

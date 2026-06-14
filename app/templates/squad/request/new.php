@@ -228,15 +228,15 @@ $join_action = !$Squad->is_public()
       </div>
 
       <div prompt-actions>
-        <mbutton close-overlay material background=clean color=dynamic>
+        <mbutton close-overlay background=clean color=dynamic>
           <p text>Cancel</p>
         </mbutton>
         <?php if (!$Squad->is_public()) { ?>
-          <mbutton size=mid background=besure material submit-closest>
+          <mbutton mid background=besure submit-closest>
             <p text std bold><?= __("Let's go!") ?></p>
           </mbutton>
         <?php } else { ?>
-          <mbutton size=mid background=company color=light material submit-closest>
+          <mbutton mid background=company color=light submit-closest>
             <p text std bold><?= __("Yes, let's go!") ?></p>
           </mbutton>
         <?php } ?>

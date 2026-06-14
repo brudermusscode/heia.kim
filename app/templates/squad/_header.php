@@ -17,13 +17,19 @@ use Heiakim\Time\Time;
 <header full=squad scroll-manipulated>
   <div inner>
     <div w100 fl jucend hide-scrolled posrel>
-      <mbutton hide-mobile material size=std has-icon=left
+      <mbutton hide-mobile has-icon=left
         <?= $Squad->joinable === 0 ? "background=unfollow color=dark-red" : ($Squad->joinable === 1 ? "background=besure color=dark-orange" : "background=follow color=dark-green"); ?>>
         <mi><?= $Squad->joinable === 0 ? "public_off" : ($Squad->joinable === 1 ? "vpn_lock" : "globe_asia"); ?></mi>
         <p text bold><?= $Squad->display_publicity(); ?></p>
       </mbutton>
-      <mbutton show-mobile material size=std icon-only
-        <?= $Squad->joinable === 0 ? "background=unfollow color=dark-red" : ($Squad->joinable === 1 ? "background=besure color=dark-orange" : "background=follow color=dark-green"); ?>>
+      <mbutton show-mobile icon-only
+        <?= $Squad->joinable === 0
+          ? "background=unfollow color=dark-red"
+          : (
+            $Squad->joinable === 1
+            ? "background=besure color=dark-orange"
+            : "background=follow color=dark-green"
+          ); ?>>
         <mi><?= $Squad->joinable === 0 ? "public_off" : ($Squad->joinable === 1 ? "vpn_lock" : "globe_asia"); ?></mi>
       </mbutton>
     </div>
@@ -127,7 +133,7 @@ use Heiakim\Time\Time;
     <?php switch (CurrentUser->available_action_for($Squad)):
       case "is_member": ?>
         <a href="/manage/squad/leave">
-          <mbutton pn-option material icon-only size=mid outlined has-tooltip=right>
+          <mbutton mid pn-option icon-only outlined has-tooltip=right>
             <mi>arrow_circle_left</mi>
             <div ttooltip>
               <p text bold><?= __("Leave") ?></p>
@@ -138,7 +144,7 @@ use Heiakim\Time\Time;
       case "invite_pending": ?>
         <form request="/squad/invite/edit" reload responder=always method=POST>
           <input type=hidden name=id value=<?= $Invitation->id; ?> />
-          <mbutton pn-option submit-closest animation=pulse material icon-only size=mid background=refollow color=dark-blue has-tooltip=right>
+          <mbutton mid pn-option submit-closest animation=pulse icon-only background=refollow color=dark-blue has-tooltip=right>
             <mi>done_all</mi>
             <div ttooltip>
               <p text bold>Accept invitation!</p>
@@ -149,7 +155,7 @@ use Heiakim\Time\Time;
       case "request_pending": ?>
         <form request="squad:request:delete" reload responder=always>
           <input type=hidden name=id value=<?= $Request->id; ?> />
-          <mbutton pn-option submit-closest animation=pulse material icon-only size=mid background=besure color=dark-orange has-tooltip=right>
+          <mbutton pn-option submit-closest animation=pulse icon-only background=besure color=dark-orange has-tooltip=right>
             <mi>do_not_disturb_on</mi>
             <div ttooltip>
               <p text bold><?= __("Cancel request") ?>
@@ -159,7 +165,9 @@ use Heiakim\Time\Time;
         </form>
       <?php break;
       case "can_join": ?>
-        <mbutton pn-option request-get="squad:request:new" data-id="<?= $Squad->id; ?>" material icon-only size=mid background=clean has-tooltip=right>
+        <mbutton mid pn-option icon-only background=clean has-tooltip=right
+          request-get="squad:request:new"
+          data-id="<?= $Squad->id; ?>">
           <mi>add_circle</mi>
           <div ttooltip>
             <p text bold><?= __("Join") ?></p>
@@ -167,7 +175,9 @@ use Heiakim\Time\Time;
         </mbutton>
       <?php break;
       case "can_request": ?>
-        <mbutton pn-option request-get="squad:request:new" data-id="<?= $Squad->id; ?>" material icon-only size=mid outlined has-tooltip=right>
+        <mbutton mid pn-option icon-only mid outlined has-tooltip=right
+          request-get="squad:request:new"
+          data-id="<?= $Squad->id; ?>">
           <mi>arrow_circle_right</mi>
           <div ttooltip>
             <p text bold><?= __("Request membership") ?></p>
@@ -176,7 +186,7 @@ use Heiakim\Time\Time;
       <?php break;
       case "login": ?>
         <a href="/register">
-          <mbutton pn-option material icon-only size=mid outlined has-tooltip=right>
+          <mbutton mid pn-option icon-only outlined has-tooltip=right>
             <mi>login</mi>
             <div ttooltip>
               <p text bold><?= __("Sign up & join") ?></p>
@@ -190,7 +200,7 @@ use Heiakim\Time\Time;
     <div pn-option pn-o-divider></div>
 
     <a pn-option href="<?= $base_url; ?>">
-      <mbutton material icon-only size=mid background=clean has-tooltip=right
+      <mbutton mid icon-only background=clean has-tooltip=right
         <?php display_active($page, ["index", "osu", "taiko", "mania", "ctb"]); ?>>
         <mi>browse</mi>
         <div ttooltip>
@@ -200,7 +210,7 @@ use Heiakim\Time\Time;
     </a>
 
     <a pn-option href="<?= $base_url; ?>/community">
-      <mbutton material icon-only size=mid background=clean has-tooltip=right
+      <mbutton mid icon-only background=clean has-tooltip=right
         <?php display_active($page, ["community"]); ?>>
         <mi>crowdsource</mi>
         <div ttooltip>
@@ -211,7 +221,7 @@ use Heiakim\Time\Time;
 
     <?php if ($Squad->is(CurrentUser->squad)) { ?>
       <a pn-option href="<?= $base_url; ?>/threads" disabled>
-        <mbutton material icon-only size=mid background=clean has-tooltip=right
+        <mbutton mid icon-only background=clean has-tooltip=right
           <?php display_active($page, ["threads", "thread"]); ?>>
           <mi>gesture</mi>
           <div ttooltip>
@@ -223,7 +233,7 @@ use Heiakim\Time\Time;
       <div pn-option pn-o-divider></div>
 
       <a pn-option href="/manage/squad">
-        <mbutton manage size=mid icon-only material has-tooltip=right>
+        <mbutton mid manage icon-only has-tooltip=right>
           <mi>settings</mi>
           <div ttooltip>
             <p text bold>Squad Manager</p>
@@ -234,7 +244,7 @@ use Heiakim\Time\Time;
   </div>
 
   <a pn-option href="/">
-    <mbutton filled material icon-only size=mid>
+    <mbutton mid filled icon-only>
       <mi>arrow_back</mi>
     </mbutton>
   </a>
@@ -275,7 +285,7 @@ use Heiakim\Time\Time;
       </div>
     </jump-menu>
 
-    <mbutton mm-open size=wide has-icon=left elevated=mid material background=company color=light>
+    <mbutton wide mm-open has-icon=left elevated=mid background=company color=light>
       <div mm-open-loading>
         <?php include COMPONENT . "/dot-loader.html"; ?>
       </div>

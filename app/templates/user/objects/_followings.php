@@ -36,7 +36,7 @@ if ($object_visibility) {
         <p text midler color=company><?= $Following->count(); ?></p>
       </div>
       <?php if ($Following->count()) { ?>
-        <mbutton material icon-only mr=smol hoverable>
+        <mbutton icon-only mr=smol hoverable>
           <mi size=midler>call_made</mi>
         </mbutton>
       <?php } ?>
@@ -78,7 +78,7 @@ if ($object_visibility) {
         <?php } ?>
 
         <?php if ($User->followers->count() > 5) { ?>
-          <mbutton material size=smol filled=lighter has-icon=right dno>
+          <mbutton smol filled=lighter has-icon=right dno>
             <p text smol bold>+<?= $Following->count() - 5; ?></p>
             <mi>east</mi>
           </mbutton>

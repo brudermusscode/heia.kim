@@ -13,14 +13,14 @@
 
     <div fl jucc alic gap>
       <a href="<?= $base_url; ?>">
-        <mbutton size=std background=clean material>
+        <mbutton background=clean>
           <p text smol>I don't accept</p>
         </mbutton>
       </a>
 
       <form data-form='users:settings,edit' responder>
         <input type=hidden name=accepts_policies value=1 />
-        <mbutton size=mid submit-closest background=slight-green material>
+        <mbutton mid submit-closest background=slight-green>
           <p text std bold color=dark-green>I accept!</p>
         </mbutton>
       </form>

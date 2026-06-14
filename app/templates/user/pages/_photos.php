@@ -55,7 +55,7 @@ use Heiakim\Model\Image;
           <?php if ($is_my_profile) { ?>
             <div fl justify-content="center">
               <a href="/editor">
-                <mbutton material has-icon=left size=mid background="dynamic">
+                <mbutton mid has-icon=left background="dynamic">
                   <mi><?= EDITOR_ICON; ?></mi>
                   <p text bold>Start Profile Editor</p>
                 </mbutton>
@@ -109,7 +109,7 @@ use Heiakim\Model\Image;
                 <ig-object data-id="<?= $Image->id; ?>">
                   <?php if ($is_my_profile || SUPER_USER) : ?>
                     <div object-actions menu-outer>
-                      <mbutton open-more-menu icon-only material size=std filled>
+                      <mbutton open-more-menu icon-only filled>
                         <mi>more_vert</mi>
                       </mbutton>
 

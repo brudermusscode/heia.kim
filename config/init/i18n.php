@@ -1,5 +1,6 @@
 <?php
 
+use Heiakim\Application\Application;
 use Heiakim\I18n\I18n;
 use Heiakim\Application\Cookie;
 
@@ -49,12 +50,18 @@ if ($__LOCALE_BEING_REQUESTED && in_array($__LOCALE_BEING_REQUESTED, I18n::$loca
 $__I18n = new I18n(locale: $__CURRENT_LOCALE);
 
 /**
- * Define the function for getting a specific key of the
- * translation file.
+ * Gets the translation for a given key. Will return the text as is from the key if no
+ * value was found.
+ *
+ * @param string $translation_key
+ * @return string
  */
 function __(string $translation_key)
 {
-  return $GLOBALS["__I18n"]->by_key($translation_key);
+  $text = htmlspecialchars_decode($GLOBALS["__I18n"]->by_key($translation_key));
+  $text = Application::replace_braced_variables($text);
+
+  return $text;
 }
 
 define("LOCALE", $__CURRENT_LOCALE);

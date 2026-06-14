@@ -15,7 +15,7 @@ use Heiakim\Model\Session;
       </div>
     </div>
     <div fl jucend>
-      <mbutton material filled
+      <mbutton filled
         data-category=<?= $category ?>
         data-sub=mailing>
         <p text bold>Manage</p>
@@ -116,7 +116,7 @@ use Heiakim\Model\Session;
 <div fl jucend>
   <form data-form="session:delete">
     <input type=hidden name=token value="<?= Cookie::get(Session::$persistent_cookies[1]); ?>" />
-    <mbutton size=mid material outlined=darker color=red color=red submit-closest>
+    <mbutton mid outlined=darker color=red color=red submit-closest>
       <p text bold><?= __("Logout") ?></p>
     </mbutton>
   </form>

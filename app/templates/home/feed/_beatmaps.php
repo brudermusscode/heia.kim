@@ -35,12 +35,12 @@ $has_favorite_beatmaps = $FavoriteBeatmaps->count();
               </div>
               <div fl jucc gap=smol>
                 <a href="/beatmaps">
-                  <mbutton material size=mid has-icon=left filled>
+                  <mbutton mid has-icon=left filled>
                     <mi>explore</mi>
                     <p text bold><?= __("Explore Beatmaps") ?></p>
                   </mbutton>
                 </a>
-                <mbutton data-action="search:open" material size=mid has-icon=left filled>
+                <mbutton mid data-action="search:open" has-icon=left filled>
                   <mi>search</mi>
                   <p text bold><?= __("Search") ?></p>
                 </mbutton>

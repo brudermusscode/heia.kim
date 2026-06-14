@@ -40,7 +40,7 @@ include PAGE_NAVIGATOR;
 
         ?>
           <a sub href="<?= $search_link;  ?>">
-            <mbutton material filled=lighter <?php if ($same_queries) echo "active"; ?>>
+            <mbutton filled=lighter <?php if ($same_queries) echo "active"; ?>>
               <p text bold><?= $Search->search; ?></p>
             </mbutton>
           </a>

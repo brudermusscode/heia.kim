@@ -35,7 +35,7 @@ if (!$is_my_profile) : ?>
             <?= __("This user is currently in restricted mode and can not be accessed.") ?></p>
         </div>
       </div>
-      <mbutton onclick="history.go(-1);" material size=mid has-icon=left outlined>
+      <mbutton mid onclick="history.go(-1);" has-icon=left outlined>
         <i class="mi">arrow_back</i>
         <p text std bold><?= __("Go back") ?></p>
       </mbutton>
@@ -89,7 +89,7 @@ if (!$is_my_profile) : ?>
       </div>
 
       <div fl justify-content=center>
-        <mbutton data-action="session:delete" material size=mid background=unfollow color=dark-red>
+        <mbutton mid data-action="session:delete" background=unfollow color=dark-red>
           <p text std bold><?= __("Logout") ?></p>
         </mbutton>
       </div>

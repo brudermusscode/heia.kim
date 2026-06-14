@@ -51,13 +51,13 @@ use Heiakim\Application\Cookie;
 
         <div fl gap=smol flex-wrap=wrap alic>
           <a href="<?= _env("DISCORD_INVITE") ?>" extern target="_blank">
-            <mbutton size=mid has-icon=left filled=lighter material color=dynamic>
+            <mbutton mid has-icon=left filled=lighter color=dynamic>
               <i class="ri-discord-fill"></i>
               <p text std bold>@heia.kim</p>
             </mbutton>
           </a>
           <a href="https://www.youtube.com/@heia.kimosu" extern target="_blank">
-            <mbutton size=mid has-icon=left filled=lighter material color=dynamic>
+            <mbutton mid has-icon=left filled=lighter color=dynamic>
               <i class="ri-youtube-fill"></i>
               <p text std bold>@heia.kimosu</p>
             </mbutton>

@@ -101,7 +101,7 @@ else {
         <form data-form="comments:create,view">
           <input type=hidden name=id value=<?= $Score->id; ?> />
           <input type=hidden name=type value=score />
-          <mbutton submit-closest outlined has-icon=left material>
+          <mbutton submit-closest outlined has-icon=left>
             <i class="mi">add</i>
             <p text smol bold><?= __("Add comment") ?></p>
           </mbutton>
@@ -114,7 +114,7 @@ else {
               <input type=hidden name=type value=score />
               <input type=hidden name=limit value=<?= $more_comments_limit; ?> />
               <input type=hidden name=offset value=<?= $more_comments_offset; ?> />
-              <mbutton submit-closest ripple-effect filled=darker icon-only size="smoler" has-icon material>
+              <mbutton smoler submit-closest ripple-effect filled=darker icon-only has-icon>
                 <i class="mi">unfold_more</i>
               </mbutton>
             </form>

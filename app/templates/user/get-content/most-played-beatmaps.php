@@ -71,7 +71,7 @@ else :
       <?php if ($is_my_profile) : ?>
         <div fl jucc>
           <a href="/beatmaps?mode=<?= $gumode; ?>">
-            <mbutton material has-icon="right" size=mid background="dynamic">
+            <mbutton mid has-icon="right" background="dynamic">
               <p text bold><?= __("Explore beatmaps") ?></p>
               <mi>arrow_forward</mi>
             </mbutton>
@@ -101,7 +101,7 @@ else :
     <?php if ($Beatmaps->count() > ($fetch_limit - 1)) { ?>
       <div fl jucc mt=smol>
         <a href="<?= "/u/$User->id/$mode_mod->mode/$mode_mod->mod/beatmaps"; ?>">
-          <mbutton material ripple-effect filled=lighter has-icon=right>
+          <mbutton ripple-effect filled=lighter has-icon=right>
             <p text smol bold ttup><?= __("Show more") ?></p>
             <mi>east</mi>
           </mbutton>

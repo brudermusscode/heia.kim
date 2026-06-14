@@ -103,7 +103,7 @@ $PasswordChange = CurrentUser->password_changes()
       <div fl alic jucsb>
         <p text pinline12>And <strong><?= $sessions_count - 5; ?></strong> more</p>
         <div fl jucend>
-          <mbutton material filled disabled>
+          <mbutton filled disabled>
             <p text bold><?= __("Manage all") ?></p>
           </mbutton>
         </div>
@@ -187,7 +187,7 @@ $PasswordChange = CurrentUser->password_changes()
 
       <div fl gap=smol>
         <?php if (!CurrentUser->discord && Feature::enabled("connect_discord")) { ?>
-          <mbutton material has-icon=left filled size=mid
+          <mbutton mid has-icon=left filled
             data-action="connect:start"
             data-type=discord>
             <mi class="ri-discord-fill"></mi>
@@ -196,7 +196,7 @@ $PasswordChange = CurrentUser->password_changes()
         <?php } ?>
 
         <?php if (!CurrentUser->google && Feature::enabled("connect_google")) { ?>
-          <mbutton material has-icon=left filled size=mid
+          <mbutton mid has-icon=left filled
             data-action="connect:start"
             data-type=google>
             <mi class="ri-google-fill"></mi>
@@ -205,7 +205,7 @@ $PasswordChange = CurrentUser->password_changes()
         <?php } ?>
 
         <?php if (!CurrentUser->osu && Feature::enabled("connect_osu")) { ?>
-          <mbutton material has-icon=left filled size=mid
+          <mbutton mid has-icon=left filled
             data-action="connect:start"
             data-type=osu>
             <mi class="osu-icon osu-outlined"></mi>

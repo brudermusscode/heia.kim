@@ -35,7 +35,7 @@ use Heiakim\Model\Squad;
           <?= __("This player has not yet verified their account. Come back later!") ?></p>
       </div>
     </div>
-    <mbutton onclick="history.go(-1);" material size=mid has-icon=left outlined>
+    <mbutton mid onclick="history.go(-1);" has-icon=left outlined>
       <i class="mi">arrow_back</i>
       <p text std bold><?= __("Go back") ?></p>
     </mbutton>

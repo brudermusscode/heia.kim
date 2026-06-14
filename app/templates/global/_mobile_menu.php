@@ -1,7 +1,7 @@
 <div class="mobile_menu" shadowed=min>
   <!--- SEARCH BUTTON --->
   <div search-icon>
-    <mbutton elevated size=mid rounded icon-only material background=complement data-action="search:open" color=white>
+    <mbutton mid elevated rounded icon-only background=complement data-action="search:open" color=white>
       <i class=mi>search</i>
     </mbutton>
   </div>

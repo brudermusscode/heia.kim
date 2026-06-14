@@ -268,7 +268,9 @@ function authorize(
  * Redirects to another location and dies.
  *
  * @param string $uri
- * @return die
+ * @return void
+ *
+ * NOTE: Will die on error.
  */
 function redirect(string $uri, array $headers = [])
 {
@@ -293,7 +295,9 @@ function redirect(string $uri, array $headers = [])
  *
  * @param string $file
  * @param bool $is_partial
- * @return require The template
+ * @return void
+ *
+ * NOTE: Includes a found template.
  */
 function template(string $file, bool $is_partial = true, array $variables = [])
 {
@@ -338,7 +342,9 @@ function template(string $file, bool $is_partial = true, array $variables = [])
  * @param string $file
  * @param bool $is_partial
  * @param array $variables
- * @return include
+ * @return void
+ *
+ * NOTE: Includes a found template.
  */
 function helper(string $file, bool $is_partial = true, array $variables = [])
 {
@@ -358,21 +364,6 @@ function helper(string $file, bool $is_partial = true, array $variables = [])
   extract($variables);
 
   include HELPER . "/$file_path" . ($is_partial && !$has_php_ending ? ".php" : "");
-}
-
-/**
- * Echoes active if the value matches the match.
- *
- * @param mixed
- * @param mixed
- * @return void
- */
-function display_active_when(mixed $value, mixed $matches)
-{
-  if ($value === $matches)
-    echo "active";
-
-  return;
 }
 
 /**

@@ -139,8 +139,10 @@ else {
         <?php if ($Appeal && $Appeal->status === "AWAITING_PROCESSING") { ?>
 
           <div fl flexone jucc mt=smol>
-            <mbutton background=slight color=dynamic material size=mid has-icon=left data-action="popup:open"
-              data-href="/user/appeal/live-play" has-tooltip=bottom>
+            <mbutton mid background=slight color=dynamic has-icon=left
+              data-action="popup:open"
+              data-href="/user/appeal/live-play"
+              has-tooltip=bottom>
               <mi class="loader-pulse posrel" fl jucstart alic style="height:32px;width:32px;top:0;">
                 <span></span>
               </mi>
@@ -173,7 +175,8 @@ else {
                 </div>
 
                 <div flexone fl jucc>
-                  <mbutton background=follow color=dark-green material size=mid has-icon=left data-action="popup:open"
+                  <mbutton mid background=follow color=dark-green has-icon=left
+                    data-action="popup:open"
                     data-href="/user/appeal/live-play">
                     <mi>add</mi>
                     <p text bold>Add new</p>
@@ -186,7 +189,8 @@ else {
         <?php } else { ?>
 
           <div fl jucc flexone>
-            <mbutton background=follow color=dark-green material size=mid has-icon=left data-action="popup:open"
+            <mbutton mid background=follow color=dark-green has-icon=left
+              data-action="popup:open"
               data-href="/user/appeal/live-play">
               <mi>add</mi>
               <p text bold>Add live play</p>
@@ -288,20 +292,23 @@ else {
             $appeal_locked = CurrentUser->appeal_locked();
 
             if ($appeal_locked) { ?>
-              <mbutton background=follow color=dark-green material size=mid has-icon=left disabled>
+              <mbutton mid background=follow color=dark-green has-icon=left disabled>
                 <mi>history_toggle_off</mi>
                 <p text bold>Appeal locked for <?= $appeal_locked; ?></p>
               </mbutton>
             <?php } else { ?>
               <?php if (!CurrentUser->current_appeal_after_restriction_waiting_period()) { ?>
-                <mbutton background=follow color=dark-green material size=mid has-icon=left data-action="popup:open"
+                <mbutton mid background=follow color=dark-green has-icon=left
+                  data-action="popup:open"
                   data-href="/user/appeal/create">
                   <mi>edit</mi>
                   <p text bold>Write an appeal</p>
                 </mbutton>
               <?php } else { ?>
-                <mbutton background=slight color=dynamic material size=mid has-icon=left data-action="popup:open"
-                  data-href="/user/appeal/create" has-tooltip=bottom>
+                <mbutton mid background=slight color=dynamic has-icon=left
+                  data-action="popup:open"
+                  data-href="/user/appeal/create"
+                  has-tooltip=bottom>
                   <mi class="loader-pulse posrel" fl jucstart alic style="height:32px;width:32px;top:0;">
                     <span></span>
                   </mi>

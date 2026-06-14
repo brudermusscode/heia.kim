@@ -110,14 +110,14 @@ else :
         <input type=hidden name=token value="<?= $token; ?>" />
 
         <div fl jucsb alic gap>
-          <mbutton material size=mid tabindex=4 background=clean
+          <mbutton mid tabindex=4 background=clean
             request="authentication:delete"
             data-token="<?= $token; ?>"
             shadow-submit redirect="/">
             <p text std>Cancel</p>
           </mbutton>
 
-          <mbutton submit-closest tabindex=3 material icon-only size=mid rounded=smol+
+          <mbutton mid submit-closest tabindex=3 icon-only rounded=smol+
             background=green color=light>
             <mi>arrow_forward</mi>
           </mbutton>

@@ -20,7 +20,7 @@ use Heiakim\Enum\SquadPrivilege;
     <div fl jucsb top-actions>
       <div></div>
       <a href="/manage/squad/members">
-        <mbutton material size=mid background=slight has-icon=right>
+        <mbutton mid background=slight has-icon=right>
           Manage Members
           <mi>arrow_forward</mi>
         </mbutton>

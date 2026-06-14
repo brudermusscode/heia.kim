@@ -104,7 +104,8 @@ $Logs = $Squad
 
           <td colspan=1 fl jucend>
             <div posrel menu-outer>
-              <mbutton material outlined icon-only ripple-effect open-more-menu has-tooltip="bottom">
+              <mbutton outlined icon-only ripple-effect open-more-menu
+                has-tooltip="bottom">
                 <mi>more_vert</mi>
                 <div ttooltip>
                   <p text std bold>More options</p>

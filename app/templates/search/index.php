@@ -118,7 +118,7 @@ else : ?>
       </div>
       <div fl jucc mt=smol>
         <a href="/beatmaps?query=<?= str_replace("%", "", $query); ?>">
-          <mbutton material ripple-effect filled=lighter has-icon=right>
+          <mbutton ripple-effect filled=lighter has-icon=right>
             <p text smol bold ttup><?= __("Show more") ?></p>
             <mi>east</mi>
           </mbutton>

@@ -23,8 +23,8 @@ ob_start(); ?>
     </div>
 
     <a href="<?= CurrentUser->link(); ?>">
-      <mbutton style="padding-right:12px;"
-        material size=midler has-image=left background=clean hoverable has-tooltip=top>
+      <mbutton midler has-image=left background=clean hoverable has-tooltip=top
+        style="padding-right:12px;">
         <picture in-menu size=std circled>
           <?php CurrentUser->image(); ?>
         </picture>
@@ -35,7 +35,7 @@ ob_start(); ?>
 
     <div dot-divider></div>
 
-    <mbutton material size=midler icon-only background=clean hoverable has-tooltip=top
+    <mbutton midler icon-only background=clean hoverable has-tooltip=top
       open-ui-component=notifications
       url="/notification/category/all"
       toggle-user-menu="1800"
@@ -44,7 +44,7 @@ ob_start(); ?>
       <div ttooltip>Notifications</div>
     </mbutton>
 
-    <mbutton material size=midler icon-only background=clean hoverable has-tooltip=top
+    <mbutton midler icon-only background=clean hoverable has-tooltip=top
       open-ui-component="user-manager"
       url="/user-manager/overview"
       toggle-user-menu>
@@ -74,9 +74,9 @@ ob_start(); ?>
       <div dot-divider></div>
 
       <a href="/squad/<?= $CurrentSquad->id; ?>">
-        <mbutton material size=midler image-only background=clean hoverable has-tooltip=top>
-          <div style="position:absolute;bottom:0;left:50%;translate:-50% 0;"
-            rounded=smol slight pinline4 pblock1 background=invert color=invert z>
+        <mbutton midler image-only background=clean hoverable has-tooltip=top>
+          <div rounded=smol slight pinline4 pblock1 background=invert color=invert z
+            style="position:absolute;bottom:0;left:50%;translate:-50% 0;">
             <p text smol semibold><?= $CurrentSquad->tag ?></p>
           </div>
           <picture in-menu size=std circled>
@@ -91,7 +91,7 @@ ob_start(); ?>
 
     <form data-form="session:delete">
       <input type=hidden name=token value="<?= Cookie::get(Session::$persistent_cookies[1]); ?>" />
-      <mbutton material size=midler submit-closest icon-only hoverable has-tooltip=top>
+      <mbutton midler submit-closest icon-only hoverable has-tooltip=top>
         <mi>logout</mi>
         <div ttooltip><?= __("Logout"); ?></div>
       </mbutton>

@@ -75,7 +75,7 @@ else :
     <?php if ($Scores->count() > ($fetch_limit - 1)) : ?>
       <div fl jucc mt=smol>
         <a href="<?= "/u/$User->id/$mode_mod->mode/$mode_mod->mod/performances-first"; ?>">
-          <mbutton material ripple-effect filled=lighter has-icon=right>
+          <mbutton ripple-effect filled=lighter has-icon=right>
             <p text smol bold ttup><?= __("Show more") ?></p>
             <mi>east</mi>
           </mbutton>

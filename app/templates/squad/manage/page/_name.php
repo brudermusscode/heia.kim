@@ -67,7 +67,7 @@ $is_disabled = !$Squad->can_change_name();
           </div>
 
           <div fl jucend>
-            <mbutton ripple-effect confirm-submit-button background=follow color=dark size=mid material <?= $disabled; ?>>
+            <mbutton mid ripple-effect confirm-submit-button background=follow color=dark <?= $disabled; ?>>
               <div action>
                 <?php if (!$is_disabled) { ?>
                   <p text bold>Save</p>

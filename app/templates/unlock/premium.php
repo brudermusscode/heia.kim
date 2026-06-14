@@ -102,19 +102,19 @@ else :
 
           <div mt18 fl jucc alic gap=smol+>
             <a href="/home">
-              <mbutton background=clean material>Cancel</mbutton>
+              <mbutton background=clean>Cancel</mbutton>
             </a>
             <?php if ($premium_feature_enabled) : ?>
               <form data-form="orders:paypal,create">
                 <input type=hidden name=months value=1 />
-                <mbutton size=mid background=slight-green color=dark-green has-icon material submit-closest>
+                <mbutton background=slight-green color=dark-green has-icon submit-closest>
                   <p text>Donate with &nbsp;
                     <strong><i class=ri-paypal-fill style="font-size:18px;"></i> PayPal</strong>
                   </p>
                 </mbutton>
               </form>
             <?php else : ?>
-              <mbutton size=std background=green has-icon material disabled>
+              <mbutton background=green has-icon disabled>
                 <div fl align-items=center gap=smol>
                   <p text std color=white>Currently disabled</p>
                 </div>

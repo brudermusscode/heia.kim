@@ -60,12 +60,12 @@ if (CurrentUser->settings->account_wiped_at) {
     <div fl justify-content=end gap>
       <?php if (Feature::enabled("restart_journey")) : ?>
         <input type=hidden name=type value=wipe_user />
-        <mbutton background="besure" color=dark-orange size=mid has-icon=left material submit-closest>
+        <mbutton mid background="besure" color=dark-orange has-icon=left submit-closest>
           <mi>fingerprint</mi>
           <p text bold>Authenticate for wipe</p>
         </mbutton>
       <?php else : ?>
-        <mbutton disabled background=slight-orange color=dark-orange size=mid material>
+        <mbutton mid disabled background=slight-orange color=dark-orange>
           <p text bold>Feature disabled</p>
         </mbutton>
       <?php endif; ?>

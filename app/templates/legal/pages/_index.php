@@ -1,7 +1,7 @@
 <?php
 
 $legal_head_slogan = "";
-$legal_head_title  = "";
+$legal_head_title  = "Go home";
 $legal_head_url = "/home";
 
 include TEMPLATE . "/legal/_header.php";

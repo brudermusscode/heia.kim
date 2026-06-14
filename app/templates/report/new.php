@@ -116,10 +116,10 @@ include SNOW; ?>
         </div>
       </div>
       <div prompt-actions fl jucsb>
-        <mbutton close-overlay material background=clean color=dynamic>
+        <mbutton close-overlay background=clean color=dynamic>
           <p text>Cancel</p>
         </mbutton>
-        <mbutton size=mid background=besure color=dark-orange material tabindex=3 submit-closest>
+        <mbutton mid background=besure color=dark-orange tabindex=3 submit-closest>
           <p text bold><?= __("Submit") ?></p>
         </mbutton>
       </div>

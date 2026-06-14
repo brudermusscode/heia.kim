@@ -77,7 +77,7 @@ ob_start();
       </div>
 
       <div fl jucend>
-        <mbutton filled no-hover-shadow color=dynamic material submit-closest>
+        <mbutton filled no-hover-shadow color=dynamic submit-closest>
           <i class=mi size=std>prompt_suggestion</i>
         </mbutton>
       </div>

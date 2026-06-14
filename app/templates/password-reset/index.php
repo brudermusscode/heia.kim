@@ -60,12 +60,12 @@ include SNOW; ?>
 
             <div fl jucsb>
               <a onclick="history.go(-1);">
-                <mbutton outlined ripple-effect material size=mid>
+                <mbutton mid outlined ripple-effect>
                   Ouh, back!
                 </mbutton>
               </a>
 
-              <mbutton size=mid rounded=smol+ ripple-effect submit-closest material icon-only background=green color=light>
+              <mbutton mid rounded=smol+ ripple-effect submit-closest icon-only background=green color=light>
                 <mi>arrow_forward</mi>
               </mbutton>
             </div>
@@ -108,7 +108,7 @@ include SNOW; ?>
               <input type=hidden value="<?= $token ?>" name=token>
 
               <div fl jucend mt>
-                <mbutton ripple-effect submit-closest icon-only material size=mid rounded=smol+ background=green color=light>
+                <mbutton mid ripple-effect submit-closest icon-only rounded=smol+ background=green color=light>
                   <mi>check</mi>
                 </mbutton>
 

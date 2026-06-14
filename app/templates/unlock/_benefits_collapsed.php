@@ -50,7 +50,7 @@ $benefits = UserSettingsPremium::$benefits_display;
   </div>
 
   <div fl jucc mt=smol>
-    <mbutton expand-more-show filled material size=smol has-icon=right>
+    <mbutton smol expand-more-show filled has-icon=right>
       <p text expand-more-text></p>
       <mi>unfold_more</mi>
     </mbutton>

@@ -51,7 +51,7 @@ include TEMPLATE . "/legal/_header.php";
 
           <div fl jucend alic gap=smol>
             <p text std><?= __("Last updated") ?></p>
-            <mbutton material color=dynamic filled>
+            <mbutton color=dynamic filled>
               <p text smol bold><?= $privacy_last_updated; ?></p>
             </mbutton>
           </div>

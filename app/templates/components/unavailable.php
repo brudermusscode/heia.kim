@@ -39,7 +39,7 @@ ob_start();
 
     <div prompt-actions>
       <div></div>
-      <mbutton close-overlay background=slight material size=mid>
+      <mbutton mid close-overlay background=slight>
         <p text bold>Too bad!</p>
       </mbutton>
     </div>

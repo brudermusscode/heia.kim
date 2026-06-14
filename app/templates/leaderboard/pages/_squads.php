@@ -106,11 +106,11 @@ $count = 0;
             </div>
 
             <div fl jucc gap=smol>
-              <mbutton material has-icon=right tag filled=lighter>
+              <mbutton has-icon=right tag filled=lighter>
                 <p text bold><?= $performance; ?></p>
                 <mi><?= $icon; ?></mi>
               </mbutton>
-              <mbutton material tag>
+              <mbutton tag>
                 <p text bold><?= number_format($Stats->accuracy, 2); ?> %</p>
               </mbutton>
             </div>

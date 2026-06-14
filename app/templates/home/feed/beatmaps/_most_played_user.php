@@ -1,6 +1,6 @@
 <div fl fldircol gap=smol+>
   <div title-inline fl alic gap=smol+>
-    <mbutton material filled size="mid" icon-only no-hover>
+    <mbutton mid filled icon-only no-hover>
       <mi mid>favorite</mi>
     </mbutton>
     <p text mid bold>You might like</p>

@@ -77,7 +77,8 @@ use Heiakim\Model\Squad\SquadUser;
         <td colspan=1 fl jucend>
           <?php if (!$Member->user->is(CurrentUser) && (!$Member->can("manage", "users") || CurrentUser->is_squad_chief())) : ?>
             <div posrel menu-outer>
-              <mbutton material outlined icon-only ripple-effect open-more-menu has-tooltip="bottom">
+              <mbutton outlined icon-only ripple-effect open-more-menu
+                has-tooltip="bottom">
                 <mi>more_vert</mi>
                 <div ttooltip>
                   <p text std bold>More options</p>
@@ -164,7 +165,7 @@ use Heiakim\Model\Squad\SquadUser;
               </jump-menu>
             </div>
           <?php else : ?>
-            <mbutton material icon-only disabled filled>
+            <mbutton icon-only disabled filled>
               <mi>heart_smile</mi>
             </mbutton>
           <?php endif; ?>

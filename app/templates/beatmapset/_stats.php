@@ -13,7 +13,7 @@ use Heiakim\Model\Beatmap;
   <bm-inr size=std>
     <div fl mb=std alic gap>
 
-      <mbutton material filled has-icon=left has-tooltip=bottom>
+      <mbutton filled has-icon=left has-tooltip=bottom>
         <mi size=midler>play_circle</mi>
         <p text bold>
           <?= number_format($Beatmap->plays); ?>
