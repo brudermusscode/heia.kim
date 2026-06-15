@@ -50,9 +50,6 @@ $Squads = Squad::with("members.user")
   ->orderByDesc("created_at")
   ->get();
 
-/**
- * Begin the output buffer.
- */
 ob_start();
 
 /**

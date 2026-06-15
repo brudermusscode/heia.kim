@@ -38,9 +38,6 @@ if (!$Squad)
 if ($CurrentSquad)
   exit($Request->error("<strong>This is your squad!</strong>"));
 
-/**
- * Begin the output buffer.
- */
 ob_start(); ?>
 
 <style>

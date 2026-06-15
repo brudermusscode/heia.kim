@@ -39,7 +39,6 @@ if (CurrentUser->is($Reference instanceof User ? $Reference : $Reference?->user)
 # ject might need.
 $Score = $Comment = $User = $Post = $Reference;
 
-# Begin output buffering.
 ob_start();
 
 # + Snow.

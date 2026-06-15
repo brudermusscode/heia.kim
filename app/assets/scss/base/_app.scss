@@ -1960,7 +1960,7 @@ input[type="range"] {
   [column-wrapper] {
     display: flex;
     align-items: flex-start;
-    gap: $gap-mid;
+    gap: $gap-std-plus;
   }
 
   [column="small"] {

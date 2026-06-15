@@ -65,7 +65,6 @@ $Artists = Artist::where("name", "LIKE", "%$query%")
 
 $all_empty = !$Users->count() && !$Sets->count() && !$Squads->count() && !$Artists->count();
 
-# Start output buffer.
 ob_start();
 
 if ($all_empty) :

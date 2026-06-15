@@ -1,10 +1,6 @@
 <?php
 
-require_once dirname(__DIR__) . "/config/init.php";
-
-/**
- * @var string $_INCLUDE_TEMPLATE
- */
+require dirname(__DIR__) . "/config/init.php";
 
 # Sanitize the output for non DEV environments. Looks cool 🙂
 if (PROD) ob_start("sanitize_output"); ?>
@@ -28,7 +24,7 @@ if (PROD) ob_start("sanitize_output"); ?>
 
   <?php
 
-  # + JS Functions and other definitions.
+  # + JS, styles and other definitions.
   include TEMPLATE . "/global/_yield-requires.php"; ?>
 </head>
 
@@ -38,7 +34,7 @@ if (PROD) ob_start("sanitize_output"); ?>
   <?php
 
   # + Matomo in Production only.
-  if (PROD) include_once CONFIG . "/matomo.php"; ?>
+  if (PROD) include CONFIG . "/matomo.php"; ?>
 
   <page-loader visible=false loading>
     <div class="linear-progress-material" in-overlay>
@@ -71,15 +67,12 @@ if (PROD) ob_start("sanitize_output"); ?>
   <?php
 
   # + App startup overlay.
-  include_once TEMPLATE . "/global/_app_init_overlay.php";
+  include_once TEMPLATE . "/global/_app_init_overlay.php"; ?>
 
-  # + Dynamic template being loaded from the Router.
-  echo <<<HTML
-    <main>
-      $_INCLUDE_TEMPLATE
-    </main>
-  HTML; ?>
+  <!--- Include HTML that is returned by the Router --->
+  <main><?= YIELD_OUTPUT ?></main>
 
+  <!--- Preload some audio files, can be used in JavaScript --->
   <audio fail-audio preload="auto">
     <source type="audio/mpeg" src="<?= SOUND; ?>/bruh.mp3">
   </audio>

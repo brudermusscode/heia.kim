@@ -52,9 +52,6 @@ $return->end = $Comments->count() < $limit;
 if (!$Comments->count())
   exit($Request->success("No comments left my friend."));
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 /**

@@ -154,4 +154,3 @@ define("EDITOR_ICON", "shape_line");
 define("ENABLE_ANIMATIONS", Cookie::exists("ANIMATIONS") && Cookie::get("ANIMATIONS") == 1 || !Cookie::exists("ANIMATIONS"));
 define("ANIMATIONS_ENABLED", ENABLE_ANIMATIONS);
 define("SOUNDS_ENABLED", Cookie::exists("SOUNDS") && Cookie::get("SOUNDS") == 1 || !Cookie::exists("SOUNDS"));
-define("PAGE_NAVIGATOR", TEMPLATE . "/global/_page-navigator.php");

@@ -30,7 +30,7 @@ class Squad extends Justin
   /**
    * @var array
    */
-  public $fillable = [
+  protected $fillable = [
     "name",
     "tag",
     "owner",
@@ -42,6 +42,12 @@ class Squad extends Justin
     "performance",
     "deleted_at",
     "updated_at",
+  ];
+
+  protected $attributes = [
+    "name" => "Vanished",
+    "tag" => "NO",
+    "owner" => 3,
   ];
 
   /**

@@ -18,6 +18,11 @@ page-navigator {
 
   @include hide_mobile();
 
+  &[reloading] {
+    opacity: 0;
+    visibility: hidden;
+  }
+
   [pn-options] {
     position: relative;
     display: flex;
@@ -57,6 +62,7 @@ page-navigator {
       width: 4px;
       border-radius: 12px;
       rotate: -45deg;
+      opacity: 0;
 
       @include themed() {
         border: 2px solid t(bg);
@@ -70,6 +76,7 @@ page-navigator {
       [pn-o-button-off] {
         width: 6px;
         height: 80%;
+        opacity: 1;
       }
     }
 

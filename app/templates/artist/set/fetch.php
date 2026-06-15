@@ -71,9 +71,6 @@ if (!$Sets->count())
 
 $include_all_diffs = true;
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 foreach ($Sets as $key => $Set)

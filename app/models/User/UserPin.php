@@ -75,9 +75,6 @@ class UserPin extends Justin
         "updated_at" => null,
       ]);
 
-    /**
-     * Begin the ouput buffer.
-     */
     ob_start();
 
     if ($params->type == "score") {

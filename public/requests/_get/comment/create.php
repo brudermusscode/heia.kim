@@ -41,9 +41,6 @@ if (!$Reference)
  */
 $Score = $Comment = $Reference;
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 ?>

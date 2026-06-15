@@ -31,7 +31,6 @@ if (!$User)
  */
 $want_gift = $User->id !== CurrentUser->id;
 
-# Begin output buffer.
 ob_start();
 
 # + Snow.

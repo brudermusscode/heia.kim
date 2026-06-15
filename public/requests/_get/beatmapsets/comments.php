@@ -25,9 +25,6 @@ $Set = Beatmap\Set::with("comments.user")->find($id);
  */
 $Comments = $Set->comments;
 
-/**
- * Begin output buffer
- */
 ob_start();
 
 ?>

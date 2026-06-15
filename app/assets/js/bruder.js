@@ -1,23 +1,18 @@
-import * as Setting from "./settings.js";
 import * as Cookie from "./cookies.js";
 import * as Audio from "./audio.js";
 import * as Page from "./page.js";
 import * as Utils from "./utils.js";
 import * as Frontend from "./frontend.js";
 import * as Responder from "./elements/responder.js";
-import * as Router from "./router.js";
-import * as Request from "./requests.js";
+import * as Settings from "./settings.js";
 
-if (!Setting.LOG) console.log = () => {};
+if (!Settings.LOG) console.log = () => {};
 
-/**
- * For search
- */
 let __type_search_timeout = null;
 
 /**
- * Set default values for recurring ajax settings to avoid needing
- * to set them on any request.
+ * Set default values for recurring ajax settings to avoid needing to set them on any
+ * request.
  */
 $.ajaxSetup({
   contentType: false,
@@ -32,24 +27,8 @@ $.ajaxSetup({
  */
 const init_application = async () => {
   let Route = Page.get_route(window.location.pathname + window.location.search);
-  let main_container = document.find("main");
 
-  // ! Make better -----------------------------------------------------------
-  Frontend.extract_exception(document.body);
-
-  await Page.redirect();
-
-  Frontend.reload_images();
-  Frontend.update_user_menu();
-  Frontend.just_show_navigation(document.find("page-navigator"));
-  Frontend.toggle_floating_actions(Route.key);
-  Frontend.disguise(Route, false);
-  Frontend.get_content();
-
-  // Fire a request for any <request>-element.
-  main_container.find_all("request")?.forEach((elem) => Request.request(elem));
-
-  // ! Please. -----------------------------------------------------------------
+  Frontend.init(Route, null, true);
 
   console.log(
     "%c🌞 Bruder, alles geladen!",
@@ -74,7 +53,7 @@ const init_application = async () => {
     Frontend.loaded();
 
     if (typeof Route.execute_once === "function") Route.execute_once();
-  }, Setting.INIT_TIMEOUT);
+  }, Settings.INIT_TIMEOUT);
 };
 
 export const get_cookie_domain = () => {
@@ -151,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   /**
    * Initialize the application.
    */
-  await init_application(overlay_loading, images, Setting.INIT_TIMEOUT);
+  await init_application(overlay_loading, images, Settings.INIT_TIMEOUT);
 
   /**
    * Generalize click event listeners

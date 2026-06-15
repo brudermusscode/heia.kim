@@ -1,25 +1,23 @@
 <?php
 
-/**
- * Standard ini values for error logging.
- */
 ini_set("log_errors", 1);
 ini_set("error_log", _env("LOG_PATH") . "/php_errors.log");
+ini_set("display_errors", 1);
+ini_set("display_startup_errors", 1);
 error_reporting(E_ALL & ~E_DEPRECATED);
 
-/**
- * Set error displaying based on current evnironment.
- */
-if (current_env() == "dev" && !_env("STAGING")) {
-  ini_set("display_errors", 1);
-  ini_set("display_startup_errors", 1);
-} else {
+# Disable all error displaying in production mode, as we do not want to show the User
+# that we suck at programming 🙂
+if (current_env() == "prod") {
   ini_set("display_errors", 0);
   ini_set("display_startup_errors", 0);
 }
 
 /**
  * Reformat the php exception message.
+ *
+ * @param ?callable $callable
+ * @return void
  */
 set_exception_handler(function ($ex) {
 
@@ -28,50 +26,23 @@ set_exception_handler(function ($ex) {
   $type = get_class($ex);
   $time = date('d.m.Y<;>H:i:s');
 
-  /**
-   * Log to the default log file defined for the local environment.
-   */
   error_log("\n$time<;>$type<;>{$ex->getMessage()}<;>{$ex->getFile()}:{$ex->getLine()}<;>{$ex->getTraceAsString()}<&>\n");
 
-  /**
-   * Only show the exceptions in dev env.
-   */
-  if (current_env() !== "dev" && !_env("STAGING"))
+  # We do not want to show any exception to the User in production, so return early.
+  if (current_env() === "prod")
     return;
 
-  /**
-   * @var string
-   */
   $stacktrace = $ex->getTraceAsString();
+  $app_inititialized = defined("APP_INIT") && APP_INIT === true;
 
-  /**
-   * @var bool
-   */
-  $app_init = defined("APP_INIT") && APP_INIT === true;
-
-  /**
-   * Start the outpout buffer and include the main styles if the
-   * app is not yet completly initialized. Otherwise fallback to
-   * an empty string, because we already have the main styles included.
-   */
+  # Save all base js & css files to the below variable inside an output buffer, so we
+  # can easily include it in our exception message.
   ob_start();
-
-  /**
-   * Any js and css file.
-   */
   include ROOT . "/app/templates/global/_yield-requires.php";
+  $include_styles = $app_inititialized ? "" : ob_get_clean();
 
+  if ($app_inititialized) ob_end_clean();
 
-  $include_styles = $app_init ? "" : ob_get_clean();
-
-  /**
-   * Clean the output buffer if the app is initialized.
-   */
-  if ($app_init) ob_end_clean();
-
-  /**
-   * Return the nice newly formatted exception screen!
-   */
   echo <<<HTML
   $include_styles
 
@@ -120,7 +91,14 @@ set_exception_handler(function ($ex) {
 });
 
 /**
- * Reformat the php exception message.
+ * Reformat the php error/warning message.
+ *
+ * @param int $errno
+ * @param string $errstr
+ * @param ?string $errfile
+ * @param ?int $errline
+ * @param ?array $errcontext
+ * @return void
  */
 set_error_handler(function (
   int $errno,
@@ -130,13 +108,11 @@ set_error_handler(function (
   ?array $errcontext = null
 ) {
 
-  # Was @ used to suppress errors?
+  # Was @ used to suppress errors? In this case we return immediately to really sur-
+  # press it 🙂
   if (!(error_reporting() & $errno))
-    return true;
+    return;
 
-  /**
-   * @var string
-   */
   $type = match ($errno) {
     E_ERROR => "PHP Error",
     E_NOTICE => "PHP Notice",
@@ -145,20 +121,15 @@ set_error_handler(function (
     default => "Unknown Error Type"
   };
 
-  /**
-   * @var string
-   */
   $time = date("d.m.Y<;>H:i:s");
 
-  /**
-   * Log to the default log file defined for the local environment.
-   */
+  # This will log the error to the standart error log file, which should be located in
+  # storage/logs/php_errors.log -
   error_log("\n{$time}<;>{$type}<;>{$errstr}<;>{$errfile}:{$errline}<&>\n");
 
-  /**
-   * Only show the errors in dev env.
-   */
-  if (current_env() !== "dev" && !_env("STAGING"))
+  # In production mode, we do not want to show any errors. We return here, right after
+  # logging.
+  if (current_env() === "prod")
     return;
 
   echo "<span><strong>{$type}</strong><br> $errstr<br>📁 {$errfile}:{$errline}</span>";

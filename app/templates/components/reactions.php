@@ -38,9 +38,6 @@ if (!$referende_id || !$reaction_type)
  */
 $ReactionPackages = ReactionPackage::all();
 
-/**
- * Begin the output buffer.
- */
 ob_start();
 
 ?>

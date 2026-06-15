@@ -149,9 +149,6 @@ class SquadPostPollAnswer extends Justin
 
       $this->db_commit();
 
-      /**
-       * Begin output buffer.
-       */
       ob_start();
 
       $CurrentUser;

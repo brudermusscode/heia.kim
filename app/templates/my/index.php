@@ -16,7 +16,6 @@ $category = filter_var(get("category"), FILTER_SANITIZE_SPECIAL_CHARS);
 $sub      = filter_var(get("sub"), FILTER_SANITIZE_SPECIAL_CHARS);
 $var      = filter_var(get("var"), FILTER_SANITIZE_SPECIAL_CHARS);
 
-# Begin output buffering.
 ob_start(); ?>
 
 <div content-width=std fl fldircol data-action="user-manager:category" <?= $sub ? "pt42 gap" : "content-gap" ?>>

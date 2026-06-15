@@ -43,9 +43,6 @@ $Authentication =
 if (!$Authentication)
   die($Request->error());
 
-/**
- * Begin the outpuff buffer.
- */
 ob_start();
 
 ?>

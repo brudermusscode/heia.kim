@@ -57,9 +57,6 @@ if (!$Thread)
 if (!$Squad->id === $Thread->squad->id)
   exit($Request->error());
 
-/**
- * Begin output buffer
- */
 ob_start();
 
 ?>

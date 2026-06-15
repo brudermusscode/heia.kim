@@ -1,5 +1,6 @@
 <?php
 
+use Heiakim\Model\Gamemode;
 use Heiakim\Model\Squad;
 use Heiakim\Model\User;
 
@@ -9,7 +10,7 @@ use Heiakim\Model\User;
  * @var object $rankings
  * @var object $rank_development
  * @var string $base_url
- * @var string $sub_page
+ * @var string $sub
  * @var string $more
  * @var string $current_mod
  * @var string $mode
@@ -26,7 +27,7 @@ use Heiakim\Model\User;
 <mode-menu>
   <jump-menu mm-menu filled="lighter" elevated color="dynamic">
     <div jm-inr>
-      <a href="<?= "$base_url/osu/vanilla" . ($more ? "/$more" : ""); ?>">
+      <a href="<?= "$base_url/overview/osu" ?>">
         <div ripple-effect class="jm__option" hoverable>
           <mi class="osu-icon osu-vanilla"></mi>
           <p text><?= __("Standard"); ?></p>
@@ -37,8 +38,7 @@ use Heiakim\Model\User;
           <?php } ?>
         </div>
       </a>
-      <a href="<?= "$base_url/taiko/vanilla" .
-                  ($more ? "/$more" : ""); ?>">
+      <a href="<?= "$base_url/overview/taiko" ?>">
         <div ripple-effect class="jm__option" hoverable>
           <mi class="osu-icon osu-taiko"></mi>
           <p text>Taiko</p>
@@ -49,7 +49,7 @@ use Heiakim\Model\User;
           <?php } ?>
         </div>
       </a>
-      <a href="<?= "$base_url/ctb/vanilla" . ($more ? "/$more" : ""); ?>">
+      <a href="<?= "$base_url/overview/ctb" ?>">
         <div ripple-effect class="jm__option" hoverable>
           <mi class="osu-icon osu-ctb"></mi>
           <p text>Catch the Beat</p>
@@ -60,8 +60,7 @@ use Heiakim\Model\User;
           <?php } ?>
         </div>
       </a>
-      <a href="<?= "$base_url/mania/vanilla" .
-                  ($more ? "/$more" : ""); ?>">
+      <a href="<?= "$base_url/overview/mania" ?>">
         <div ripple-effect class="jm__option" hoverable>
           <mi class="osu-icon osu-mania"></mi>
           <p text>Mania</p>
@@ -79,17 +78,9 @@ use Heiakim\Model\User;
     <div mm-open-loading>
       <?php include COMPONENT . "/dot-loader.html"; ?>
     </div>
-    <mi class="osu-icon osu-<?= $mode === "osu" ? "vanilla" : $mode; ?>"></mi>
+    <mi class="osu-icon osu-<?= Gamemode::mode_icon($mode) ?>"></mi>
     <div>
-      <p text bold>
-        <?= ucfirst(
-          $mode === "osu"
-            ? __("Standard")
-            : ($mode === "ctb"
-              ? "Catch the Beat"
-              : $mode)
-        ); ?>
-      </p>
+      <p text bold><?= Gamemode::mode_full($mode) ?></p>
     </div>
   </mbutton>
 </mode-menu>

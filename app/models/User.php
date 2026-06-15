@@ -1211,7 +1211,7 @@ class User extends Justin
   }
 
   /**
-   * Checks if a Feedback from this User to another one exists in a specific year.
+   * Checks if a Feedback from this User to another one exists from a specific year.
    *
    * @param User $User
    * @param string $year

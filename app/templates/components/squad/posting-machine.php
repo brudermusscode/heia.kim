@@ -77,9 +77,6 @@ $Score = $attachment_id && $attachment_type === "score"
   ? Score::find($attachment_id)
   : null;
 
-/**
- * Begin output buffer.
- */
 ob_start(); ?>
 
 <?php include SNOW; ?>

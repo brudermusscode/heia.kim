@@ -20,7 +20,7 @@ $Router->get(
   title: function ($params) {
     $Squad = Squad::find($params["id"]);
 
-    return $Squad->name . " on " . APP_NAME;
+    return "🏆 " . $Squad?->name ?? "Vanished" . " on " . APP_NAME;
   }
 );
 $Router->get(
@@ -33,7 +33,7 @@ $Router->get(
     $Squad = Squad::find($params["id"]);
     $feed = Gamemode::mode_full($params["feed"]) ?: $params["feed"];
 
-    return ucwords($feed) . " 🏆 " . $Squad->name . " on " . APP_NAME;
+    return ucwords($feed) . " 🏆 " . $Squad?->name ?? "Vanished" . " on " . APP_NAME;
   }
 );
 $Router->get(
@@ -45,7 +45,7 @@ $Router->get(
   title: function ($params) {
     $Squad = Squad::find($params["id"]);
 
-    return "🏆 " . $Squad->name . " on " . APP_NAME;
+    return "🏆 " . $Squad?->name ?? "Vanished" . " on " . APP_NAME;
   }
 );
 $Router->get("/squad/fetch",  "squad/fetch",  return: JSON);
@@ -59,14 +59,6 @@ $Router->post("/squad/create",  "squad/create",  return: JSON);
 /**
  * Threads
  */
-// $Router->get(
-//   "/squad/:id/thread/",
-//   "squad/show",
-//   constraints: [
-//     "id" => "\d+",
-//   ],
-//   title: "Squad"
-// );
 $Router->get(
   "/squad/:id/threads",
   "squad/show",

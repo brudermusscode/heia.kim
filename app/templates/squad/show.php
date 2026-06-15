@@ -2,12 +2,11 @@
 
 use Heiakim\Model\Squad;
 use Heiakim\Model\Gamemode;
-use Heiakim\Model\User;
 
 /**
  * @var int
  */
-$id = filter_var(GET->id ?? 0, FILTER_VALIDATE_INT);
+$id = filter_var($GLOBALS["route_param_id"], FILTER_VALIDATE_INT);
 
 /**
  * @var ?Squad
@@ -24,9 +23,6 @@ $page = $mode = filter_var(GET->feed ?? "index", FILTER_SANITIZE_SPECIAL_CHARS);
  */
 $sub  = filter_var(GET->sub ?? null, FILTER_SANITIZE_SPECIAL_CHARS);
 
-/**
- * @var array
- */
 $pages = [
   "index",
   "osu",
@@ -38,9 +34,6 @@ $pages = [
   "thread",
 ];
 
-/**
- * @var array
- */
 $only_member_pages = [
   "threads",
   "thread",
@@ -50,9 +43,6 @@ if (!$Squad)
   include UNAVAILABLE;
 else {
 
-  /**
-   * Fallback to index if the page is invalid.
-   */
   if (!in_array($page, $pages))
     $page = "index";
 

@@ -8,7 +8,6 @@ use Heiakim\Http\Request;
  * @var Request $Request
  */
 
-# Start the output buffer.
 ob_start(); ?>
 
 <global-search animation=fade-in>

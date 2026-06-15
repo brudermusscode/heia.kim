@@ -8,9 +8,6 @@
  * @var string $link_add_country
  */
 
-# + Page navigator.
-include PAGE_NAVIGATOR;
-
 ?>
 
 <header page scroll-manipulated>

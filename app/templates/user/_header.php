@@ -10,7 +10,7 @@ use Heiakim\Model\Squad;
  * @var object $rankings
  * @var object $rank_development
  * @var string $base_url
- * @var string $sub_page
+ * @var string $sub
  * @var string $more
  * @var string $current_mod
  * @var string $mode
@@ -31,7 +31,7 @@ use Heiakim\Model\Squad;
 
     <?php
 
-    # + Only showing in Edit Mode.
+    # + Only showing in Non Edit Mode.
     if (!IS_EDIT_MODE) : ?>
       <div privileges fl alic gap=smol w100 jucend hide-scrolled>
         <?php

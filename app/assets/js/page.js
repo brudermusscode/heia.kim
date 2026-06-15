@@ -5,9 +5,6 @@ import * as Frontend from "./frontend.js";
 import * as Cookies from "./cookies.js";
 import * as Responder from "./elements/responder.js";
 import * as Request from "./requests.js";
-import * as MaterialButton from "./elements/mbutton.js";
-import * as Settings from "./settings.js";
-import Overlay from "./elements/Overlay.js";
 
 /**
  * Page settings
@@ -131,28 +128,18 @@ export const get = async (
     method: "GET",
     success: async function (data) {
       //
+      //
+      console.log(data);
 
-      // Close all overlays if not set different.
       if (!keep_overlays) Frontend.close_overlays();
 
-      // Scroll to the top only when not going back in history.
-      // if (scroll_top && !state) window.scrollTo(0, 0);
-
-      // Update __page global.
       __page.current = Route.key;
       __page.marked = Route.mark ? Route.mark : Route.key;
+      __page.params = data.data.params;
 
-      // Insert the new content to the <main>.
-      main_container.innerHTML = data;
+      main_container.innerHTML = data.data.HTML;
 
-      // Extract the title.
       title = main_container.find("title")?.innerHTML;
-
-      // Fire of any redirect that could be found inside the document tree.
-      await redirect();
-
-      // Fire a request for any <request>-element.
-      main_container.find_all("request")?.forEach((elem) => Request.request(elem));
 
       // Pushes the coming state to the browser history and sets a proper title to
       // the document.
@@ -171,9 +158,7 @@ export const get = async (
         __current_audio_element = null;
       }
 
-      // For each page load, we need to reset the infinite scrolling variables to let
-      // the new page, if available, can access those freshly and calculate when to
-      // add new items
+      // Reset infinite scroll parameter.
       __infinite_scroll.start = 0;
       __infinite_scroll.reached_end = false;
       __infinite_scroll.reached_full_end = false;
@@ -182,15 +167,6 @@ export const get = async (
       // amount.
       if (window.scrollY >= 20)
         document.find("[scroll-manipulated]")?.setAttribute("scrolled", "true");
-
-      // Set frontend state.
-      Frontend.unload();
-      Frontend.extract_exception(main_container);
-      Frontend.toggle_floating_actions(Route.key);
-      Frontend.disguise(Route, is_same_history_route);
-      Frontend.get_content();
-      if (reload) Frontend.update_user_menu();
-      Frontend.reload_images();
 
       // Find [autofocus] and focus it.
       if (document.find("[autofocus]")) document.find("[autofocus]").focus();
@@ -219,11 +195,6 @@ export const get = async (
         "",
       );
 
-      // Find all <script> elements and fire off their scripts -
-      main_container.find_all("script").forEach((script) => {
-        eval(script.innerHTML);
-      });
-
       // Deactivates all [page] elements which are links/buttons to different pages
       // and in the following, find the one that has been clicked and any that is e-
       // qual to the one clicked..
@@ -242,26 +213,7 @@ export const get = async (
 
       let PreviousRoute = Router.router(coming_from_path_split[1]);
 
-      // Body can be set to initialized here!
-      document.body.setAttribute("initialized", true);
-
-      let page_navigator = main_container.find("page-navigator");
-
-      // Based on where we came from, we want to either just show the page navigator
-      // without any animations, or slide in when visiting a new main model page like
-      // squads
-      if (
-        (Route.is_main_page && PreviousRoute.is_main_page) ||
-        Route.key === coming_from_path_split[1]
-      )
-        Frontend.just_show_navigation(page_navigator);
-      else
-        setTimeout(() => {
-          Frontend.slide_in_navigation(page_navigator);
-        }, Settings.PAGE_NAVIGATOR_SHOW_DELAY);
-
-      // Reinitialize all material buttons for a sleek animation when clicked.
-      MaterialButton.init();
+      Frontend.init(Route, PreviousRoute, reload);
 
       return true;
     },
@@ -271,6 +223,7 @@ export const get = async (
 /**
  * Finds a redirect element on the page, reads the to attribute
  * and opens this link in the current tab.
+ *
  * @returns void
  */
 export const redirect = async () => {

@@ -51,11 +51,6 @@ $limit = 23;
  */
 $offset = 0;
 
-/**
- * Include main page navigator.
- */
-include PAGE_NAVIGATOR;
-
 ?>
 
 <header page scroll-manipulated>

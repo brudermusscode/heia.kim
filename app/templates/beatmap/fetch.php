@@ -59,9 +59,6 @@ $BeatmapSets = Beatmap\Set::view(
 if (!$BeatmapSets->count())
   exit($Request->success("No Beatmaps found."));
 
-/**
- * Begin the output buffer.
- */
 ob_start();
 
 

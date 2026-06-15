@@ -8,11 +8,6 @@ $Searches = LOGGED ? CurrentUser->searches()
   ->get()
   : null;
 
-/**
- * Include main page navigator.
- */
-include PAGE_NAVIGATOR;
-
 ?>
 
 <header page scroll-manipulated>

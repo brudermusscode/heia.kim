@@ -46,11 +46,6 @@ else {
    */
   $artist_play_count = $Artist->play_count();
 
-  /**
-   * Include main page navigator.
-   */
-  include PAGE_NAVIGATOR;
-
 ?>
 
   <div class="artists__banner" scroll-manipulated>

@@ -4,7 +4,7 @@ const jsCookie = require("js-cookie");
 window.axios = axios;
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-import * as App from "./application";
+import * as Bruder from "./bruder";
 import * as Settings from "./settings";
 import * as Router from "./router";
 import * as Request from "./requests";

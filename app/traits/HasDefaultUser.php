@@ -6,6 +6,7 @@ use Heiakim\Model\User;
 
 trait HasDefaultUser
 {
+
   /**
    * @return User
    */

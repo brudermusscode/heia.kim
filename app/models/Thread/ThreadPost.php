@@ -143,9 +143,6 @@ class ThreadPost extends Justin
      */
     $this->return->has_error = $error ?? false;
 
-    /**
-     * Begin the output buffer.
-     */
     ob_start();
     $is_new = true;
     $CurrentUser;

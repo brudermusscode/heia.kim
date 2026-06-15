@@ -7,11 +7,6 @@ use Heiakim\Model\Beatmap;
  * @var Beatmap\Set $Set
  */
 
-/**
- * Include main page navigator.
- */
-include PAGE_NAVIGATOR;
-
 ?>
 
 <div class="set__header" scroll-manipulated>

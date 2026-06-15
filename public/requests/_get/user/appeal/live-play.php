@@ -59,9 +59,6 @@ $reviewing_live_play =
   && $Appeal->status === "AWAITING_PROCESSING"
   && $Appeal->live_play_file;
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 /**

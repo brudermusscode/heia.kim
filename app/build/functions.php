@@ -183,6 +183,20 @@ function request_error(?string $message = null, mixed $data = null, bool $return
 }
 
 /**
+ * @param User $Resource
+ * @return void
+ *
+ * NOTE: Redirects through header() on error.
+ */
+function redirect_unauthorized(User $Resource = CurrentUser)
+{
+  if (!$Resource->exists) {
+    header("location: /not-found");
+    exit;
+  }
+}
+
+/**
  * @param string $message
  * @param mixed $data
  * @param bool $return_json_string
@@ -197,6 +211,8 @@ function request_success(?string $message = null, mixed $data = null, bool $retu
 
   return $die && $return_json_string ? die($Request) : $Request;
 }
+
+
 
 /**
  * Validates authorization of a given resource to take action on

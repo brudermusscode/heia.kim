@@ -17,9 +17,6 @@ $file_name = filter_var(GET->file_name ?? "", FILTER_SANITIZE_SPECIAL_CHARS);
  */
 $file_path = __DIR__ . "/$file_name.php";
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 if (file_exists($file_path)) :

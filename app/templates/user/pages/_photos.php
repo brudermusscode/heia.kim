@@ -11,7 +11,7 @@ use Heiakim\Model\Image;
  * @var object $rankings
  * @var object $rank_development
  * @var string $base_url
- * @var string $sub_page
+ * @var string $sub
  * @var string $more
  * @var string $current_mod
  * @var string $mode

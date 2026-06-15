@@ -48,9 +48,6 @@ $Attachment = match ($type) {
   default => null,
 };
 
-/**
- * Begin output buffer
- */
 ob_start();
 
 ?>

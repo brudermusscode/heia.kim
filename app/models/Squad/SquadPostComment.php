@@ -101,9 +101,6 @@ class SquadPostComment extends Justin
        */
       $this->return->id = $Post->id;
 
-      /**
-       * Begin output buffer.
-       */
       ob_start();
 
       /**

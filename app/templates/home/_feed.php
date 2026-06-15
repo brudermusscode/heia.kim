@@ -3,29 +3,14 @@
 use Heiakim\Model\Gamemode;
 use Heiakim\Time\Time;
 
-/**
- * Serialize get
- */
+# GET parameters.
 $sub = filter_input(INPUT_GET, "sub", FILTER_SANITIZE_SPECIAL_CHARS);
 
-/**
- * Favorite mode based on the amount of plays set inside a single
- * gamemode which is defined by it's gulag mode.
- *
- * @var array
- */
 $favorite_modes = CurrentUser->favorite_modes();
 $favorite_gumode = $favorite_modes[0]->mode ?? null;
-
-/**
- * @var object
- */
-$favorite_mode = $favorite_gumode === null ? null : Gamemode::gumode_text($favorite_gumode);
-
-/**
- * Include main page navigator.
- */
-include PAGE_NAVIGATOR;
+$favorite_mode = $favorite_gumode === null
+  ? null
+  : Gamemode::gumode_text($favorite_gumode);
 
 ?>
 
@@ -77,14 +62,9 @@ include PAGE_NAVIGATOR;
 
       <?php
 
-      /**
-       * Following
-       */
       $Following = CurrentUser->followings;
 
-      /**
-       * Sort the followed people by latest activity.
-       */
+      # Sort the Followings by latest activity.
       $SortedFollowing = $Following->sortByDesc(function ($Follower) {
         $last_activity = date("Y-m-d H:i:s", $Follower->latest_activity);
         $last_activity_checked = $Follower->pivot->updated_at;
@@ -96,9 +76,6 @@ include PAGE_NAVIGATOR;
       });
 
       foreach ($SortedFollowing->take(10) ?? [] as $Follower) {
-        /**
-         * Activity
-         */
         $last_activity_timestamp = date("Y-m-d H:i:s", $Follower->latest_activity);
         $last_activity_ago = Time::ago($last_activity_timestamp);
 

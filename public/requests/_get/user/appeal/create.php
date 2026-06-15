@@ -45,9 +45,6 @@ $Appeal = $CurrentUser->current_appeal_after_restriction_waiting_period();
  */
 $is_editable = !$Appeal || !$Appeal->live_play_file;
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 /**

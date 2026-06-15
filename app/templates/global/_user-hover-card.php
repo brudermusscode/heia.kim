@@ -36,9 +36,6 @@ if (!$User)
  */
 $Bancho = $User->get_bancho_game_status();
 
-/**
- * Begin output buffer
- */
 ob_start();
 
 ?>

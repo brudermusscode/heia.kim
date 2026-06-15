@@ -51,9 +51,6 @@ if (
 )
   exit($Request->error("!NO_PERMISSIONS"));
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 include SNOW; ?>

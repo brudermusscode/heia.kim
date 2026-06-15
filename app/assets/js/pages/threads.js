@@ -1,4 +1,4 @@
-import * as App from "../application";
+import * as Bruder from "../bruder";
 import * as Frontend from "../frontend";
 import * as Page from "../page";
 import * as Utils from "../utils";
@@ -39,18 +39,13 @@ $(document).on("submit", '[data-form="threads:create"]', function (e) {
           document.body,
           data.message,
           data.status ? "success" : "error",
-          "squad"
+          "squad",
         );
     },
     error: function (data) {
       button.enable();
       Frontend.unload();
-      new Responder.Responder().add(
-        document.body,
-        data.statusText,
-        "error",
-        "squad"
-      );
+      new Responder.Responder().add(document.body, data.statusText, "error", "squad");
     },
   });
 });
@@ -77,8 +72,7 @@ $(document).on("submit", '[data-form="threads:post,create"]', function (e) {
   let post_count_container = document.find("[thread-post-count]");
   let post_count;
 
-  if (post_count_container)
-    post_count = parseInt(post_count_container.innerHTML);
+  if (post_count_container) post_count = parseInt(post_count_container.innerHTML);
 
   button.disable();
   Frontend.load();
@@ -100,8 +94,7 @@ $(document).on("submit", '[data-form="threads:post,create"]', function (e) {
         Frontend.close_composer();
         Frontend.reload_images();
 
-        if (post_count_container)
-          post_count_container.innerHTML = post_count + 1;
+        if (post_count_container) post_count_container.innerHTML = post_count + 1;
       } else button.enable();
 
       if (data.has_error || !data.status || !threads)
@@ -109,7 +102,7 @@ $(document).on("submit", '[data-form="threads:post,create"]', function (e) {
           __body,
           data.message,
           data.status ? "success" : "error",
-          "squad"
+          "squad",
         );
     },
     error: function (data) {

@@ -18,9 +18,6 @@ $sub = filter_input(INPUT_GET, "sub", FILTER_SANITIZE_SPECIAL_CHARS);
  */
 $section = filter_input(INPUT_GET, "section", FILTER_SANITIZE_SPECIAL_CHARS);
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 ?>

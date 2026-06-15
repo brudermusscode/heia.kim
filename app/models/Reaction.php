@@ -89,9 +89,6 @@ class Reaction extends Justin
      */
     $Reaction = $Reaction->fresh();
 
-    /**
-     * Begin output buffer.
-     */
     ob_start();
     $CurrentUser;
 

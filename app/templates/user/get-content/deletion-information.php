@@ -18,9 +18,6 @@ use Heiakim\Model\User;
 if (!LOGGED)
   exit($Request->error("!NOT_LOGGED"));
 
-/**
- * Begin the output buffer.
- */
 ob_start();
 
 /**

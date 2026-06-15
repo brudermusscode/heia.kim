@@ -6,6 +6,7 @@ import * as Responder from "./elements/responder.js";
 import * as Setting from "./settings.js";
 import * as MaterialButton from "./elements/mbutton.js";
 import * as Request from "./requests.js";
+import * as Settings from "./settings.js";
 
 let Cookie = require("js-cookie");
 
@@ -16,6 +17,35 @@ $.ajaxSetup({
     Frontend.ajax_error(error);
   },
 });
+
+/**
+ * Initializes all the important parts of the frontend in one run.
+ */
+export const init = async (Route, PreviousRoute = null, update_refs = false) => {
+  let main_container = document.find("main");
+
+  extract_exception(document.body);
+
+  await Page.redirect();
+
+  if (update_refs) update_user_menu();
+
+  if (Route.page_navigator) page_navigator(Route, PreviousRoute);
+
+  toggle_floating_actions(Route.key);
+  get_content();
+  unload();
+  reload_images();
+
+  MaterialButton.init();
+
+  document.body.setAttribute("initialized", true);
+
+  main_container?.find_all("request")?.forEach((elem) => Request.request(elem));
+  main_container.find_all("script").forEach((script) => {
+    eval(script.innerHTML);
+  });
+};
 
 /**
  * Reloads the page.
@@ -84,44 +114,6 @@ export const unload = () => {
      */
     document.find("page-loader")?.setAttribute("visible", false);
   }, Setting.INIT_TIMEOUT);
-};
-
-/**
- * Some pages should be fullscreen and look different from the
- * rest of the design language used. This function modifies all
- * elements that should appear/disappear or just look different.
- *
- * @param { Object } Route - The Router object.
- * @return { void }
- */
-export const disguise = (Route, history_route_is_equal) => {
-  /**
-   * Set the disguised background color if.
-   */
-  let disguised = document.find("disguised");
-  if (!Route.disguised && !disguised) document.body.removeAttribute("someone-else");
-  else document.body.setAttribute("someone-else", true);
-
-  /**
-   * If a new page is called, different styles to header and
-   * sub header can be set through this section.
-   */
-  // let header = document.find("page-navigator");
-  // let __toggle_header = document.find("toggle-header");
-  // let show_header = document.find("show-header");
-
-  if (!history_route_is_equal) {
-    //  || __toggle_header
-    // if ((Route.hide_header && !show_header) || __toggle_header) {
-    //   header.setAttribute("toggled", true);
-    //   document.find("main").setAttribute("toggled", true);
-    // } else {
-    //   header.setAttribute("toggled", false);
-    //   document.find("main").removeAttribute("toggled");
-    // }
-
-    if (typeof Route.execute === "function") Route.execute();
-  }
 };
 
 /**
@@ -540,13 +532,17 @@ export const toggle_user_menu = () => {
   let menu = document.find("user-menu");
 
   if (!menu) {
-    create_responder("<strong>Where is the user menu dude? 🙄</strong>");
+    respond("<strong>Menu where? 🙁</strong>");
     return;
   }
 
-  menu.hasAttribute("inactive")
-    ? menu.removeAttribute("inactive")
-    : menu.setAttribute("inactive", true);
+  if (menu.hasAttribute("inactive")) {
+    menu.removeAttribute("inactive");
+    localStorage.setItem("component-user-menu", 1);
+  } else {
+    menu.setAttribute("inactive", true);
+    localStorage.setItem("component-user-menu", 0);
+  }
 };
 
 export const close_ui_components = (toggle_user_menu = true) => {
@@ -613,6 +609,12 @@ export const update_user_menu = () => {
     },
   });
 };
+
+/**
+ * --------------------------------------------
+ * Floating sign actions ----------------------
+ * --------------------------------------------
+ */
 
 export const toggle_floating_actions = (route_name) => {
   /**
@@ -686,37 +688,82 @@ export const hide_floating_action = () => {
 };
 
 /**
- * ? Main-Navigation
+ * --------------------------------------------
+ * Page Navigator -----------------------------
+ * --------------------------------------------
  */
-export const slide_in_navigation = (navigation) => {
+
+/**
+ * Loads the page navigator for a corresponding page from the generic Router object.
+ * As it should slide in like a charm on new main page loads but stay as is on sub-pa-
+ * ges of the current main page, we need the PreviousRoute, too.
+ *
+ * @param {object} Route
+ */
+export const page_navigator = (Route, PreviousRoute = null) => {
+  let params = __page.params;
+  let query = "&";
+
+  // A new navigation should just be loaded, if the previous route has a different
+  // than the new route being requested. So return early if it's the same.
+  if (Route.page_navigator === PreviousRoute?.page_navigator) return;
+
+  Object.entries(params).forEach((value, key) => {
+    query += value[0] + "=" + value[1] + "&";
+  });
+
+  let page_navigator = document.find("page-navigator");
+  page_navigator?.setAttribute("reloading", true);
+
+  $.ajax({
+    url: "/ui/page-navigator" + "?type=" + Route.page_navigator + query.slice(0, -1),
+    success: function (data) {
+      page_navigator?.remove();
+      document.body.insertAdjacentHTML("afterbegin", data.data ?? "");
+      page_navigator = document.find("page-navigator");
+
+      let slide = PreviousRoute?.page_navigator !== Route.page_navigator;
+
+      Frontend.show_page_navigator(slide);
+    },
+  });
+};
+
+export const show_page_navigator = async (slide = true) => {
+  navigation = await ensure_page_navigator();
   if (!navigation) return;
 
   let options = navigation.find_all("[pn-option]");
   let timer = 0;
 
   options.forEach((option) => {
-    setTimeout(() => {
-      option.setAttribute("slidin", "");
-    }, timer);
+    if (slide) {
+      setTimeout(() => {
+        option.setAttribute("slidin", "");
+      }, timer);
 
-    timer += 100;
+      timer += 100;
+    } else option.setAttribute("show", "");
   });
 };
 
-export const just_show_navigation = (navigation) => {
-  if (!navigation) return;
+const ensure_page_navigator = async () => {
+  let tries = 0;
+  let navigation = document.find("page-navigator");
+  while (!navigation) {
+    navigation = document.find("page-navigator");
+    await Utils.sleep(100);
+    tries++;
 
-  let options = navigation.find_all("[pn-option]");
+    if (tries === 20) break;
+  }
 
-  options.forEach((option) => {
-    option.setAttribute("show", "");
-  });
+  return navigation;
 };
 
 $(function () {
-  /**
-   * Initialize all the material buttons to open up the ripple effect.
-   */
+  //
+
   MaterialButton.init();
 
   /**

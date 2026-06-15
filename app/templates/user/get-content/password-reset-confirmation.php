@@ -15,9 +15,6 @@ use Heiakim\Http\Request;
 if (!LOGGED)
   exit($Request->error("!NOT_LOGGED"));
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 ?>

@@ -1,36 +1,22 @@
-import * as Utils from "./utils.js";
-import * as Frontend from "./frontend.js";
-
 export const APP_NAME = "heia.kim";
 export const SCRIPT = "/assets/javascript";
 
 export const routes = {
   "not-found": {},
-
-  download: {
-    mark: "download",
-    disguised: true,
-    hide_header: true,
-  },
-
-  unlock: {
-    hide_header: true,
-    disguised: true,
-  },
-
-  connect: {
-    hide_header: true,
-    // disguised: true,
-  },
-
-  reconnect: {
-    hide_header: true,
-    // disguised: true,
-  },
+  download: {},
+  unlock: {},
+  connect: {},
+  reconnect: {},
+  login: {},
+  register: {},
+  "password-reset": {},
+  begin: {},
+  legal: {},
+  manage: {},
 
   home: {
-    hide_header: true,
-    is_main_page: true,
+    mark: "home",
+    page_navigator: "home",
     execute_once: () => {
       const words = ["Circles", "Drums", "Fruits", "Pianos", "You"];
       const textContainer = document.querySelector(".text-container");
@@ -72,100 +58,53 @@ export const routes = {
   },
 
   "": {
-    hide_header: true,
     mark: "home",
-    is_main_page: true,
+    page_navigator: "home",
     execute: async () => {
       routes.home.execute();
     },
   },
 
-  login: {
-    hide_header: true,
-  },
-
-  register: {
-    hide_header: true,
-  },
-
-  "password-reset": {
-    hide_header: true,
-  },
-
-  begin: {
-    hide_header: true,
-  },
-
-  legal: {
-    disguised: true,
-    hide_header: true,
-  },
-
   leaderboard: {
     mark: "leaderboard",
-    is_main_page: true,
+    page_navigator: "home",
   },
 
   beatmaps: {
     mark: "beatmaps",
-    is_main_page: true,
+    page_navigator: "home",
   },
 
   "beatmap-set": {
     mark: "beatmaps",
-    is_main_page: true,
+    page_navigator: "home",
   },
 
   artists: {
-    is_main_page: true,
+    page_navigator: "home",
   },
 
   artist: {
     mark: "artists",
-    is_main_page: true,
+    page_navigator: "home",
   },
 
   squads: {
-    is_main_page: true,
+    mark: "squads",
+    page_navigator: "home",
   },
 
   squad: {
     mark: "squads",
-    hide_header: true,
+    page_navigator: "squad",
   },
-
-  scores: {
-    is_main_page: true,
-  },
-
-  score: {},
 
   u: {
-    hide_header: true,
-  },
-
-  my: {
-    // hide_header: true,
-    // execute_once: (url) => {
-    //   let loading_extras = document.find("loading-extras");
-    //   document.find("main").setAttribute("my", "");
-    //   $.get("/ui/my/sub-menu", (data) => {
-    //     loading_extras.innerHTML = data.data;
-    //     Frontend.reload_images();
-    //     Frontend.activate_current_anchor(url);
-    //   });
-    // },
+    page_navigator: "user",
   },
 
   editor: {
-    hide_header: true,
-  },
-
-  manage: {
-    body_attribute: "my",
-    execute: () => {
-      document.find("main").setAttribute("my", "");
-    },
+    page_navigator: "editor",
   },
 };
 

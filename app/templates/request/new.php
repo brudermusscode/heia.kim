@@ -30,9 +30,6 @@ $Beatmap = Beatmap::findOrReturn($id, "<strong>WHAT? NOT FOUND MAN. 🫠</strong
  */
 $Beatmap->create_featured_artists();
 
-/**
- * Begin the outpuff buffer.
- */
 ob_start();
 
 include SNOW; ?>

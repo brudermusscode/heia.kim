@@ -41,6 +41,8 @@ use Heiakim\Application\Cookie;
     overlay: null,
   };
 
+  __page["params"] = <?= json_encode($_GET) ?>;
+
   // An object for handling request state.
   let __request = {
     queue: [],

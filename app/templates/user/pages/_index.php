@@ -9,7 +9,7 @@ use Heiakim\Model\Squad;
  * @var object $rankings
  * @var object $rank_development
  * @var string $base_url
- * @var string $sub_page
+ * @var string $sub
  * @var string $more
  * @var string $current_mod
  * @var string $mode
@@ -46,7 +46,7 @@ $DecodedProfile = $User->decoded_profile();
       </form>
       <?php else :
 
-      # + If there is an invitation pending.
+      # + Invitation from the Squad of the CurrentUser is pending.
       if (
         ($Invitation = $User->has_invite_from(CurrentUser?->squad))
         && CurrentUser->sqcan("coordinate", "users")
@@ -64,7 +64,7 @@ $DecodedProfile = $User->decoded_profile();
   </div>
 
   <div column-wrapper>
-    <div column=smaller hide-mobile fl fldircol gap=mid>
+    <div column=small hide-mobile fl fldircol gap=mid>
       <?php
 
       /**
@@ -74,11 +74,11 @@ $DecodedProfile = $User->decoded_profile();
         ?? $Profile->sections_visibility[0];
 
       # Convention over configuration, huh? Thank you for this point of view, Rails.
-      # I love you.
+      # I love you 💋 And I will never forget the time we had, Simon! I love you too,
+      # even tho it was short 🙂
       foreach ($ProfileFirstColumn as $object_name => $object_visibility) :
         $object_file_path = dirname(__DIR__) . "/objects/_$object_name.php";
 
-        # + Include the object file, if it exists.
         if (file_exists($object_file_path))
           include $object_file_path;
       endforeach;
@@ -113,23 +113,19 @@ $DecodedProfile = $User->decoded_profile();
 
       <?php
 
-      # Birthday cheering button!
+      # + Show a nice box, where people can cheer for this User's birthday 🥳
       if ($User->has_birthday()) :
-
-        /**
-         * @var bool
-         */
-        $have_cheered = CurrentUser->cheered_for_birthday($User, date("y"));
+        $has_cheered = CurrentUser->cheered_for_birthday($User, date("y"));
 
       ?>
         <box-model background=invert rounded=wide
-          <?php if (!$have_cheered) echo "elevated=wide"; ?>
+          <?php if (!$has_cheered) echo "elevated=wide"; ?>
           style="background:url(<?= IMAGE . "/birthday-card.jpg"; ?>) center center no-repeat;background-size:cover;">
           <bm-inr size=std>
             <div background=invert p24 fl fldircol gap rounded=wide>
               <p text tac color=invert><strong>It's my birthday!</strong></p>
               <div fl jucc>
-                <?php if (!$have_cheered) { ?>
+                <?php if (!$has_cheered) : ?>
                   <div fl fldircol gap=smol>
                     <div fl alic jucc posrel append-animation>
                       <form data-form="feedback:birthday,create">
@@ -145,12 +141,13 @@ $DecodedProfile = $User->decoded_profile();
                     </div>
                     <p text color=invert smol tac slight>Send some wishes</p>
                   </div>
-                <?php } else { ?>
+                <?php else : ?>
                   <mbutton mid disabled background=dynamic has-icon=left>
                     <p text mid>🎉</p>
-                    <p counter text bold><?= $User->birthday_cheers(year: date("Y"))->count(); ?></p>
+                    <p counter text bold>
+                      <?= $User->birthday_cheers(year: date("Y"))->count(); ?></p>
                   </mbutton>
-                <?php } ?>
+                <?php endif ?>
               </div>
             </div>
           </bm-inr>
@@ -168,7 +165,6 @@ $DecodedProfile = $User->decoded_profile();
       foreach ($ProfileFirstColumn as $object_name => $object_visibility) :
         $object_file_path = dirname(__DIR__) . "/objects/_$object_name.php";
 
-        # Include the object file, if it exists.
         if (file_exists($object_file_path))
           include $object_file_path;
       endforeach; ?>

@@ -13,9 +13,6 @@ use Heiakim\Http\Request;
  */
 $type = filter_input(INPUT_GET, "type", FILTER_SANITIZE_SPECIAL_CHARS);
 
-/**
- * Begin the outpuff buffer.
- */
 ob_start();
 
 ?>

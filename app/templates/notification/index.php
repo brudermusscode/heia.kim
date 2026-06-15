@@ -34,9 +34,6 @@ $Notifications =
  */
 $count = 0;
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 if (!$Notifications->count()) : ?>

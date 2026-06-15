@@ -4,7 +4,7 @@ import * as Audio from "./audio";
 import Overlay from "./elements/Overlay";
 
 /**
- * Fetches content from a given URL and appends it to a new Overlay.
+ * Loads content into an Overlay.
  *
  * @param {string} url
  * @param {string} query

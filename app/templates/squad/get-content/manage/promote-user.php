@@ -40,9 +40,6 @@ $User = $Member->user;
 if (!CurrentUser->squad_user->can_edit_permissions_of($Member))
   exit($Request->error("!NO_PERMISSIONS"));
 
-/**
- * Begin output buffer.
- */
 ob_start();
 
 include SNOW; ?>
