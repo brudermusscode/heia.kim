@@ -12,9 +12,10 @@ $benefits = UserSettingsPremium::$benefits_display;
 <div expand-more fl fldircol gap=smoler>
 
   <?php for ($i = 0; $i < 4; $i++) { ?>
-    <div outlined=darker rounded p14>
+    <div outlined=darker rounded p10>
       <div fl alic gap=smol+>
-        <mi color=green><?= isset($benefits[$i]["icon"]) ? $benefits[$i]["icon"] : "task_alt"; ?></mi>
+        <mi color=green>
+          <?= isset($benefits[$i]["icon"]) ? $benefits[$i]["icon"] : "check_circle"; ?></mi>
         <p text bold><?= $benefits[$i]["text"]; ?></p>
       </div>
     </div>
@@ -23,7 +24,7 @@ $benefits = UserSettingsPremium::$benefits_display;
 
   <div expand-more-hidden fl fldircol gap=smoler>
     <?php foreach ($benefits as $benefit) { ?>
-      <div outlined=darker rounded p14>
+      <div outlined=darker rounded p10>
         <div fl alic gap=smol+>
           <div <?= isset($benefit["tooltip"]) ? "has-tooltip=bottom" : ""; ?>>
 
@@ -31,7 +32,7 @@ $benefits = UserSettingsPremium::$benefits_display;
               <a href="<?= $benefit["tooltip_link"]; ?>">
               <?php } ?>
               <mi color=<?= isset($benefit["color"]) ? $benefit["color"] : "green"; ?>>
-                <?= isset($benefit["icon"]) ? $benefit["icon"] : "task_alt"; ?>
+                <?= isset($benefit["icon"]) ? $benefit["icon"] : "check_circle"; ?>
               </mi>
               <?php if (isset($benefit["tooltip_link"])) { ?>
               </a>

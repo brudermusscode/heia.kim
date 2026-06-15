@@ -1,4 +1,3 @@
-import Overlay from "../elements/Overlay";
 import * as Responder from "../elements/responder";
 import * as Utils from "../utils";
 import * as Frontend from "../frontend";
@@ -11,56 +10,56 @@ $(function () {
    * Toggle category in windowed User Manager.
    * @event click
    */
-  $(document).on(
-    "click",
-    "[data-action='user-manager:category'] [data-category]",
-    function (e) {
-      let category = this.dataset.category;
-      let sub = this.dataset.sub;
-      let center = document.find("ui-component[type=user-manager]");
-      let react = center?.find("nc-inr");
-      let button = this;
-      let buttons = this.parentElement.find_all("[data-category]");
+  $(document).on("click", "ui-component[type='user-manager'] [open]", function (e) {
+    e.preventDefault();
 
-      if (!center) {
-        Frontend.close_ui_components();
-        Frontend.create_responder(
-          "<strong>Where is your user manager bro 🥲</strong>",
-          "error",
-        );
+    let url = this.getAttribute("open");
+    let center = this.closest("ui-component");
+    let react = center?.find("nc-inr");
+    let button = this;
+    let buttons = center.find_all("nc-tab-option");
 
-        return;
-      }
+    if (!center) {
+      Frontend.close_ui_components();
+      Frontend.create_responder(
+        "<strong>Where is your user manager bro 🥲</strong>",
+        "error",
+      );
 
-      center.set_loading();
+      return;
+    }
 
-      buttons.forEach((b) => {
-        b.deactivate();
-        b.setAttribute("showing", true);
+    center.set_loading();
+
+    buttons.forEach((b) => {
+      b.deactivate();
+      b.setAttribute("showing", true);
+    });
+
+    setTimeout(() => {
+      $.ajax({
+        url: "/user-manager/" + url,
+        method: "GET",
+        success: function (data) {
+          Frontend.unload();
+          center.unset_loading();
+
+          if (data.status) {
+            react.innerHTML = data.data;
+            Frontend.reload_images();
+
+            // TODO: Button will activate when immediately pressing ESC.
+            button.activate();
+
+            if (!url.includes("/"))
+              center.find_all(`[open="${url}"]`)?.forEach((btn) => btn.activate());
+          } else {
+            Frontend.create_responder(data);
+          }
+        },
       });
-
-      setTimeout(() => {
-        $.ajax({
-          url: "/user-manager/" + category + (sub ? "/" + sub : ""),
-          method: "GET",
-          success: function (data) {
-            Frontend.unload();
-            center.unset_loading();
-
-            if (data.status) {
-              react.innerHTML = data.data;
-              Frontend.reload_images();
-
-              // TODO: Button will activate when immediately pressing ESC.
-              button.activate();
-            } else {
-              Frontend.create_responder(data);
-            }
-          },
-        });
-      }, 100);
-    },
-  );
+    }, 100);
+  });
 });
 
 /**

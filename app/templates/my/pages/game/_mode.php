@@ -7,7 +7,7 @@ $preferred_gamemode = CurrentUser->preferred_mode;
 /**
  * @var object
  */
-$gumode_text = Gamemode::get_gumode_as_text($preferred_gamemode);
+$gumode_text = Gamemode::gumode_text($preferred_gamemode);
 
 ?>
 

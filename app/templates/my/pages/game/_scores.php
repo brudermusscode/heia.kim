@@ -2,6 +2,8 @@
 
 use Heiakim\Http\Request;
 use Heiakim\Model\Gamemode;
+use Heiakim\Model\Score;
+use Illuminate\Support\Collection;
 
 $limit = 4;
 $status = 2;
@@ -10,18 +12,14 @@ $order = 'pp';
 $sort = 'DESC';
 $limit = 18;
 
-/**
- * Validate mod get params
- */
 $mode   = Request::sanitize_get_param("mode", "osu");
 $mod    = Request::sanitize_get_param("mod", "vanilla");
 $base_url = "/my/game/scores";
+$gumode = Gamemode::find_gumode($mode, $mod, array: false);
 
 /**
- * Gumode
+ * @var Collection<Score>
  */
-$gumode = Gamemode::get_gumode_as_int($mode, $mod);
-
 $Scores = CurrentUser->scores()
   ->where("mode", $gumode)
   ->orderByDesc("pp")

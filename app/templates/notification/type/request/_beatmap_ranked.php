@@ -33,7 +33,7 @@ else :
   /**
    * @var object
    */
-  $notification_mode = Gamemode::get_mode_as_text($Beatmap->mode);
+  $notification_mode = Gamemode::mode_text($Beatmap->mode);
 
 
 ?>

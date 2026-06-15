@@ -31,7 +31,7 @@ $Router->get(
   ],
   title: function ($params) {
     $Squad = Squad::find($params["id"]);
-    $feed = Gamemode::convert_mode_to_full_name($params["feed"]) ?: $params["feed"];
+    $feed = Gamemode::mode_full($params["feed"]) ?: $params["feed"];
 
     return ucwords($feed) . " 🏆 " . $Squad->name . " on " . APP_NAME;
   }

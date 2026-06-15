@@ -6,7 +6,7 @@ $beatmap = $Beatmap->data();
 
 $beatmap_set_id = $beatmap->set_id;
 $beatmap_difficulty = $Beatmap->get_difficulty();
-$current_beatmap_mode = Gamemode::get_mode_as_text($beatmap->mode);
+$current_beatmap_mode = Gamemode::mode_text($beatmap->mode);
 
 ?>
 

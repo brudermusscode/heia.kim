@@ -35,7 +35,8 @@ define(true, 1);
 # Uhm...
 define("APP_NAME", ENV?->APP_NAME);
 define("APP_SLOGAN", ENV?->APP_SLOGAN);
-define('APP_VERSION', ENV?->APP_VERSION);
+define("APP_VERSION", ENV?->APP_VERSION);
+define("SERVER_ADDRESS", ENV?->SERVER_ADDRESS);
 define("CURRENCY", ENV?->CURRENCY);
 define('MAINTENANCE', ENV?->MAINTENANCE);
 define("HOME_URL", ENV?->SERVER_ADDRESS);

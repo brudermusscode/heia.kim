@@ -14,7 +14,7 @@ $premium_time_left = Time::left(CurrentUser->donor_end);
    * USER RECOMMENDED SETTINGS
    */
   if (CurrentUser->has_recommended_settings()) { ?>
-    <a href="/my/recommendations" sub>
+    <a href="/my/recommendations" sub dno>
       <box-model filled clickable>
         <bm-inr size=mid fl fldircol gap>
           <div fl gap jucsb alic>
@@ -48,7 +48,7 @@ $premium_time_left = Time::left(CurrentUser->donor_end);
         </p>
       </div>
       <div fl jucend pblock12>
-        <mbutton data-category=security filled>
+        <mbutton open="security" filled>
           <p text bold><?= __("Manage settings") ?></p>
         </mbutton>
       </div>

@@ -6,6 +6,17 @@ class Str
 {
 
   /**
+   * Sexy form for strtolower.
+   *
+   * @param string $str
+   * @return string
+   */
+  public static function lower(string $str)
+  {
+    return strtolower($str);
+  }
+
+  /**
    * Checks if all of the gioven $characters are existent in $string.
    *
    * @param string $string

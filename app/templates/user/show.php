@@ -57,7 +57,7 @@ else :
    * Preferred gumode (mode + mod) as text strings.
    * @var object
    */
-  $gumode_text = Gamemode::get_gumode_as_text($User->preferred_mode);
+  $gumode_text = Gamemode::gumode_text($User->preferred_mode);
 
   # Use the mode set in GET or fallback to the Users preferred one.
   $mode ??= $gumode_text->mode;
@@ -70,7 +70,7 @@ else :
    * From mode and mod above, get the gumode as an int.
    * @var int
    */
-  $gumode = Gamemode::get_gumode_as_int($mode, $mod);
+  $gumode = Gamemode::find_gumode($mode, $mod);
 
   # No gumode could be determined from mode and mod?
   if ($gumode === null) :

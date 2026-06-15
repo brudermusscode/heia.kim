@@ -11,13 +11,13 @@ $mode = filter_var(GET->mode ?? "", FILTER_SANITIZE_SPECIAL_CHARS);
 /**
  * Validate mode.
  */
-if (!in_array($mode, Gamemode::$basic_modes_text))
+if (!in_array($mode, Gamemode::$modes_text))
   $mode = null;
 
 /**
  * @var string
  */
-$mode_string = $mode ? Gamemode::convert_mode_to_full_name($mode) : null;
+$mode_string = $mode ? Gamemode::mode_full($mode) : null;
 
 /**
  * Publicity filter.
@@ -236,7 +236,7 @@ include PAGE_NAVIGATOR;
           ?>
             <box-model rounded=wide filled=lighter p62 fl fldircol alic gap style=flex:1;>
               <div style="height:4.2em;width:4.2em;" fl alic jucc circled filled>
-                <?php if (in_array($mode, Gamemode::$basic_modes_text)) { ?>
+                <?php if (in_array($mode, Gamemode::$modes_text)) { ?>
                   <i text wide class="osu-icon osu-<?= $mode == "osu" ? "vanilla" : $mode; ?>"></i>
                 <?php } else { ?>
                   <i class="mi" size="wide">diversity_3</i>

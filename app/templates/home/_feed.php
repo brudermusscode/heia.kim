@@ -20,7 +20,7 @@ $favorite_gumode = $favorite_modes[0]->mode ?? null;
 /**
  * @var object
  */
-$favorite_mode = $favorite_gumode === null ? null : Gamemode::get_gumode_as_text($favorite_gumode);
+$favorite_mode = $favorite_gumode === null ? null : Gamemode::gumode_text($favorite_gumode);
 
 /**
  * Include main page navigator.

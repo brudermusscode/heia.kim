@@ -19,7 +19,7 @@ $current_score_gumode = $Score->mode;
 /**
  * @var object
  */
-$mode_mod = Gamemode::convert_gumode_to_mode_mod($current_score_gumode);
+$mode_mod = Gamemode::gumode_text($current_score_gumode);
 
 /**
  * @var bool

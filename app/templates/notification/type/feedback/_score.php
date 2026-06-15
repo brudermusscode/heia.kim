@@ -26,7 +26,7 @@ else :
   /**
    * @var object
    */
-  $notification_mode = Gamemode::get_gumode_as_text($Score->mode);
+  $notification_mode = Gamemode::gumode_text($Score->mode);
 
 ?>
 

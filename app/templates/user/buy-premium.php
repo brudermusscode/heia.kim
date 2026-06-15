@@ -56,9 +56,7 @@ include SNOW; ?>
             # someone else.
             if ($want_gift) :
               include TEMPLATE . "/user/_user_report.php";
-            else :
-
-            ?>
+            else : ?>
 
               <div fl fldircol gap=smol>
                 <p text bold>What you get</p>
@@ -78,8 +76,8 @@ include SNOW; ?>
 
             <tipp-box outlined=darker rounded=mid dno>
               <mi>info</mi>
-              <p text>With your donation, you support the existence of <?= APP_NAME; ?>. We are grateful for every
-                penny spent!</p>
+              <p text>
+                With your donation, you support the existence of <?= APP_NAME; ?>. <strong>We are grateful for every penny spent!</strong></p>
             </tipp-box>
 
             <p text slight>By proceeding, you agree with our <a href='/legal/privacy' normal>Privacy Policy</a>. It's a

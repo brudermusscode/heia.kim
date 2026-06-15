@@ -16,9 +16,9 @@ $Router->get(
   ],
   title: function ($params) {
     $User = User::find($params["id"]);
-    $mode_mod =  Gamemode::convert_gumode_to_mode_mod($User->preferred_mode);
+    $mode_mod =  Gamemode::gumode_text($User->preferred_mode);
 
-    return $User->name . " × " . Gamemode::convert_mode_to_full_name($mode_mod->mode) . " on " . APP_NAME;
+    return $User->name . " × " . Gamemode::mode_full($mode_mod->mode) . " on " . APP_NAME;
   }
 );
 $Router->get(
@@ -30,7 +30,7 @@ $Router->get(
   title: function ($params) {
     $User = User::find($params["id"]);
 
-    return $User->name . " × " . ucwords($params["mode"]) . " on " . APP_NAME;
+    return $User->name . " × " . ucwords($params["sub"]) . " on " . APP_NAME;
   }
 );
 $Router->get(
@@ -42,7 +42,7 @@ $Router->get(
   title: function ($params) {
     $User = User::find($params["id"]);
 
-    return $User->name . " × " . Gamemode::convert_mode_to_full_name($params["mode"]) . " on " . APP_NAME;
+    return $User->name . " × " . Gamemode::mode_full($params["mode"]) . " on " . APP_NAME;
   }
 );
 $Router->get(
@@ -55,7 +55,7 @@ $Router->get(
   title: function ($params) {
     $User = User::find($params["id"]);
 
-    return $User->name . " × " . Gamemode::convert_mode_to_full_name($params["mode"]) . " on " . APP_NAME;
+    return $User->name . " × " . Gamemode::mode_full($params["mode"]) . " on " . APP_NAME;
   }
 );
 

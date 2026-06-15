@@ -66,6 +66,7 @@ class Order extends Justin
 
     # Initialize a PayPal SDK Client.
     $c = oauth_credentials("paypal");
+    $env = current_env() === "dev" ? Environment::SANDBOX : Environment::PRODUCTION;
     $Client = PaypalServerSdkClientBuilder::init()
       ->clientCredentialsAuthCredentials(
         ClientCredentialsAuthCredentialsBuilder::init(
@@ -73,7 +74,7 @@ class Order extends Justin
           $c[current_env()]["client_secret"],
         )
       )
-      ->environment(Environment::SANDBOX)
+      ->environment($env)
       ->build();
 
     # Create a new Order through PayPal API.
@@ -90,8 +91,8 @@ class Order extends Justin
           'payment_source' => [
             'paypal' => [
               'experience_context' => [
-                'return_url' => 'http://localhost:81/order/success',
-                'cancel_url' => 'http://localhost:81/order/cancel',
+                'return_url' => SERVER_ADDRESS . '/order/success',
+                'cancel_url' => SERVER_ADDRESS . '/order/cancel',
               ],
             ],
           ],

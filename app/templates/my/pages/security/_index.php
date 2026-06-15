@@ -4,9 +4,12 @@ use Heiakim\Application\Cookie;
 use Heiakim\Application\Feature;
 use Heiakim\Application\Session;
 use Heiakim\Time\Time;
-use Heiakim\Model\User;
 use Heiakim\Model\Change;
 use Heiakim\Model\Session as ModelSession;
+
+/**
+ * @var string $category
+ */
 
 /**
  * @var ?Change
@@ -58,9 +61,7 @@ $PasswordChange = CurrentUser->password_changes()
       /**
        * @var Session
        */
-      $Session =
-        CurrentUser
-        ->sessions()
+      $Session = CurrentUser->sessions()
         ->where("token", Cookie::get(ModelSession::$persistent_cookies[1]))
         ->first();
 
@@ -78,9 +79,7 @@ $PasswordChange = CurrentUser->password_changes()
       /**
        * @var ?Session
        */
-      $Sessions =
-        CurrentUser
-        ->sessions()
+      $Sessions = CurrentUser->sessions()
         ->orderByRaw('ISNULL(updated_at), updated_at DESC, created_at DESC')
         ->whereNot("token", Cookie::get(ModelSession::$persistent_cookies[1]))
         ->limit(4)

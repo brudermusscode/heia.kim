@@ -71,7 +71,7 @@ class Set extends Justin
       $mode = [0, 1, 2, 3];
     else
       foreach ($mode as $key => $m)
-        $mode[$key] = !is_numeric($m) ? Gamemode::get_mode_as_int($m) : $m;
+        $mode[$key] = !is_numeric($m) ? Gamemode::mode_int($m) : $m;
 
     /**
      * Build query

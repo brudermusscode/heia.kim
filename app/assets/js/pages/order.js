@@ -16,7 +16,6 @@ const _delete = (id, silent = true) => {
     data: data,
     method: "POST",
     success: function (data) {
-      console.log(data);
       if (silent) return;
     },
   });
@@ -51,9 +50,9 @@ $(document).on("submit", "[data-action='order:create']", async function (e) {
     return;
   }
 
+  // Listen for the popup to send a message with type "success", so we know the order
+  // is done.
   window.addEventListener("message", function (event) {
-    console.log(event);
-
     if (event.origin !== window.location.origin) return;
     if (event.data.type !== "success") return;
 
@@ -109,6 +108,10 @@ $(document).on("submit", "[data-action='order:create']", async function (e) {
                 if (ddata.status) {
                   clearInterval(__capture_order_interval);
                   Frontend.respond(ddata);
+
+                  new Audio(
+                    "https://github.com/brudermusscode/heia.kim-cdn/raw/refs/heads/master/sounds/Nyanpasu.mp3",
+                  ).play();
 
                   setTimeout(() => {
                     Frontend.reload();

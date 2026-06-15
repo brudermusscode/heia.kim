@@ -205,54 +205,29 @@ class Score extends Justin
   }
 
   /**
-   * Returns the full text mod name from a two char value
-   *
-   * @param string $mod The mod
-   * @return string The mod's full name
-   */
-  public static function get_full_mod_name_from(string $mod)
-  {
-    switch ($mod) {
-      case "NM":
-        return 'No Mod';
-      case "HD":
-        return 'Hidden';
-      case "DT":
-      case "NC":
-        return 'DoubleTime';
-      case "HR":
-        return 'HardRock';
-      case "FL":
-        return 'Flashlight';
-      case "RX":
-        return 'Relax';
-      case "AP":
-        return 'Autopilot';
-      case "V2":
-        return 'Score Version 2';
-      case "NF":
-        return 'Never Fail';
-      case "MR":
-        return 'Mirroring';
-      case "PF":
-        return 'Perfect';
-      case "TD":
-        return 'Touch Device';
-
-      default:
-        return 'Unknown mod';
-    }
-  }
-
-  /**
-   * Converts the abbreviation of a mod into their real name
+   * Turn abbreviation of a mod into their full name.
    *
    * @param string $mod
    * @return string
    */
-  public function mod_text(string $mod)
+  public static function mod_text(string $mod)
   {
-    return self::get_full_mod_name_from($mod);
+    return match ($mod) {
+      "NM" => "No mod",
+      "HD" => "Hidden",
+      "DT" => "DoubleTime",
+      "NC" => "Nightcore",
+      "HR" => "HardRock",
+      "FL" => "Flashlight",
+      "RX" => "Relax",
+      "AP" => "Autopilot",
+      "V2" => "Score V2",
+      "NF" => "No Fail",
+      "MR" => "Mirroring",
+      "PF" => "Perfect",
+      "TD" => "Touch Device",
+      default => "Unknown mod",
+    };
   }
 
   /**

@@ -5,7 +5,7 @@ use Heiakim\Model\User;
 use Heiakim\Time\Time;
 
 
-$gm = Gamemode::get_gumode_as_text(CurrentUser->preferred_mode);
+$gm = Gamemode::gumode_text(CurrentUser->preferred_mode);
 
 ?>
 

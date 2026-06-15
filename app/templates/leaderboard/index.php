@@ -41,7 +41,7 @@ $sort_by = match ($type) {
 };
 
 # The currently viewed mode + mod as an int.
-$gumode = Gamemode::get_gumode_as_int($mode, $mod);
+$gumode = Gamemode::find_gumode($mode, $mod, array: false);
 
 /**
  * @var Leaderboard

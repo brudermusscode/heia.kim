@@ -60,14 +60,10 @@ else {
    * Set the page to `scores` if it is set to any mode. The page
    * partial will handle the rest. Love!
    */
-  if (in_array($page, Gamemode::$basic_modes_text)) {
+  if (in_array($page, Gamemode::$modes_text)) {
     $mode = $page;
     $mod = in_array($sub, Gamemode::$mods_text) ? $sub : Gamemode::$mods_text[0];
-
-    /**
-     * @var int
-     */
-    $gumode = Gamemode::convert_mode_mod_to_gumode($mode, $mod);
+    $gumode = Gamemode::find_gumode($mode, $mod);
 
     /**
      * @var string

@@ -33,7 +33,7 @@ if (!in_array($gumode, Gamemode::$modes))
 /**
  * @var object
  */
-$mode_mod = Gamemode::convert_gumode_to_mode_mod($gumode);
+$mode_mod = Gamemode::gumode_text($gumode);
 
 /**
  * @var ?User

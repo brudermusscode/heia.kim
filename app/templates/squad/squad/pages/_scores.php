@@ -26,7 +26,7 @@ $sub = $mod =
  * @var array[int]
  */
 $modes = $mod
-  ? [Gamemode::convert_mode_mod_to_gumode($mode, $mod)]
+  ? [Gamemode::find_gumode($mode, $mod)]
   : Gamemode::$mods_int_per_mode[$mode];
 
 /**

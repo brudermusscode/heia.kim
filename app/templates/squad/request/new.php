@@ -126,12 +126,12 @@ $join_action = !$Squad->is_public()
                     <i class="osu-icon osu-<?= $mode == "osu" ? "vanilla" : $mode; ?>"></i>
                   </p>
                   <div fl fldircol gap="smoler">
-                    <p text std bold><?= Gamemode::convert_mode_to_full_name($mode); ?></p>
+                    <p text std bold><?= Gamemode::mode_full($mode); ?></p>
                     <div fl style="gap:.2em;">
 
                       <?php
 
-                      $gumode = Gamemode::get_gumode_as_int($mode, "vanilla");
+                      $gumode = Gamemode::find_gumode($mode, "vanilla");
 
                       $contributing = number_format(
                         $Stats->filter(function ($q) use ($gumode) {
@@ -153,7 +153,7 @@ $join_action = !$Squad->is_public()
 
                       if (in_array($mode, ["osu", "ctb", "taiko"])) {
 
-                        $gumode = Gamemode::get_gumode_as_int($mode, "relax");
+                        $gumode = Gamemode::find_gumode($mode, "relax");
 
                         $contributing = number_format(
                           $Stats->filter(function ($q) use ($gumode) {
@@ -176,7 +176,7 @@ $join_action = !$Squad->is_public()
 
                       if (in_array($mode, ["osu"])) {
 
-                        $gumode = Gamemode::get_gumode_as_int($mode, "autopilot");
+                        $gumode = Gamemode::find_gumode($mode, "autopilot");
 
                         $contributing = number_format(
                           $Stats->filter(function ($q) use ($gumode) {

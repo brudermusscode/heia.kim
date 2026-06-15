@@ -5,35 +5,56 @@ use Heiakim\Model\Session;
 
 /**
  * @var Session $Session
+ * @var string $category
  */
 
 ?>
 
 <div rounded pinline12 pblock8 fl gap jucsb alic hoverable
-  data-category=<?= $category ?>
-  data-sub=device
-  data-id=<?= $Session->id ?>>
+  data-category="<?= $category ?>"
+  data-sub="device"
+  data-id="<?= $Session->id ?>">
   <div fl gap=smol+ alic <?php if ($Session->deleted_at) echo "slight"; ?>>
-    <mi mid class="<?= $Session->display()->icon_class; ?>"></mi>
     <div fl fldircol gap=smoler>
-      <p text bold><?= $Session->display()->os_full; ?></p>
+
+      <?php
+
+      $masked_ip = $Session->remote_address;
+      $masked_ip_split = explode(".", $masked_ip);
+      unset($masked_ip_split[array_key_last($masked_ip_split)]);
+      $masked_ip = implode(".", $masked_ip_split);
+
+      ?>
+
+      <div fl alic gap=smolest>
+        <p text bold><?= $masked_ip ?>.</p>
+        <p pinline6 pblock8 background=slight rounded></p>
+        <p pinline6 pblock8 background=slight rounded></p>
+      </div>
       <div fl alic gap=smol>
-        <?php if ($Session->deleted_at) { ?>
+
+        <?php
+
+        # + Deleted session.
+        if ($Session->deleted_at) : ?>
           <div fl gap=smol alic>
             <mi spec color=red>toggle_off</mi>
             <p text smol><?= __("Inactive") ?></p>
           </div>
           <p text smol slight>&middot;</p>
-        <?php } else if ($Session->token === $_COOKIE[Session::$persistent_cookies[1]]) { ?>
+        <?php
+
+        # + Current Session.
+        elseif (
+          $Session->token === $_COOKIE[Session::$persistent_cookies[1]]
+        ) : ?>
           <div fl gap=smol alic>
             <mi spec color=blue>check_circle</mi>
             <p text smol><?= __("Current") ?></p>
           </div>
           <p text smol slight>&middot;</p>
-        <?php } ?>
-        <p text smol slight>
-          <?= $Session->city !== "None" ? $Session->city ?? __("Unknown city") : __("Unknown city"); ?></p>
-        <p text smol slight>&middot;</p>
+        <?php endif; ?>
+
         <p text smol color=company>
           <?= Time::ago($Session->updated_at ?? $Session->created_at, true); ?></p>
       </div>

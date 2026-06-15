@@ -282,11 +282,11 @@ class User extends Justin
 
       # ? Preferred Gamemode
       if (isset($params->mode, $params->mod)) {
-        $this->preferred_mode = Gamemode::get_gumode_as_int(
+        $this->preferred_mode = Gamemode::find_gumode(
           $params->mode,
-          $params->mod
+          $params->mod,
+          array: false
         );
-
         unset($params->mode, $params->mod);
       }
 

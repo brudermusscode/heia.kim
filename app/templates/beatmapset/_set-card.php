@@ -38,7 +38,7 @@ $is_feature = $Artists->count() > 1;
  * Mode
  */
 if (in_array($FirstBeatmap->mode, Gamemode::$basic_modes))
-  $mode_text = Gamemode::get_mode_as_text($FirstBeatmap->mode);
+  $mode_text = Gamemode::mode_text($FirstBeatmap->mode);
 else if (in_array($FirstBeatmap->mode, Gamemode::$modes_text))
   $mode_text = $mode;
 else

@@ -39,8 +39,8 @@ else {
   /**
    * Validate mode
    */
-  if (!in_array($mode, Gamemode::$basic_modes_text))
-    $mode = Gamemode::$basic_modes_text[0];
+  if (!in_array($mode, Gamemode::$modes_text))
+    $mode = Gamemode::$modes_text[0];
 
   /**
    * Validate mod
@@ -51,7 +51,7 @@ else {
   /**
    * Gumode
    */
-  $gumode = Gamemode::get_gumode_as_int($mode, $mod);
+  $gumode = Gamemode::find_gumode($mode, $mod, array: false);
 
   /**
    * All Beatmaps of this Set
@@ -355,7 +355,7 @@ else {
      */
     $Sets = Beatmap\Set::view(
       query: implode(" ", $artist_names),
-      mode: Gamemode::get_mode_as_int($mode),
+      mode: Gamemode::mode_int($mode),
       limit: $fetch_count,
     );
 

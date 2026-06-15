@@ -245,7 +245,7 @@ class UsersGateway extends Gateway
     $mode    = filter_var($this->params->id2 ?? null, FILTER_SANITIZE_SPECIAL_CHARS);
     $mod     = filter_var($this->params->id3 ?? null, FILTER_SANITIZE_SPECIAL_CHARS);
     $section = filter_var($this->params->section ?? null, FILTER_SANITIZE_SPECIAL_CHARS);
-    $gumode  = Gamemode::convert_mode_mod_to_gumode_array($mode, $mod);
+    $gumode  = Gamemode::find_gumode($mode, $mod, array: true);
 
     /**
      * Valid order?

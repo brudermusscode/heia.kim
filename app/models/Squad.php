@@ -820,7 +820,7 @@ class Squad extends Justin
        *
        * @var string
        */
-      $mode = Gamemode::convert_gumode_to_mode_text($gumode);
+      $mode = Gamemode::gumode_to_mode($gumode);
       if ($this->modes[$mode] == 0)
         continue;
 
@@ -1208,7 +1208,7 @@ class Squad extends Justin
     /**
      * @var ?string
      */
-    $mode = Gamemode::convert_gumode_to_mode_text($gumode);
+    $mode = Gamemode::gumode_to_mode($gumode);
 
     return $mode && $this->modes[$mode] == 1;
   }

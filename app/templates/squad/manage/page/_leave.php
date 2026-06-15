@@ -84,10 +84,10 @@ use Heiakim\Model\Squad\SquadUser;
                     foreach ($Performance as $mode => $P) : ?>
                       <div fl alic gap>
                         <div z filled=darker circled fl alic jucc style="height:3.2em;width:3.2em;">
-                          <i text mid class="osu-icon osu-<?= Gamemode::convert_mode_to_icon($mode) ?>"></i>
+                          <i text mid class="osu-icon osu-<?= Gamemode::mode_icon($mode) ?>"></i>
                         </div>
                         <div>
-                          <p text bold><?= Gamemode::convert_mode_to_full_name($mode) ?></p>
+                          <p text bold><?= Gamemode::mode_full($mode) ?></p>
                           <p text>
                             <strong><?= number_format($P->performance, 2, ",", ".") ?></strong> <?= METRIC_NAME ?>, <strong><?= Utils::round_with_ending($P->ranked_score) ?></strong> ranked score
                           </p>

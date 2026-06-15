@@ -3,10 +3,9 @@
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
 use Heiakim\Application\Cookie;
-use Heiakim\Application\CurrentUser;
 use Heiakim\Model\Session;
-use Heiakim\Model\User;
 use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
  * @var ?Squad $CurrentSquad
@@ -198,39 +197,36 @@ ob_start(); ?>
       </box-model>
     </nc-inr>
 
-    <nc-tabs-floating hide-mobile
-      data-action="user-manager:category">
-
-      <nc-tab-option data-category=overview>
+    <nc-tabs-floating hide-mobile>
+      <nc-tab-option open=overview>
         <mi>dashboard</mi>
         <p text>Overview</p>
       </nc-tab-option>
 
-      <nc-tab-option data-category=personal>
+      <nc-tab-option open=personal>
         <mi>insert_emoticon</mi>
         <p text>Personals</p>
       </nc-tab-option>
 
-      <nc-tab-option data-category=game>
+      <nc-tab-option open=game>
         <mi>extension</mi>
         <p text>Gameplay</p>
       </nc-tab-option>
 
-      <nc-tab-option data-category=privacy>
+      <nc-tab-option open=privacy>
         <mi>shield_person</mi>
         <p text>Data & Privacy</p>
       </nc-tab-option>
 
-      <nc-tab-option data-category=security>
+      <nc-tab-option open=security>
         <mi>vpn_key</mi>
         <p text>Security</p>
       </nc-tab-option>
 
-      <nc-tab-option data-category=website>
+      <nc-tab-option open=website>
         <mi>desktop_mac</mi>
         <p text>Appearance</p>
       </nc-tab-option>
-
     </nc-tabs-floating>
   </ui-component>
 <?php endif;

@@ -136,7 +136,7 @@ class ScoresGateway extends Gateway
     $mode    = filter_var($this->params->id ?? null, FILTER_SANITIZE_SPECIAL_CHARS);
     $mod     = filter_var($this->params->model2 ?? null, FILTER_SANITIZE_SPECIAL_CHARS);
     $section = filter_var($this->params->section ?? null, FILTER_SANITIZE_SPECIAL_CHARS);
-    $gumode  = Gamemode::convert_mode_mod_to_gumode_array($mode, $mod);
+    $gumode  = Gamemode::find_gumode($mode, $mod, array: true);
 
     /**
      * Get the extra information requested and make an array of it.

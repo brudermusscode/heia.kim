@@ -14,7 +14,7 @@ use Heiakim\Model\Beatmap;
 $beatmap_status_text = $Beatmap->turn_status_to_text();
 $beatmap_id = $Beatmap->id;
 $beatmap_set_id = $Beatmap->set_id;
-$beatmap_mode_text = Gamemode::get_mode_as_text($Beatmap->mode);
+$beatmap_mode_text = Gamemode::mode_text($Beatmap->mode);
 
 /**
  * Create artist references

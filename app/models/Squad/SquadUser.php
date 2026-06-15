@@ -515,7 +515,7 @@ class SquadUser extends Justin
      */
     if ($performance)
       foreach ($performance as $gumode => $p) {
-        $mode_text = Gamemode::convert_gumode_to_mode_text($gumode);
+        $mode_text = Gamemode::gumode_to_mode($gumode);
 
         if ($mode_text)
           foreach ($p as $name => $value)

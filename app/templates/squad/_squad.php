@@ -188,7 +188,7 @@ if ($is_my_clan) {
                     <div has-tooltip=bottom>
                       <i text midler class="osu-icon osu-<?= $active_mode === "osu" ? "vanilla" : $active_mode; ?>"></i>
                       <div ttooltip>
-                        <p text std bold><?= Gamemode::convert_mode_to_full_name($active_mode); ?></p>
+                        <p text std bold><?= Gamemode::mode_full($active_mode); ?></p>
                       </div>
                     </div>
                   <?php endforeach; ?>
