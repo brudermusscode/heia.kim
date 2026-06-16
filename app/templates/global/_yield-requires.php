@@ -31,8 +31,7 @@ use Heiakim\Application\Cookie;
   };
 
   let __page = {
-    current: "<?= filter_input(INPUT_GET, "page", FILTER_SANITIZE_SPECIAL_CHARS); ?>",
-    marked: "home",
+    current: "<?= CURRENT_PAGE ?>",
     is_loading: false,
     is_darkmode: <?= defined("APP") && APP->dark_mode_enabled == 0 ? "0" : "1"; ?>,
     theme: "<?= defined("APP") ? APP->current_theme ?? APP->main_theme : _env("THEME"); ?>",

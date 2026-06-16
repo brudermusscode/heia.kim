@@ -7,10 +7,6 @@ import * as Responder from "./elements/responder.js";
 
 if (!Settings.LOG) console.log = () => {};
 
-/**
- * Set default values for recurring ajax settings to avoid needing to set them on any
- * request.
- */
 $.ajaxSetup({
   contentType: false,
   processData: false,
@@ -19,32 +15,18 @@ $.ajaxSetup({
   },
 });
 
-/**
- * Initialize the application
- */
 const init_application = async () => {
+  console.log(
+    "%cJesus loves you! 🌞💌",
+    "color:light-blue;font-size:3em;font-weight:800;",
+  );
+
   let Route = Page.get_route(window.location.pathname + window.location.search);
 
   Frontend.init(Route, null, true);
 
-  console.log(
-    "%c🌞 Bruder, alles geladen!",
-    "color:light-blue;font-size:1.32em;font-weight:800;",
-    "\nJustin Seidel ©️ 2022-" + new Date().getFullYear(),
-  );
-
-  /**
-   * Find cookie notice and show, if available
-   */
-
   // TODO: Build cookie notice banner.
   // TODO: Build feeback dialogue.
-
-  /**
-   * Set body attribute for current page. This will apply styles
-   * for the current page.
-   */
-  document.body.setAttribute(Route.key, "");
 
   setTimeout(() => {
     Frontend.loaded();
@@ -86,6 +68,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   //
 
   await init_application();
+
+  let __current_path = window.location.pathname;
+
+  window.addEventListener("popstate", async (e) => {
+    if (!e.state) return;
+
+    Frontend.close_overlays();
+
+    if (e.state.href == undefined || !e.state.href) return;
+
+    await Page.get(e.state.href, { coming_from: __current_path });
+  });
 
   $(document).on("keyup", (e) => {
     const key = () => {
@@ -187,16 +181,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       $scroll_container.forEach((s) => {
         s.setAttribute("scrolled", false);
       });
-  });
-
-  $(window).on("popstate", async (e) => {
-    if (!e.state) return;
-
-    Frontend.close_overlays();
-
-    if (e.state.href == undefined || !e.state.href) return;
-
-    await Page.get(e.state.href, true);
   });
 
   $(document).on("click", "[submit-closest]", function (e) {

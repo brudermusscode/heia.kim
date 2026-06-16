@@ -38,9 +38,6 @@ export const get_route = (url) => {
 
   url_parameter.shift();
 
-  /**
-   * Mark home if none.
-   */
   if (url_parameter[0] === "") url_parameter[0] = "home";
 
   let route = url_parameter[0];
@@ -79,17 +76,13 @@ export const get = async (
   let url = href;
   let main_container = document.body.querySelector("main");
   let title;
-  let coming_from_path = window.location.pathname;
-  let coming_from_path_split = coming_from_path.split("/");
 
   // Prepare a reload if set.
   if (reload)
     url = url.concat(url.includes("?") ? "&reload=" : "?reload=") + random_string(8);
 
-  /**
-   * @var object
-   */
-  let Route = await get_route(url);
+  let Route = get_route(url);
+  let PreviousRoute = Router.router(__page.current);
 
   let history_params = {};
   history_params["href"] = url;
@@ -127,29 +120,25 @@ export const get = async (
     url: url,
     method: "GET",
     success: async function (data) {
-      //
-      //
-      console.log(data);
-
       if (!keep_overlays) Frontend.close_overlays();
 
+      clearInterval(scroll_interval);
+
       __page.current = Route.key;
-      __page.marked = Route.mark ? Route.mark : Route.key;
       __page.params = data.data.params;
 
       main_container.innerHTML = data.data.HTML;
 
       title = main_container.find("title")?.innerHTML;
 
+      document.title =
+        title !== undefined && title !== null && title ? title : "Unknown Page";
+
       // Pushes the coming state to the browser history and sets a proper title to
       // the document.
       if (!state && !reload) {
         history.pushState(history_params, title, url);
-        document.title =
-          title !== undefined && title !== null && title ? title : "Unknown Page";
       }
-
-      clearInterval(scroll_interval);
 
       // Stop playing any audio and reset the global.
       if (__current_audio_element) {
@@ -163,12 +152,9 @@ export const get = async (
       __infinite_scroll.reached_end = false;
       __infinite_scroll.reached_full_end = false;
 
-      // Set the header to scroll manipulated if scroll top is higher than a given
-      // amount.
       if (window.scrollY >= 20)
         document.find("[scroll-manipulated]")?.setAttribute("scrolled", "true");
 
-      // Find [autofocus] and focus it.
       if (document.find("[autofocus]")) document.find("[autofocus]").focus();
 
       // If set, execute a function only once in a Route main key.
@@ -186,15 +172,6 @@ export const get = async (
         document.body.removeAttribute(index);
       });
 
-      document.body.setAttribute(
-        Route.key == ""
-          ? "home"
-          : Route.body_attribute !== undefined
-            ? Route.body_attribute
-            : Route.key,
-        "",
-      );
-
       // Deactivates all [page] elements which are links/buttons to different pages
       // and in the following, find the one that has been clicked and any that is e-
       // qual to the one clicked..
@@ -210,8 +187,6 @@ export const get = async (
         document
           .find_all(`[page="${Route.key}"]`)
           ?.forEach((button) => button.activate());
-
-      let PreviousRoute = Router.router(coming_from_path_split[1]);
 
       Frontend.init(Route, PreviousRoute, reload);
 

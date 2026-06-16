@@ -28,9 +28,9 @@ export const init = async (Route, PreviousRoute = null, update_refs = false) => 
 
   await Page.redirect();
 
-  if (update_refs) update_user_menu();
+  if (update_refs) await update_user_menu();
 
-  page_navigator(Route, PreviousRoute);
+  await page_navigator(Route, PreviousRoute);
   toggle_floating_actions(Route.key);
   get_content();
   unload();
@@ -39,6 +39,14 @@ export const init = async (Route, PreviousRoute = null, update_refs = false) => 
   MaterialButton.init();
 
   document.body.setAttribute("initialized", true);
+  document.body.setAttribute(
+    Route.key == ""
+      ? "home"
+      : Route.body_attribute !== undefined
+        ? Route.body_attribute
+        : Route.key,
+    "",
+  );
 
   main_container?.find_all("request")?.forEach((elem) => Request.request(elem));
   main_container.find_all("script").forEach((script) => {
@@ -585,27 +593,28 @@ export const close_mode_menu = () => {
   }, 200);
 };
 
-export const update_user_menu = () => {
-  let url = "/ui/user-menu";
-  let menu = document.find("user-menu");
+export const update_user_menu = async () => {
+  return new Promise((resolve, reject) => {
+    let menu = document.find("user-menu");
 
-  console.log("[Frontend] Updating user menu...");
+    menu?.setAttribute("deleted", true);
 
-  menu?.setAttribute("deleted", true);
+    $.ajax({
+      url: "/ui/user-menu",
+      method: "GET",
+      success: function (data) {
+        if (data.status) {
+          document.body.insertAdjacentHTML("afterbegin", data.data);
+          menu?.remove();
+          Frontend.reload_images();
+        } else {
+          menu?.removeAttribute("deleted");
+          create_responder(data);
+        }
 
-  $.ajax({
-    url: url,
-    method: "GET",
-    success: function (data) {
-      if (data.status) {
-        document.body.insertAdjacentHTML("afterbegin", data.data);
-        menu?.remove();
-        Frontend.reload_images();
-      } else {
-        menu?.removeAttribute("deleted");
-        create_responder(data);
-      }
-    },
+        resolve(1);
+      },
+    });
   });
 };
 
@@ -694,42 +703,47 @@ export const hide_floating_action = () => {
 
 /**
  * Loads the page navigator for a corresponding page from the generic Router object.
- * As it should slide in like a charm on new main page loads but stay as is on sub-pa-
- * ges of the current main page, we need the PreviousRoute, too.
+ * As it should slide in like a charm on new main page loads but stay as is on sub-
+ * pages of the current main page, we need the PreviousRoute, too.
  *
  * @param {object} Route
  */
-export const page_navigator = (Route, PreviousRoute = null) => {
-  let params = __page.params;
-  let query = "&";
-  let page_navigator = document.find("page-navigator");
+export const page_navigator = async (Route, PreviousRoute = null) => {
+  return new Promise((resolve, reject) => {
+    let params = __page.params;
+    let query = "&";
+    let page_navigator = document.find("page-navigator");
 
-  // A new navigation should just be loaded, if the previous route has a different
-  // than the new route being requested. So return early if it's the same.
-  if (Route.page_navigator === PreviousRoute?.page_navigator) return;
+    // A new navigation should just be loaded, if the previous route has a different
+    // than the new route being requested. So return early if it's the same.
+    if (Route.page_navigator === PreviousRoute?.page_navigator) return resolve(1);
 
-  page_navigator?.setAttribute("reloading", true);
+    page_navigator?.setAttribute("reloading", true);
 
-  if (!Route.page_navigator) {
-    page_navigator?.remove();
-    return;
-  }
-
-  Object.entries(params).forEach((value, key) => {
-    query += value[0] + "=" + value[1] + "&";
-  });
-
-  $.ajax({
-    url: "/ui/page-navigator" + "?type=" + Route.page_navigator + query.slice(0, -1),
-    success: function (data) {
+    if (!Route.page_navigator) {
       page_navigator?.remove();
-      document.body.insertAdjacentHTML("afterbegin", data.data ?? "");
-      page_navigator = document.find("page-navigator");
+      return resolve(1);
+    }
 
-      let slide = PreviousRoute?.page_navigator !== Route.page_navigator;
+    Object.entries(params).forEach((value, key) => {
+      query += value[0] + "=" + value[1] + "&";
+    });
 
-      Frontend.show_page_navigator(slide);
-    },
+    $.ajax({
+      url:
+        "/ui/page-navigator" + "?type=" + Route.page_navigator + query.slice(0, -1),
+      success: function (data) {
+        page_navigator?.remove();
+        document.body.insertAdjacentHTML("afterbegin", data.data ?? "");
+        page_navigator = document.find("page-navigator");
+
+        let slide = PreviousRoute?.page_navigator !== Route.page_navigator;
+
+        Frontend.show_page_navigator(slide);
+
+        return resolve(2);
+      },
+    });
   });
 };
 
