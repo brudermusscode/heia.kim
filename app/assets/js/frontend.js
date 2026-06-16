@@ -30,8 +30,7 @@ export const init = async (Route, PreviousRoute = null, update_refs = false) => 
 
   if (update_refs) update_user_menu();
 
-  if (Route.page_navigator) page_navigator(Route, PreviousRoute);
-
+  page_navigator(Route, PreviousRoute);
   toggle_floating_actions(Route.key);
   get_content();
   unload();
@@ -703,17 +702,22 @@ export const hide_floating_action = () => {
 export const page_navigator = (Route, PreviousRoute = null) => {
   let params = __page.params;
   let query = "&";
+  let page_navigator = document.find("page-navigator");
 
   // A new navigation should just be loaded, if the previous route has a different
   // than the new route being requested. So return early if it's the same.
   if (Route.page_navigator === PreviousRoute?.page_navigator) return;
 
+  page_navigator?.setAttribute("reloading", true);
+
+  if (!Route.page_navigator) {
+    page_navigator?.remove();
+    return;
+  }
+
   Object.entries(params).forEach((value, key) => {
     query += value[0] + "=" + value[1] + "&";
   });
-
-  let page_navigator = document.find("page-navigator");
-  page_navigator?.setAttribute("reloading", true);
 
   $.ajax({
     url: "/ui/page-navigator" + "?type=" + Route.page_navigator + query.slice(0, -1),

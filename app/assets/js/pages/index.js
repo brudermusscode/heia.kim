@@ -8,3 +8,4 @@ import * as Register from "./register";
 import * as Squad from "./squads";
 import * as Thread from "./threads";
 import * as User from "./users";
+import * as Global from "./global";

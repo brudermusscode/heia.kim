@@ -74,9 +74,7 @@ use Heiakim\Application\Cookie;
   let __osu = {
     "beatmap_preview_url": "<?= _env("OSU_BEATMAPS") ?>"
   };
-</script>
 
-<script>
   <?php
 
   echo "let __get_params = {\n";
@@ -85,9 +83,7 @@ use Heiakim\Application\Cookie;
   echo "};\n\n";
 
   ?>
-</script>
 
-<script>
   <?php
 
   $CurrentUser = CurrentUser;
