@@ -2,13 +2,13 @@
   <div fl fldircol gap>
     <a href="/">
       <picture pn-option quadrat style="height:3.4em;width:3.4em;" loading>
-        <img hover-zoom src="<?= IMAGE . '/logo/painted/100.webp'; ?>" />
+        <img hover-zoom src="<?= IMAGE . '/logo/painted/100.webp'; ?>" loaded=true />
       </picture>
     </a>
 
     <mbutton mid request-get="search"
       pn-option rounded icon-only background=complement color=white>
-      <i class=mi>explore</i>
+      <mi>explore</mi>
     </mbutton>
   </div>
 

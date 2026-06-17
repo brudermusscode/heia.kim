@@ -15,6 +15,7 @@ page-navigator {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  transition: none;
 
   @include hide_mobile();
 
@@ -88,7 +89,7 @@ page-navigator {
 
     &[show] {
       transition:
-        $trans-cubic,
+        all 2s linear,
         margin-left 0s linear,
         opacity 0s linear,
         visibility 0s linear;

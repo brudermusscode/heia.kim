@@ -98,6 +98,8 @@ $DecodedProfile = $User->decoded_profile();
       $ProfileFirstColumn = $DecodedProfile->sections_visibility[1]
         ?? $Profile->sections_visibility[1];
 
+      # This includes all mid columns based on the profile sections the User has set
+      # in their Editor 💅
       foreach ($ProfileFirstColumn as $object_name => $object_visibility) {
         $object_file_path = dirname(__DIR__) . "/objects/_$object_name.php";
 

@@ -48,7 +48,7 @@ $gumode = 0;
 
   <?php
 
-  # + Header.
+  include __DIR__ . "/_page-navigator.php";
   include TEMPLATE . "/user/_header.php";
 
   /**

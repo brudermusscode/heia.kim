@@ -127,17 +127,15 @@ else :
 
     # + Mode menu should only be shown in sub pages that have scores to show.
     if (!in_array($sub, ["photos"]))
-      include_once __DIR__ . "/_mode-menu.php";
+      include __DIR__ . "/_mode-menu.php";
 
     # Add scores for our bot Aida. Should just happen once or can be uncommented to
     # redo it.
-    // include_once __DIR__ . "/Aida/_add_scores.php";
+    // include __DIR__ . "/Aida/_add_scores.php";
 
-    # + User header.
-    include_once __DIR__ . "/_header.php";
-
-    # + Navigation rail for mobile devices.
-    include_once __DIR__ . "/_mobile-menu.php";
+    include __DIR__ . "/_page-navigator.php";
+    include __DIR__ . "/_header.php";
+    include __DIR__ . "/_mobile-menu.php";
 
     # TODO: Add relationship actions for mobile devices.
 

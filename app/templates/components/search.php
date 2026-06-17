@@ -14,9 +14,9 @@ ob_start(); ?>
   <search fl alic elevated rounded=mid+>
     <mi pinline42 mid>search</mi>
 
-    <input search autofocus type-to-focus type="text" placeholder="<?= __("Search for players, beatmaps, squads") ?>...">
+    <input autofocus type-to-focus type="text" placeholder="<?= __("Search for players, beatmaps, squads") ?>...">
 
-    <div fl alic gap=smol no-word-wrap>
+    <div extra fl alic jucend gap=smol no-word-wrap>
       <p background=slight rounded=smol+ pblock6 pinline10 pr12 text smol bold fl alic gap=smol>
         <mi>keyboard</mi> ESC
       </p>

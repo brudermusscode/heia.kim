@@ -114,6 +114,8 @@ class Profile extends Justin
   public function edit(object $params)
   {
 
+    pdie($params);
+
     /**
      * @var User
      */

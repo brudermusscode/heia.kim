@@ -1,9 +1,6 @@
 <?php
 
-# + Landing header.
 include __DIR__ . "/landing/_header.php";
-
-# + Snow.
 include SNOW; ?>
 
 <content home fl fldircol alistretch>

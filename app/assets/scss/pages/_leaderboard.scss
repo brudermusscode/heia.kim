@@ -6,7 +6,6 @@ $lb-countries-width: 236px;
 
 [page-structure="leaderboard"] {
   max-width: $squad-content-width !important;
-  padding-top: 33.2em;
   margin-top: 0;
 
   [column-wrapper] {
@@ -49,26 +48,6 @@ $lb-countries-width: 236px;
 
 [page-structure="leaderboard"],
 [leaderboard-content] {
-  &:not([page-structure="squad"]) {
-    position: relative;
-    z-index: 1;
-    padding-top: 33.2em;
-    display: flex;
-    flex-direction: column;
-
-    @media screen and (max-width: 1080px) {
-      padding-top: 27.6em;
-    }
-
-    @media screen and (max-width: 800px) {
-      padding-top: 24.4em;
-    }
-
-    @media screen and (max-width: 600px) {
-      padding-top: 16em;
-    }
-  }
-
   [best] {
     display: flex;
     align-items: end;

@@ -20,12 +20,7 @@
   border-radius: 42px;
   transition: $trans-cubic;
 
-  @media screen and (max-width: 1900px) {
-    right: initial;
-    left: calc($page-navigator-width);
-  }
-
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: $mobile-max-width) {
     right: initial;
     left: 6px;
     width: calc(100vw - 12px);

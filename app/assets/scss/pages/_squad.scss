@@ -1,10 +1,6 @@
 @use "../abstract" as *;
 @use "../base" as *;
 
-[header-page-content] {
-  padding-top: 512px;
-}
-
 header {
   @include themed() {
     &[full="squad"] {
@@ -167,12 +163,7 @@ header {
             t(bg) 2%,
             transparent 100%
           );
-          background: linear-gradient(
-            0deg,
-            t(bg) 0%,
-            t(bg) 2%,
-            transparent 100%
-          );
+          background: linear-gradient(0deg, t(bg) 0%, t(bg) 2%, transparent 100%);
         }
       }
 
@@ -193,18 +184,8 @@ header {
         [cover] {
           &:before {
             background: t(bg);
-            background: -moz-linear-gradient(
-              0deg,
-              t(bg) 0%,
-              t(bg) 0%,
-              t(bg) 0%
-            );
-            background: -webkit-linear-gradient(
-              0deg,
-              t(bg) 0%,
-              t(bg) 0%,
-              t(bg) 0%
-            );
+            background: -moz-linear-gradient(0deg, t(bg) 0%, t(bg) 0%, t(bg) 0%);
+            background: -webkit-linear-gradient(0deg, t(bg) 0%, t(bg) 0%, t(bg) 0%);
             background: linear-gradient(0deg, t(bg) 0%, t(bg) 0%, t(bg) 0%);
           }
         }

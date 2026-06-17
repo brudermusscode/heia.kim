@@ -20,40 +20,30 @@
     </div>
   </div>
 
-  <div posrel>
-    <div class="outer">
-      <a href="<?= "$base_url/$model/osu"; ?>" sub>
-        <div ripple-effect rounded=mid class="option" <?php if ($mode === "osu") echo "active"; ?>>
-          <p class=icon>
-            <i class="osu-icon osu-vanilla"></i>
-          </p>
-          <p class=text hide-700><?= __("Standard") ?></p>
-        </div>
-      </a>
-      <a href="<?= "$base_url/$model/taiko"; ?>" sub>
-        <div ripple-effect rounded=mid class="option" <?php if ($mode === "taiko") echo "active"; ?>>
-          <p class=icon>
-            <i class="osu-icon osu-taiko"></i>
-          </p>
-          <p class=text hide-700>Taiko</p>
-        </div>
-      </a>
-      <a href="<?= "$base_url/$model/ctb"; ?>" sub>
-        <div ripple-effect rounded=mid class="option" <?php if ($mode === "ctb") echo "active"; ?>>
-          <p class=icon>
-            <i class="osu-icon osu-ctb"></i>
-          </p>
-          <p class=text hide-700>Catch</p>
-        </div>
-      </a>
-      <a href="<?= "$base_url/$model/mania"; ?>" sub>
-        <div ripple-effect rounded=mid class="option" <?php if ($mode === "mania") echo "active"; ?>>
-          <p class=icon>
-            <i class="osu-icon osu-mania"></i>
-          </p>
-          <p class=text hide-700>Mania</p>
-        </div>
-      </a>
-    </div>
-  </div>
+  <mode-menu-inline>
+    <a href="<?= "$base_url/$model/osu"; ?>" sub>
+      <moption ripple-effect rounded=mid <?php display_active($mode, "osu") ?>>
+        <mi class="osu-icon osu-vanilla"></mi>
+        <p class=text hide-mobile><?= __("Standard") ?></p>
+      </moption>
+    </a>
+    <a href="<?= "$base_url/$model/taiko"; ?>" sub>
+      <moption ripple-effect rounded=mid" <?php display_active($mode, "taiko") ?>>
+        <mi class="osu-icon osu-taiko"></mi>
+        <p class=text hide-mobile>Taiko</p>
+      </moption>
+    </a>
+    <a href="<?= "$base_url/$model/ctb"; ?>" sub>
+      <moption ripple-effect rounded=mid <?php display_active($mode, "ctb") ?>>
+        <mi class="osu-icon osu-ctb"></mi>
+        <p class=text hide-mobile>Catch</p>
+      </moption>
+    </a>
+    <a href="<?= "$base_url/$model/mania"; ?>" sub>
+      <moption ripple-effect rounded=mid <?php display_active($mode, "mania") ?>>
+        <mi class="osu-icon osu-mania"></mi>
+        <p class=text hide-mobile>Mania</p>
+      </moption>
+    </a>
+  </mode-menu-inline>
 </header>

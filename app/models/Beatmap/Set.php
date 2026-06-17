@@ -9,6 +9,7 @@ use Heiakim\Model\Gamemode;
 use Heiakim\Validate\Search;
 use Heiakim\Model\Comment;
 use Heiakim\Model\Artist;
+use Illuminate\Support\Collection;
 
 class Set extends Justin
 {
@@ -26,7 +27,7 @@ class Set extends Justin
    * @param int $mode
    * @param string $order
    * @param int $limit
-   * @return Set
+   * @return Collection<Set>
    */
   public static function view(
     ?string $query = null,

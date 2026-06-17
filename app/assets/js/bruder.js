@@ -69,16 +69,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await init_application();
 
-  let __current_path = window.location.pathname;
-
   window.addEventListener("popstate", async (e) => {
     if (!e.state) return;
-
-    Frontend.close_overlays();
-
     if (e.state.href == undefined || !e.state.href) return;
 
-    await Page.get(e.state.href, { coming_from: __current_path });
+    await Page.get(e.state.href, true);
   });
 
   $(document).on("keyup", (e) => {

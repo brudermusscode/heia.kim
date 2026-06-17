@@ -1,5 +1,11 @@
 <?php
 
+use Heiakim\Model\Search;
+use Illuminate\Support\Collection;
+
+/**
+ * @var ?Collection<Search>
+ */
 $Searches = LOGGED ? CurrentUser->searches()
   ->where("type", "beatmap")
   ->groupBy("search")
@@ -20,7 +26,7 @@ $Searches = LOGGED ? CurrentUser->searches()
     </div>
   </div>
 
-  <div content-width=std fl fldircol gap>
+  <div content-width=std fl fldircol alic gap>
     <?php include_once __DIR__ . "/_search.php"; ?>
 
     <?php if (LOGGED && $Searches->count()) { ?>

@@ -8,9 +8,6 @@ use Heiakim\Model\Squad;
  */
 $mode = filter_var(GET->mode ?? "", FILTER_SANITIZE_SPECIAL_CHARS);
 
-/**
- * Validate mode.
- */
 if (!in_array($mode, Gamemode::$modes_text))
   $mode = null;
 
@@ -19,39 +16,25 @@ if (!in_array($mode, Gamemode::$modes_text))
  */
 $mode_string = $mode ? Gamemode::mode_full($mode) : null;
 
-/**
- * Publicity filter.
- */
+# Prepare publicity filter.
 $publicity = GET->publicity ?? null;
 $publicity =
   $publicity !== null && in_array($publicity, Squad::$joinable)
   ? $publicity
   : null;
 
-
-
 if ($publicity !== null) {
   $publicity_array_string = array_search($publicity, Squad::$joinable);
   $publicity_string = $publicity_array_string == "request" ? "On request only" : $publicity_array_string;
 }
 
-/**
- * Basication.
- */
 $base_url = "/squads";
 $url_query = $publicity === null ? "" : "?publicity=$publicity";
-
-/**
- * @var int
- */
 $limit = 23;
-
-/**
- * @var int
- */
 $offset = 0;
 
-?>
+# Partial inclusion.
+include TEMPLATE . "/home/_page-navigator.php"; ?>
 
 <header page scroll-manipulated>
   <div class=title>
@@ -63,61 +46,57 @@ $offset = 0;
     </div>
   </div>
 
-  <div fl jucc alic gap=smol>
-    <div class="outer">
-      <a href="<?= "$base_url$url_query"; ?>" sub>
-        <div ripple-effect rounded="mid" class="option" <?php display_active($mode, null) ?>>
-          <p class="icon">
-            <mi>all_inclusive</mi>
-          </p>
-          <p class="text" hide-700><?= __("All") ?></p>
-        </div>
-      </a>
-      <a href="<?= "$base_url/osu$url_query"; ?>" sub>
-        <div ripple-effect rounded="mid" class="option" <?php display_active($mode, "osu") ?>>
-          <p class="icon">
-            <i class="osu-icon osu-vanilla"></i>
-          </p>
-          <p class="text" hide-700><?= __("Standard") ?></p>
-        </div>
-      </a>
-      <a href="<?= "$base_url/ctb$url_query"; ?>" sub>
-        <div ripple-effect rounded="mid" class="option" <?php display_active($mode, "ctb") ?>>
-          <p class="icon">
-            <i class="osu-icon osu-ctb"></i>
-          </p>
-          <p class="text" hide-700>Catch</p>
-        </div>
-      </a>
-      <a href="<?= "$base_url/taiko$url_query"; ?>" sub>
-        <div ripple-effect rounded="mid" class="option" <?php display_active($mode, "taiko") ?>>
-          <p class="icon">
-            <i class="osu-icon osu-taiko"></i>
-          </p>
-          <p class="text" hide-700>Taiko</p>
-        </div>
-      </a>
-      <a href="<?= "$base_url/mania$url_query"; ?>" sub>
-        <div ripple-effect rounded="mid" class="option" <?php display_active($mode, "mania") ?>>
-          <p class="icon">
-            <i class="osu-icon osu-mania"></i>
-          </p>
-          <p class="text" hide-700>Mania</p>
-        </div>
-      </a>
+  <mode-menu-inline>
+    <a href="<?= "$base_url$url_query"; ?>" sub>
+      <moption ripple-effect <?php display_active($mode, null) ?>>
+        <mi>all_inclusive</mi>
+        <p class="text" hide-mobile><?= __("All") ?></p>
+      </moption>
+    </a>
+    <a href="<?= "$base_url/osu$url_query"; ?>" sub>
+      <moption ripple-effect <?php display_active($mode, "osu") ?>>
+        <mi class="osu-icon osu-vanilla"></mi>
+        <p class="text" hide-mobile><?= __("Standard") ?></p>
+      </moption>
+    </a>
+    <a href="<?= "$base_url/ctb$url_query"; ?>" sub>
+      <moption ripple-effect <?php display_active($mode, "ctb") ?>>
+        <mi class="osu-icon osu-ctb"></mi>
+        <p class="text" hide-mobile>Catch</p>
+      </moption>
+    </a>
+    <a href="<?= "$base_url/taiko$url_query"; ?>" sub>
+      <moption ripple-effect <?php display_active($mode, "taiko") ?>>
+        <mi class="osu-icon osu-taiko"></mi>
+        <p class="text" hide-mobile>Taiko</p>
+      </moption>
+    </a>
+    <a href="<?= "$base_url/mania$url_query"; ?>" sub>
+      <moption ripple-effect <?php display_active($mode, "mania") ?>>
+        <mi class="osu-icon osu-mania"></mi>
+        <p class="text" hide-mobile>Mania</p>
+      </moption>
+    </a>
 
-      <?php if (!CurrentUser->squad && !CurrentUser->is_socially_excluded()) { ?>
-        <div ripple-effect rounded=mid class="option" create data-action="popup:open" data-href="/squad/new" has-tooltip=bottom>
-          <p class=icon><i class="ri-add-fill"></i></p>
-          <p class=text><?= __("Create") ?></p>
+    <?php
 
-          <div ttooltip>
-            <p text bold><?= __("Create new squad") ?></p>
-          </div>
+    # Button to create a new squad.
+    if (
+      LOGGED
+      && !CurrentUser->squad
+      && !CurrentUser->is_socially_excluded()
+    ) { ?>
+      <moption create ripple-effect has-tooltip=bottom
+        background=slight-green hide-mobile
+        request-get="squad:new">
+        <mi>add</mi>
+        <p class=text><?= __("Create") ?></p>
+        <div ttooltip>
+          <p text bold><?= __("Create new squad") ?></p>
         </div>
-      <?php } ?>
-    </div>
-  </div>
+      </moption>
+    <?php } ?>
+  </mode-menu-inline>
 </header>
 
 <div header-page-content content-width=widest fl fldircol content-gap>

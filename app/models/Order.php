@@ -2,22 +2,14 @@
 
 namespace Heiakim\Model;
 
-use Exception;
 use Heiakim\Application\Logger;
-use Heiakim\Enum\Privilege;
 use Heiakim\Justin;
 use Heiakim\Model\User;
 use Heiakim\Trait\HasDefaultUser;
-use Heiakim\Utils\Utils;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use PaypalServerSdkLib\Authentication\ClientCredentialsAuthCredentialsBuilder;
 use PaypalServerSdkLib\Environment;
-use PaypalServerSdkLib\Logging\LoggingConfigurationBuilder;
-use PaypalServerSdkLib\Logging\RequestLoggingConfigurationBuilder;
-use PaypalServerSdkLib\Logging\ResponseLoggingConfigurationBuilder;
-use PaypalServerSdkLib\PaypalServerSdkClient;
 use PaypalServerSdkLib\PaypalServerSdkClientBuilder;
-use Psr\Log\LogLevel;
 
 class Order extends Justin
 {

@@ -702,53 +702,19 @@ export const hide_floating_action = () => {
  */
 
 /**
- * Loads the page navigator for a corresponding page from the generic Router object.
- * As it should slide in like a charm on new main page loads but stay as is on sub-
- * pages of the current main page, we need the PreviousRoute, too.
+ * Finds the page-navigator and either just shows it or slides it in.
  *
  * @param {object} Route
  */
-export const page_navigator = async (Route, PreviousRoute = null) => {
-  return new Promise((resolve, reject) => {
-    let params = __page.params;
-    let query = "&";
-    let page_navigator = document.find("page-navigator");
+export const page_navigator = (Route, PreviousRoute = null) => {
+  let slide = PreviousRoute?.page_navigator !== Route.page_navigator;
 
-    // A new navigation should just be loaded, if the previous route has a different
-    // than the new route being requested. So return early if it's the same.
-    if (Route.page_navigator === PreviousRoute?.page_navigator) return resolve(1);
-
-    page_navigator?.setAttribute("reloading", true);
-
-    if (!Route.page_navigator) {
-      page_navigator?.remove();
-      return resolve(1);
-    }
-
-    Object.entries(params).forEach((value, key) => {
-      query += value[0] + "=" + value[1] + "&";
-    });
-
-    $.ajax({
-      url:
-        "/ui/page-navigator" + "?type=" + Route.page_navigator + query.slice(0, -1),
-      success: function (data) {
-        page_navigator?.remove();
-        document.body.insertAdjacentHTML("afterbegin", data.data ?? "");
-        page_navigator = document.find("page-navigator");
-
-        let slide = PreviousRoute?.page_navigator !== Route.page_navigator;
-
-        Frontend.show_page_navigator(slide);
-
-        return resolve(2);
-      },
-    });
-  });
+  Frontend.show_page_navigator(slide);
 };
 
 export const show_page_navigator = async (slide = true) => {
-  navigation = await ensure_page_navigator();
+  let navigation = await ensure_page_navigator();
+
   if (!navigation) return;
 
   let options = navigation.find_all("[pn-option]");

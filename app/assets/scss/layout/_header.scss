@@ -1,7 +1,124 @@
 @use "../abstract" as *;
 @use "../base" as *;
 
+$header-page-height: 482px;
+$header-page-tablet-height: 424px;
+$header-page-mobile-height: 224px;
+
 header {
+  &[page] {
+    padding-inline: 2.4em;
+    height: $header-page-height;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    @include full-header-fixed;
+    @include themed() {
+      background: t(box2);
+    }
+
+    @media screen and (max-width: $tablet-max-width) {
+      height: $header-page-tablet-height;
+    }
+
+    @media screen and (max-width: $mobile-max-width) {
+      height: $header-page-mobile-height;
+    }
+
+    &[scrolled="true"] {
+      height: 94px;
+      padding-inline: 16px;
+
+      @include material-card(2);
+
+      .title {
+        display: none;
+      }
+
+      search {
+        border-radius: 18px;
+
+        @media screen and (max-width: $mobile-max-width) {
+          border-radius: 20px;
+        }
+
+        [extra] {
+          opacity: 0;
+        }
+
+        input {
+          height: 3.2em;
+        }
+      }
+
+      mode-menu-inline {
+        box-shadow: none;
+        gap: $gap-smolest;
+
+        moption {
+          flex-direction: row;
+          gap: 8px;
+          height: 40px;
+          padding-inline: 16px 24px;
+
+          > mi {
+            width: 24px;
+          }
+        }
+      }
+    }
+
+    search {
+      @media screen and (max-width: $tablet-max-width) {
+        input {
+          height: 4.2em;
+        }
+      }
+
+      @media screen and (max-width: $mobile-max-width) {
+        > mi {
+          width: 42px;
+          padding-left: 24px;
+        }
+
+        [extra] {
+          padding-right: 8px;
+
+          p {
+            border-radius: 24px !important;
+          }
+        }
+
+        input {
+          height: 2.8em;
+          margin-inline: -24px -202px;
+        }
+      }
+    }
+
+    .title {
+      margin-bottom: 1.2em;
+      font-size: 1.6em;
+
+      @media screen and (max-width: $mobile-max-width) {
+        font-size: 1.2em;
+      }
+    }
+
+    .beatmaps__tags {
+      height: 60px;
+      overflow: hidden;
+      padding-top: 6px;
+
+      mbutton {
+        margin-bottom: 24px;
+      }
+    }
+  }
+
   &[full] {
     padding-left: calc($page-navigator-width + 1.2em);
   }
@@ -283,6 +400,89 @@ header {
 
   &[closed] {
     left: calc(-1 * ($main-header-width + 2em));
+  }
+}
+
+// Content with a big header that has to be pushed down.
+body[leaderboard],
+body[beatmaps],
+body[squads] {
+  main {
+    padding-top: calc($header-page-height + 2 * $main-distance);
+
+    @media screen and (max-width: $tablet-max-width) {
+      padding-top: calc($header-page-tablet-height + 2 * $main-distance);
+    }
+
+    @media screen and (max-width: $mobile-max-width) {
+      padding-top: calc($header-page-mobile-height + 2 * $main-distance);
+    }
+  }
+}
+
+mode-menu-inline {
+  @include material-card(1);
+  @include material-card-hover(2);
+  @include themed() {
+    background: t(box3);
+    color: t(text);
+  }
+  position: relative;
+  display: flex;
+  gap: $gap-smoler;
+  transition: $trans-cubic;
+  scale: none;
+  padding: 0.9em;
+
+  @media screen and (max-width: $tablet-max-width) {
+  }
+
+  @media screen and (max-width: $mobile-max-width) {
+    padding: 0.4em;
+  }
+
+  moption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    min-width: 5.8em;
+    height: 5.8em;
+    transition: $trans-cubic;
+    border-radius: 20px;
+
+    @media screen and (max-width: $mobile-max-width) {
+      height: 3.8em;
+      min-width: 3.8em;
+    }
+
+    > mi {
+      height: 38px;
+      width: 38px;
+    }
+
+    .text {
+      font-size: 0.8em;
+      font-weight: 700;
+    }
+
+    &:hover {
+      @include themed() {
+        background: t(slighter-hover);
+      }
+    }
+
+    &[active] {
+      @include themed() {
+        background: t(slight-hover);
+
+        > mi {
+          font-weight: 900;
+          color: t(company-color);
+        }
+      }
+    }
   }
 }
 

@@ -69,7 +69,8 @@ $offset = $ppage === 1
   ? ($ppage - 1) * $limit
   : ($ppage - 1) * $limit + 1;
 
-# + Big header.
+# Partials.
+include TEMPLATE . "/home/_page-navigator.php";
 include __DIR__ . "/_header.php"; ?>
 
 <div page-structure="leaderboard">
