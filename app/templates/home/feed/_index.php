@@ -1,21 +1,19 @@
 <?php
 
 use Heiakim\Model\Feed;
+use Heiakim\Time\Time;
 
 /**
- * @var int
+ * @var string $sub
  */
+
 $base_limit = 3;
-
-/**
- * @var Feed
- */
 $Feed = new Feed(CurrentUser);
 
 ?>
 
 <?php if (!in_array("applications_open", INFO_WINDOWS)) { ?>
-  <feed-section dialogue>
+  <feed-section dialogue dno>
     <story-banner fl alic background=company color=light rounded=mid>
       <picture style=width:24em;margin-bottom:-2em;margin-top:-2em;>
         <img src="<?= IMAGE . "/legal/apply.svg"; ?>" />
@@ -47,95 +45,117 @@ $Feed = new Feed(CurrentUser);
   </feed-section>
 <?php } ?>
 
+<div fl alistart jucstretch gap>
+  <column-wrapper smol>
+  </column-wrapper>
 
-<!--- NEW RANKED --->
-<feed-section>
-  <div class="feed_section__inr" fl fldircol gap>
-    <div title-inline fl alic gap=smol+>
-      <mbutton mid icon-only filled text midler>🏅</mbutton>
-      <div fl fldircol>
-        <h2><?= __("Newly ranked") ?></h2>
-        <p text slight>Beatmaps that have recently been set to ranked state. Playing these will help you rank up.</p>
+  <column-wrapper wide flone fl fldircol gap=wide flex-truncate>
+    <!--- Newly Ranked --->
+    <div fl fldircol gap=smol+>
+      <div title-inline fl alic gap=smol+>
+        <mbutton icon-only outlined text midler>🏅</mbutton>
+        <div fl fldircol>
+          <h2 text ttup><?= __("Newly ranked") ?></h2>
+          <p text color=company>Beatmaps you can achieve performance on</p>
+        </div>
+      </div>
+
+      <div fl fldircol gap=smol>
+        <get-content from="/home/get-content/newly-ranked" fl fldircol gap=smol>
+          <?php include TEMPLATE . "/beatmap/_placeholder-column.php" ?>
+        </get-content>
       </div>
     </div>
 
-    <div class="feed_section__content" grid-repeat gap="smol">
-      <get-content from="/home/get-content/newly-ranked">
-        <?php include COMPONENT . "/animations/_loading_content_beatmaps.html"; ?>
-      </get-content>
-    </div>
-  </div>
-</feed-section>
-
-
-
-<!--- NEW LOVED --->
-<feed-section>
-  <div class="feed_section__inr" fl fldircol gap>
-    <div title-inline fl alic gap=smol+>
-      <mbutton mid icon-only filled text midler>❤️</mbutton>
-      <div fl fldircol>
-        <h2><?= __("Newly loved") ?></h2>
-        <p text slight>Beatmaps that are now featuring the loved state! Playing these won't help you rank up.</p>
-      </div>
-    </div>
-
-
-    <div class="feed_section__content" grid-repeat gap="smol">
-      <get-content from="/home/get-content/newly-loved">
-        <?php include COMPONENT . "/animations/_loading_content_beatmaps.html"; ?>
-      </get-content>
-    </div>
-  </div>
-</feed-section>
-
-<?php if (!in_array("open_development", INFO_WINDOWS)) { ?>
-  <feed-section dialogue>
-    <story-banner fl alic filled=darker rounded=mid>
-      <picture style=width:24em;>
-        <img src="<?= IMAGE . "/legal/dev.webp"; ?>" />
-      </picture>
-
-      <div fl gap fldircol>
+    <!--- Newly Loved --->
+    <div fl fldircol gap=smol+>
+      <div title-inline fl alic gap=smol+>
+        <mbutton icon-only outlined text midler>❤️</mbutton>
         <div>
-          <p text wide bold><?= __("A brief story") ?></p>
-          <p text><?= __("Read along about how we approach development on {app-name}.") ?></p>
-        </div>
-
-        <div fl jucend>
-          <a href="/legal/development">
-            <mbutton background=invert color=invert>
-              <p text bold><?= __("Learn more") ?></p>
-            </mbutton>
-          </a>
+          <h2 text ttup><?= __("Newly loved") ?></h2>
+          <p text color=company>Beatmaps people like alot</p>
         </div>
       </div>
-
-      <mbutton close filled=darker hoverable icon-only close-dialogue data-info-window="open_development">
-        <mi size=midler>close</mi>
-      </mbutton>
-    </story-banner>
-  </feed-section>
-<?php } ?>
-
-
-<!--- MOST PLAYED --->
-<feed-section>
-  <div class="feed_section__inr" fl fldircol gap>
-    <div title-inline fl alic gap=smol+>
-      <mbutton mid icon-only filled text midler>
-        <mi midler>trending_up</mi>
-      </mbutton>
-      <div fl fldircol>
-        <h2><?= __("Most played") ?></h2>
-        <p text slight>Beatmaps, that have been played the very most over all by any player.</p>
+      <div fl fldircol gap=smol>
+        <get-content from="/home/get-content/newly-loved" fl fldircol gap=smol>
+          <?php include TEMPLATE . "/beatmap/_placeholder-column.php" ?>
+        </get-content>
       </div>
     </div>
 
-    <div class="feed_section__content" grid-repeat gap="smol">
-      <get-content from="/home/get-content/most-played-beatmaps">
-        <?php include COMPONENT . "/animations/_loading_content_beatmaps.html"; ?>
-      </get-content>
+    <!--- Most Played --->
+    <div fl fldircol gap=smol+>
+      <div title-inline fl alic gap=smol+>
+        <mbutton icon-only outlined text>
+          <mi midler>trending_up</mi>
+        </mbutton>
+        <div>
+          <h2 text ttup><?= __("Most played") ?></h2>
+          <p text color=company>Beatmaps that have been played alot</p>
+        </div>
+      </div>
+      <div fl fldircol gap=smol>
+        <get-content from="/home/get-content/most-played-beatmaps" fl fldircol gap=smol>
+          <?php include TEMPLATE . "/beatmap/_placeholder-column.php" ?>
+        </get-content>
+      </div>
     </div>
-  </div>
-</feed-section>
+  </column-wrapper>
+
+  <column-wrapper smol hide-tablet style="position:sticky;top:16px;">
+    <div fl fldircol gap=smol+>
+      <div fl fldircol jucc style="height:46px;">
+        <p text bold ttup>Player you follow</p>
+        <p text smol color=company>Activity of player you follow</p>
+      </div>
+
+      <?php
+
+      $Following = CurrentUser->followings;
+
+      # Sort the Followings by latest activity.
+      $SortedFollowing = $Following->sortByDesc(function ($Follower) {
+        $last_activity = date("Y-m-d H:i:s", $Follower->latest_activity);
+        $last_activity_checked = $Follower->pivot->updated_at;
+
+        if ($Follower->pivot->updated_at == null)
+          return $Follower->pivot->created_at < $last_activity;
+
+        return $last_activity > $last_activity_checked;
+      });
+
+      foreach ($SortedFollowing->take(6) ?? [] as $Follower) {
+        $last_activity_timestamp = date("Y-m-d H:i:s", $Follower->latest_activity);
+        $last_activity_ago = Time::ago($last_activity_timestamp);
+        $last_activity_checked = $Follower->pivot->updated_at;
+        $relationship_created_at = $Follower->pivot->created_at;
+
+        $has_activity =
+          $last_activity_checked == NULL
+          ? $relationship_created_at < $last_activity_timestamp
+          : $last_activity_checked < $last_activity_timestamp;
+
+      ?>
+
+        <div fl alic gap=smol p4 rounded=wide hoverable>
+          <picture std circled>
+            <?php $Follower->image(); ?>
+            <?php if ($has_activity) { ?>
+              <div class=bg-wrap>
+                <?php
+                include ROOT . "/public/assets/images/fancy-colorful-bg.html"; ?>
+              </div>
+            <?php } ?>
+          </picture>
+
+          <div>
+            <p text bold><?= $Follower->name; ?></p>
+            <p text smol>Last active &middot; <span color=company>
+                <?= Time::ago($last_activity_timestamp, true); ?></span></p>
+          </div>
+        </div>
+
+      <?php } ?>
+    </div>
+  </column-wrapper>
+</div>

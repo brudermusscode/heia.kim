@@ -1,14 +1,14 @@
 @use "../abstract" as *;
 @use "../base" as *;
 
-$set-header-height: 28em;
+$set-header-height: 23.6em;
 $set-small-header-height: 20em;
 $set-smallest-header-height: 12em;
 $set-width: 1620px;
 
-$pb-size: 5.2em;
-$pb-small-size: 4.2em;
-$pb-smallest-size: 3.6em;
+$pb-size: 5.8em;
+$pb-small-size: 5em;
+$pb-smallest-size: 4em;
 
 .set__header {
   position: fixed;
@@ -18,58 +18,68 @@ $pb-smallest-size: 3.6em;
   height: $set-header-height;
   width: $full-header-width;
   transition: $trans-cubic;
-
-  @media screen and (max-width: 1900px) {
-    left: $page-navigator-width;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 42px 62px;
+  padding-inline: 62px;
+  left: $page-navigator-width;
 
   @media screen and (max-width: $mobile-max-width) {
-    left: 6px;
-    width: calc(100vw - 12px);
-    height: $set-small-header-height;
-  }
-
-  @media screen and (max-width: 500px) {
+    left: 0;
+    margin-inline: 6px;
     height: $set-smallest-header-height;
+    width: calc(100vw - 2 * 6px);
+    padding-inline: 28px;
+    padding-block: 28px;
   }
 
-  .sh__inr {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding-inline: 4.2em;
-    padding-block: 3em;
+  &[scrolled="true"] {
+    height: calc(82px + 2 * 1.8em);
+    padding-block: 1.8em;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
     align-items: center;
 
-    .status {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: $set-width;
-      display: flex;
-      justify-content: flex-start;
+    @media screen and (max-width: $mobile-max-width) {
+      height: 82px;
+      padding: 18px;
+    }
 
-      .status_option {
-        border-radius: 16px;
-        padding: 0.6em 1em;
-        white-space: nowrap;
+    [top] {
+      display: none;
+    }
 
-        @media screen and (max-width: 600px) {
-          padding: 0.4em 1em;
+    [bottom] {
+      [title] {
+        margin-top: 0;
+
+        > p {
+          font-size: 1.8em;
         }
       }
     }
 
-    @media screen and (max-width: 800px) {
-      padding-inline: 2.4em;
-      padding-block: 2.8em;
+    play-track {
+      play-button {
+        height: 4.2em;
+        width: 4.2em;
+
+        @media screen and (max-width: $mobile-max-width) {
+          height: 3.2em;
+          width: 3.2em;
+        }
+      }
+
+      track-duration {
+        bottom: -18px;
+      }
     }
   }
 
-  .sh__cover {
+  [cover] {
+    @include image_fade_before;
     position: absolute;
     z-index: 1;
     left: 0;
@@ -79,156 +89,70 @@ $pb-smallest-size: 3.6em;
     border-radius: 42px;
     overflow: hidden;
 
-    @include image_fade_before;
+    picture {
+      height: 100%;
+      max-height: 100%;
+      min-height: 100%;
+      min-width: 100%;
+
+      img {
+        height: 100%;
+        width: auto;
+        min-width: 100%;
+        max-width: 100%;
+      }
+    }
   }
 
-  .sh__content {
+  [top] {
     position: relative;
     z-index: 2;
-    max-width: calc($set-width);
     width: 100%;
+    max-width: $set-width;
     display: flex;
-    flex-direction: column;
-    gap: 1.2em;
+    justify-content: flex-start;
 
+    .status_option {
+      border-radius: 16px;
+      padding: 0.6em 1em;
+      white-space: nowrap;
+
+      @media screen and (max-width: 600px) {
+        padding: 0.4em 1em;
+      }
+    }
+  }
+
+  [bottom] {
+    position: relative;
+    z-index: 2;
+    gap: $gap-std;
     @include themed() {
       color: white;
     }
 
-    .play_button {
-      height: $pb-size;
-      width: $pb-size;
-      padding-top: 0.4em;
+    @media screen and (max-width: $mobile-max-width) {
+      gap: $gap-smol-plus;
+    }
 
-      @media screen and (max-width: 1000px) {
-        height: $pb-small-size;
-        width: $pb-small-size;
-      }
+    [title] {
+      margin-top: -10px;
 
-      @media screen and (max-width: 600px) {
-        padding-top: 0.2em;
-        height: $pb-smallest-size;
-        width: $pb-smallest-size;
-      }
+      > p {
+        font-size: 3.2em;
+        line-height: 1.4;
 
-      .length {
-        position: absolute;
-        display: block;
-        content: "";
-        height: 0.6em;
-        width: 0;
-        background: white;
-        border-radius: 24px;
-        top: 11.8em;
-        transition: $trans-cubic;
-        opacity: 0;
-
-        @media screen and (max-width: 1000px) {
-          top: 10.4em;
+        @media screen and (max-width: $tablet-max-width) {
+          font-size: 2.4em;
         }
 
-        @media screen and (max-width: 800px) {
-          top: 6em;
-        }
-
-        @media screen and (max-width: 600px) {
-          top: 5.2em;
-        }
-      }
-
-      &[active] {
-        .length {
-          visibility: visible;
-          opacity: 1;
-        }
-      }
-
-      .pb__inr {
-        position: absolute;
-        height: $pb-size;
-        width: $pb-size;
-        border-radius: 50%;
-        background: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: $dark;
-        transition: all 0.4s $cubic;
-
-        @media screen and (max-width: 1000px) {
-          height: $pb-small-size;
-          width: $pb-small-size;
-        }
-
-        @media screen and (max-width: 600px) {
-          height: $pb-smallest-size;
-          width: $pb-smallest-size;
-        }
-
-        [pause] {
-          display: none;
-        }
-
-        &:active {
-          scale: 0.98;
-        }
-
-        &:after {
-          display: block;
-          content: "";
-          z-index: -1;
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          background: rgba(255, 255, 255, 0.42);
-          border-radius: 50%;
-        }
-
-        &[active] {
-          scale: 0.78;
-
-          [pause] {
-            display: block;
-          }
-
-          [play] {
-            display: none;
-          }
-
-          &:after {
-            animation: play-button-buffer 3.2s ease infinite;
-          }
-        }
-
-        @keyframes play-button-buffer {
-          from,
-          to {
-            height: 100%;
-            width: 100%;
-          }
-
-          50% {
-            height: calc(100% + 2em);
-            width: calc(100% + 2em);
-          }
+        @media screen and (max-width: $mobile-max-width) {
+          font-size: 1.4em;
         }
       }
     }
 
-    .title {
-      font-size: 3.2em;
-      line-height: 1.32em;
-
-      @media screen and (max-width: 1000px) {
-        font-size: 2.4em;
-      }
-
-      @media screen and (max-width: 600px) {
-        font-size: 1.6em;
-      }
-    }
-
-    .tag {
+    [tag] {
       border-radius: 16px;
       padding: 0.6em 1em;
       white-space: nowrap;
@@ -244,116 +168,129 @@ $pb-smallest-size: 3.6em;
     }
   }
 
-  .sh__actions {
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    gap: 0.4em;
-    width: 100%;
+  play-track {
+    &[active] {
+      track-duration {
+        visibility: visible;
+        opacity: 1;
+      }
 
-    @media screen and (max-width: 1000px) {
-      justify-content: center;
+      play-button {
+        scale: 0.78;
+
+        &:hover {
+          scale: 0.8;
+        }
+
+        &:after {
+          animation: play-button-buffer 3.2s ease infinite;
+        }
+
+        > mi {
+          &::before {
+            content: "pause";
+          }
+        }
+      }
     }
 
-    @media screen and (max-width: 800px) {
-      display: none;
-    }
-  }
+    track-duration {
+      position: absolute;
+      z-index: 1;
+      display: block;
+      content: "";
+      height: 6px;
+      width: 0;
+      bottom: -38px;
+      left: 0;
+      opacity: 0;
+      transition:
+        $trans-cubic,
+        opacity 0.1s linear;
 
-  &[scrolled="true"] {
-    height: calc(82px + 2 * 1.8em);
-
-    .sh__inr {
-      padding-block: 1.8em;
-
-      .status {
+      @media screen and (max-width: $mobile-max-width) {
         display: none;
       }
     }
 
-    .sh__cover {
-      box-shadow: var(--mio-theme-elevation-2);
-    }
+    play-button {
+      z-index: 2;
+      position: relative;
+      height: $pb-size;
+      width: $pb-size;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $dark;
+      transition: scale 0.4s $cubic;
+      cursor: pointer;
 
-    .sh__content {
-      .play_button {
-        height: 4.2em;
-        width: 4.2em;
-        padding-top: 0.2em;
+      @media screen and (max-width: $tablet-max-width) {
+        height: $pb-small-size;
+        width: $pb-small-size;
+      }
 
-        .length {
-          height: 0.4em;
-          top: 5.6em;
+      @media screen and (max-width: $mobile-max-width) {
+        height: $pb-smallest-size;
+        width: $pb-smallest-size;
+      }
 
-          @media screen and (max-width: 1000px) {
-            top: 5.4em;
-          }
+      &:hover {
+        scale: 1.04;
+      }
 
-          @media screen and (max-width: 600px) {
-            top: 5em;
-          }
+      &:active {
+        scale: 0.98;
+      }
+
+      &:after {
+        display: block;
+        content: "";
+        z-index: -1;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.42);
+        border-radius: 50%;
+      }
+
+      @keyframes play-button-buffer {
+        from,
+        to {
+          height: 100%;
+          width: 100%;
         }
 
-        .pb__inr {
-          height: 4.2em;
-          width: 4.2em;
-        }
-
-        &,
-        .pb__inr {
-          @media screen and (max-width: 600px) {
-            height: $pb-smallest-size;
-            width: $pb-smallest-size;
-          }
+        50% {
+          height: calc(100% + 2em);
+          width: calc(100% + 2em);
         }
       }
 
-      .title {
-        font-size: 2.4em;
-
-        @media screen and (max-width: 1000px) {
-          font-size: 1.8em;
-        }
-
-        @media screen and (max-width: 800px) {
-          font-size: 1.6em;
+      > mi {
+        &::before {
+          display: block;
+          content: "arrow_back_2";
         }
       }
-
-      .artist-no-bg,
-      .artist {
-        padding-block: 0.06em;
-        font-size: 1em;
-      }
-
-      .tag {
-        background: white;
-        border-radius: 16px;
-        padding: 0.4em 0.8em;
-        color: $dark;
-      }
-    }
-
-    .sh__actions {
-      display: none;
     }
   }
 }
 
 .set__main {
   margin-top: 0.4em;
-  padding-top: calc($set-header-height + 2.4em);
+  padding-top: calc($set-header-height + 2 * $main-distance);
   max-width: $set-width;
   margin: 0 auto;
 
-  @media screen and (max-width: $mobile-max-width) {
-    padding-top: calc($set-small-header-height + 42px);
+  @media screen and (max-width: $tablet-max-width) {
+    padding-top: calc($set-header-height + 2 * $main-distance);
   }
 
-  @media screen and (max-width: 500px) {
-    padding-top: calc($set-smallest-header-height + 42px);
+  @media screen and (max-width: $mobile-max-width) {
+    padding-top: calc($set-smallest-header-height + 2 * $main-distance);
   }
 }
 

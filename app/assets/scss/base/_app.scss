@@ -1495,6 +1495,10 @@ get-content {
     height: 207px;
   }
 
+  &[loading-content="beatmap-column"] {
+    height: 117.5px;
+  }
+
   &[loading-content="score"] {
     height: 130px;
   }
@@ -1800,14 +1804,6 @@ input[type="range"] {
   margin-inline: auto;
   max-width: 2100px;
   padding-left: 1.2em;
-
-  &[page-structure="squad"] {
-    max-width: 1680px;
-  }
-
-  @media screen and (max-width: 1800px) {
-    gap: $gap-smol-plus;
-  }
 
   @media screen and (max-width: $mobile-max-width) {
     padding-left: 0;

@@ -222,7 +222,7 @@ header {
 }
 
 [page-structure="squad"] {
-  max-width: $squad-content-width !important;
+  max-width: $squad-content-width;
   gap: $gap-mid;
   justify-content: stretch;
 

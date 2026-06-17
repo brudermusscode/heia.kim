@@ -38,6 +38,7 @@ use Heiakim\Application\Cookie;
     is_sounds_enabled: <?= defined("SOUNDS_ENABLED") && SOUNDS_ENABLED == 0 ? "0" : "1"; ?>,
     is_animations_enabled: <?= defined("ANIMATIONS_ENABLED") && ANIMATIONS_ENABLED == 0 ? "0" : "1"; ?>,
     overlay: null,
+    audio: null,
   };
 
   __page["params"] = <?= json_encode($_GET) ?>;

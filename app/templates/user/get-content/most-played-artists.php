@@ -66,7 +66,7 @@ else :
 
   <div fl fldircol gap=smoler>
     <div fl jucsb alic>
-      <div fl gap=smoler title-inline>
+      <div fl gap=smoler>
         <p text bold ttup>Artists &nbsp;&middot;&nbsp; </p>
         <p text color=company><?= number_format($Artists->count()); ?></p>
       </div>

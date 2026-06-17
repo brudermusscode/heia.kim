@@ -27,6 +27,16 @@ function oauth_credentials(string $key)
 }
 
 /**
+ * @param string $str
+ * @return ?mixed
+ */
+function aglobal(string $str, bool $from_router = true)
+{
+  $key = $from_router ? "route_param_$str" : $str;
+  return $GLOBALS[$key] ?? null;
+}
+
+/**
  * @param ?string $message
  * @param ?mixed $data
  * @return object|string

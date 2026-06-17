@@ -1,24 +1,18 @@
 <?php
 
 use Heiakim\Model\Beatmap;
+use Illuminate\Support\Collection;
+
+$limit = 4;
 
 /**
- * @var Beatmap
+ * @var Collection<Beatmap>
  */
 $Beatmaps = Beatmap::where("status", 2)
   ->orderBy("last_update", "DESC")
   ->groupBy("set_id")
-  ->limit(6)
+  ->limit($limit)
   ->get();
 
-/**
- * Card include appearances
- */
-$include_all_diffs = false;
-$include_time_ago = true;
-$include_status = false;
-
 foreach ($Beatmaps as $key => $Beatmap)
-  include COMPONENT . "/beatmaps/_beatmap.php";
-
-unset($Beatmaps, $include_status, $include_all_diffs, $include_time_ago);
+  include COMPONENT . "/beatmaps/_beatmap-column.php";

@@ -1,14 +1,14 @@
 @use "../abstract" as *;
 @use "../base" as *;
 
-$header-user-height: 317px;
+$header-user-height: 324px;
 $header-user-inr-width: 1480px;
 $user-header-inline-padding: 4.2em;
 
 header {
   @include themed() {
     &[full="user"] {
-      height: 320px;
+      height: $header-user-height;
       position: fixed;
       z-index: 0;
       width: 100svw;
@@ -197,6 +197,7 @@ header {
 [page-structure="user"] {
   max-width: 2100px;
   margin-inline: auto;
+  margin-top: calc($header-user-height + 2 * $main-distance);
 
   @media screen and (max-width: $mobile-max-width) {
     padding-left: 0;

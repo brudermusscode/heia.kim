@@ -42,7 +42,7 @@
 
     <a pn-option href="/squads" page=squads>
       <mbutton mid icon-only background=clean hoverable has-tooltip=right <?= display_active_when_condition(in_array(CURRENT_PAGE, ["squads", "squad"])) ?>>
-        <mi>workspaces</mi>
+        <mi>chess_king_2</mi>
         <div ttooltip>
           <p text bold>Squads</p>
         </div>

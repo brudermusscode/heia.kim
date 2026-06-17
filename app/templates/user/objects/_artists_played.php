@@ -7,8 +7,6 @@ use Heiakim\Model\User;
  * @var int $gumode
  */
 
-// TODO: Make these files only accessible through using the whole website.
-
 /**
  * @var bool
  */

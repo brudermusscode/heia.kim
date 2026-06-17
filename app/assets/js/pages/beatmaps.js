@@ -45,6 +45,44 @@ export const close_search = async () => {
 $(function () {
   //
 
+  $(document).on("click", "[data-action='beatmap:set:play']", function (e) {
+    let track = this.closest("play-track");
+    let duration = track.find("track-duration");
+    let audio;
+
+    if (track.hasAttribute("active")) {
+      __page.audio.pause();
+      track.deactivate();
+
+      return;
+    }
+
+    __page.audio = audio = new Audio(
+      __osu.beatmap_preview_url + "/preview/" + this.dataset.id + ".mp3",
+    );
+
+    audio.volume = 0.3;
+    audio.play();
+
+    audio.addEventListener("loadedmetadata", () => {
+      track.activate();
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      const audio_duration = audio.duration;
+      const current_time = audio.currentTime;
+      const progress_percent = (current_time / audio_duration) * 100;
+
+      duration.style.width = progress_percent + "%";
+    });
+
+    audio.addEventListener("ended", () => {
+      track.deactivate();
+      duration.removeAttribute("style");
+      __page.audio = null;
+    });
+  });
+
   /**
    * @event keyup
    */
@@ -150,61 +188,6 @@ $(function () {
     }
 
     query_input.value = value;
-  });
-
-  /**
-   * Start playing a beatmap set's preview song.
-   */
-  $(document).on("click", '[data-action="beatmaps:set,play"]', function (e) {
-    if (this.hasAttribute("active")) {
-      __current_audio_element.pause();
-      this.removeAttribute("active");
-
-      return;
-    }
-
-    this.setAttribute("active", "");
-    let set_id = this.dataset.id;
-    let play_button = this.closest(".play_button");
-    let length = play_button.querySelector(".length");
-
-    let audio = document.createElement("audio");
-    audio.setAttribute(
-      "src",
-      __osu.beatmap_preview_url + "/preview/" + set_id + ".mp3",
-    );
-    __main.appendChild(audio);
-
-    __current_audio_element = audio;
-
-    audio.play();
-
-    audio.addEventListener("loadedmetadata", () => {
-      const audio_duration = audio.duration;
-
-      play_button.setAttribute("active", "");
-      this.setAttribute("active", "");
-
-      audio.addEventListener("timeupdate", () => {
-        const current_time = audio.currentTime;
-        const progress_percent = (current_time / audio_duration) * 100;
-
-        length.style.width = progress_percent + "%";
-
-        if (audio.ended) length.style.width = "100%";
-      });
-    });
-
-    // audio.addEventListener('pause', () => {
-    //   console.log('Audio was stopped.');
-    // });
-
-    audio.addEventListener("ended", () => {
-      this.removeAttribute("active");
-      length.removeAttribute("style");
-      play_button.removeAttribute("active");
-      audio.remove();
-    });
   });
 
   /**

@@ -133,7 +133,7 @@ class Gamemode extends Justin
    * @param int $gumode The game mode from 0-8 (excl. 7)
    * @return object
    */
-  public static function gumode_text(int $gumode)
+  public static function gumode_text(?int $gumode)
   {
 
     $return = [];

@@ -24,10 +24,12 @@ if ($object_visibility && $has_played) { ?>
 
   <div fl fldircol gap=smoler>
     <div fl alic jucsb>
-      <p text bold ttup title-inline>Statistics</p>
-      <mbutton icon-only mr hoverable color=special>
-        <mi size="midler">stat_3</mi>
-      </mbutton>
+      <p text bold ttup>Statistics</p>
+      <a href="<?= $User->link() ?>/statistics">
+        <mbutton icon-only hoverable color=special>
+          <mi size="midler">stat_3</mi>
+        </mbutton>
+      </a>
     </div>
     <box-model mt=smol user-stats fl alic outlined rounded=mid>
       <bm-inr size=midler flexone>

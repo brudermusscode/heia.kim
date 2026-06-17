@@ -466,6 +466,10 @@ $artist-card-height: 12em;
   position: relative;
   z-index: 3;
 
+  @media screen and (max-width: $mobile-max-width) {
+    font-size: 0.8em;
+  }
+
   &:hover {
     .hover_menu {
       opacity: 1;

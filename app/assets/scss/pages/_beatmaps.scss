@@ -4,6 +4,63 @@
 $beatmap-content-width: 1620px;
 $beatmap-header-width: 1120px;
 
+beatmap {
+  display: block;
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+
+  &[column] {
+    @include themed() {
+      background: t(box3);
+    }
+    padding-inline: 28px;
+    padding-block: 24px;
+
+    picture {
+      position: absolute;
+      z-index: 0;
+      right: 0;
+      top: 0;
+      height: 100%;
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+        @include themed() {
+          background: t(box3);
+          background: linear-gradient(-90deg, transparent 0%, t(box3) 100%);
+        }
+      }
+
+      img {
+        vertical-align: middle;
+      }
+    }
+
+    beatmap-content {
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+
+    beatmap-status {
+      position: absolute;
+      left: 12px;
+      top: 0;
+      margin-inline: 12px;
+      padding: 4px 12px 4px 6px;
+      border-radius: 12px;
+    }
+  }
+}
+
 .beatmaps {
   transition: $trans-cubic;
   padding-top: 32em;

@@ -514,6 +514,10 @@ mbutton {
   }
 
   &[active] {
+    font-weight: 900;
+    mi {
+      font-weight: 800;
+    }
     @include themed() {
       background: t(active) !important;
       color: t(active-text);

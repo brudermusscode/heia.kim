@@ -4,16 +4,13 @@ use Heiakim\Model\Beatmap;
 use Heiakim\Model\Beatmap\Set;
 use Heiakim\Model\Gamemode;
 use Heiakim\Model\Artist;
+use Heiakim\Model\Score;
+use Illuminate\Support\Collection;
 
-/**
- * Get params
- */
-$set_id = filter_var($_GET["set_id"] ?? 0, FILTER_VALIDATE_INT) ?? 0;
-$map_id = filter_var($_GET["map_id"] ?? 0, FILTER_VALIDATE_INT) ?? 0;
-$mode   = filter_var($_GET["mode"] ?? "osu", FILTER_SANITIZE_SPECIAL_CHARS);
-$mod
-  = $current_mod
-  = filter_var($_GET["mod"] ?? "vanilla", FILTER_SANITIZE_SPECIAL_CHARS);
+$set_id = aglobal("set_id") ?? 0;
+$map_id = aglobal("map_id") ?? 0;
+$mode   = aglobal("mode") ?? "osu";
+$mod    = $current_mod = aglobal("mod") ?? "vanilla";
 
 /**
  * @var Set
@@ -29,64 +26,44 @@ $Beatmap = $Set?->beatmaps
   ->where("id", $map_id)
   ->first();
 
-/**
- * Set and beatmap are set?
- */
 if (!$Set || !$Beatmap)
   include UNAVAILABLE;
 else {
 
-  /**
-   * Validate mode
-   */
+  # Serialize mode.
   if (!in_array($mode, Gamemode::$modes_text))
     $mode = Gamemode::$modes_text[0];
 
-  /**
-   * Validate mod
-   */
+  # Serialize mod.
   if (!in_array($mod, Gamemode::$mods_text))
     $mod = $current_mod = Gamemode::$mods_text[0];
 
-  /**
-   * Gumode
-   */
   $gumode = Gamemode::find_gumode($mode, $mod, array: false);
 
   /**
-   * All Beatmaps of this Set
+   * @var Collection<Beatmap>
    */
   $Beatmaps = $Set->beatmaps()
     ->with("feedback")
     ->orderByDesc("diff")
     ->get();
 
-  /**
-   * Create featured artists from map title and artist column.
-   */
+  # This will ensure that the artist string is split by certain characters to create
+  # new Artists and attach them to this Beatmap/Set.
   $Beatmap->create_featured_artists();
 
   /**
-   * @var Artist
+   * @var Collection<Artist>
    */
   $Artists = $Set->artists;
 
-  /**
-   * URLs
-   */
   $base_url = "/beatmap-set/$Set->id/$Beatmap->id";
 
-  /**
-   * Include header
-   */
+  # Partial inclusion.
+  include TEMPLATE . "/home/_page-navigator.php";
   include __DIR__ . "/_header.php";
-
-  /**
-   * Show menu on mobile devices
-   */
-  include __DIR__ . "/_mobile_menu.php";
-
-?>
+  include __DIR__ . "/_mode-menu.php";
+  include __DIR__ . "/_mobile-menu.php"; ?>
 
   <div class=set__main content-width=wide fl fldircol content-gap>
     <div class="s__">
@@ -116,18 +93,18 @@ else {
 
           <?php
 
-          /**
-           * Check the INFO_WINDOWS cookie to contain the string
-           * `beatmap_comments` and hide it, if it is in.
-           */
           $show_info_window = !in_array("beatmap_comments", INFO_WINDOWS);
 
           ?>
 
-          <div has-tooltip=bottom <?php if ($show_info_window) echo "has-info-window"; ?> disabled>
-            <mbutton mid data-action="beatmaps:comments,open" data-id=<?= $Set->id; ?> icon-only filled=lighter ripple-effect>
+          <div has-tooltip=bottom disabled
+            <?= $show_info_window ? "has-info-window" : ""; ?>>
+            <mbutton mid icon-only filled=lighter ripple-effect
+              data-action="beatmap:comment:wrapper"
+              data-id=<?= $Set->id; ?>>
               <mi>forum</mi>
             </mbutton>
+
             <div ttooltip>
               <p text std bold><?= __("Comments") ?></p>
             </div>
@@ -170,14 +147,9 @@ else {
               </mbutton>
 
               <jump-menu menu-more filled=lighter elevated color=dynamic>
-
-
                 <!--- REQUEST --->
                 <?php
 
-                /**
-                 * @var bool
-                 */
                 $can_request_ranking = $Beatmap->ranking_requestable();
 
                 if ($can_request_ranking) :
@@ -186,9 +158,7 @@ else {
                     ->where("active", 1)
                     ->first();
 
-                  if (!$MyBeatmapRequest) :
-
-                ?>
+                  if (!$MyBeatmapRequest) : ?>
                     <div request-get="request:new" data-id="<?= $Beatmap->id; ?>" ripple-effect
                       class=jm__option hoverable>
                       <mi>forward</mi>
@@ -204,12 +174,11 @@ else {
                   <?php endif; ?>
 
                   <div divide="line"></div>
-
                 <?php endif; ?>
 
 
                 <!--- SQUAD --->
-                <?php if (CurrentUser->squad) { ?>
+                <?php if (CurrentUser->squad) : ?>
                   <div dno ripple-effect class=jm__option hoverable
                     request-get="squad:thread:new"
                     data-id=<?= $Set->id; ?>
@@ -217,14 +186,14 @@ else {
                     <mi>gesture</mi>
                     <p text std><?= __("Create Squad Thread") ?></p>
                   </div>
-                <?php } else { ?>
+                <?php else : ?>
                   <a href="/squads">
                     <div ripple-effect class=jm__option hoverable>
                       <mi>workspaces</mi>
                       <p text std><?= __("Join a Squad for more") ?></p>
                     </div>
                   </a>
-                <?php }
+                <?php endif;
 
                 // TODO: Create squad post for beatmaps.
                 ?>
@@ -249,7 +218,7 @@ else {
     <?php
 
     /**
-     * Scores
+     * @var Collection<Score>
      */
     $Scores = $Beatmap->score_leaderboard($gumode, limit: 10);
 
@@ -289,18 +258,13 @@ else {
 
         } else {
 
-          /**
-           * Only show the very first element of object.
-           */
+          # Only show the very first User from top scores.
           foreach ($Scores->take(1) as $key => $Score)
-            include __DIR__ . "/_user_card.php";
-
-        ?>
+            include __DIR__ . "/_user_card.php"; ?>
 
           <div class="divide"></div>
 
           <?php if ($Scores->count() < 2) { ?>
-
             <box-model outlined animation=fade-in>
               <bm-inr size=mid>
                 <div fl alic gap>
@@ -309,21 +273,14 @@ else {
                 </div>
               </bm-inr>
             </box-model>
-
-        <?php
-
-          } else {
+        <?php } else {
             foreach ($Scores->skip(1) as $key => $Score)
               include __DIR__ . "/_user_card.php";
 
             unset($rank);
           }
-        }
-
-        ?>
+        } ?>
       </div>
-
-
 
       <!--- STATS --->
       <div class=s__stats fl fldircol gap=smol+>
@@ -336,22 +293,16 @@ else {
 
     <?php
 
-    /**
-     * Build an array with artist's names
-     */
     $artist_names = [];
 
     if ($Artists->count())
       foreach ($Artists as $Artist)
         array_push($artist_names, $Artist->name);
 
-    /**
-     * @var int
-     */
     $fetch_count = 8;
 
     /**
-     * @var ?Set
+     * @var ?Collection<Set>
      */
     $Sets = Beatmap\Set::view(
       query: implode(" ", $artist_names),
@@ -359,15 +310,9 @@ else {
       limit: $fetch_count,
     );
 
-    /**
-     * @var int
-     */
     $count = $Sets->count();
 
-    if ($Sets->count() && $Artists->count()) {
-
-    ?>
-
+    if ($Sets->count() && $Artists->count()) : ?>
       <div class="s__maps" fl fldircol gap>
         <div pblock12>
           <p text midler bold>
@@ -415,12 +360,8 @@ else {
           </div>
         <?php } ?>
       </div>
-
-    <?php } ?>
+    <?php endif; ?>
   </div>
 
-
-<?php
-
-  include TEMPLATE . "/global/_scroll_end_logo.php";
+<?php include TEMPLATE . "/global/_scroll_end_logo.php";
 }

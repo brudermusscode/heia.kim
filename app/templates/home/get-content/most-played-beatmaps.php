@@ -1,14 +1,12 @@
 <?php
 
 use Heiakim\Model\Beatmap;
+use Illuminate\Support\Collection;
+
+$limit = 4;
 
 /**
- * @var int
- */
-$limit = 6;
-
-/**
- * @var Beatmap
+ * @var Collection<Beatmap>
  */
 $MostPlayedBeatmaps = Beatmap::orderBy("plays", "DESC")
   ->groupBy("set_id")
@@ -16,4 +14,4 @@ $MostPlayedBeatmaps = Beatmap::orderBy("plays", "DESC")
   ->get();
 
 foreach ($MostPlayedBeatmaps as $Beatmap)
-  include TEMPLATE . "/components/beatmaps/_beatmap.php";
+  include COMPONENT . "/beatmaps/_beatmap-column.php";

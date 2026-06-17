@@ -36,7 +36,7 @@ if ($object_visibility) :
         <p text color=company><?= $Followers->count(); ?></p>
       </div>
       <?php if ($Followers->count()) { ?>
-        <mbutton icon-only mr=smol hoverable>
+        <mbutton icon-only hoverable>
           <mi size=midler>call_received</mi>
         </mbutton>
       <?php } ?>
