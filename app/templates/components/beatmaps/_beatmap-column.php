@@ -37,8 +37,12 @@ $last_updated = Time::ago($Beatmap->last_update, true);
     </picture>
 
     <beatmap-content flex-truncate>
-      <p text std trimt semibold lh1>
-        <?= htmlspecialchars_decode($Artists->first()->name ?? "Someone"); ?></p>
+      <div fl jucsb alic>
+        <p text trimt>
+          <?= htmlspecialchars_decode($Artists->first()->name ?? "Someone"); ?></p>
+        <p text smol no-word-wrap background=dynamic rounded pinline8 pblock2>
+          Added &middot; <span color=company><?= $last_updated; ?></span></p>
+      </div>
 
       <p text midler bold trimt style="margin-top:-4px;margin-bottom:4px;">
         <?= htmlentities($Beatmap->title); ?></p>

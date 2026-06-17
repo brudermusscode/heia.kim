@@ -1,6 +1,8 @@
 <?php
 
+use Heiakim\Database\RedisManager;
 use Heiakim\Model\Feed;
+use Heiakim\Registry\RedisRegistry;
 use Heiakim\Time\Time;
 
 /**
@@ -12,44 +14,18 @@ $Feed = new Feed(CurrentUser);
 
 ?>
 
-<?php if (!in_array("applications_open", INFO_WINDOWS)) { ?>
-  <feed-section dialogue dno>
-    <story-banner fl alic background=company color=light rounded=mid>
-      <picture style=width:24em;margin-bottom:-2em;margin-top:-2em;>
-        <img src="<?= IMAGE . "/legal/apply.svg"; ?>" />
-      </picture>
-
-      <div fl gap fldircol>
-        <div fl fldircol gap=smol>
-          <p style="line-height:.9;" text wide bold>
-            <?= __("Want to work with us?") ?></p>
-          <p text>
-            <?= __("Applications for <strong>Moderators</strong>, <strong>Assistants</strong> and <strong>Beatmap Nominators</strong> are open.") ?>
-          </p>
-        </div>
-
-        <div fl jucend>
-          <a href="/legal/applications">
-            <mbutton background=invert color=invert>
-              <p text bold><?= __("Apply now") ?></p>
-            </mbutton>
-          </a>
-        </div>
-      </div>
-
-      <mbutton close hoverable icon-only close-dialogue
-        data-info-window="applications_open">
-        <mi size=midler>close</mi>
-      </mbutton>
-    </story-banner>
-  </feed-section>
-<?php } ?>
-
-<div fl alistart jucstretch gap>
-  <column-wrapper smol>
+<wrapper fl alistart jucstretch>
+  <column-wrapper smol hide-mobile posstick style="top:24px;">
+    <?php include __DIR__ . "/_follower-activity.php"; ?>
   </column-wrapper>
 
-  <column-wrapper wide flone fl fldircol gap=wide flex-truncate>
+  <column-wrapper wide flone fl fldircol flex-truncate>
+    <?php
+
+    # Applications open banner.
+    if (!in_array("applications_open", INFO_WINDOWS))
+      include __DIR__ . "/_banner-applications-open.php"; ?>
+
     <!--- Newly Ranked --->
     <div fl fldircol gap=smol+>
       <div title-inline fl alic gap=smol+>
@@ -103,59 +79,76 @@ $Feed = new Feed(CurrentUser);
   </column-wrapper>
 
   <column-wrapper smol hide-tablet style="position:sticky;top:16px;">
-    <div fl fldircol gap=smol+>
-      <div fl fldircol jucc style="height:46px;">
-        <p text bold ttup>Player you follow</p>
-        <p text smol color=company>Activity of player you follow</p>
+
+    <div fl fldircol gap=smol>
+      <div fl alic jucsb>
+        <p text bold ttup>Dev Updates</p>
+        <a extern target="_blank" href="https://github.com/brudermusscode/heia.kim">
+          <mbutton icon-only hoverable>
+            <mi color=yellow>deployed_code</mi>
+          </mbutton>
+        </a>
       </div>
 
       <?php
 
-      $Following = CurrentUser->followings;
-
-      # Sort the Followings by latest activity.
-      $SortedFollowing = $Following->sortByDesc(function ($Follower) {
-        $last_activity = date("Y-m-d H:i:s", $Follower->latest_activity);
-        $last_activity_checked = $Follower->pivot->updated_at;
-
-        if ($Follower->pivot->updated_at == null)
-          return $Follower->pivot->created_at < $last_activity;
-
-        return $last_activity > $last_activity_checked;
-      });
-
-      foreach ($SortedFollowing->take(6) ?? [] as $Follower) {
-        $last_activity_timestamp = date("Y-m-d H:i:s", $Follower->latest_activity);
-        $last_activity_ago = Time::ago($last_activity_timestamp);
-        $last_activity_checked = $Follower->pivot->updated_at;
-        $relationship_created_at = $Follower->pivot->created_at;
-
-        $has_activity =
-          $last_activity_checked == NULL
-          ? $relationship_created_at < $last_activity_timestamp
-          : $last_activity_checked < $last_activity_timestamp;
-
       ?>
 
-        <div fl alic gap=smol p4 rounded=wide hoverable>
-          <picture std circled>
-            <?php $Follower->image(); ?>
-            <?php if ($has_activity) { ?>
-              <div class=bg-wrap>
-                <?php
-                include ROOT . "/public/assets/images/fancy-colorful-bg.html"; ?>
-              </div>
-            <?php } ?>
-          </picture>
+      <div posrel fl fldircol gap=smoler>
 
-          <div>
-            <p text bold><?= $Follower->name; ?></p>
-            <p text smol>Last active &middot; <span color=company>
-                <?= Time::ago($last_activity_timestamp, true); ?></span></p>
+        <?php
+
+        $show = 6 - 1;
+        $count = 0;
+        $commits = new RedisManager()->connection()
+          ->zRange(RedisRegistry::$github_commit_history, 0, $show, [
+            "WITHSCORES" => true,
+            "REV",
+          ]);
+
+        if (empty($commits)) : ?>
+          <div p24 tac fl fldircol alic jucc outlined rounded slight>
+            <p text bold>Huch?</p>
+            <p text smol>Could not fetch history</p>
           </div>
-        </div>
+        <?php else : ?>
+          <div posabs mt12 style="height:calc(100% - 42px);width:3px;left:10.4px;top:0;" rounded background=slight></div>
+        <?php endif; ?>
 
-      <?php } ?>
+        <?php foreach ($commits ?? [] as $key => $unix_timestamp) :
+          if ($count === $show + 1) break;
+          $count++;
+          $commit = json_decode($key, true);
+
+        ?>
+          <a extern target="_blank" href="<?= $commit["html_url"] ?? "#" ?>"
+            fl alistart gap=smol>
+            <mi mt4 style="height:24px;width:24px;" background=bg z posrel circled>commit</mi>
+            <div flone outlined rounded pinline14 pblock8 clickable>
+              <p text smolplus semibold>
+                <?= $commit["commit"]["message"] ?? "Unknown message" ?></p>
+              <div fl alic gap=smol>
+                <p text smol mr4>
+                  <span color=company>
+                    <?= Time::ago($commit["commit"]["author"]["date"] ?? CURRENT_TIMESTAMP) ?></span>
+                </p>
+                &middot;
+                <p text smol slight fl alic>
+                  <mi std>merge_type</mi> panties
+                </p>
+              </div>
+            </div>
+          </a>
+        <?php endforeach; ?>
+        <div fl alic gap=smol>
+          <mi std mt4 style="height:24px;width:24px;" background=bg z posrel circled>open_in_new</mi>
+          <a flone extern target="_blank" href="https://github.com/brudermusscode/heia.kim">
+            <mbutton mt6 background=yellow color=Dark>
+              Github Repository
+            </mbutton>
+          </a>
+        </div>
+      </div>
     </div>
   </column-wrapper>
-</div>
+</wrapper>

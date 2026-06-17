@@ -37,7 +37,7 @@ class Job extends Justin
 
     # Throw an exception if the Job class is not filled into the database.
     if (!$JobClass)
-      static::create([
+      $JobClass = static::create([
         "class_name" => $class_name,
         "updated_at" => null,
       ]);

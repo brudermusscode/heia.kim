@@ -3,6 +3,7 @@
 require dirname(__DIR__) . "/vendor/autoload.php";
 
 use Heiakim\Job\ApiOsuCacheLeaderboard;
+use Heiakim\Job\CacheGithubCommits;
 use Heiakim\Job\CacheLeaderboard;
 use Heiakim\Job\CacheLeaderboardDevelopment;
 use Heiakim\Job\CreateDefaultProfile;
@@ -25,6 +26,9 @@ ApiOsuCacheLeaderboard::run("+1 day");
 # should always be actual but we cache once a week to keep it real. It also caches
 # rank development (climb).
 CacheLeaderboard::run("+1 week");
+
+# Caches new github commits on a daily bases.
+CacheGithubCommits::run("+20000 seconds");
 
 exit;
 

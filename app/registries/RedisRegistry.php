@@ -5,6 +5,8 @@ namespace Heiakim\Registry;
 abstract class RedisRegistry
 {
 
+  public static string $github_commit_history = "github:commit-history";
+
   /**
    * Leaderboard specific keys.
    */

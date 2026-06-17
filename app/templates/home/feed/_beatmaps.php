@@ -2,6 +2,7 @@
 
 use Heiakim\Model\Score;
 use Heiakim\Model\Beatmap;
+use Illuminate\Support\Collection;
 
 /**
  * @var ?Beatmap
@@ -23,7 +24,7 @@ $has_favorite_beatmaps = $FavoriteBeatmaps->count();
 
     <div class="feed_section__content" fl fldircol content-gap>
       <div grid-repeat gap=smol>
-        <?php if (!$has_favorite_beatmaps) { ?>
+        <?php if (!$has_favorite_beatmaps) : ?>
           <div grid-keeper>
             <box-model rounded="wide" filled="lighter" p62 fl fldircol alic gap style="flex:1;">
               <div style="height:4.2em;width:4.2em;" fl alic jucc circled filled>
@@ -47,22 +48,18 @@ $has_favorite_beatmaps = $FavoriteBeatmaps->count();
               </div>
             </box-model>
           </div>
-        <?php
-
-        } else
-          foreach ($FavoriteBeatmaps as $Feedback) {
+        <?php else :
+          foreach ($FavoriteBeatmaps as $Feedback) :
             $Beatmap = $Feedback->reference;
-
             include TEMPLATE . "/components/beatmaps/_beatmap.php";
-          }
-
-        ?>
+          endforeach;
+        endif; ?>
       </div>
 
       <?php
 
       /**
-       * @var ?Score
+       * @var Collection<Score>
        */
       $Scores = CurrentUser->scores()
         ->orderBy("id", "DESC")
@@ -70,15 +67,25 @@ $has_favorite_beatmaps = $FavoriteBeatmaps->count();
         ->limit(6)
         ->get();
 
-      /**
-       * @var int
-       */
       $has_scores = $Scores->count();
 
-      if ($has_scores)
-        include __DIR__ . "/beatmaps/_most_played_user.php";
+      if ($has_scores) : ?>
+        <div fl fldircol gap=smol+>
+          <div title-inline fl alic gap=smol+>
+            <mbutton mid filled icon-only no-hover>
+              <mi mid>favorite</mi>
+            </mbutton>
+            <p text mid bold>You might like</p>
+          </div>
 
-      ?>
+          <div grid-repeat gap=smol>
+            <?php foreach ($Scores as $Score) :
+              $Beatmap = $Score->beatmap;
+              include TEMPLATE . "/components/beatmaps/_beatmap.php";
+            endforeach; ?>
+          </div>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 </feed-section>

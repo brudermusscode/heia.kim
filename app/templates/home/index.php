@@ -2,8 +2,7 @@
 
 use Heiakim\Model\Gamemode;
 
-if (LOGGED) {
-  include __DIR__ . "/_page-navigator.php";
+if (LOGGED) :
 
   # Router params.
   $sub = aglobal("sub");
@@ -12,10 +11,10 @@ if (LOGGED) {
   $favorite_modes = CurrentUser->favorite_modes();
   $favorite_mode = Gamemode::gumode_text($favorite_modes[0]->mode ?? null);
 
-?>
+  include __DIR__ . "/_page-navigator.php"; ?>
 
-  <page-structure feed fl fldircol gap=mid>
-    <div fl alic jucc gap=smol style="height:124px;" z>
+  <page-structure feed fl fldircol>
+    <div fl alic jucc gap=smol style="height:100px;padding-top:32px;" z>
       <a href="/home" sub>
         <mbutton mid outlined has-icon=left <?php display_active($sub, null); ?>>
           <mi>stream</mi>
@@ -45,5 +44,9 @@ if (LOGGED) {
 
   <?php include TEMPLATE . "/global/_scroll_end_logo.php"; ?>
 
-<?php } else
+<?php
+
+# Landing page.
+else :
   include __DIR__ . "/_landing.php";
+endif;

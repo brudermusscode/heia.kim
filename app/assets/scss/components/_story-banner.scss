@@ -4,24 +4,33 @@
 story-banner {
   display: block;
   content: "";
-  padding-inline: 12px 42px;
-  padding-block: 24px;
+  padding-inline: 212px 42px;
+  padding-block: 48px;
   gap: $gap-mid;
   position: relative;
+  overflow: hidden;
 
-  picture {
-    max-width: 100%;
+  @media screen and (max-width: $tablet-max-width) {
+    padding-inline: 148px 42px;
+    padding-block: 32px;
   }
 
-  @media screen and (max-width: 700px) {
-    flex-direction: column;
-    padding: 24px;
+  picture {
+    position: absolute;
+    left: -4.8em;
+    bottom: -2em;
+    width: 18em;
+
+    @media screen and (max-width: $tablet-max-width) {
+      left: -6.2em;
+      width: 15.2em;
+    }
   }
 
   [close] {
     position: absolute;
     z-index: 2;
-    top: 1.2em;
-    right: 1.2em;
+    top: 12px;
+    right: 12px;
   }
 }
