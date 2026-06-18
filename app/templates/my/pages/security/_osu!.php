@@ -1,7 +1,7 @@
 <?php
 
 use Heiakim\Time\Time;
-use Heiakim\Model\ConnectionDiscord;
+use Heiakim\Model\ConnectionOsu;
 
 /**
  * @var string $category
@@ -10,47 +10,46 @@ use Heiakim\Model\ConnectionDiscord;
  */
 
 /**
- * @var ?ConnectionDiscord
+ * @var ?ConnectionOsu
  */
-$Connection = CurrentUser->discord;
+$Connection = CurrentUser->osu;
 
 ?>
 
 <div fl fldircol gap>
   <div fl alic gap>
     <?php include TEMPLATE . "/my/_back_button.php"; ?>
-    <p text mid bold>Discord</p>
+    <p text mid bold>osu!</p>
   </div>
 
   <div fl fldircol gap>
 
     <div fl alic gap>
-      <mi circled style=height:56px;min-width:56px; background=light wide class="ri-discord-fill" color=discord-blue></mi>
-      <div fl fldircol gap=smol>
-        <?php if ($Connection) { ?>
-          <div fl gap=smol+ alic>
-            <mi size=spec color=green>toggle_on</mi>
+      <mi circled style=height:56px;min-width:56px; background=light color=osu-pink text semi-bold wider class="osu-icon osu-outlined"></mi>
+
+      <div fl fldircol>
+        <?php if ($Connection) : ?>
+          <div fl gap=smol alic>
+            <mi color=green>toggle_on</mi>
             <p text><?= __("Active") ?> &middot;
               <strong color=company><?= Time::ago($Connection->created_at); ?></strong>
             </p>
           </div>
 
           <?php if ($Connection->updated_at) { ?>
-            <div fl gap=smol+ alic>
-              <mi size=spec>update</mi>
+            <div fl gap=smol alic>
+              <mi>update</mi>
               <p text><?= __("Last accessed") ?> &middot;
-                <strong><?= Time::ago($Connection->updated_at, true); ?></strong>
+                <strong color=company><?= Time::ago($Connection->updated_at); ?></strong>
               </p>
             </div>
           <?php } ?>
-
-        <?php } else { ?>
+        <?php else : ?>
           <div fl gap=smol+ alic>
             <div style=height:12px;width:12px; circled background=red></div>
-            <p text><?= __("Inactive") ?></strong>
-            </p>
+            <p text><?= __("Inactive") ?></p>
           </div>
-        <?php } ?>
+        <?php endif; ?>
       </div>
     </div>
 
@@ -59,23 +58,12 @@ $Connection = CurrentUser->discord;
       <div fl fldircol gap=smol>
         <div fl gap=smol+ alic>
           <mi size=spec slight>info</mi>
-          <p text><?= __("Username, avatar and banner") ?></p>
+          <p text>Public information, including name & avatar</p>
         </div>
+
         <div fl gap=smol+ alic>
           <mi size=spec slight>info</mi>
-          <p text><?= __("E-mail address") ?></p>
-        </div>
-        <div fl gap=smol+ alic>
-          <mi size=spec slight>info</mi>
-          <p text><?= __("Servers you are in") ?></p>
-        </div>
-        <div fl gap=smol+ alic>
-          <mi size=spec slight>info</mi>
-          <p text><?= __("Join servers for you") ?></p>
-        </div>
-        <div fl gap=smol+ alic>
-          <mi size=spec slight>info</mi>
-          <p text><?= __("Member info for servers you are in") ?></p>
+          <p text>Account statistics</p>
         </div>
       </div>
     </div>

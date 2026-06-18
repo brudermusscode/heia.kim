@@ -28,15 +28,11 @@
 
       <div mt=smol mb=smol style="height:1px;width:calc(100% - 2.4em);margin-inline:1.2em;" filled=darker></div>
 
-      <div hoverable p12 style="padding-right:32px;" rounded=mid
-        data-category=<?= $category ?>
-        data-sub=name>
+      <div open="personal:name" hoverable p12 style="padding-right:32px;" rounded=mid>
         <div fl gap align-items=center justify-content=space-between>
           <div fl gap align-items=center>
             <div style="width:3.2em;" fl justify-content=center align-items=center>
-              <p>
-                <i class="mi" size=mid>format_size</i>
-              </p>
+              <mi size=mid>format_size</mi>
             </div>
 
             <div>
@@ -51,9 +47,7 @@
 
       <div mt=smol mb=smol style="height:1px;width:calc(100% - 2.4em);margin-inline:1.2em;" filled=darker></div>
 
-      <div hoverable p12 style="padding-right:32px;" rounded=mid
-        data-category=<?= $category ?>
-        data-sub=birthday>
+      <div open="personal:birthday" hoverable p12 style="padding-right:32px;" rounded=mid>
         <div fl gap align-items=center justify-content=space-between>
           <div fl gap align-items=center>
             <div style="width:3.2em;" fl justify-content=center align-items=center>
@@ -128,8 +122,7 @@
       </div>
 
       <div hoverable p12 style="padding-right:32px;" rounded=mid
-        data-category=<?= $category ?>
-        data-sub=mail>
+        open="personal:mail">
         <div fl gap align-items=center justify-content=space-between>
           <div fl gap align-items=center>
             <div style="width:3.2em;" fl justify-content=center align-items=center>

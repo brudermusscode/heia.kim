@@ -1,25 +1,13 @@
 <?php
 
-$name_changes_left = CurrentUser->changes_left("name");
+$changes_left = CurrentUser->changes_left("name");
 
 ?>
 
-<div mb fl gap alic>
+<div fl gap alic>
   <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-  <label size="mid" has-secondary>
-    <div class="label__main">
-      <p bold><?= __("Username") ?></p>
-    </div>
-  </label>
+  <p text mid bold><?= __("Username") ?></p>
 </div>
-
-<tipp-box outlined rounded=mid>
-  <mi>privacy_tip</mi>
-  <p text>
-    <?= __("Your username is visible to any other player. You can change it up to <strong>{name-changes-count} time(s)</strong>") ?>
-  </p>
-</tipp-box>
 
 <form settings request="user:update" responder reload>
   <div fl fldircol gap>
@@ -29,15 +17,28 @@ $name_changes_left = CurrentUser->changes_left("name");
       <input type=hidden data-backup value="<?= CurrentUser->name; ?>" />
     </div>
 
-    <div fl justify-content=end gap>
-      <mbutton mid background=slight-green color=dark-green confirm-submit-button>
-        <div action>
-          <p text bold><?= __("Save") ?></p>
-        </div>
-        <div confirmation>
-          <p text bold><?= __("Are you sure?") ?></p>
-        </div>
-      </mbutton>
+    <div fl jucsb alic gap>
+      <p text>Changes left &middot;
+        <strong color=company><?= CurrentUser->changes_left("name") ?></strong>
+      </p>
+
+      <?php if ($changes_left) : ?>
+        <mbutton mid background=slight-green color=dark-green confirm-submit-button>
+          <div action>
+            <p text bold><?= __("Save") ?></p>
+          </div>
+          <div confirmation>
+            <p text bold><?= __("Are you sure?") ?></p>
+          </div>
+        </mbutton>
+      <?php else : ?>
+        <a href="/unlock/premium">
+          <mbutton background=premium color=premium-text mid has-icon=left>
+            <mi><?= PREMIUM_ICON ?></mi>
+            Buy more changes
+          </mbutton>
+        </a>
+      <?php endif; ?>
     </div>
   </div>
 </form>

@@ -80,7 +80,12 @@ class ConnectionsController extends Controller
         ->associate(CurrentUser)
         ->save();
 
-      return success($Connection->provider . " connected!");
+      return success(
+        $Connection->provider . " connected!",
+        data: [
+          "redirect" => "/home"
+        ]
+      );
     }
 
     # ? ---------------------------------------
@@ -167,7 +172,19 @@ class ConnectionsController extends Controller
 
     $this->validate_params(
       strict: ["provider"],
-      optional: [],
     );
+
+    $this->authorize();
+
+    $ProviderClass = ApiConnectionRegistry::ClassOrDie($this->params->provider);
+
+    $Connection = $ProviderClass::where([
+      "user_id" => CurrentUser->id,
+      "provider" => $this->params->provider
+    ])->first();
+
+    $Connection?->delete();
+
+    return success("Connection removed!");
   }
 }

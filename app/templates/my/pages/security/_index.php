@@ -6,6 +6,7 @@ use Heiakim\Application\Session;
 use Heiakim\Time\Time;
 use Heiakim\Model\Change;
 use Heiakim\Model\Session as ModelSession;
+use Illuminate\Support\Collection;
 
 /**
  * @var string $category
@@ -23,12 +24,8 @@ $PasswordChange = CurrentUser->password_changes()
 
 <div fl fldircol gap>
   <box-model outlined=darker p24>
-    <div p12>
-      <p text midler bold>Password</p>
-    </div>
-    <div hoverable p12 rounded=mid
-      data-category=<?= $category ?>
-      data-sub=password>
+    <p p12 text midler bold>Password</p>
+    <div open="security:password" hoverable p12 rounded=mid>
       <div fl gap align-items=center justify-content=space-between>
         <div fl gap alic>
           <mi wide>password</mi>
@@ -42,20 +39,13 @@ $PasswordChange = CurrentUser->password_changes()
   </box-model>
 </div>
 
-
 <!--- DEVICES --->
 <div fl fldircol gap=smol+>
-  <div title-inline>
-    <p text midler bold><?= __("Devices") ?></p>
-    <p text><?= __("Manage devices you are logged into your account with") ?></p>
-  </div>
+  <p text midler bold title-inline><?= __("Your Devices") ?></p>
   <box-model outlined=darker p24 fl fldircol gap=smol+>
     <div>
       <?php
 
-      /**
-       * @var int
-       */
       $sessions_count = CurrentUser->sessions->count();
 
       /**
@@ -65,19 +55,14 @@ $PasswordChange = CurrentUser->password_changes()
         ->where("token", Cookie::get(ModelSession::$persistent_cookies[1]))
         ->first();
 
-      /**
-       * Include the current session before all others.
-       */
       include TEMPLATE . "/session/_session-card.php";
 
-      if ($sessions_count > 1) { ?>
-
+      if ($sessions_count > 1) : ?>
         <divide horiz mt=smol mb=smol></divide>
-
-      <?php }
+      <?php endif;
 
       /**
-       * @var ?Session
+       * @var Collection<Session>
        */
       $Sessions = CurrentUser->sessions()
         ->orderByRaw('ISNULL(updated_at), updated_at DESC, created_at DESC')
@@ -85,13 +70,8 @@ $PasswordChange = CurrentUser->password_changes()
         ->limit(4)
         ->get();
 
-      /**
-       * Loop through all other sessions.
-       */
       foreach ($Sessions as $Session)
-        include TEMPLATE . "/session/_session-card.php";
-
-      ?>
+        include TEMPLATE . "/session/_session-card.php"; ?>
     </div>
 
     <?php
@@ -112,111 +92,111 @@ $PasswordChange = CurrentUser->password_changes()
 </div>
 
 <div fl fldircol gap=smol+>
-  <div title-inline>
-    <p text midler bold><?= __("Third party") ?></p>
-    <p text std><?= __("Manage the data you share between {app-name} and other third party apps") ?></p>
-  </div>
+  <p text midler bold title-inline><?= __("Third party connections") ?></p>
 
   <!--- THIRD PARTY CONNECTIONS --->
   <box-model outlined=darker p24 fl fldircol gap>
-    <div fl fldircol gap=smol+>
-      <p text bold>Active connections</p>
+    <?php
 
-      <div>
-        <?php if (!CurrentUser->connections->count()) { ?>
-          <p text slight mt=smol mb12><?= __("Nothing connected") ?></p>
-        <?php } else { ?>
+    # Only show this section if the CurrentUser has any active Connection.
+    if (CurrentUser->osu || CurrentUser->discord || CurrentUser->github) : ?>
+      <div fl fldircol gap=smol+>
+        <p text bold>Active connections</p>
 
-          <!--- Discord --->
-          <?php if (CurrentUser->discord) { ?>
-            <div rounded pinline12 pblock8 fl gap jucsb alic hoverable
-              data-category=<?= $category ?>
-              data-sub=discord>
-              <div fl gap=smol+ alic>
-                <mi wide color=discord-blue class="ri-discord-fill"></mi>
-                <div>
-                  <p text bold>Discord</p>
-                  <p text smol>Active &middot; <span color=company><?= Time::ago(CurrentUser->discord->created_at, true); ?></span></p>
+        <div>
+          <?php if (!CurrentUser->connections->count()) { ?>
+            <p text slight mt=smol mb12><?= __("Nothing connected") ?></p>
+          <?php } else { ?>
+
+            <!-- Osu --->
+            <?php if (CurrentUser->osu) { ?>
+              <div open="security:osu!" rounded pinline12 pblock8 fl gap jucsb alic hoverable>
+                <div fl gap=smol+ alic>
+                  <mi wide class="osu-icon osu-outlined" color=osu-pink></mi>
+                  <div>
+                    <p text bold>osu!</p>
+                    <p text smol>Active &middot; <span color=company><?= Time::ago(CurrentUser->osu->created_at, true); ?></span></p>
+                  </div>
                 </div>
-              </div>
 
-              <mi midler>east</mi>
-            </div>
+                <mi midler>east</mi>
+              </div>
+            <?php } ?>
+
+            <!--- Discord --->
+            <?php if (CurrentUser->discord) { ?>
+              <div open="security:discord" rounded pinline12 pblock8 fl gap jucsb alic hoverable>
+                <div fl gap=smol+ alic>
+                  <mi wide color=discord-blue class="ri-discord-fill"></mi>
+                  <div>
+                    <p text bold>Discord</p>
+                    <p text smol>Active &middot; <span color=company><?= Time::ago(CurrentUser->discord->created_at, true); ?></span></p>
+                  </div>
+                </div>
+
+                <mi midler>east</mi>
+              </div>
+            <?php } ?>
+
+            <!-- Github --->
+            <?php if (CurrentUser->github) { ?>
+              <div open="security:github" rounded pinline12 pblock8 fl gap jucsb alic hoverable>
+                <div fl gap=smol+ alic>
+                  <mi wide class="ri-github-fill"></mi>
+                  <div>
+                    <p text bold>GitHub</p>
+                    <p text smol>Active &middot; <span color=company><?= Time::ago(CurrentUser->github->created_at, true); ?></span></p>
+                  </div>
+                </div>
+
+                <mi midler>east</mi>
+              </div>
+            <?php } ?>
+          <?php } ?>
+        </div>
+      </div>
+    <?php endif;
+
+    # Only show this section if the CurrentUser has any third party app open to con-
+    # nect to.
+    if (!CurrentUser->osu || !CurrentUser->discord || !CurrentUser->github) : ?>
+      <div fl fldircol gap=smol+>
+        <p text bold><?= __("Add connection") ?></p>
+
+        <div fl gap=smol>
+          <?php if (!CurrentUser->discord && Feature::enabled("connect_discord")) { ?>
+            <mbutton mid has-icon=left filled
+              data-action="connection:start"
+              data-provider="discord"
+              data-call-action="connect">
+              <mi class="ri-discord-fill"></mi>
+              <p text bold>Discord</p>
+            </mbutton>
           <?php } ?>
 
-          <!-- Google --->
-          <?php if (CurrentUser->google) { ?>
-            <div rounded pinline12 pblock8 fl gap jucsb alic hoverable
-              data-category=<?= $category ?>
-              data-sub=google>
-              <div fl gap=smol+ alic>
-                <mi wide class="ri-google-fill" color=google-blue></mi>
-                <div>
-                  <p text bold>Google</p>
-                  <p text smol>Active &middot; <span color=company><?= Time::ago(CurrentUser->google->created_at, true); ?></span></p>
-                </div>
-              </div>
-
-              <mi midler>east</mi>
-            </div>
+          <?php if (!CurrentUser->github && Feature::enabled("connect_github")) { ?>
+            <mbutton mid has-icon=left filled
+              data-action="connection:start"
+              data-provider="github"
+              data-call-action="connect">
+              <mi class="ri-github-fill"></mi>
+              <p text bold>GitHub</p>
+            </mbutton>
           <?php } ?>
 
-          <!-- Osu --->
-          <?php if (CurrentUser->osu) { ?>
-            <div rounded pinline12 pblock8 fl gap jucsb alic hoverable
-              data-category=<?= $category ?>
-              data-sub=osu>
-              <div fl gap=smol+ alic>
-                <mi text size=mid class="osu-icon osu-outlined" color=osu-pink></mi>
-                <div>
-                  <p text bold>osu!</p>
-                  <p text smol>Active &middot; <span color=company><?= Time::ago(CurrentUser->osu->created_at, true); ?></span></p>
-                </div>
-              </div>
-
-              <mi midler>east</mi>
-            </div>
+          <?php if (!CurrentUser->osu && Feature::enabled("connect_osu")) { ?>
+            <mbutton mid has-icon=left filled
+              data-action="connection:start"
+              data-provider="osu!"
+              data-call-action="connect">
+              <mi class="osu-icon osu-outlined"></mi>
+              <p text bold>osu!</p>
+            </mbutton>
           <?php } ?>
-        <?php } ?>
+        </div>
+
+        <p text slight>Clicking one of the options will open the authentication window of the third party service in the current browser tab.</p>
       </div>
-    </div>
-
-    <div fl fldircol gap=smol+ mt12>
-      <p text bold><?= __("Add connection") ?></p>
-
-      <div fl gap=smol>
-        <?php if (!CurrentUser->discord && Feature::enabled("connect_discord")) { ?>
-          <mbutton mid has-icon=left filled
-            data-action="connect:start"
-            data-type=discord>
-            <mi class="ri-discord-fill"></mi>
-            <p text bold>Discord</p>
-          </mbutton>
-        <?php } ?>
-
-        <?php if (!CurrentUser->google && Feature::enabled("connect_google")) { ?>
-          <mbutton mid has-icon=left filled
-            data-action="connect:start"
-            data-type=google>
-            <mi class="ri-google-fill"></mi>
-            <p text bold>Google</p>
-          </mbutton>
-        <?php } ?>
-
-        <?php if (!CurrentUser->osu && Feature::enabled("connect_osu")) { ?>
-          <mbutton mid has-icon=left filled
-            data-action="connect:start"
-            data-type=osu>
-            <mi class="osu-icon osu-outlined"></mi>
-            <p text bold>osu!</p>
-          </mbutton>
-        <?php } ?>
-      </div>
-
-      <div fl alistart gap=smol slight>
-        <mi smol style=margin-top:3px;>info</mi>
-        <p text>Clicking one of the options will open the authentication window of the third party service in the current browser tab.</p>
-      </div>
-    </div>
+    <?php endif; ?>
   </box-model>
 </div>

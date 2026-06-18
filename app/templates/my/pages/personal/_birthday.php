@@ -5,14 +5,9 @@ $birthday_set = CurrentUser->settings->birthday;
 ?>
 
 <div fl fldircol gap>
-  <div mb fl gap alic>
+  <div fl gap alic>
     <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-    <label size="mid" has-secondary>
-      <div class="label__main">
-        <p bold><?= __("Birthday") ?></p>
-      </div>
-    </label>
+    <p text mid bold><?= __("Birthday") ?></p>
   </div>
 
   <tipp-box outlined rounded=mid>
@@ -22,12 +17,9 @@ $birthday_set = CurrentUser->settings->birthday;
     </p>
   </tipp-box>
 
-  <form settings request="user:settings:update" reload responder>
+  <form request="user:setting:update" reload responder>
     <div fl fldircol gap>
       <?php if (!$birthday_set) { ?>
-        <div>
-          <p text std><?= __("Your birthday should look like <strong>06-10-1997</strong>") ?></p>
-        </div>
         <div fl gap=smol>
           <div input material>
             <input type=text max-length=2 min-length=2 name=day value placeholder="dd" autofocus tabindex=1 />
@@ -42,6 +34,9 @@ $birthday_set = CurrentUser->settings->birthday;
           </div>
         </div>
 
+        <p text std>
+          <?= __("Your birthday should look like <strong>06-10-1997</strong>") ?></p>
+
         <div fl justify-content=end gap>
           <mbutton mid background=slight-green color=dark-green confirm-submit-button tabindex=4>
             <div action>
@@ -55,11 +50,9 @@ $birthday_set = CurrentUser->settings->birthday;
 
       <?php } else { ?>
 
-        <div fl justify-content=center>
-          <p text mid bold>
-            <?= date_format(date_create(CurrentUser->settings->birthday), 'd F Y'); ?>
-          </p>
-        </div>
+        <p text wide bold tac>
+          <?= date_format(date_create(CurrentUser->settings->birthday), 'd. F Y'); ?>
+        </p>
 
         <div fl justify-content=end gap>
           <mbutton mid background=besure color=dark-orange disabled>

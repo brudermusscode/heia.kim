@@ -40,8 +40,9 @@ $Router->post("/password-reset/create", "password-reset/create", return: "JSON")
 $Router->post("/password-reset/update", "password-reset/update", return: "JSON");
 
 # ? Connections
-$Router->post("/connection/start", "connection/start", return: "JSON");
 $Router->post("/connection/create", "connection/create", return: "JSON");
+$Router->post("/connection/delete", "connection/delete", return: "JSON");
+$Router->post("/connection/start", "connection/start", return: "JSON");
 $Router->post("/connection/reconnect", "connection/reconnect", return: "JSON");
 $Router->get("/connect/:provider", "connection/index", title: function ($params) {
   return "Connect your " . $params["provider"] . " to " . APP_NAME . "!";

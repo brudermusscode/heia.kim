@@ -1,15 +1,10 @@
 <?php
 
-/**
- * @var string
- */
 $tab = filter_input(INPUT_GET, "tab", FILTER_SANITIZE_SPECIAL_CHARS) ?? "index";
 
-if (!$SquadUser->can("coordinate", "users"))
+if (!$SquadUser->can("coordinate", "users")) :
   include UNAVAILABLE;
-else {
-
-?>
+else : ?>
 
   <div content-width=smol>
 
@@ -55,6 +50,4 @@ else {
 
   </div>
 
-<?php
-
-}
+<?php endif;

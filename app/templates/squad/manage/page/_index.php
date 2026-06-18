@@ -1,10 +1,12 @@
 <?php
 
+use Heiakim\Model\Squad;
 use Heiakim\Time\Time;
 use Heiakim\Model\Squad\SquadUser;
 use Heiakim\Model\Squad\SquadFeedItem;
 
 /**
+ * @var Squad $Squad
  * @var SquadUser $SquadUser
  */
 

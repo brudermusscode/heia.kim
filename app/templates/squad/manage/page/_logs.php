@@ -13,10 +13,9 @@ $Logs = $Squad
 
 ?>
 
-<div content-width=mid>
-
+<content midplus minlineauto>
   <div fl align-items="center" gap=mid mb mt=wide>
-    <?php include TEMPLATE . "/my/_back_button.php"; ?>
+    <?php include TEMPLATE . "/squad/manage/_back-button.php"; ?>
     <p text mid bold>Logs</p>
   </div>
 
@@ -65,7 +64,7 @@ $Logs = $Squad
             <a href="/u/<?= $TriggeredUser->id ?>" fl jucstart>
               <div rounded=wide filled clickable style="padding:8px 16px 8px 8px;" fl alic gap=smol>
                 <picture size=smol circled posrel>
-                  <img src="<?= AVATAR . "/$TriggeredUser->id" ?>" />
+                  <?php $TriggeredUser->image(); ?>
                 </picture>
                 <p text><?= $TriggeredUser->name() ?></p>
               </div>
@@ -87,7 +86,7 @@ $Logs = $Squad
                 <a href="/u/<?= $AffectedUser->id ?>">
                   <div rounded=wide filled clickable style="padding:8px 16px 8px 8px;" fl alic gap=smol>
                     <picture size=smol circled posrel>
-                      <img src="<?= AVATAR . "/$AffectedUser->id" ?>" />
+                      <?php $AffectedUser->image(); ?>
                     </picture>
                     <p text><?= $AffectedUser->name() ?></p>
                   </div>
@@ -153,5 +152,4 @@ $Logs = $Squad
       <?php } ?>
     </table>
   </div>
-
-</div>
+</content>

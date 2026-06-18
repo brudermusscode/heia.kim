@@ -8,15 +8,10 @@ $publicity_text = CurrentUser->squad->joinable === 0
 
 ?>
 
-<div content-width=smol>
+<content std minlineauto>
   <div mt=wide mb fl gap=mid align-items="center" mb=std>
-    <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-    <label size="mid" has-secondary>
-      <div class="label__main">
-        <p bold>Publicity</p>
-      </div>
-    </label>
+    <?php include TEMPLATE . "/squad/manage/_back-button.php"; ?>
+    <p text mid bold>Publicity</p>
   </div>
 
   <box-model>
@@ -57,4 +52,4 @@ $publicity_text = CurrentUser->squad->joinable === 0
       </bm-inr>
     </form>
   </box-model>
-</div>
+</content>

@@ -8,12 +8,7 @@ $premium_time_left = Time::left(CurrentUser->donor_end);
 
 <div fl fldircol gap=mid>
 
-  <?php
-
-  /**
-   * USER RECOMMENDED SETTINGS
-   */
-  if (CurrentUser->has_recommended_settings()) { ?>
+  <?php if (CurrentUser->has_recommended_settings()) : ?>
     <a href="/my/recommendations" sub dno>
       <box-model filled clickable>
         <bm-inr size=mid fl fldircol gap>
@@ -30,7 +25,7 @@ $premium_time_left = Time::left(CurrentUser->donor_end);
         </bm-inr>
       </box-model>
     </a>
-  <?php } ?>
+  <?php endif; ?>
 
 
   <box-model outlined=darker>

@@ -6,10 +6,7 @@
 
 namespace Heiakim\Model;
 
-use Heiakim\Registry\ApiRegistry;
-use Heiakim\Time\Time;
 use Heiakim\Trait\IsConnectionProvider;
-use Heiakim\Http\CURL;
 
 class ConnectionGithub extends Connection
 {

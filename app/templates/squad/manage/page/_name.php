@@ -1,39 +1,28 @@
 <?php
 
+use Heiakim\Time\Time;
 use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
  * @var Squad $Squad
+ * @var SquadUser $SquadUser
  */
-
-use Heiakim\Time\Time;
 
 $disabled = !$Squad->can_change_name() ? "disabled" : "";
 $is_disabled = !$Squad->can_change_name();
 
 ?>
 
-<div content-width=smol>
+<content std minlineauto>
   <div mt=wide fl gap=mid align-items="center" mb=std>
-    <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-    <div>
-      <p text mid bold>Name & Tag</p>
-    </div>
+    <?php include TEMPLATE . "/squad/manage/_back-button.php"; ?>
+    <p text mid bold>Tag & Name</p>
   </div>
 
   <div fl fldircol gap>
-
-    <tipp-box outlined rounded=mid>
-      <mi>info</mi>
-      <p class="text">You can only change your name and tag <strong>every 30 days</strong>. Be sure about it,
-        since it will affect
-        <strong><?= CurrentUser->squad->members->count(); ?></strong> members.
-      </p>
-    </tipp-box>
-
-    <box-model filled=lighter>
-      <form request="squad:update" redirect="<?= $base_url ?>" responder>
+    <form request="squad:update" redirect="<?= $base_url ?>" responder>
+      <box-model filled=lighter>
         <bm-inr size=wide fl fldircol gap>
           <div fl gap=smol>
             <div input material has-icon style=max-width:10em; <?= $disabled; ?>>
@@ -62,27 +51,26 @@ $is_disabled = !$Squad->can_change_name();
                     </div>
                   </div>
                 </div>
+              </toggle-switch>
             </div>
-            </toggle-switch>
-          </div>
 
-          <div fl jucend>
-            <mbutton mid ripple-effect confirm-submit-button background=follow color=dark <?= $disabled; ?>>
-              <div action>
-                <?php if (!$is_disabled) { ?>
-                  <p text bold>Save</p>
-                <?php } else { ?>
-                  <p text bold><?= Time::left($Squad->time_left_for_name_change()); ?></p>
-                <?php } ?>
-              </div>
-              <div confirmation>
-                <p text bold>Are you sure?</p>
-              </div>
-            </mbutton>
+            <div fl jucend>
+              <mbutton mid ripple-effect confirm-submit-button background=follow color=dark <?= $disabled; ?>>
+                <div action>
+                  <?php if (!$is_disabled) { ?>
+                    <p text bold>Save</p>
+                  <?php } else { ?>
+                    <p text bold><?= Time::left($Squad->time_left_for_name_change()); ?></p>
+                  <?php } ?>
+                </div>
+                <div confirmation>
+                  <p text bold>Are you sure?</p>
+                </div>
+              </mbutton>
+            </div>
           </div>
         </bm-inr>
-      </form>
-    </box-model>
-
+      </box-model>
+    </form>
   </div>
-</div>
+</content>

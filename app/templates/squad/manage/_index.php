@@ -1,42 +1,33 @@
 <?php
 
 use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
 
-/**
- * Get Parameter.
- */
-$sub    = filter_var(get("sub") ?? "index", FILTER_SANITIZE_SPECIAL_CHARS);
-$action = filter_var(get("action"), FILTER_SANITIZE_SPECIAL_CHARS);
+# Router parameter.
+$sub    = aglobal("sub") ?? "index";
+$action = aglobal("action");
 
 /**
  * @var Squad
  */
 $Squad = CurrentUser->squad;
 
-/**
- * @var string
- */
-$base_url = "/manage/squad";
-
 if (!$Squad)
   include UNAVAILABLE;
 else {
 
+  $base_url = "/manage/squad";
+
   $squad_headline = CurrentUser->squad->headline ?? "default.jpg";
 
   /**
-   * SquadUser
+   * @var SquadUser
    */
   $SquadUser = CurrentUser->squad_user;
 
-  /**
-   * Header
-   */
+  # Partial inclusion.
   include TEMPLATE . "/my/_header.php";
 
-  /**
-   * File exists for sub?
-   */
   $path = TEMPLATE . "/squad/manage/page/_$sub.php";
   $file_exists = file_exists($path);
 

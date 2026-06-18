@@ -10,29 +10,29 @@ use Heiakim\Model\Squad\SquadUser;
 
 ?>
 
-<div content-width=smol center-content>
+<content std minlineauto>
   <div fl fldircol gap=smoler>
     <div mt=wide mb fl gap=mid align-items="center" mb=std>
-      <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-      <label size="mid" has-secondary>
-        <div class="label__main">
-          <p bold>Leave <?= $Squad->name ?></p>
-        </div>
-      </label>
+      <?php include TEMPLATE . "/squad/manage/_back-button.php"; ?>
+      <p text mid bold>Leave <?= $Squad->name ?></p>
     </div>
 
     <?php if (!$SquadUser->can_leave()) : ?>
       <box-model filled p42 pt62 fl fldircol gap=smol+ alic>
-        <div z filled=darker circled fl alic jucc style="height:4.2em;width:4.2em;">
+        <div z background=yellow color=dark circled fl alic jucc
+          style="height:4.2em;width:4.2em;">
           <mi wide>brightness_alert</mi>
         </div>
         <div tac fl fldircol gap=smol>
-          <p text wide bold>Hold on!</p>
+          <p text wide bold>Hold on</p>
           <p text>You are the chief of your squad. For leaving, you need to <strong>transfer your privileges</strong> to another trusted member.</p>
-          <a href="/manage/squad/members">
-            <p text color=company>See members</p>
-          </a>
+          <div fl alic jucc mt12>
+            <a href="/manage/squad/members">
+              <mbutton mid background=invert color=invert>
+                See members
+              </mbutton>
+            </a>
+          </div>
         </div>
       </box-model>
     <?php else : ?>
@@ -117,4 +117,4 @@ use Heiakim\Model\Squad\SquadUser;
       </form>
     <?php endif ?>
   </div>
-</div>
+</content>

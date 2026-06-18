@@ -145,7 +145,7 @@ export const request = (element) => {
         if (responder === "success") Frontend.create_responder(data);
 
         // Redirect the user from a link in data object.
-        if (redirect_from_data !== null && data.data.redirect) {
+        if (redirect_from_data !== null && data.data?.redirect) {
           redirect_from_data === "full"
             ? window.location.replace(data.data.redirect)
             : Page.get(data.data.redirect);

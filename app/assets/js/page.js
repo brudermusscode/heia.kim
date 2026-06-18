@@ -116,6 +116,9 @@ export const get = async (
     return;
   }
 
+  // Stop any running audio.
+  __page.audio?.pause();
+
   $.ajax({
     url: url,
     method: "GET",

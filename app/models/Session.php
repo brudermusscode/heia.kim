@@ -154,4 +154,17 @@ class Session extends Justin
   {
     return $this->belongsTo(User::class);
   }
+
+  /**
+   * @return string
+   */
+  public function masked_ip()
+  {
+    $masked_ip = $this->remote_address;
+    $masked_ip_split = explode(".", $masked_ip);
+    unset($masked_ip_split[array_key_last($masked_ip_split)]);
+    $masked_ip = implode(".", $masked_ip_split);
+
+    return $masked_ip;
+  }
 }

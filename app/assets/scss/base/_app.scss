@@ -393,7 +393,8 @@ body[connect],
 body[order],
 body[password-reset],
 body[loading],
-body[unlock] {
+body[unlock],
+body[legal] {
   background: #1f1f1f !important;
 
   [material-bar-loader] {
@@ -411,6 +412,21 @@ body[unlock] {
 
   main {
     padding: 0;
+  }
+}
+
+body[manage] {
+  main {
+    padding-block: 4.2em 2.4em;
+    padding-inline: $main-distance;
+
+    @media screen and (max-width: $tablet-max-width) {
+      padding-inline: $main-distance;
+    }
+
+    @media screen and (max-width: $mobile-max-width) {
+      padding-inline: 6px;
+    }
   }
 }
 
@@ -592,30 +608,6 @@ main {
   @media screen and (max-width: 500px) {
     &[sub] {
       width: calc(100vw - 0.4em);
-    }
-  }
-}
-
-body {
-  &[manage],
-  &[my] {
-    main {
-      padding-top: 4.2em;
-      padding-left: calc($main-distance + $sub-menu-width + 1.2em);
-
-      @media screen and (max-width: 1660px) {
-        padding-left: calc($main-distance + $main-header-width + $sub-menu-width);
-      }
-
-      @media screen and (max-width: 980px) {
-        padding-left: calc(
-          $main-distance + $main-header-width + $sub-menu-width-shrinked
-        );
-      }
-
-      @media screen and (max-width: 800px) {
-        padding-inline: 0.8em;
-      }
     }
   }
 }

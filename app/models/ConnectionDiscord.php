@@ -8,7 +8,6 @@ namespace Heiakim\Model;
 
 use Heiakim\Time\Time;
 use Heiakim\Trait\IsConnectionProvider;
-use Heiakim\Http\CURL;
 
 class ConnectionDiscord extends Connection
 {

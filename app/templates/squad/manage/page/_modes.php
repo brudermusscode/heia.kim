@@ -3,13 +3,10 @@
 
 ?>
 
-<div content-width=smol>
+<content std minlineauto>
   <div mt=wide mb fl gap=mid align-items="center" mb=std>
-    <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-    <div>
-      <p text mid bold>Modes</p>
-    </div>
+    <?php include TEMPLATE . "/squad/manage/_back-button.php"; ?>
+    <p text mid bold>Modes</p>
   </div>
 
   <div fl fldircol gap>
@@ -26,10 +23,7 @@
     </box-model>
 
     <form request="squad:update" fl fldircol gap=smol delay=20 responder=error>
-
-      <?php
-
-      foreach ($Squad->modes as $mode => $active) {
+      <?php foreach ($Squad->modes as $mode => $active) {
 
         switch ($mode) {
           case "osu":
@@ -95,9 +89,7 @@
             </div>
           </bm-inr>
         </box-model>
-
       <?php } ?>
-
-      </=>
+    </form>
   </div>
-</div>
+</content>

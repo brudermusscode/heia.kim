@@ -10,7 +10,6 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\Format;
 use Intervention\Image\Interfaces\ImageManagerInterface;
-use DateTime;
 use Heiakim\Validate\Validate;
 
 class UserSettings extends Justin
@@ -59,7 +58,7 @@ class UserSettings extends Justin
 
   /**
    * @param object $params
-   * @return object
+   * @return static
    */
   public function edit(object $params)
   {
@@ -96,12 +95,12 @@ class UserSettings extends Justin
       $this->save();
       $this->db_commit();
 
-      return success("<strong>Your account has been updated!</strong>");
+      return $this;
     } catch (\Exception $e) {
       Logger::to_file($e);
       $this->db_rollback();
 
-      return error();
+      die(error());
     }
   }
 

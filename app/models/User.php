@@ -247,7 +247,8 @@ class User extends Justin
       }
 
       # ? Mail
-      $this->set_mail_invalid($params->email);
+      if (isset($params->email))
+        $this->set_mail_invalid($params->email);
 
       # ? Name
       if (isset($params->name)) {

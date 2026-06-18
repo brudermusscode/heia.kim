@@ -19,6 +19,8 @@ $(function () {
     let button = this;
     let buttons = center.find_all("nc-tab-option");
 
+    url = url.replaceAll(":", "/");
+
     if (!center) {
       Frontend.close_ui_components();
       Frontend.create_responder(

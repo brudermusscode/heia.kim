@@ -6,11 +6,8 @@
 
 namespace Heiakim\Model;
 
-use Heiakim\Registry\ApiRegistry;
 use Heiakim\Time\Time;
-use Heiakim\Utils\Utils;
 use Heiakim\Trait\IsConnectionProvider;
-use Heiakim\Http\CURL;
 
 class ConnectionOsu extends Connection
 {

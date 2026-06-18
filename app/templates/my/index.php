@@ -12,35 +12,29 @@ use Heiakim\Model\Squad\SquadUser;
 
 authorize(resource: CurrentUser);
 
-$category = filter_var(get("category"), FILTER_SANITIZE_SPECIAL_CHARS);
-$sub      = filter_var(get("sub"), FILTER_SANITIZE_SPECIAL_CHARS);
-$var      = filter_var(get("var"), FILTER_SANITIZE_SPECIAL_CHARS);
+# Serialize GET parameter.
+$category = aglobal("category") ?? "overview";
+$sub      = aglobal("sub");
+$var      = aglobal("var");
 
 ob_start(); ?>
 
-<div content-width=std fl fldircol data-action="user-manager:category" <?= $sub ? "pt42 gap" : "content-gap" ?>>
+<div content-width=std fl fldircol <?= $sub ? "pt42 gap" : "content-gap" ?>
+  data-action="user-manager:category">
 
   <?php
 
   include __DIR__ . "/_header.php";
 
-  $overview_path = __DIR__ . "/pages/overview/_index.php";
+  $sub_path = __DIR__ . "/pages/$category/_$sub.php";
   $file_path = __DIR__ . "/pages/$category/_index.php";
+  $overview_path = __DIR__ . "/pages/overview/_index.php";
 
-  if (file_exists($file_path)) {
-    if (!$sub) {
-      include file_exists($file_path) ? $file_path : $overview_path;
-    } else {
-      $action_file_path = __DIR__ . "/pages/$category/_$sub.php";
-      include file_exists($action_file_path) ? $action_file_path : __DIR__ . "/pages/$category/_index.php";
-    }
-  } else
-    include $overview_path;
-
-  ?>
-
+  include !$sub && file_exists($file_path)
+    ? $file_path
+    : (
+      $sub && file_exists($sub_path) ? $sub_path : $overview_path
+    ); ?>
 </div>
 
-<?php
-
-request_success(data: ob_get_clean(), die: true);
+<?php die(success(data: ob_get_clean()));

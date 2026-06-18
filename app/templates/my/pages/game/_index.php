@@ -12,23 +12,21 @@ $gm = Gamemode::gumode_text(CurrentUser->preferred_mode);
 <div fl fldircol gap=smol+>
   <?php if (FROZEN || CurrentUser->is_restricted()) { ?>
     <div fl fldircol gap>
-      <a href="<?= "/my/game/restriction"; ?>" sub>
-        <box-model style="background:#C9534F;" color=white elevated clickable>
-          <bm-inr size=mid>
-            <div p6 fl gap align-items=center justify-content=space-between>
-              <div fl gap alic>
-                <mi wide>raven</mi>
-                <div>
-                  <p text std bold>Restriction</p>
-                  <p text std>Reason & progress of your restriction</p>
-                </div>
+      <box-model open="game:restriction" style="background:#C9534F;" color=white elevated clickable>
+        <bm-inr size=mid>
+          <div p6 fl gap align-items=center justify-content=space-between>
+            <div fl gap alic>
+              <mi wide>raven</mi>
+              <div>
+                <p text std bold>Restriction</p>
+                <p text std>Reason & progress of your restriction</p>
               </div>
-
-              <mi midler>east</mi>
             </div>
-          </bm-inr>
-        </box-model>
-      </a>
+
+            <mi midler>east</mi>
+          </div>
+        </bm-inr>
+      </box-model>
     </div>
   <?php } ?>
 
@@ -40,9 +38,7 @@ $gm = Gamemode::gumode_text(CurrentUser->preferred_mode);
       </p>
     </div>
 
-    <div hoverable p12 rounded=mid
-      data-category=<?= $category ?>
-      data-sub=mode>
+    <div open="game:mode" hoverable p12 rounded=mid>
       <div fl gap align-items=center justify-content=space-between>
         <div fl gap align-items=center>
           <p text wide>
@@ -74,9 +70,7 @@ $gm = Gamemode::gumode_text(CurrentUser->preferred_mode);
         <?= __("All your scores managable at one place. Scores are public to any other player.") ?>
       </p>
     </div>
-    <div hoverable p12 rounded=mid
-      data-category=<?= $category ?>
-      data-sub=scores>
+    <div open="game:scores" hoverable p12 rounded=mid>
       <div fl gap align-items=center justify-content=space-between>
         <div fl gap align-items=center>
           <mi wide>trending_up</mi>
@@ -95,9 +89,7 @@ $gm = Gamemode::gumode_text(CurrentUser->preferred_mode);
   </div>
 
   <box-model filled p24>
-    <div hoverable p12 style="padding-right:32px;" rounded=mid
-      data-category=<?= $category ?>
-      data-sub=restart>
+    <div open="game:restart" hoverable p12 style="padding-right:32px;" rounded=mid>
       <div fl gap align-items=center justify-content=space-between>
         <div fl gap align-items=center>
           <div style="width:3.2em;" fl justify-content=center align-items=center>

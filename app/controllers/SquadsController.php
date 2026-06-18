@@ -18,14 +18,8 @@ class SquadsController extends Controller
       optional: ["tag", "name", "joinable", "osu", "taiko", "mania", "ctb"],
     );
 
-    /**
-     * User is logged?
-     */
     $this->authorize();
 
-    /**
-     * Has clan already?
-     */
     if (CurrentUser->squad)
       return $this->error("!HAS_SQUAD");
 
@@ -43,15 +37,9 @@ class SquadsController extends Controller
       optional: ["name", "owner", "leave", "notification", "tag", "joinable", "osu", "taiko", "mania", "ctb", "image_type", "MAX_FILE_SIZE", "files"],
     );
 
-    /**
-     * Files for image update sent but no image type?
-     */
     if (isset($this->params->files) && !isset($this->params->image_type))
       return $this->error();
 
-    /**
-     * SquadUser is authorized?
-     */
     authorize(
       resource: CurrentUser?->squad_user,
       can: ["manage", "squad"],

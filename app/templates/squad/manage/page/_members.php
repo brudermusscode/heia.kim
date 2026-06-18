@@ -10,10 +10,9 @@ use Heiakim\Model\Squad\SquadUser;
 
 ?>
 
-<div content-width=mid>
-
+<content midplus minlineauto>
   <div fl align-items="center" gap=mid mb mt=wide>
-    <?php include TEMPLATE . "/my/_back_button.php"; ?>
+    <?php include TEMPLATE . "/squad/manage/_back-button.php"; ?>
     <p text mid bold>Members</p>
   </div>
 
@@ -52,7 +51,7 @@ use Heiakim\Model\Squad\SquadUser;
           <a href="/u/<?= $Member->user_id ?>">
             <div fl alic gap=smol+ jucstart>
               <picture size=std circled posrel>
-                <img src="<?= AVATAR . "/$Member->user_id" ?>" />
+                <?php $Member->user->image(); ?>
               </picture>
               <p text><?= $Member->user->name() ?></p>
             </div>
@@ -175,5 +174,4 @@ use Heiakim\Model\Squad\SquadUser;
 
     <?php } ?>
   </table>
-
-</div>
+</content>

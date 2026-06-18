@@ -28,7 +28,7 @@ ApiOsuCacheLeaderboard::run("+1 day");
 CacheLeaderboard::run("+1 week");
 
 # Caches new github commits on a daily bases.
-CacheGithubCommits::run("+20000 seconds");
+CacheGithubCommits::run("+1 hour");
 
 exit;
 

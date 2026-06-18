@@ -15,9 +15,7 @@ use Heiakim\Model\Session;
       </div>
     </div>
     <div fl jucend>
-      <mbutton filled
-        data-category=<?= $category ?>
-        data-sub=mailing>
+      <mbutton open="privacy:mailing" filled>
         <p text bold>Manage</p>
       </mbutton>
     </div>
@@ -28,9 +26,7 @@ use Heiakim\Model\Session;
       <p text midler bold><?= __("Public profile") ?></p>
       <p text std><?= __("Share your skill with others") ?></p>
     </div>
-    <div hoverable p12 rounded=mid
-      data-category=<?= $category ?>
-      data-sub=visibility>
+    <div open="privacy:visibility" hoverable p12 rounded=mid>
       <div fl gap align-items=center justify-content=space-between>
         <div fl gap alic>
           <mi wide><?= CurrentUser->privacy->is_public ? "visibility" : "visibility_off"; ?></mi>
@@ -52,9 +48,7 @@ use Heiakim\Model\Session;
       <p text midler bold>Uploads</p>
       <p text std>Any files that will enter our servers from your device</p>
     </div>
-    <div hoverable p12 rounded=mid posrel fl gap align-items=center justify-content=space-between
-      data-category=<?= $category ?>
-      data-sub=images>
+    <div open="privacy:images" hoverable p12 rounded=mid posrel fl gap align-items=center justify-content=space-between>
       <div fl gap alic>
         <mi wide><?= CurrentUser->privacy->image_history ? "history" : "history_off"; ?></mi>
         <div>
@@ -78,9 +72,7 @@ use Heiakim\Model\Session;
   </div>
 
   <box-model filled p24>
-    <div disabled hoverable p12 rounded=mid fl gap alic jucsb
-      data-category=<?= $category ?>
-      data-sub=download>
+    <div open="privacy:download" disabled hoverable p12 rounded=mid fl gap alic jucsb>
       <div fl gap alic>
         <div fl jucc alic>
           <mi mid>download</mi>
@@ -93,9 +85,7 @@ use Heiakim\Model\Session;
       <mi midler>east</mi>
     </div>
 
-    <div rounded=mid p12 hoverable fl gap alic jucsb
-      data-category=<?= $category ?>
-      data-sub=removal>
+    <div open="privacy:removal" rounded=mid p12 hoverable fl gap alic jucsb>
       <div fl gap align-items=center>
         <div fl jucc alic>
           <mi mid>delete</mi>

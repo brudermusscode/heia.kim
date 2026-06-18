@@ -10,24 +10,11 @@ use Heiakim\Model\Session;
 
 ?>
 
-<div rounded pinline12 pblock8 fl gap jucsb alic hoverable
-  data-category="<?= $category ?>"
-  data-sub="device"
-  data-id="<?= $Session->id ?>">
+<div open="security:device:<?= $Session->id ?>" rounded pinline12 pblock8 fl gap jucsb alic hoverable>
   <div fl gap=smol+ alic <?php if ($Session->deleted_at) echo "slight"; ?>>
     <div fl fldircol gap=smoler>
-
-      <?php
-
-      $masked_ip = $Session->remote_address;
-      $masked_ip_split = explode(".", $masked_ip);
-      unset($masked_ip_split[array_key_last($masked_ip_split)]);
-      $masked_ip = implode(".", $masked_ip_split);
-
-      ?>
-
       <div fl alic gap=smolest>
-        <p text bold><?= $masked_ip ?>.</p>
+        <p text bold><?= $Session->masked_ip() ?>.</p>
         <p pinline6 pblock8 background=slight rounded></p>
         <p pinline6 pblock8 background=slight rounded></p>
       </div>
