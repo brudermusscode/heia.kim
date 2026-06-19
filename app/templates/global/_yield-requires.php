@@ -37,8 +37,10 @@ use Heiakim\Application\Cookie;
     theme: "<?= defined("APP") ? APP->current_theme ?? APP->main_theme : _env("THEME"); ?>",
     is_sounds_enabled: <?= defined("SOUNDS_ENABLED") && SOUNDS_ENABLED == 0 ? "0" : "1"; ?>,
     is_animations_enabled: <?= defined("ANIMATIONS_ENABLED") && ANIMATIONS_ENABLED == 0 ? "0" : "1"; ?>,
-    overlay: null,
     audio: null,
+    overlay: null,
+    exception: null,
+    component: null,
   };
 
   __page["params"] = <?= json_encode($_GET) ?>;

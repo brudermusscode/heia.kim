@@ -1,5 +1,4 @@
 import * as Page from "./page.js";
-import * as Audio from "./audio.js";
 import * as Cookie from "./cookies.js";
 import * as Settings from "./settings.js";
 import * as Frontend from "./frontend.js";
@@ -74,108 +73,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (e.state.href == undefined || !e.state.href) return;
 
     await Page.get(e.state.href, true);
-  });
-
-  $(document).on("keyup", (e) => {
-    const key = () => {
-      return e.key.toLowerCase();
-    };
-
-    if (key() === "t") {
-      return;
-    }
-
-    if (key() === "escape") {
-      let reactions = document.find("[reactions-window]");
-      let composer = document.find("[composer]");
-      if (composer || reactions) Frontend.close_composer();
-    }
-
-    if (key() === "e") {
-      if (!__current_user.id) return;
-
-      Page.get(`/editor`);
-    }
-
-    if (key() === "p") {
-      if (!__current_user.id) return;
-
-      Page.get(`/u/${__current_user.id}`);
-    }
-  });
-
-  $(document).on("keypress", function (e) {
-    // Lovely click sounds when typing.
-    if (__page.is_sounds_enabled) {
-      Audio.stop("[click-audio]");
-      Audio.play("[click-audio]");
-    }
-
-    // Enter.
-    if (e.key.toLowerCase() === "enter") e.preventDefault();
-    if (
-      e.key.toLowerCase() === "enter" &&
-      (e.target.tagName.toLowerCase() === "input" ||
-        e.target.tagName.toLowerCase() === "textarea") &&
-      e.target.hasAttribute("enter-submitable")
-    ) {
-      e.preventDefault();
-
-      let form = e.target.closest("form");
-      let button = form.querySelector("[submit-closest]");
-      if (form && button && !button.hasAttribute("disabled")) button.click();
-    }
-  });
-
-  $(document).on("click", async function (e) {
-    if (
-      !$(e.target).closest("[open-more-menu]").is("[open-more-menu]") &&
-      !$(e.target).closest("[menu-more]").is("[menu-more]")
-    )
-      Frontend.close_jump_menus();
-
-    let anchor = e.target.closest("a");
-    let href = anchor?.getAttribute("href");
-
-    if (anchor !== null) {
-      if (!anchor.hasAttribute("extern") && href) {
-        e.preventDefault();
-
-        await Page.get(href, false, anchor);
-      }
-    }
-
-    // Close all ui components.
-    if (
-      __current_ui_component &&
-      !e.target.closest("ui-component")?.matches("ui-component") &&
-      !e.target.closest("[open-ui-component]")?.matches("[open-ui-component]")
-    ) {
-      Frontend.close_ui_components(true);
-    }
-
-    // Close mode menu on outside click.
-    let mode_menu = e.target.closest("mode-menu");
-    if (!mode_menu || !mode_menu.matches("mode-menu")) Frontend.close_mode_menu();
-  });
-
-  $(document).on("scroll", (e) => {
-    Frontend.close_composer();
-
-    let $scroll_container = document.body.querySelectorAll("[scroll-manipulated]");
-    if (!$scroll_container[0]) return;
-
-    if (
-      ($scroll_container[0] && document.documentElement.scrollTop >= 40) ||
-      document.body.scrollTop >= 40
-    )
-      $scroll_container.forEach((s) => {
-        s.setAttribute("scrolled", true);
-      });
-    else
-      $scroll_container.forEach((s) => {
-        s.setAttribute("scrolled", false);
-      });
   });
 
   $(document).on("click", "[submit-closest]", function (e) {

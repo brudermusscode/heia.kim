@@ -74,10 +74,9 @@ export default class Overlay {
     this.overlay.setAttribute("visible", false);
     document.body.setAttribute("toggled", false);
 
-    __page.overlay = null;
-
     setTimeout(() => {
       this.overlay.remove();
+      __page.overlay = null;
     }, 200);
   }
 }

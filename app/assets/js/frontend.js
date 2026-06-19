@@ -6,7 +6,7 @@ import * as Responder from "./elements/responder.js";
 import * as Setting from "./settings.js";
 import * as MaterialButton from "./elements/mbutton.js";
 import * as Request from "./requests.js";
-import * as Settings from "./settings.js";
+import * as Audio from "./audio.js";
 
 let Cookie = require("js-cookie");
 
@@ -54,16 +54,10 @@ export const init = async (Route, PreviousRoute = null, update_refs = false) => 
   });
 };
 
-/**
- * Reloads the page.
- */
 export const reload = () => {
   return Page.reload();
 };
 
-/**
- * Sets the frontend to be loading.
- */
 export const loaded = () => {
   let overlay = document.find("overlay[loading-app]");
 
@@ -79,9 +73,6 @@ export const loaded = () => {
 
 let __frontend_load_overlay_timeout = 0;
 
-/**
- * Sets the frontend to be loading.
- */
 export const load = (show_overlay_delay = 0) => {
   __page.is_loading = true;
 
@@ -100,9 +91,6 @@ export const load = (show_overlay_delay = 0) => {
   }, show_overlay_delay);
 };
 
-/**
- * Unsets the loading state of the frontend.
- */
 export const unload = () => {
   clearTimeout(__frontend_load_overlay_timeout);
 
@@ -123,20 +111,10 @@ export const unload = () => {
   }, Setting.INIT_TIMEOUT);
 };
 
-/**
- * Scrolls to the top!
- */
 export const scroll_to_top = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
-/**
- * Preloads a list of <img> elements by creating new Image
- * instances and marks them with a [loaded] tag so they will fade in.
- *
- * @param {HTMLImageElement[]} arr - Array of <img> elements to load
- * @returns {void}
- */
 export const load_images = (arr) => {
   arr.forEach((img) => {
     if (img.hasAttribute("loaded")) return;
@@ -164,9 +142,6 @@ export const load_images = (arr) => {
   });
 };
 
-/**
- * Reloads all images and marks them again so new ones fade in.
- */
 export const reload_images = () => load_images(document.find_all("img"));
 
 /**
@@ -199,9 +174,6 @@ export const respond = (message, status = "error", append_to = document.body) =>
   create_responder(message, status, append_to);
 };
 
-/**
- * Removes all overlays.
- */
 export const close_overlays = () => {
   let overlays = document.querySelectorAll("overlay");
 
@@ -229,20 +201,11 @@ export const close_overlays = () => {
   __current_second_overlay = null;
 };
 
-/**
- * Only removes the exception overlay.
- */
 export const close_exception_overlay = () => {
   document.find("exception-container")?.remove();
+  __page.exception = null;
 };
 
-/**
- * Extract an exception from the incoming reponse either as text
- * or HTML already.
- *
- * @param {string|HTMLElement} from
- * @returns {void}
- */
 export const extract_exception = (from) => {
   if (from && !(from instanceof Element) && from.includes("exception-container"))
     document.body.insertAdjacentHTML("beforeend", from);
@@ -253,20 +216,11 @@ export const extract_exception = (from) => {
   if (exception) {
     exception.remove();
     document.body.appendChild(exception);
+
+    __page.exception = exception;
   }
 };
 
-/**
- * Handles AJAX errors by cleaning up UI and displaying an error message.
- *
- * - Unloads any loaders
- * - Re-enables all submit buttons
- * - Extracts the exception message
- * - Shows a responder with the error status
- *
- * @param {{ responseText: string, statusText: string }} error
- * @returns {void}
- */
 export const ajax_error = (error) => {
   unload();
 
@@ -320,8 +274,11 @@ export const get_content = () => {
 };
 
 /**
- * ? Prompt animation
+ * --------------------------------------------
+ * Prompt Animation ---------------------------
+ * --------------------------------------------
  */
+
 let __prompt_animation_playing = false;
 
 export const slide_out_prompt = (prompt) => {
@@ -409,9 +366,6 @@ export const slide_in_prompt = (prompt) => {
   }, 200);
 };
 
-/**
- * Iterates through all jump menus and removes them from the frontend.
- */
 export const close_jump_menus = () => {
   let menus = document.find_all("[menu-more");
 
@@ -430,26 +384,14 @@ export const close_jump_menus = () => {
     });
 };
 
-/**
- * Closes a given responder and hides it from the frontend.
- * @param {HTMLElement} responder
- */
 export const close_responder = (responder) => {
   new Responder.Responder().close(responder);
 };
 
-/**
- * Sets the body's background color.
- */
 export const set_background_color = (color) => {
   return (document.body.style.backgroundColor = color);
 };
 
-/**
- * Animates the ajax response container based on the return of requests.
- *
- * @param {string} type
- */
 export const ajax_response = (type = "success") => {
   let container = document.find("ajax-response");
 
@@ -460,23 +402,6 @@ export const ajax_response = (type = "success") => {
     container.removeAttribute(type);
     container.deactivate();
   });
-};
-
-/**
- * Createsa a responder based on the `responder` attribute being
- * set or not and the status of the data passed.
- *
- * @param {JSON} data
- * @param {string} responder
- * @returns {}
- */
-export const create_dynamic_responder = (data, responder) => {
-  if (data.status)
-    if (responder === "success") Frontend.create_responder(data.message, "success");
-    else if (responder === "error") Frontend.create_responder(data.message, "error");
-
-  if (responder === "always")
-    Frontend.create_responder(data.message, data.status ? "success" : "error");
 };
 
 /**
@@ -573,7 +498,7 @@ export const close_ui_components = (toggle_user_menu = true) => {
     component.deactivate();
   });
 
-  __current_ui_component = null;
+  __page.component = null;
 };
 
 export const close_mode_menu = () => {
@@ -701,11 +626,6 @@ export const hide_floating_action = () => {
  * --------------------------------------------
  */
 
-/**
- * Finds the page-navigator and either just shows it or slides it in.
- *
- * @param {object} Route
- */
 export const page_navigator = (Route, PreviousRoute = null) => {
   let slide = PreviousRoute?.page_navigator !== Route.page_navigator;
 
@@ -745,6 +665,96 @@ const ensure_page_navigator = async () => {
   return navigation;
 };
 
+const infscroll_fetch = () => {
+  let _container = document.find('[scroll="infinite"]');
+  let form = document.find('[data-form="infinite-scroll"]');
+  let _type = document.find("[scroll-type]")?.getAttribute("scroll-type");
+  let offset = document.find('[data-react="infinite-scroll-offset"]');
+  let loader = document.find('[data-react="scroll:reached-end"]');
+  let page_end_bird = document.find("[page-end-bird]");
+  let real_bodyScrollHeight = document.body.scrollHeight - window.innerHeight;
+  let url;
+
+  if (!_container || !form || !_type || __page.is_loading) return;
+
+  let offset_number = parseInt(offset.value);
+  let limit_number = form.find("input[name=limit]").value;
+  let formdata = new FormData(form);
+  let formatted_data = new URLSearchParams(formdata);
+
+  if (_type === "squad") url = "/squad/score/fetch";
+  if (_type === "beatmaps") url = "/beatmap/fetch";
+  if (_type === "squads") url = "/squad/fetch";
+
+  if (
+    window.scrollY >= real_bodyScrollHeight - __infinite_scroll.page_offset &&
+    !(__infinite_scroll.reached_end || __infinite_scroll.reached_full_end)
+  ) {
+    __page.is_loading = true;
+    __infinite_scroll.reached_end = true;
+    loader.setAttribute("show-loader", "");
+    loader.removeAttribute("style");
+    page_end_bird.style.display = "none";
+
+    url = url + "?" + formatted_data;
+
+    $.ajax({
+      url: url,
+      success: function (data) {
+        __page.is_loading = false;
+
+        if (data.status) {
+          _container.insertAdjacentHTML("beforeend", data.data);
+          offset.value = offset_number + parseInt(limit_number);
+
+          /**
+           * full-end set?
+           */
+          if (document.find("infinite-scroll-full-end-reached")) {
+            pdie("Reached full scroll end!");
+            __infinite_scroll.reached_full_end = true;
+            page_end_bird.removeAttribute("style");
+            loader.style.display = "none";
+          } else __infinite_scroll.reached_end = false;
+
+          if (!data.data) {
+            page_end_bird.removeAttribute("style");
+            loader.style.display = "none";
+          }
+        }
+
+        reload_images();
+
+        if (!data.status) respond(data);
+      },
+      error: function (data) {
+        __page.is_loading = false;
+        page_end_bird.removeAttribute("style");
+        page_end_bird.style.display = "none";
+        loader.removeAttribute("show-loader");
+        respond(data.statusText, "error");
+      },
+    });
+  }
+};
+
+const scroll_header_toggle = () => {
+  let scroll_container = document.body.querySelectorAll("[scroll-manipulated]");
+
+  if (!scroll_container[0]) return;
+  if (
+    (scroll_container[0] && document.documentElement.scrollTop >= 40) ||
+    document.body.scrollTop >= 40
+  )
+    scroll_container.forEach((s) => {
+      s.setAttribute("scrolled", true);
+    });
+  else
+    scroll_container.forEach((s) => {
+      s.setAttribute("scrolled", false);
+    });
+};
+
 $(function () {
   //
 
@@ -754,51 +764,103 @@ $(function () {
    * @event keyup
    */
   $(document).on("keyup", function (e) {
-    if (e.key.toLowerCase() === "escape") {
-      // Close current overlay.
-      if (__page.overlay && !__page.overlay.locked) __page.overlay?.delete();
+    const key = (key) => {
+      return e.key.toLowerCase() === key;
+    };
 
-      // Close all ui components.
-      close_ui_components();
+    // Lovely click sounds.
+    if (__page.is_sounds_enabled) {
+      Audio.stop("[click-audio]");
+      Audio.play("[click-audio]");
+    }
+
+    if (key("enter")) e.preventDefault();
+    if (
+      key("enter") &&
+      (e.target.tagName.toLowerCase() === "input" ||
+        e.target.tagName.toLowerCase() === "textarea") &&
+      e.target.hasAttribute("enter-submitable")
+    ) {
+      e.preventDefault();
+
+      let form = e.target.closest("form");
+      let button = form.querySelector("[submit-closest]");
+      if (form && button && !button.hasAttribute("disabled")) button.click();
+    }
+
+    if (key("escape")) {
+      if (__page.exception) return close_exception_overlay();
+      if (!__page.overlay) close_ui_components();
+      if (!__page.overlay?.locked) __page.overlay?.delete();
+    }
+
+    if (key("e")) {
+      if (!__current_user.id || __page.component) return;
+
+      Page.get(`/editor`);
+    }
+
+    if (key("p")) {
+      if (!__current_user.id || __page.component) return;
+
+      Page.get(`/u/${__current_user.id}`);
     }
   });
 
   /**
-   * ? Click Events
+   * @event click
    */
-  $(document).on("click", function (e) {
-    /**
-     * Close inner prompts.
-     */
+  $(document).on("click", async function (e) {
+    // Closes opened inner prompts.
     let inner_prompts = document.find_all("[has-inner-prompt][active]");
     if (inner_prompts && !__prompt_animation_playing)
       inner_prompts.forEach(async (i) => {
         if (e.target.closest("[has-inner-prompt]") !== i && e.target !== i) {
           let prompt = i.find("[inner-prompt]");
-          if (prompt) await slide_out_prompt(prompt);
+          if (prompt) slide_out_prompt(prompt);
           i.unactivate();
         }
       });
+
+    // Closes all jump menus.
+    if (!e.target.closest("[open-more-menu]") && !e.target.closest("[menu-more]"))
+      Frontend.close_jump_menus();
+
+    // Custom handling for <a> tags.
+    let anchor = e.target.closest("a");
+    let href = anchor?.getAttribute("href");
+
+    if (anchor !== null) {
+      if (!anchor.hasAttribute("extern") && href) {
+        e.preventDefault();
+
+        await Page.get(href, false, anchor);
+      }
+    }
+
+    // Close all ui components.
+    if (
+      __page.component &&
+      !e.target.closest("ui-component") &&
+      !e.target.closest("[open-ui-component]") &&
+      !__page.overlay
+    )
+      Frontend.close_ui_components(true);
+
+    // Close mode menu on outside click.
+    let mode_menu = e.target.closest("mode-menu");
+    if (!mode_menu || !mode_menu.matches("mode-menu")) Frontend.close_mode_menu();
   });
 
   /**
-   * ? Scroll Events
+   * @event scroll
    */
   $(window).on("scroll", function () {
-    let header = document.querySelector("[scroll-changed]");
-
-    if (!header) return;
-
-    if (window.scrollY >= 200) {
-      header.setAttribute("active", "");
-    } else {
-      header.removeAttribute("active");
-    }
+    close_composer();
+    scroll_header_toggle();
+    infscroll_fetch();
   });
 
-  /**
-   * ? UI Components
-   */
   $(document).on("click", "[open-ui-component]", function (e) {
     let user_menu = document.find("user-menu");
     let component_name = this.getAttribute("open-ui-component");
@@ -810,9 +872,6 @@ $(function () {
     let url = this.getAttribute("url");
     let button = this;
 
-    /**
-     * UI component was not found somehow?
-     */
     if (!component) {
       Frontend.create_responder(
         "<strong>UI component not found 🥲</strong>",
@@ -822,15 +881,8 @@ $(function () {
       return;
     }
 
-    /**
-     * If a component is active and the button for it was pressed,
-     * close all components.
-     */
-    if (component.hasAttribute("active")) {
-      Frontend.close_ui_components(true);
-
-      return;
-    }
+    // Close the componetn if it is active already.
+    if (component.hasAttribute("active")) return Frontend.close_ui_components(true);
 
     /**
      * Toggle the user menu if it is not yet toggled.
@@ -844,11 +896,7 @@ $(function () {
     )
       Frontend.toggle_user_menu();
 
-    /**
-     * Close all components before opening a new one.
-     */
     Frontend.close_ui_components(false);
-
     component.activate();
 
     let increasing_delay = 0;
@@ -875,7 +923,7 @@ $(function () {
             inr.innerHTML = data.data;
             Frontend.reload_images();
 
-            __current_ui_component = component;
+            __page.component = component;
 
             // TODO: Button will activate when immediately pressing ESC.
             button.activate();
@@ -887,111 +935,10 @@ $(function () {
     }, 100);
   });
 
-  /**
-   * ? Infinite Scrolling
-   */
-  $(window).on("scroll", (e) => {
-    let _container = document.find('[scroll="infinite"]');
-    let form = document.find('[data-form="infinite-scroll"]');
-    let _type = document.find("[scroll-type]");
-    let offset = document.find('[data-react="infinite-scroll-offset"]');
-    let loader = document.find('[data-react="scroll:reached-end"]');
-    let page_end_bird = document.find("[page-end-bird]");
-    let real_bodyScrollHeight = document.body.scrollHeight - window.innerHeight;
-    let formdata;
-    let formatted_data;
-    let url;
-
-    /**
-     * Return if there is no infinite scroll container.
-     */
-    if (!_container || !form || !_type || __page.is_loading) return;
-
-    _type = _type.getAttribute("scroll-type");
-    let offset_number = parseInt(offset.value);
-
-    let limit_number = form.find("input[name=limit]").value;
-    formdata = new FormData(form);
-    formatted_data = new URLSearchParams(formdata);
-
-    if (_type === "squad") url = "/squad/score/fetch";
-    if (_type === "beatmaps") url = "/beatmap/fetch";
-    if (_type === "squads") url = "/squad/fetch";
-
-    if (
-      window.scrollY >= real_bodyScrollHeight - __infinite_scroll.page_offset &&
-      !(__infinite_scroll.reached_end || __infinite_scroll.reached_full_end)
-    ) {
-      __page.is_loading = true;
-      __infinite_scroll.reached_end = true;
-      loader.setAttribute("show-loader", "");
-      loader.removeAttribute("style");
-      page_end_bird.style.display = "none";
-
-      url = url + "?" + formatted_data;
-
-      $.ajax({
-        url: url,
-        method: "GET",
-        processData: false,
-        contentType: false,
-        success: function (data) {
-          __page.is_loading = false;
-
-          if (data.status) {
-            _container.insertAdjacentHTML("beforeend", data.data);
-            offset.value = offset_number + parseInt(limit_number);
-
-            /**
-             * full-end set?
-             */
-            if (document.find("infinite-scroll-full-end-reached")) {
-              pdie("Reached full scroll end!");
-              __infinite_scroll.reached_full_end = true;
-              page_end_bird.removeAttribute("style");
-              loader.style.display = "none";
-            } else __infinite_scroll.reached_end = false;
-
-            if (!data.data) {
-              page_end_bird.removeAttribute("style");
-              loader.style.display = "none";
-            }
-          }
-
-          reload_images();
-
-          if (!data.status)
-            new Responder.Responder().add(
-              document.body,
-              data.message,
-              "error",
-              "beatmaps",
-            );
-        },
-        error: function (data) {
-          __page.is_loading = false;
-          page_end_bird.removeAttribute("style");
-          page_end_bird.style.display = "none";
-          loader.removeAttribute("show-loader");
-          new Responder.Responder().add(
-            document.body,
-            data.statusText,
-            "error",
-            "beatmaps",
-          );
-        },
-      });
-    }
-  });
-
   $(document).on("click", "user-menu [toggle]", function (e) {
     toggle_user_menu();
   });
 
-  /**
-   * Click event listener for closing & hiding a given responder
-   * from the frontend.
-   */
   $(document).on("click", "[close-responder]", function (e) {
     e.preventDefault();
 
@@ -1000,10 +947,6 @@ $(function () {
     if (responder) close_responder(responder);
   });
 
-  /**
-   * ? Theme
-   * Switch dark or light mode.
-   */
   $(document).on("click", "theme-switcher", function (e) {
     let current_theme = __page.theme;
     let body = document.body;
@@ -1043,9 +986,6 @@ $(function () {
     __page.is_darkmode = __page.is_darkmode ? 0 : 1;
   });
 
-  /**
-   * Set a new theme.
-   */
   $(document).on("click", '[data-action="my:website,theme"]', function (e) {
     let theme = this.getAttribute("chooser-option");
     let body = document.body;
@@ -1065,7 +1005,7 @@ $(function () {
   });
 
   /**
-   * ? Carousel
+   * Carousel
    */
   $(document).on(
     "click",
@@ -1103,9 +1043,6 @@ $(function () {
     },
   );
 
-  /**
-   * ? Toggle switches.
-   */
   $(document).on("click", "toggle-switch", function (e) {
     let input = this.find('input[type="hidden"]');
 
@@ -1118,13 +1055,6 @@ $(function () {
     }
   });
 
-  /**
-   * Dynamically update boolean values in cookies.
-   *
-   * If the cookie doesn't exist, it will automatically set it to 0,
-   * assuming the user wants to disable a setting that has not been
-   * touched yet.
-   */
   $(document).on("click", "[update-cookie-bool]", function (e) {
     setTimeout(() => {
       let setting = this.getAttribute("update-cookie-bool");

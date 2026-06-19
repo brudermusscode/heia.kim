@@ -13,7 +13,6 @@ $(function () {
     let type = inner?.getAttribute("post-type");
     let input_wrappers = inner?.find_all(`[post-type-input]`);
     let posts = document.find("[posts]");
-    let responder = this.getAttribute("responder");
 
     input_wrappers?.forEach((wrapper) => {
       if (wrapper.getAttribute("post-type-input") !== type) {
@@ -44,7 +43,7 @@ $(function () {
           button.enable();
         }
 
-        Frontend.create_dynamic_responder(data, responder);
+        Frontend.respond(data);
       },
     });
   });
@@ -54,8 +53,7 @@ $(function () {
     let inner = this.closest("pm-inr");
     let type_input = inner.find("input[type=hidden][name=type]");
 
-    if (!type_input)
-      return console.log("Could not find input[hidden][name=type]");
+    if (!type_input) return console.log("Could not find input[hidden][name=type]");
 
     type_input.value = type;
     inner.setAttribute("post-type", type);
@@ -93,7 +91,7 @@ $(function () {
       clone_input.setAttribute("placeholder", "Another option!");
       clone.focus();
       options.appendChild(clone);
-    }
+    },
   );
 
   $(document).on(
@@ -112,7 +110,7 @@ $(function () {
       if (options_length === 1) {
         options.find("[p-option] [delete-option]").disable();
       }
-    }
+    },
   );
 
   $(document).on("click", "[posting-machine-overlay] close", function (e) {
