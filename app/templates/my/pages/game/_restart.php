@@ -21,14 +21,9 @@ if (CurrentUser->settings->account_wiped_at) {
 
 ?>
 
-<div fl gap=mid alic>
+<div fl gap alic>
   <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-  <label size="mid" has-secondary>
-    <div class="label__main">
-      <p bold><?= __("Restart journey") ?></p>
-    </div>
-  </label>
+  <p text mid bold><?= __("Restart journey") ?></p>
 </div>
 
 <tipp-box outlined rounded=mid>
@@ -39,8 +34,8 @@ if (CurrentUser->settings->account_wiped_at) {
 </tipp-box>
 
 <form fl fldircol gap
-  data-action="authentication:create"
-  data-redirect="<?= CurrentUser->link() ?>">
+  responder um-open="game"
+  data-action="authentication:create">
 
   <input type=hidden name="type" value="user:wipe" />
 

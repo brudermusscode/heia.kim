@@ -73,6 +73,7 @@ $Connection = CurrentUser->github;
         <mbutton mid background=unfollow color=dark-red
           request="connection:delete"
           data-provider="<?= $sub ?>"
+          um-open="security"
           shadow-submit>
           <p text bold><?= __("Remove") ?></p>
         </mbutton>

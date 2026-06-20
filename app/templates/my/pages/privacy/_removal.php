@@ -1,14 +1,9 @@
-<div fl gap=mid alic>
+<div fl gap alic>
   <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-  <label size="mid" has-secondary>
-    <div class="label__main">
-      <p bold>Delete account</p>
-    </div>
-  </label>
+  <p text mid bold>Delete account</p>
 </div>
 
-<form data-action="authentication:create" data-redirect="/home">
+<form data-action="authentication:create" full-redirect="/home">
 
   <input type=hidden name="type" value="user:delete" />
 

@@ -11,8 +11,21 @@ $(document).on("submit", '[data-action="authentication:create"]', function (e) {
 
   let formdata = new FormData(this);
   let button = this;
-  let redirect = this.dataset.redirect;
+  let redirect = this.getAttribute("redirect");
+  let reload = this.hasAttribute("reload");
+  let full_reload = this.hasAttribute("full-reload");
+  let full_redirect = this.getAttribute("full-redirect");
+  let um_open = this.getAttribute("um-open");
   let update_user_references = this.hasAttribute("update-user-references");
+  let query = "?";
+
+  query +=
+    (redirect ? `redirect=${redirect}&` : "") +
+    (full_redirect ? `full-redirect=${full_redirect}&` : "") +
+    (um_open ? `um-open=${um_open}&` : "") +
+    (reload ? `reload=1&` : "") +
+    (full_reload ? `full-reload=1&` : "") +
+    (update_user_references ? `update-user-references=1&` : "");
 
   Frontend.load();
 
@@ -24,46 +37,9 @@ $(document).on("submit", '[data-action="authentication:create"]', function (e) {
       Frontend.unload();
       button.enable();
 
-      if (data.status)
-        return Request.get(
-          `/authentication/${data.data.type}` +
-            (redirect ? `?redirect=${redirect}` : "") +
-            (update_user_references
-              ? (redirect ? "&" : "?") + `update-user-references=1`
-              : ""),
-          false,
-        );
+      if (data.status) return Request.get(`/authentication/${data.data.type}`, query);
 
       Frontend.respond(data);
-    },
-  });
-});
-
-/**
- * Delete authentication
- *
- * @action DELETE
- * @controller UsersController
- */
-$(document).on("click", '[data-action="authentication:remove"]', function (e) {
-  let formdata = new FormData();
-  let button = this;
-
-  formdata.append("token", this.dataset.token);
-  button.disable();
-
-  $.ajax({
-    url: "/authentication/remove",
-    method: "POST",
-    dataType: "JSON",
-    data: formdata,
-    processData: false,
-    contentType: false,
-    success: function (data) {
-      Page.get("/login");
-    },
-    error: function () {
-      Page.get("/login");
     },
   });
 });

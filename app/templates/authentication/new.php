@@ -4,11 +4,14 @@ require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php"
 
 use Heiakim\Model\Authentication;
 
-$type = aglobal("type");
-$redirect = filter_var(get("redirect"), FILTER_SANITIZE_SPECIAL_CHARS);
-
-if (!$type)
-  die(error());
+$type = aglobal("type") ?? die(error());
+$attributes = [
+  "redirect" => filter_var(get("redirect"), FILTER_SANITIZE_SPECIAL_CHARS),
+  "full-redirect" => filter_var(get("full-redirect"), FILTER_SANITIZE_SPECIAL_CHARS),
+  "um-open" => filter_var(get("um-open"), FILTER_SANITIZE_SPECIAL_CHARS),
+  "reload" => filter_var(get("reload"), FILTER_SANITIZE_SPECIAL_CHARS),
+  "full-reload" => filter_var(get("full-reload"), FILTER_SANITIZE_SPECIAL_CHARS),
+];
 
 /**
  * Just get the latest authentication of the current user.
@@ -25,9 +28,12 @@ if (!$Authentication)
 
 ob_start(); ?>
 
-<form request="authentication:update" responder
-  <?= $redirect ? "redirect='$redirect'" : "reload" ?>
-  <?= get("update-user-references") ? "update-user-references" : "" ?>>
+<form request="authentication:update" responder close-overlay
+  <?= get("update-user-references") ? "update-user-references" : "" ?>
+  <?php foreach ($attributes as $attr => $val) :
+    if (!$val) continue;
+    echo "$attr='$val'";
+  endforeach; ?>>
   <div style="min-height:100vh;" fl alic jucc pblock62>
     <content smolplus>
       <box-model prompt elevated rounded="wide" filled=lighter>

@@ -35,7 +35,7 @@ $email = !filter_var(CurrentUser->email, FILTER_VALIDATE_EMAIL)
   <p text>Your e-mail address is only visible to you. It's required for authentication.</p>
 </tipp-box>
 
-<form responder
+<form responder um-open="personal"
   data-action="authentication:create"
   fl fldircol gap=smol+>
 
