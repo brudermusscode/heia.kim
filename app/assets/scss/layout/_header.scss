@@ -406,7 +406,8 @@ header {
 // Content with a big header that has to be pushed down.
 body[leaderboard],
 body[beatmaps],
-body[squads] {
+body[squads],
+body[artists] {
   main {
     padding-top: calc($header-page-height + 2 * $main-distance);
 

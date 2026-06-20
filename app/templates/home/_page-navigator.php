@@ -48,6 +48,15 @@
         </div>
       </mbutton>
     </a>
+
+    <a pn-option href="/artists" page=artists>
+      <mbutton mid icon-only background=clean hoverable has-tooltip=right <?= display_active_when_condition(in_array(CURRENT_PAGE, ["artists", "artist"])) ?>>
+        <mi>artist</mi>
+        <div ttooltip>
+          <p text bold>Artists</p>
+        </div>
+      </mbutton>
+    </a>
   </div>
 
   <div pn-options></div>

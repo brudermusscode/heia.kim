@@ -1,7 +1,6 @@
 <?php
 
 use Heiakim\Model\Artist;
-use Heiakim\Model\User;
 
 /**
  * @var int
@@ -46,7 +45,7 @@ else {
    */
   $artist_play_count = $Artist->play_count();
 
-?>
+  include TEMPLATE . "/home/_page-navigator.php";  ?>
 
   <div class="artists__banner" scroll-manipulated>
     <div class="artists__banner_image">
