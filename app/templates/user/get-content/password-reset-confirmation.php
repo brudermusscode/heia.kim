@@ -17,7 +17,7 @@ ob_start(); ?>
 
         <div prompt-inner-content fl fldircol gap>
           <?php if (CurrentUser->email) { ?>
-            <form request="password-reset:create" responder redirect="/my/security">
+            <form request="password-reset:create" responder reload>
               <box-model submit-closest filled clickable>
                 <bm-inr size=smol fl gap alistart>
                   <mi wide>alternate_email</mi>
@@ -29,9 +29,10 @@ ob_start(); ?>
                   </div>
                 </bm-inr>
               </box-model>
+
+              <input type=hidden name=email value="<?= CurrentUser->email ?>" />
             </form>
           <?php } else { ?>
-
             <box-model filled=darker clickable>
               <bm-inr size=std>
                 <div fl fldircol gap=smol alic>
@@ -40,14 +41,11 @@ ob_start(); ?>
                 </div>
               </bm-inr>
             </box-model>
-
           <?php } ?>
 
           <tipp-box outlined=darker rounded=mid>
             <mi>info</mi>
-            <p text>If none of these options can be used, please create a support ticket on our {discord-link} and we
-              will
-              help you there.</p>
+            <p text>If none of these options can be used, please create a support ticket on our {discord-link} and we will help you there.</p>
           </tipp-box>
         </div>
       </div>

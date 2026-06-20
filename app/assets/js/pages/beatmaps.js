@@ -166,9 +166,6 @@ $(function () {
     if (e.key.toLowerCase() === "enter") {
       this.blur();
       submit.click();
-
-      pdie("Entered...");
-
       return;
     }
   });

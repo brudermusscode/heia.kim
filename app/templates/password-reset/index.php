@@ -73,7 +73,6 @@ include SNOW; ?>
         </div>
 
       <?php else : ?>
-
         <div fl fldircol gap>
           <div flone>
             <p text wide bold trimt><?= __("Password reset") ?></p>
@@ -88,7 +87,7 @@ include SNOW; ?>
             <form
               request="password-reset:update"
               responder
-              redirect="<?= LOGGED ? "/my/security" : "/login" ?>"
+              redirect="<?= LOGGED ? "/home" : "/login" ?>"
               audio-success="bell-highpitch-audio"
               audio-error="bell-negative-audio">
               <div fl fldircol gap=smol>
@@ -116,23 +115,17 @@ include SNOW; ?>
               </div>
             </form>
           <?php else : ?>
-
             <div>
               <p text>
                 <?= __("An either invalid or outdated token has been used to reset a password. You might want to request a new one. If you think this is a mistake, contact a staff member through our") ?>
                 <a extern target='_blank' href='<?= _env("DISCORD_INVITE") ?>'>Discord <i class='ri-link-unlink'></i></a>.
               </p>
             </div>
-
           <?php endif; ?>
         </div>
       <?php endif; ?>
-
     </div>
 
-    <?php
-
-    # + Login specific footer with basic links.
-    include TEMPLATE . "/global/_basic-footer.php"; ?>
+    <?php include TEMPLATE . "/global/_basic-footer.php"; ?>
   </sign-container>
 </content>
