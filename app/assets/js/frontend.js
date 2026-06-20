@@ -772,6 +772,10 @@ $(function () {
       return e.key.toLowerCase() === key;
     };
 
+    const tag = (tag) => {
+      return e.target.tagName.toLowerCase() === tag;
+    };
+
     // Lovely click sounds.
     if (__page.is_sounds_enabled) {
       Audio.stop("[click-audio]");
@@ -781,15 +785,19 @@ $(function () {
     if (key("enter")) e.preventDefault();
     if (
       key("enter") &&
-      (e.target.tagName.toLowerCase() === "input" ||
-        e.target.tagName.toLowerCase() === "textarea") &&
+      (tag("input") || tag("textarea")) &&
       e.target.hasAttribute("enter-submitable")
     ) {
-      e.preventDefault();
-
       let form = e.target.closest("form");
       let button = form.querySelector("[submit-closest]");
-      if (form && button && !button.hasAttribute("disabled")) button.click();
+      if (form && button && !button.hasAttribute("disabled")) {
+        let required_empty = false;
+        form.find_all("input")?.forEach((input) => {
+          if (!input.value && input.hasAttribute("required")) required_empty = !0;
+        });
+
+        // if (!required_empty) $(form).submit();
+      }
     }
 
     if (key("escape")) {

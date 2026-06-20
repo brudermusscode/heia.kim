@@ -5,7 +5,6 @@ namespace Heiakim\Controller;
 use Heiakim\Controller\Controller;
 use Heiakim\Http\Request;
 use Heiakim\Model\Authentication;
-use Heiakim\Model\User;
 use Heiakim\Utils\Utils;
 
 class AuthenticationsController extends Controller
@@ -24,45 +23,28 @@ class AuthenticationsController extends Controller
 
     $this->authorize();
 
-    # For new User: logged in already?
-    if ($this->params->type === "user:create" && CurrentUser->exists)
-      return error("!ALREADY_LOGGED");
+    # Every authentication has a specific type, an action to authenticate. And for ea-
+    # ch action there has to be different params set. This will validate this and die
+    # on error.
+    Authentication::validate_params($this->params);
 
-    # For new User: E-Mail is not set?
-    if ($this->params->type === "user:create" && empty($this->params->email))
-      return error("<strong>Bro, where mail?</strong>");
-
-    # For new User: E-Mail is not set?
-    if ($this->params->type === "user:update:email" && empty($this->params->email))
-      return error("<strong>Bro, where mail?</strong>");
-
-    # Any other case: User is not logged in?
-    if ($this->params->type !== "user:create" && !CurrentUser->exists)
-      return error("!NOT_LOGGED");
-
-    $token = Utils::random_alpha_token(32);
-    $code = Utils::random_numeric_token(6);
-
-    # Type is set?
     if (
-      !$this->params->type || !in_array($this->params->type, Authentication::$types)
+      !$this->params->type
+      || !in_array($this->params->type, Authentication::$types)
     )
-      return request_error("<strong>What happened kurwa?</strong> 😂");
-
-    # New user creation is handled differently.
-    if ($this->params->type === "user:create")
-      return new Authentication()->create_user($this->params);
+      return error("What happened? 😂");
 
     # If the value is set but there is nothing in it, return an error.
     if (isset($params->value) && !trim($params->value))
       return request_error(match ($params->type) {
-        Authentication::$types[2] => "<strong>Put a valid mail bro</strong> 🤪",
-        default => "<strong>Nothing to authenticate!</strong> Put something in! 🤭"
+        Authentication::$types[2] => "Put a valid mail brother 🤪",
+        default => "Nothing to authenticate! 🤭"
       });
 
+    $token = Utils::random_alpha_token(32);
+    $code = Utils::random_numeric_token(6);
+
     /**
-     * Creating a user by now uses a different procedure, because
-     * no user requires to be logged in.
      * @var ?Authentication
      */
     $Authentication = CurrentUser->authentications()
@@ -70,24 +52,18 @@ class AuthenticationsController extends Controller
       ->whereNull("deleted_at")
       ->first();
 
+    $arr = [
+      "email" => CurrentUser->email,
+      "type" => $this->params->type,
+      "token" => $token,
+      "code" => $code,
+      "value" => $this->params->value ?? null,
+      "remote_address" => Request::get_remote_address(),
+    ];
+
     $Authentication
-      ? $Authentication->update([
-        "email" => CurrentUser->email,
-        "type" => $this->params->type,
-        "token" => $token,
-        "code" => $code,
-        "value" => $params->value ?? null,
-        "remote_address" => Request::get_remote_address(),
-      ])
-      : $Authentication = CurrentUser->authentications()
-      ->create([
-        "email" => CurrentUser->email,
-        "type" => $this->params->type,
-        "token" => $token,
-        "code" => $code,
-        "value" => $params->value ?? null,
-        "remote_address" => Request::get_remote_address(),
-      ]);
+      ? $Authentication->update($arr)
+      : $Authentication = CurrentUser->authentications()->create($arr);
 
     # Send a mail and return.
     return !$Authentication->send_mail(
@@ -96,7 +72,7 @@ class AuthenticationsController extends Controller
       CurrentUser->name,
     )
       ? error("<strong>We had trouble sending a mail.</strong> Try again!")
-      : success("<strong>A code has been sent to your e-mail address.</strong> Be sure to check your spam folder, too!");
+      : success("<strong>A code has been sent to your e-mail address.</strong> Be sure to check your spam folder, too!", data: ["type" => $this->params->type]);
   }
 
   /**
@@ -105,29 +81,15 @@ class AuthenticationsController extends Controller
   public function update()
   {
 
-    $this->validate_params(
-      strict: ["token"],
-      optional: ["email"],
-    );
+    $this->authenticate();
 
-    /**
-     * User is not logged in?
-     */
-    $this->authorize(false);
-
-    /**
-     * @var ?Authentication
-     */
-    $Authentication = Authentication::where("token", $this->params->token)
-      ->first();
-
-    /**
-     * Authentication doesn't exist?
-     */
-    if (!$Authentication)
-      return error();
-
-    return $Authentication->edit($this->params);
+    # Based on the type, return a corresponding controller-action.
+    return match ($this->params->authentication_type) {
+      default => error(),
+      "user:update:email" => new UsersController([
+        "email" => $this->params->authentication_value
+      ])->update(),
+    };
   }
 
   public function delete()

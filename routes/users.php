@@ -64,7 +64,7 @@ $Router->get(
  */
 $Router->post("/user/wipe", "user/wipe", return: JSON);
 $Router->post("/user/update", "user/update", return: JSON);
-$Router->post("/user/update/:var", "user/update", return: JSON);
+// $Router->post("/user/update/:var", "user/update", return: JSON);
 $Router->post("/user/create", "user/create", return: JSON);
 $Router->post("/user/delete", "user/delete", return: JSON);
 $Router->post("/user/setting/update", "user/setting/update", return: JSON);

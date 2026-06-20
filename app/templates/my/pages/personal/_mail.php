@@ -36,23 +36,25 @@ $email = !filter_var(CurrentUser->email, FILTER_VALIDATE_EMAIL)
 </tipp-box>
 
 <form responder
-  data-form="authentication:create"
-  data-type="user:update:email"
+  data-action="authentication:create"
   fl fldircol gap=smol+>
-  <?php if (CurrentUser->email) { ?>
+
+  <input type=hidden name="type" value="user:update:email" />
+
+  <?php if (CurrentUser->email) : ?>
     <p text>Current e-mail address is <strong><?= CurrentUser->email; ?></strong></p>
-  <?php } else { ?>
+  <?php else : ?>
     <p text>You have no e-mail address set, but we <strong>highly recommend to set one</strong>. It is required to properly authenticate any critical action to your account, as well as recovering it if you lose your credentials.</p>
-  <?php } ?>
+  <?php endif; ?>
 
   <div fl fldircol gap>
     <div input material has-icon>
       <mi>alternate_email</mi>
-      <input autofocus required type="text" name="value" enter-submitable placeholder="<?= $email ?? "E-mail address"; ?>" autocomplete="false" tabindex=1 />
+      <input autofocus required enter-submitable type="text" name="value" placeholder="<?= $email ?? "E-mail address"; ?>" autocomplete="false" tabindex=1 />
     </div>
 
     <div fl justify-content=end gap>
-      <mbutton mid background=besure has-icon=left color=dark-orange submit-closest tabindex=2>
+      <mbutton mid submit-closest background=besure has-icon=left color=dark-orange tabindex=2>
         <mi>fingerprint</mi>
         <p text bold>Request code</p>
       </mbutton>

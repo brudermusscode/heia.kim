@@ -200,6 +200,23 @@ class Authentication extends Justin
     );
   }
 
+  /**
+   * @param object $params
+   * @return void
+   *
+   * NOTE: Will die on error.
+   */
+  public static function validate_params(object $params)
+  {
+    if ($params->type === "user:update:email") {
+      if (empty($params->value))
+        die(error("Bro, where mail?"));
+
+      if (!filter_var($params->value, FILTER_VALIDATE_EMAIL))
+        die(error("Invalid mail 😟"));
+    }
+  }
+
 
   // ? >>>>>>>>>>>>>>>>>>>>> DISPLAY >>>>>>>>>>>>>>>>>>>>>>>>>
 

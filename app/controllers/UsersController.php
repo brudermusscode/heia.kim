@@ -78,20 +78,6 @@ class UsersController extends Controller
   public function update()
   {
 
-    /**
-     * Some updates of the User need to be authenticated by the
-     * bad boy system. So we first authenticate the user for the
-     * given type and check if everything necessary from the
-     * authentication value to the type of the authentication
-     * value is set.
-     */
-    if (get("var") === "email" && isset($this->params["authentication_value"])) {
-      $this->authenticate();
-      $this->params["email"] = $this->params["authentication_value"];
-
-      unset($this->params["authentication_value"]);
-    }
-
     $this->validate_params(
       strict: [],
       optional: ["name", "mode", "mod", "email", "code", "token", "password", "current_password"],
@@ -99,7 +85,9 @@ class UsersController extends Controller
 
     $this->authorize();
 
-    return CurrentUser->edit($this->params);
+    CurrentUser->edit($this->params);
+
+    return success("<strong>Saved!</strong>");
   }
 
   /**

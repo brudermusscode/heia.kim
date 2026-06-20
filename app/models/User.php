@@ -198,39 +198,26 @@ class User extends Justin
   public function edit(object $params)
   {
 
-    # Begin database transaction.
+    $Change = null;
+
     $this->db_transaction();
 
     try {
 
-      $Change = null;
-
       # ? Password
       if (isset($params->password, $params->current_password)) {
         $current_password = htmlspecialchars_decode($params->current_password);
+        $current_pw_bcrypt = $this->pw_bcrypt;
         $User = User::verify_login($this->name, $current_password);
 
-        # Could not verify login credentials?
         if (!$User)
-          return error("<strong>Your credentials seem to be wrong!</strong>");
+          die(error("<strong>Your credentials seem to be wrong!</strong>"));
 
-        # Current set password is matching the old one?
         if ($params->current_password === $params->password)
-          return error("<strong>This is your current password.</strong> Choose another one!");
+          die(error("<strong>This is your current password.</strong> Choose another one!"));
 
-        # ? Password
-        # Need to decode special chars as the Controller will automatically
-        # encode everything.
+        # Need to decode special chars as the Controller will automatically encode it.
         $password = htmlspecialchars_decode($params->password);
-
-        # Check all previous passwords.
-        foreach ($this->password_changes()->get() as $Change) {
-          if (self::decrypt_password($password, $Change->previous_value)) {
-            return error(
-              "<strong>You have used this password before.</strong> Please choose another one."
-            );
-          }
-        }
 
         $this->set_password_invalid($password);
 
@@ -241,7 +228,7 @@ class User extends Justin
           ->make([
             "type" => "password",
             "previous_value" => $this->pw_bcrypt,
-            "updated_value" => $params->pw_bcrypt,
+            "updated_value" => $current_pw_bcrypt,
             "updated_at" => null,
           ]);
       }
@@ -255,10 +242,10 @@ class User extends Justin
 
         # No name changes left?
         if ($this->settings->name_changes_left < 1)
-          return error(
+          die(error(
             "<strong>No name changes left!</strong> " .
               $this->dd["UNLOCK_MORE_WITH_PREMIUM"]
-          );
+          ));
 
         $this->set_name_invalid($params->name);
 
@@ -274,8 +261,6 @@ class User extends Justin
 
         # Remove one name change.
         $this->settings->decrement("name_changes_left");
-
-        $return_msg = "<strong>Hello, $params->name!</strong>";
       }
 
       # ? Preferred Gamemode
@@ -294,15 +279,12 @@ class User extends Justin
       $Change?->save();
       $this->db_commit();
 
-      return success(
-        $return_msg ??
-          "<strong>Your information has been saved!</strong>"
-      );
+      return $this;
     } catch (\Exception $e) {
       Logger::to_file($e);
       $this->db_rollback();
 
-      return error();
+      die(error());
     }
   }
 
@@ -482,16 +464,19 @@ class User extends Justin
   public function set_mail_invalid(string $email)
   {
 
-    # Trim the email string first.
     $email = trim($email);
+
+    # Email is current one?
+    if ($email === $this->email)
+      return die(error("This is your mail already 🥹"));
 
     # Mail is of invalid format?
     if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-      return die(error("<strong>Mail invalid!</strong>"));
+      return die(error("Mail invalid!"));
 
     # Mail exists on another User?
     if (self::where("email", $email)->exists())
-      return die(error("<strong>You can't use this E-Mail brother!</strong>"));
+      return die(error("You can't use this E-Mail brother!"));
 
     $this->email = $email;
   }

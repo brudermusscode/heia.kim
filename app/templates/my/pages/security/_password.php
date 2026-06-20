@@ -4,7 +4,7 @@
     <p text mid bold>Password</p>
   </div>
 
-  <form request="user:update" responder responder redirect="<?= $base_url; ?>">
+  <form request="user:update" responder responder um-open="security">
     <div fl fldircol gap=smol>
       <div fl fldircol gap=smol>
         <div input material has-icon>

@@ -17,17 +17,17 @@ class Controller
 {
   use ProcessesRequests;
 
-  /**
-   * Keys in POST or GET that will always pass.
-   */
   protected static array $valid_passthrough_keys = [
     "CurrentUser",
   ];
 
-  /**
-   * Params to send to any inheriting Controller.
-   */
   protected mixed $params = [];
+
+  /**
+   * Some controller-actions need to be authenticated. Using the authenticate() method
+   * will populate this.
+   */
+  protected ?Authentication $Authentication = null;
 
   public function __construct(array $params = [], array $files =  [])
   {
@@ -42,9 +42,6 @@ class Controller
       foreach ($files as $key => $file)
         $this->params["files"][$key] = $file;
     }
-
-    # Append the CurrentUser so it's available everyhwere, only if it exists.
-    $this->params["CurrentUser"] = CurrentUser->exists ? CurrentUser : null;
   }
 
   /**
@@ -128,71 +125,51 @@ class Controller
   }
 
   /**
-   * This bad boy is part of the authentication dialogue
-   * system which requires the logged in user to authenticate with
-   * a code sent to their email before firing of critical
-   * functions related to their account. It takes the code sent
-   * with the params automatically. User always has to be logged in.
+   * Authenticating certain controller-actions can be done through this method. Checks
+   * for a valid Authentication to be present with given params
    *
    * @param bool $die_on_error
    * @return null|string|object
+   *
+   * NOTE: Will die on error.
    */
   public function authenticate(bool $die_on_error = true)
   {
 
-    /**
-     * @var object|string
-     */
-    $error = $this->error("!AUTH_FAILED");
+    $error = error("!AUTH_FAILED");
 
-    /**
-     * Any necessary parameter for validating authentication is missing?
-     */
-    if (
-      empty($this->params["authentication_type"])
-      || empty($this->params["authentication_code"])
-      || empty($this->params["authentication_token"])
-    )
-      return $die_on_error ? die($error) : $error;
+    $this->validate_params(
+      strict: [
+        "authentication_type",
+        "authentication_code",
+        "authentication_token"
+      ],
+    );
 
+    $this->authorize();
 
     /**
      * @var ?Authentication
      */
-    $Authentication =
-      CurrentUser
-      ->authentications()
-      ->where("type", $this->params["authentication_type"])
-      ->where("code", $this->params["authentication_code"])
-      ->where("token", $this->params["authentication_token"])
+    $Authentication = CurrentUser->authentications()
+      ->where([
+        "code" => $this->params->authentication_code,
+        "type" => $this->params->authentication_type,
+        "token" => $this->params->authentication_token
+      ])
       ->whereNull("deleted_at")
       ->first();
 
-    /**
-     * Authentication is existing?
-     */
     if (!$Authentication)
       return $die_on_error ? die($error) : $error;
 
-    /**
-     * In case there is a value for authentication set, manipulate
-     * the params array so that the actual value's type name is
-     * the key instead of the authenticationn_value.
-     */
-    // if (get("var"))
+    # So the value can be used inside the Conroller. This should always be secure and
+    # correct as the value is validated through the create-method.
+    $this->params->authentication_value = $Authentication->value;
 
-    /**
-     * Unset all parameter important for this authentication to
-     * allow strict param validation later in the controller.
-     */
-    unset(
-      $this->params["authentication_type"],
-      $this->params["authentication_code"],
-      $this->params["authentication_token"],
-    );
-
-    # Invalidate authentication & return.
-    return $Authentication->delete();
+    # We delete the Authentication here already, so it will be invalid even tho the
+    # action, that needs to be authenticated has failed because of any reason -
+    $Authentication->delete();
   }
 
   /**
