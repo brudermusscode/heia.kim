@@ -3,11 +3,11 @@
 namespace Heiakim\Model\User;
 
 use Heiakim\Justin;
-use Heiakim\Application\Cookie;
 use Heiakim\Model\User;
 
 class UserSettingsPrivacy extends Justin
 {
+
   /**
    * @var string
    */
@@ -46,87 +46,13 @@ class UserSettingsPrivacy extends Justin
     "updated_at" => null,
   ];
 
-  /**
-   * @var array
-   */
-  public $mailings = [
+  public static array $mailings = [
     "mailing_account",
     "mailing_newsletter",
     "mailing_expiring_premium",
     "mailing_reminder",
     "mailing_birthday",
   ];
-
-  /**
-   * @param object $params
-   * @return object
-   */
-  public function edit(object $params)
-  {
-
-    /**
-     * * Mailings
-     */
-    foreach ($this->mailings as $mailing) {
-      if (isset($params->$mailing)) {
-        $mailing_value = $this->ensure_numeric_bool($params->$mailing);
-
-        /**
-         * Set the real bool value for the mailing.
-         */
-        $this->$mailing = $mailing_value !== null ? $mailing_value : $this->$mailing;
-      }
-    }
-
-    /**
-     * * Public Profile
-     */
-    if (isset($params->is_public))
-      $this->is_public = $params->is_public > 0 ? 1 : 0;
-
-    /**
-     * * Image History
-     */
-    if (isset($params->image_history))
-      $this->image_history = $params->image_history > 0 ? 1 : 0;
-
-    /**
-     * * Policies
-     */
-    if (isset($params->accepts_policies)) {
-      $this->accepts_policies = $params->accepts_policies > 0 ? 1 : 0;
-
-      /**
-       * Remove policies step cookie and set the consent set cookie.
-       */
-      Cookie::delete("POLICIES_CONSENT_STEP");
-      Cookie::set("POLICIES_CONSENT", true, "+10 years");
-    }
-
-    /**
-     * Update it!
-     */
-    $this->save();
-
-    return $this->success("<strong>All cool!</strong>");
-  }
-
-  /**
-   * @return int
-   */
-  public function ensure_numeric_bool(mixed $input)
-  {
-
-    /**
-     * @var ?int
-     */
-    $filtered_input = filter_var($input, FILTER_VALIDATE_INT);
-
-    if ($filtered_input !== null && ($filtered_input == 0 || $filtered_input == 1))
-      return intval($input);
-    else
-      return null;
-  }
 
   /**
    * @return User

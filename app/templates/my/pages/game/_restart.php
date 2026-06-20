@@ -39,28 +39,26 @@ if (CurrentUser->settings->account_wiped_at) {
 </tipp-box>
 
 <form fl fldircol gap
-  data-form="authentication:create"
-  data-type="user:wipe"
+  data-action="authentication:create"
   data-redirect="<?= CurrentUser->link() ?>">
-  <?php if ($can_wipe && $wipes_left) : ?>
-    <div fl jucsb alic gap>
-      <p text>Restarts left &middot;
-        <strong color=company><?= $wipes_left ?></strong>
-      </p>
 
-      <?php if (Feature::enabled("restart_journey")) : ?>
-        <input type=hidden name=type value=wipe_user />
-        <mbutton mid background="besure" color=dark-orange has-icon=left submit-closest>
-          <mi>fingerprint</mi>
-          <p text bold>Authenticate for wipe</p>
-        </mbutton>
-      <?php else : ?>
-        <mbutton mid disabled background=slight-orange color=dark-orange>
-          <p text bold>Feature disabled</p>
-        </mbutton>
-      <?php endif; ?>
-    </div>
-  <?php else : ?>
-    <!--- ? --->
-  <?php endif; ?>
+  <input type=hidden name="type" value="user:wipe" />
+
+  <div fl jucsb alic gap>
+    <p text>Restarts left &middot;
+      <strong color=company><?= $wipes_left ?></strong>
+    </p>
+
+    <?php if (Feature::enabled("restart_journey")) : ?>
+      <mbutton mid submit-closest background="besure" color=dark-orange has-icon=left
+        <?= !$wipes_left ? "disabled" : "" ?>>
+        <mi>fingerprint</mi>
+        <p text bold>Authenticate</p>
+      </mbutton>
+    <?php else : ?>
+      <mbutton mid disabled background=slight-orange color=dark-orange>
+        <p text bold>Feature disabled</p>
+      </mbutton>
+    <?php endif; ?>
+  </div>
 </form>

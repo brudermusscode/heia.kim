@@ -12,7 +12,7 @@ class CacheGithubCommits extends Job
   /**
    * @return void
    */
-  public static function run(string $interval = "+1 day")
+  public static function run(string $interval = "+1 hour")
   {
 
     if (static::has_run_before($interval)) return;

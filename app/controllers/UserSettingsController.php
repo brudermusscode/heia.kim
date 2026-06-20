@@ -3,6 +3,7 @@
 namespace Heiakim\Controller;
 
 use Heiakim\Controller\Controller;
+use Heiakim\Model\User\UserSettingsPrivacy;
 
 class UserSettingsController extends Controller
 {
@@ -13,9 +14,8 @@ class UserSettingsController extends Controller
   public function update()
   {
 
-    $this->validate_params(
-      strict: [],
-      optional: [
+    $accepted_params = array_merge(
+      [
         "remove_current_profile_picture",
         "image",
         "headline",
@@ -23,8 +23,19 @@ class UserSettingsController extends Controller
         "month",
         "year",
         "MAX_FILE_SIZE",
-        "checked_notifications_at"
+        "checked_notifications_at",
+        "mail",
+        "accepts_policies",
+        "image_history",
+        "can_interact",
+        "is_public",
       ],
+      UserSettingsPrivacy::$mailings
+    );
+
+    $this->validate_params(
+      strict: [],
+      optional: $accepted_params,
     );
 
     $this->authorize();

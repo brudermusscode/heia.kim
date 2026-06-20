@@ -208,6 +208,10 @@ class Authentication extends Justin
    */
   public static function validate_params(object $params)
   {
+
+    if (!$params->type || !in_array($params->type, Authentication::$types))
+      die(error("What happened? 😂"));
+
     if ($params->type === "user:update:email") {
       if (empty($params->value))
         die(error("Bro, where mail?"));

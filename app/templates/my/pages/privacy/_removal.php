@@ -8,22 +8,20 @@
   </label>
 </div>
 
-<form
-  data-form="authentication:create"
-  data-type="user:delete"
-  data-redirect="/home">
+<form data-action="authentication:create" data-redirect="/home">
+
+  <input type=hidden name="type" value="user:delete" />
+
   <div fl fldircol gap>
-    <tipp-box outlined rounded=mid clickable disabled>
-      <div fl jucsb alic flexone>
-        <div fl alic gap=smol+>
-          <mi size=midler>download</mi>
-          <div>
-            <p text bold>Download your data first</p>
-            <p text>Not yet available</p>
-          </div>
+    <tipp-box outlined rounded=mid clickable disabled fl jucsb alic flexone>
+      <div fl alic gap=smol+>
+        <mi size=midler>download</mi>
+        <div>
+          <p text bold>Download your data first</p>
+          <p text color=red>Not yet available</p>
         </div>
-        <mi size=midler>east</mi>
       </div>
+      <mi size=midler>east</mi>
     </tipp-box>
 
     <div fl fldircol gap=smol+>
@@ -41,15 +39,13 @@
 
     <tipp-box outlined rounded=mid>
       <mi>info</mi>
-      <p text>When authentication is done, your account will be <strong>irreversible deleted</strong>. It's
-        permanent, so be really sure
-        about it. We won't be able to recover anything!</p>
+      <p text>When authentication is done, your account will be <strong>irreversible deleted</strong>.</p>
     </tipp-box>
 
     <div fl jucend>
       <mbutton mid background="besure" color=dark-orange has-icon=left submit-closest>
         <mi>fingerprint</mi>
-        <p text bold>Authenticate for deletion</p>
+        <p text bold>Authenticate</p>
       </mbutton>
     </div>
   </div>

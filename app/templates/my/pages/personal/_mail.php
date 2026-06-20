@@ -56,7 +56,7 @@ $email = !filter_var(CurrentUser->email, FILTER_VALIDATE_EMAIL)
     <div fl justify-content=end gap>
       <mbutton mid submit-closest background=besure has-icon=left color=dark-orange tabindex=2>
         <mi>fingerprint</mi>
-        <p text bold>Request code</p>
+        <p text bold>Authenticate</p>
       </mbutton>
     </div>
   </div>

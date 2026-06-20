@@ -194,6 +194,8 @@ class User extends Justin
   /**
    * @param object $params
    * @return string
+   *
+   * NOTE: Will die on error.
    */
   public function edit(object $params)
   {
@@ -290,96 +292,88 @@ class User extends Justin
 
   /**
    * @param object $params
-   * @return bool
+   * @return ?string
+   *
+   * NOTE: Will die on error.
    */
-  public function remove(object $params)
+  public function remove()
   {
 
-    /**
-     * @var User
-     */
-    $CurrentUser = $params->CurrentUser ?? $this;
-
-    /**
-     * @var ?SquadUser
-     */
-    $SquadUser = $CurrentUser->squad_user;
-
-    # User is a squad owner?
-    if ($SquadUser && $SquadUser->is_owner()) {
-      return error(
+    # If the User is a Squad-owner, he should transfer their privileges before dele-
+    # ting their account.
+    if ($this->squad_user?->is_owner()) {
+      die(error(
         "<strong>Please transfer the ownership of your squad, before you delete your account.</strong>"
-      );
+      ));
     }
 
-    # Begin new database transaction.
     $this->db_transaction();
 
     try {
 
       # ? Authentications
-      $CurrentUser->authentications()->delete();
+      $this->authentications()->delete();
 
       # ? Changes
-      $CurrentUser->changes()->delete();
+      $this->changes()->delete();
 
       # ? Squad
-      $CurrentUser->squad_requests()?->delete();
-      $CurrentUser->squad_feed_item()?->delete();
-      $SquadUser?->delete();
+      $this->squad_requests()?->delete();
+      $this->squad_feed_item()?->delete();
+      $this->squad_user?->delete();
 
       # ? Client hashes
-      $CurrentUser->client_hashes()->delete();
+      $this->client_hashes()->delete();
 
       # ? Connect credentials
-      $CurrentUser->connections()->delete();
+      $this->connections()->delete();
 
       # ? Favourites
-      $CurrentUser->osu_favorites()->delete();
+      $this->osu_favorites()->delete();
 
       # ? Feedback
-      $CurrentUser->feedback()->delete();
+      $this->feedback()->delete();
 
       # ? Images
       # This will only delete images of type __user__. Squad images will still be a-
       # vailable.
-      $CurrentUser->images()->delete();
+      $this->images()->delete();
 
       # ? Ingame logins
-      $CurrentUser->osu_ingame_logins()->delete();
+      $this->osu_ingame_logins()->delete();
 
       # ? Mailings
-      $CurrentUser->mailings()->delete();
+      $this->mailings()->delete();
 
       # ? Manager
-      $CurrentUser->manager_authentications()->delete();
-      $CurrentUser->manager_logs()->delete();
-      $CurrentUser->manager_sessions()->delete();
-      $CurrentUser->manager_user()->delete();
+      $this->manager_authentications()->delete();
+      $this->manager_logs()->delete();
+      $this->manager_sessions()->delete();
+      $this->manager_user()->delete();
 
       # ? Beatmap Requests
-      $CurrentUser->beatmap_requests()->delete();
+      $this->beatmap_requests()->delete();
 
       # ? Notifications
-      $CurrentUser->notifications()->delete();
+      $this->notifications()->delete();
 
       # ? Orders
-      $CurrentUser->orders->each(function (Order $Order) {
+      $this->orders->each(function (Order $Order) {
         $Order->paypal()->delete();
         $Order->delete();
       });
 
       # ? Password Resets
-      $CurrentUser->password_resets()->delete();
+      $this->password_resets()->delete();
 
       # ? Profile
-      $CurrentUser->profile()->delete();
+      $this->profile()->delete();
 
       # ? Ratings
-      $CurrentUser->osu_ratings()->delete();
+      $this->osu_ratings()->delete();
 
       # ? Reactions
-      $CurrentUser->reactions()->delete();
+      $this->reactions()->delete();
 
       # ? Relationships
       Relationship::whereRaw("user1 = ? OR user2 = ?", [$this->id, $this->id])
@@ -387,16 +381,16 @@ class User extends Justin
         ?->each(fn(Relationship $R) => $R->delete());
 
       # ? Reports
-      $CurrentUser->reports()->delete();
+      $this->reports()->delete();
 
       # ? Restrictions
-      $CurrentUser->restrictions()->delete();
+      $this->restrictions()->delete();
 
       # ? Appeals
-      $CurrentUser->appeals()->delete();
+      $this->appeals()->delete();
 
       # ? Scores
-      $CurrentUser->scores->each(function (Score $Score) {
+      $this->scores->each(function (Score $Score) {
         $Score->comments()->delete();
         $Score->reactions()->delete();
         $Score->thread_post_attachments()->delete();
@@ -404,19 +398,19 @@ class User extends Justin
       });
 
       # ? Searches
-      $CurrentUser->searches()->delete();
+      $this->searches()->delete();
 
       # ? Sessions
-      $CurrentUser->sessions()->delete();
+      $this->sessions()->delete();
 
       # ? Stats
-      $CurrentUser->stats()->delete();
+      $this->stats()->delete();
 
       # ? Stat Developments
-      $CurrentUser->stat_development()->delete();
+      $this->stat_development()->delete();
 
       # ? Threads
-      $CurrentUser->threads->each(function ($Thread) {
+      $this->threads->each(function ($Thread) {
         $Thread->posts->each(function ($Post) {
           $Post->attachments->each->delete();
           $Post->delete();
@@ -425,30 +419,28 @@ class User extends Justin
       });
 
       # ? Achievements
-      $CurrentUser->achievements()->delete();
+      $this->achievements()->delete();
 
       # ? Pins
-      $CurrentUser->pins()->delete();
+      $this->pins()->delete();
 
       # ? Settings
-      $CurrentUser->settings()->delete();
-      $CurrentUser->privacy()->delete();
-      $CurrentUser->premium()->delete();
+      $this->settings()->delete();
+      $this->privacy()->delete();
+      $this->premium()->delete();
 
-      # ! DELETE THE USER OMG
-      $CurrentUser->delete();
 
-      # Commit!
+      $this->delete();
       $this->db_commit();
 
-      return success("<strong>See you l8er boi.</strong>");
+      return null;
     } catch (\Exception $e) {
       Logger::to_file($e);
       $this->db_rollback();
 
-      return error(
-        "<strong>What happened?</strong> Something is wrong, definetely."
-      );
+      die(error(
+        "Something is wrong, definetely."
+      ));
     }
   }
 
@@ -2561,11 +2553,9 @@ class User extends Justin
   public function wipe()
   {
 
-    # Begin a database transaction! Nothing to leave behind!
     $this->db_transaction();
 
     try {
-
       $this->remove_cached_data();
       $this->stats()->update(new Stat()->getAttributes());
       $this->stat_development()->delete();
@@ -2581,15 +2571,14 @@ class User extends Justin
         ]);
       }
 
-      # Commit!
       $this->db_commit();
 
-      return success("<strong>Wiped!</strong> Good luck on your new path, friend.");
+      return $this;
     } catch (\Exception $e) {
       Logger::to_file($e);
       $this->db_rollback();
 
-      return error($e->getMessage());
+      die(error($e->getMessage()));
     }
   }
 

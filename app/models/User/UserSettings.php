@@ -2,6 +2,7 @@
 
 namespace Heiakim\Model\User;
 
+use Heiakim\Application\Cookie;
 use Heiakim\Justin;
 use Heiakim\Application\Logger;
 use Heiakim\Model\User;
@@ -64,7 +65,7 @@ class UserSettings extends Justin
   {
 
     # ? Profile Picture
-    # Handled through Profiles.
+    # Upload: Handled through Profiles.
 
     # Remove profile picture.
     if (isset($params->remove_current_profile_picture))
@@ -86,13 +87,40 @@ class UserSettings extends Justin
     )
       $this->birthday = $Date->format("Y-m-d");
 
-    # Begin a transaction! Nothing to leave behind.
+    # ? Privacy: Mailings
+    foreach (UserSettingsPrivacy::$mailings as $mailing) {
+      if (isset($params->$mailing)) {
+        $mailing_value = $this->ensure_numeric_bool($params->$mailing);
+
+        $this->user->privacy->$mailing = $mailing_value !== null
+          ? $mailing_value
+          : $this->user->privacy->$mailing;
+      }
+    }
+
+    # ? Privacy: Public Profile
+    if (isset($params->is_public))
+      $this->user->privacy->is_public = $params->is_public > 0 ? 1 : 0;
+
+    # ? Privacy: Image History
+    if (isset($params->image_history))
+      $this->user->privacy->image_history = $params->image_history > 0 ? 1 : 0;
+
+    # ? Privacy: Policies
+    if (isset($params->accepts_policies)) {
+      $this->user->privacy->accepts_policies = $params->accepts_policies > 0 ? 1 : 0;
+
+      Cookie::delete("POLICIES_CONSENT_STEP");
+      Cookie::set("POLICIES_CONSENT", true, "+10 years");
+    }
+
     $this->db_transaction();
 
     try {
 
       # Save and commit!
       $this->save();
+      $this->user->privacy->save();
       $this->db_commit();
 
       return $this;
@@ -110,6 +138,20 @@ class UserSettings extends Justin
   public function user()
   {
     return $this->belongsTo(User::class);
+  }
+
+  /**
+   * @return ?int
+   */
+  public function ensure_numeric_bool(mixed $input)
+  {
+
+    $filtered_input = filter_var($input, FILTER_VALIDATE_INT);
+
+    if ($filtered_input !== null && ($filtered_input == 0 || $filtered_input == 1))
+      return intval($input);
+    else
+      return null;
   }
 
   /**

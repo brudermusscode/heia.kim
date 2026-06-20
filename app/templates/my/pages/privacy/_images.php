@@ -1,19 +1,9 @@
-<div fl gap=mid alic>
+<div fl gap alic>
   <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-  <label size="mid" has-secondary>
-    <div class="label__main">
-      <p bold>Image history</p>
-    </div>
-  </label>
+  <p text mid bold>Image history</p>
 </div>
 
-<tipp-box dno outlined rounded="mid">
-  <mi>info</mi>
-  <p text></p>
-</tipp-box>
-
-<form request="user:settings:privacy:update" delay=20 responder=error no-loader radio fl fldircol gap=smol>
+<form request="user:setting:update" delay=20 responder=error no-loader radio fl fldircol gap=smol>
   <box-model filled p32 fl fldircol gap=smol+>
     <p text midler bold>Enable history</p>
     <div fl jucsb alistart gap>

@@ -97,9 +97,10 @@ class UsersController extends Controller
   {
 
     $this->authorize();
-    $this->authenticate();
 
-    return CurrentUser->remove($this->params);
+    CurrentUser->remove();
+
+    return success("You are gone! <strong>Jesus loves you!</strong> 🙂");
   }
 
   /**
@@ -109,8 +110,9 @@ class UsersController extends Controller
   {
 
     $this->authorize();
-    $this->authenticate();
 
-    return CurrentUser->wipe();
+    CurrentUser->wipe();
+
+    return success("All gone! Have fun with your fresh start! 🫰");
   }
 }

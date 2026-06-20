@@ -3,8 +3,6 @@
 namespace Heiakim\Model;
 
 use Heiakim\Justin;
-use Heiakim\Application\Exception;
-use Heiakim\Application\Logger;
 use Heiakim\Model\User;
 
 class Relationship extends Justin

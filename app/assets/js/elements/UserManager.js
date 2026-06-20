@@ -29,6 +29,7 @@ export const get = (page) => {
 
         if (data.status) {
           react.innerHTML = data.data;
+          Frontend.get_content();
           Frontend.reload_images();
 
           if (!page.includes("/"))

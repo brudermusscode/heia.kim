@@ -28,12 +28,6 @@ class AuthenticationsController extends Controller
     # on error.
     Authentication::validate_params($this->params);
 
-    if (
-      !$this->params->type
-      || !in_array($this->params->type, Authentication::$types)
-    )
-      return error("What happened? 😂");
-
     # If the value is set but there is nothing in it, return an error.
     if (isset($params->value) && !trim($params->value))
       return request_error(match ($params->type) {
@@ -89,6 +83,8 @@ class AuthenticationsController extends Controller
       "user:update:email" => new UsersController([
         "email" => $this->params->authentication_value
       ])->update(),
+      "user:wipe" => new UsersController()->wipe(),
+      "user:delete" => new UsersController()->delete(),
     };
   }
 
