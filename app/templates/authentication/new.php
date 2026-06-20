@@ -2,57 +2,33 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Heiakim\Http\Request;
 use Heiakim\Model\Authentication;
 
-/**
- * @var Request $Request
- */
-
-/**
- * @var string
- */
-$type = filter_var(get("type"), FILTER_SANITIZE_SPECIAL_CHARS);
-
-/**
- * @var string
- */
+$type = aglobal("type");
 $redirect = filter_var(get("redirect"), FILTER_SANITIZE_SPECIAL_CHARS);
 
-/**
- * Type not set?
- */
 if (!$type)
-  die($Request->error());
+  die(error());
 
 /**
  * Just get the latest authentication of the current user.
  * @var ?Authentication
  */
-$Authentication =
-  CurrentUser
-  ->authentications()
+$Authentication = CurrentUser->authentications()
   ->where("type", $type)
   ->whereNull("deleted_at")
   ->latest()
   ->first();
 
-/**
- * Authentication doesn't exist?
- */
 if (!$Authentication)
-  die($Request->error());
+  die(error());
 
-ob_start();
-
-?>
-
-<form
+ob_start(); ?>
+<form responder
   request="<?= $Authentication->type ?>"
-  responder
   <?= $redirect ? "redirect='$redirect'" : "reload" ?>
   <?= get("update-user-references") ? "update-user-references" : "" ?>>
-  <content smolest prompt-height>
+  <content std prompt-height minlineauto>
     <box-model prompt elevated rounded="wide" filled=lighter>
       <div prompt-content>
         <div prompt-header>
@@ -100,9 +76,7 @@ ob_start();
         </mbutton>
       </div>
     </box-model>
-    </div>
+  </content>
 </form>
 
-<?php
-
-die($Request->success(data: ob_get_clean()));
+<?php die(success(data: ob_get_clean()));

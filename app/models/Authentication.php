@@ -31,109 +31,13 @@ class Authentication extends Justin
     "remote_address",
   ];
 
-  protected static array $types = [
+  public static array $types = [
     "user:create",
     "user:delete",
     "user:update:email",
     "user:wipe",
     "squad:user:delete",
   ];
-
-  /**
-   * @param object $params
-   * @return object
-   */
-  public function new(object $params)
-  {
-
-    /**
-     * @var User
-     */
-    $CurrentUser = $params->CurrentUser ?? null;
-
-    /**
-     * @var string
-     */
-    $token = Utils::random_alpha_token(32);
-
-    /**
-     * @var string
-     */
-    $code = Utils::random_numeric_token(6);
-
-    /**
-     * Type is set?
-     */
-    if (!$params->type || !in_array($params->type, static::$types))
-      return request_error("<strong>What happened kurwa?</strong> 😂");
-
-    /**
-     * New user creation is handled differently.
-     */
-    if ($params->type === "user:create")
-      return $this->create_user($params);
-
-    /**
-     * User needs to be logged in any case except the user creation.
-     */
-    if (!$CurrentUser)
-      return request_error("!NOT_LOGGED");
-
-    /**
-     * If the value is set but there is nothing in it, return an error.
-     */
-    if (isset($params->value) && !trim($params->value))
-      return request_error(match ($params->type) {
-        static::$types[2] => "<strong>Put a valid mail bro</strong> 🤪",
-        default => "<strong>Nothing to authenticate!</strong> Put something in! 🤭"
-      });
-
-    /**
-     * Creating a user by now uses a different procedure, because
-     * no user requires to be logged in.
-     * @var ?Authentication
-     */
-    $Authentication =
-      $CurrentUser
-      ->authentications()
-      ->where("type", $params->type)
-      ->whereNull("deleted_at")
-      ->first();
-
-    /**
-     * Create a new authentication for the current user.
-     */
-    $Authentication
-      ? $Authentication->update([
-        "email" => $CurrentUser->email,
-        "type" => $params->type,
-        "token" => $token,
-        "code" => $code,
-        "value" => $params->value ?? null,
-        "remote_address" => Request::get_remote_address(),
-      ])
-      : $Authentication = $params->CurrentUser
-      ->authentications()
-      ->create([
-        "email" => $CurrentUser->email,
-        "type" => $params->type,
-        "token" => $token,
-        "code" => $code,
-        "value" => $params->value ?? null,
-        "remote_address" => Request::get_remote_address(),
-      ]);
-
-    /**
-     * Send a mail.
-     */
-    return !$Authentication->send_mail(
-      $code,
-      $CurrentUser->email,
-      $CurrentUser->name,
-    )
-      ? $this->error("<strong>We had trouble sending a mail.</strong> Try again!")
-      : $this->success("<strong>A code has been sent to your e-mail address.</strong> Be sure to check your spam folder, too!");
-  }
 
   /**
    * @return HasOne<Connection>

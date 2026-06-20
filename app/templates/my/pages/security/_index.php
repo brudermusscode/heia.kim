@@ -41,7 +41,7 @@ $PasswordChange = CurrentUser->password_changes()
 
 <!--- DEVICES --->
 <div fl fldircol gap=smol+>
-  <p text midler bold title-inline><?= __("Your Devices") ?></p>
+  <p text mid bold title-inline><?= __("Devices") ?></p>
   <box-model outlined=darker p24 fl fldircol gap=smol+>
     <div>
       <?php
@@ -92,7 +92,7 @@ $PasswordChange = CurrentUser->password_changes()
 </div>
 
 <div fl fldircol gap=smol+>
-  <p text midler bold title-inline><?= __("Third party connections") ?></p>
+  <p text mid bold title-inline><?= __("Connections") ?></p>
 
   <!--- THIRD PARTY CONNECTIONS --->
   <box-model outlined=darker p24 fl fldircol gap>

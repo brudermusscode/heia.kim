@@ -29,14 +29,9 @@ $Scores = CurrentUser->scores()
 
 ?>
 
-<div fl gap=mid alic>
+<div fl gap alic>
   <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-  <label size="mid" has-secondary>
-    <div class="label__main">
-      <p bold>Scores</p>
-    </div>
-  </label>
+  <p text mid bold>Scores</p>
 </div>
 
 <div fl jucc style="max-width: 620px; margin-inline: auto">

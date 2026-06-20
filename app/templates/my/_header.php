@@ -49,7 +49,6 @@ $title_w_desc = [
 
     <div>
       <p text bold mid><?= $title_w_desc[$category][0] ?></p>
-      <p text slight><?= $title_w_desc[$category][1] ?></p>
     </div>
   </div>
 <?php endif; ?>

@@ -92,7 +92,7 @@ class Application
    */
   public function get_main_theme()
   {
-    return self::$themes[3];
+    return "golden-embrace";
   }
 
   /**

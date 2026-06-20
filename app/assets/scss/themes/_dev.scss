@@ -1,25 +1,23 @@
-//main: ../application.scss
-
 @use "sass:map";
 
 // @use "sangria-sunset" as *;
 // @use "springtime-symphony.scss" as *;
 // @use "lemon-zest.scss" as *;
 // @use "azure-dreams.scss" as *;
-@use "twilight-noir" as *;
+// @use "twilight-noir" as *;
 // @use "nocturnal-nebula.scss" as *;
 // @use "discord.scss" as *;
-// @use "golden-embrace.scss" as *;
+@use "golden-embrace.scss" as *;
 
 $themes: ();
-// $themes: map-merge($themes, $azure-dreams-theme);
-// $themes: map-merge($themes, $sangria-sunset-theme);
-// $themes: map-merge($themes, $springtime-symphony-theme);
-// $themes: map-merge($themes, $lemon-zest-theme);
-$themes: map.merge($themes, $twilight-noir-theme);
-// $themes: map-merge($themes, $nocturnal-nebula-theme);
-// $themes: map-merge($themes, $discord-theme);
-// $themes: map-merge($themes, $golden-embrace-theme);
+// $themes: map.merge($themes, $azure-dreams-theme);
+// $themes: map.merge($themes, $sangria-sunset-theme);
+// $themes: map.merge($themes, $springtime-symphony-theme);
+// $themes: map.merge($themes, $lemon-zest-theme);
+/* $themes: map.merge($themes, $twilight-noir-theme); */
+// $themes: map.merge($themes, $nocturnal-nebula-theme);
+// $themes: map.merge($themes, $discord-theme);
+$themes: map.merge($themes, $golden-embrace-theme);
 
 @mixin themed() {
   @each $theme, $map in $themes {

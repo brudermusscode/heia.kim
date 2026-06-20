@@ -30,7 +30,7 @@ export const init = async (Route, PreviousRoute = null, update_refs = false) => 
 
   if (update_refs) await update_user_menu();
 
-  await page_navigator(Route, PreviousRoute);
+  page_navigator(Route, PreviousRoute);
   toggle_floating_actions(Route.key);
   get_content();
   unload();
@@ -199,6 +199,10 @@ export const close_overlays = () => {
 
   __current_overlay = null;
   __current_second_overlay = null;
+};
+
+export const close_current_overlay = () => {
+  __page.overlay?.delete();
 };
 
 export const close_exception_overlay = () => {

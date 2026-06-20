@@ -17,7 +17,7 @@ $birthday_set = CurrentUser->settings->birthday;
     </p>
   </tipp-box>
 
-  <form request="user:setting:update" reload responder>
+  <form request="user:setting:update" um-open="personal" responder=error>
     <div fl fldircol gap>
       <?php if (!$birthday_set) { ?>
         <div fl gap=smol>

@@ -5,6 +5,8 @@ use Heiakim\Model\Session;
 use Heiakim\Application\Cookie;
 
 /**
+ * @var string $category
+ * @var string $sub
  * @var string $var
  */
 
@@ -19,7 +21,8 @@ if (!$Session) :
   echo "Nö";
 else :
 
-  $is_current_session = $Session->token === Cookie::get(Session::$persistent_cookies[1]);
+  $is_current_session = $Session->token ===
+    Cookie::get(Session::$persistent_cookies[1]);
 
 ?>
 
@@ -37,19 +40,19 @@ else :
     <div fl fldircol gap posrel pl64>
       <div style="width:4px;height:100%;top:0;left:28px;" posabs rounded background=slight></div>
 
-      <div fl fldircol gap=smol>
+      <div>
         <?php if (!$Session->deleted_at) { ?>
           <div fl gap=smol+ alic>
-            <mi mid color=green>toggle_on</mi>
-            <p text midler><?= __("Active") ?> &middot;
+            <mi color=green>toggle_on</mi>
+            <p text><?= __("Active") ?> &middot;
               <strong color=company><?= Time::ago($Session->created_at); ?></strong>
             </p>
           </div>
 
           <?php if ($Session->updated_at) { ?>
             <div fl gap=smol+ alic>
-              <mi mid>update</mi>
-              <p text midler><?= __("Last accessed") ?> &middot;
+              <mi>update</mi>
+              <p text><?= __("Last accessed") ?> &middot;
                 <strong color=company><?= Time::ago($Session->updated_at, true); ?></strong>
               </p>
             </div>
@@ -57,7 +60,7 @@ else :
 
         <?php } else { ?>
           <div fl gap=smol+ alic>
-            <mi size=spec color=red>toggle_off</mi>
+            <mi color=red>toggle_off</mi>
             <p text><?= __("Inactive") ?></p>
           </div>
         <?php } ?>
@@ -76,13 +79,13 @@ else :
 
       <?php if (!$Session->deleted_at) : ?>
         <div fl jucend>
-          <form data-form="session:delete" responder>
-            <input type=hidden name=token value="<?= $Session->token; ?>" />
-            <mbutton mid submit-closest has-icon=left background=unfollow color=dark-red>
-              <mi>logout</mi>
-              <p text bold><?= __("Logout") ?></p>
-            </mbutton>
-          </form>
+          <mbutton mid has-icon=left background=unfollow color=dark-red
+            request="session:delete" shadow-submit
+            data-token="<?= $Session->token; ?>"
+            <?= $is_current_session ? "full-redirect='/'" : "um-open='security'" ?> responder=error>
+            <mi>logout</mi>
+            <p text bold><?= __("Logout") ?></p>
+          </mbutton>
         </div>
       <?php endif; ?>
     </div>

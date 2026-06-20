@@ -7,7 +7,7 @@ use Heiakim\Application\Feature;
  * @var string $base_url
  */
 
-$wipes_left = CurrentUser->settings->account_wipes_left;
+$wipes_left = CurrentUser->changes_left("wipe");
 $one_month_ts = strtotime("-1 month");
 $current_ts = strtotime(date('Y-m-d H:i:s'));
 $can_wipe = true;
@@ -42,22 +42,12 @@ if (CurrentUser->settings->account_wiped_at) {
   data-form="authentication:create"
   data-type="user:wipe"
   data-redirect="<?= CurrentUser->link() ?>">
-  <p text std tac mb mt>
-    <?php
-
-    if ($wipes_left)
-      if ($can_wipe)
-        echo __("You have got <strong>{wipes-left-count}</strong> restart(s) left");
-      else
-        echo __("Your last restart is <strong>{last-wipe-ago}</strong><br>You may only restart once every month");
-    else
-      echo __("You have no restarts left");
-
-    ?>
-  </p>
-
   <?php if ($can_wipe && $wipes_left) : ?>
-    <div fl justify-content=end gap>
+    <div fl jucsb alic gap>
+      <p text>Restarts left &middot;
+        <strong color=company><?= $wipes_left ?></strong>
+      </p>
+
       <?php if (Feature::enabled("restart_journey")) : ?>
         <input type=hidden name=type value=wipe_user />
         <mbutton mid background="besure" color=dark-orange has-icon=left submit-closest>

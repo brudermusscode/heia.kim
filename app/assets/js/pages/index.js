@@ -2,7 +2,6 @@ import * as Artist from "./artists";
 import * as Auth from "./authentications";
 import * as Beatmap from "./beatmaps";
 import * as Legal from "./legal";
-import * as My from "./my";
 import * as Order from "./order";
 import * as Register from "./register";
 import * as Squad from "./squads";

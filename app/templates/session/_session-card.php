@@ -35,7 +35,7 @@ use Heiakim\Model\Session;
         elseif (
           $Session->token === $_COOKIE[Session::$persistent_cookies[1]]
         ) : ?>
-          <div fl gap=smol alic>
+          <div fl gap=smoler alic>
             <mi spec color=blue>check_circle</mi>
             <p text smol><?= __("Current") ?></p>
           </div>

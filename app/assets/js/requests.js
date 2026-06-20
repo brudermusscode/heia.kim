@@ -2,6 +2,7 @@ import * as Frontend from "./frontend";
 import * as Page from "./page";
 import * as Audio from "./audio";
 import Overlay from "./elements/Overlay";
+import * as UserManager from "./elements/UserManager";
 
 /**
  * Loads content into an Overlay.
@@ -183,11 +184,13 @@ const SUBMIT_FORM_ATTRIBUTES = [
   "responder",
   "no-scroll-top",
   "toggle-button-active",
+  // Will open the given page in the user-manager.
+  "um-open",
   "redirect",
   "full-redirect",
   "reload",
   "full-reload",
-  "close-overlays",
+  "close-overlay",
   "on-success",
   "update-library",
   "update-current-track",
@@ -214,9 +217,7 @@ $(function () {
     button.setAttribute("submit-closest", true);
     form.prepend(button);
 
-    /**
-     * Create an input inside the form for every dataset entry.
-     */
+    // Create an input inside the form for every dataset entry.
     for (const [key, value] of Object.entries(this.dataset)) {
       form.insertAdjacentHTML(
         "afterbegin",
@@ -224,9 +225,7 @@ $(function () {
       );
     }
 
-    /**
-     * Append all attributes from this element to the form.
-     */
+    // Append all attributes from this element to the form.
     for (const attribute of this.attributes) {
       if (!SUBMIT_FORM_ATTRIBUTES.includes(attribute.name)) continue;
 
@@ -234,13 +233,8 @@ $(function () {
     }
 
     document.body.prepend(form);
-
-    // # Submit the form!
-    button.click();
-
+    $(form).submit();
     form.remove();
-
-    return;
   });
 
   /**
@@ -265,12 +259,14 @@ $(function () {
       let responder = this.getAttribute("responder");
       let audio_success = this.getAttribute("audio-success");
       let audio_error = this.getAttribute("audio-error");
+      let open = this.getAttribute("um-open");
       let redirect = this.getAttribute("redirect");
-      let scroll_top = !this.hasAttribute("no-scroll-top");
+      let full_redirect = this.getAttribute("full-redirect");
       let reload = this.getAttribute("reload");
       let full_reload = this.getAttribute("full-reload");
+      let scroll_top = !this.hasAttribute("no-scroll-top");
       let execute_success = this.getAttribute("on-success");
-      let close_overlays = this.getAttribute("close-overlays");
+      let close_overlay = this.getAttribute("close-overlay");
       let update_user_references = this.hasAttribute("update-user-references");
 
       request_url = request_url.replaceAll(":", "/");
@@ -282,10 +278,8 @@ $(function () {
       if (redirect) {
         let split_redirect_url = redirect.split("/");
 
-        /**
-         * Build a new redirect url by substituting the colon
-         * parameter with actual values from the submitted form.
-         */
+        // Build a new redirect url by substituting the colon parameter with actual
+        // values from the submitted form.
         split_redirect_url.forEach((section, index) => {
           if (section[0] === ":") {
             let param = section.replace(":", "");
@@ -304,69 +298,43 @@ $(function () {
           Frontend.unload();
 
           if (data.status) {
-            // Update anything that could have changed for the user in the ui through
-            // this request.
             if (update_user_references) Frontend.update_user_menu();
 
-            /**
-             * Close all overlays requested.
-             */
-            if (close_overlays !== null) Frontend.close_overlays();
+            if (close_overlay !== null) Frontend.close_current_overlay();
 
-            /**
-             * Play success audio.
-             */
             if (audio_success !== null) Audio.play(`[${audio_success}]`);
 
-            /**
-             * Page reload requested.
-             */
-            if (reload !== null) {
-              Page.reload();
+            if (open !== null) {
+              UserManager.get(open);
             }
 
-            /**
-             * Redirect requested.
-             */
-            if (redirect !== null && full_reload === null) {
-              Page.get(redirect, false, null, scroll_top);
-
-              /**
-               * Full reload requested.
-               */
-            } else if (full_reload !== null)
+            if (full_redirect !== null)
               window.location.replace(
-                redirect ?? window.location.pathname + window.location.search,
+                full_redirect ??
+                  redirect ??
+                  window.location.pathname + window.location.search,
               );
 
-            /**
-             * Show responder only on success.
-             */
-            if (responder !== null && responder === "success")
-              Frontend.create_responder(data);
+            if (full_reload !== null)
+              window.location.replace(
+                window.location.pathname + window.location.search,
+              );
 
-            /**
-             * Execute on success functions.
-             */
+            if (redirect !== null) Page.get(redirect);
+
+            if (reload !== null) Page.reload();
+
+            if (responder === "success") Frontend.respond(data);
+
             if (execute_success) $.globalEval(execute_success);
           } else {
-            /**
-             * Play audio on error.
-             */
             if (audio_error !== null) Audio.play(`[${audio_error}]`);
 
-            /**
-             * Show responder only on error.
-             */
-            if (responder !== null && responder === "error")
-              Frontend.create_responder(data.message, "error");
+            if (responder === "error") Frontend.respond(data.message, "error");
           }
 
-          /**
-           * Always show responder.
-           */
           if (responder !== null && (responder === "always" || !responder))
-            Frontend.create_responder(data);
+            Frontend.respond(data);
 
           buttons.forEach((button) => button.enable());
         },

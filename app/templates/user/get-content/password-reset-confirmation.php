@@ -17,7 +17,8 @@ ob_start(); ?>
 
         <div prompt-inner-content fl fldircol gap>
           <?php if (CurrentUser->email) { ?>
-            <form request="password-reset:create" responder reload>
+            <form request="password-reset:create" responder close-overlay
+              um-open="security">
               <box-model submit-closest filled clickable>
                 <bm-inr size=smol fl gap alistart>
                   <mi wide>alternate_email</mi>

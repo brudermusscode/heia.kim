@@ -8,13 +8,13 @@ use Heiakim\Model\Session;
 <div fl fldircol gap=smol+>
   <box-model outlined=darker style=min-width:20em; flexone p24>
     <div fl gap=smol>
-      <div p12 fl fldircol gap=smoler>
+      <div p12 fl fldircol gap=smol>
         <p text midler bold>Mailing</p>
         <p text std>Sub- or unsubscribe from mailings that you receive from our services such as newsletter or
           birthday wishes</p>
       </div>
     </div>
-    <div fl jucend>
+    <div fl jucend mt12>
       <mbutton open="privacy:mailing" filled>
         <p text bold>Manage</p>
       </mbutton>
@@ -22,15 +22,19 @@ use Heiakim\Model\Session;
   </box-model>
 
   <box-model outlined=darker style=min-width:20em; flexone fl fldircol p24>
-    <div p12 fl fldircol style="gap:.2em;">
+    <div p12 fl fldircol gap=smol>
       <p text midler bold><?= __("Public profile") ?></p>
       <p text std><?= __("Share your skill with others") ?></p>
     </div>
     <div open="privacy:visibility" hoverable p12 rounded=mid>
       <div fl gap align-items=center justify-content=space-between>
         <div fl gap alic>
-          <mi wide><?= CurrentUser->privacy->is_public ? "visibility" : "visibility_off"; ?></mi>
-          <p text bold><?= CurrentUser->privacy->is_public ? __("Enabled") : __("Disabled"); ?></p>
+          <mi wide>
+            <?= CurrentUser->privacy->is_public ? "visibility" : "visibility_off"; ?>
+          </mi>
+          <p text bold color=company>
+            <?= CurrentUser->privacy->is_public ? __("Enabled") : __("Disabled"); ?>
+          </p>
         </div>
         <mi midler>east</mi>
       </div>
@@ -44,9 +48,9 @@ use Heiakim\Model\Session;
   </div>
 
   <box-model outlined=darker flexone p24>
-    <div p12>
+    <div p12 fl fldircol gap=smol>
       <p text midler bold>Uploads</p>
-      <p text std>Any files that will enter our servers from your device</p>
+      <p text std>Files that enter our servers from your device</p>
     </div>
     <div open="privacy:images" hoverable p12 rounded=mid posrel fl gap align-items=center justify-content=space-between>
       <div fl gap alic>
@@ -54,7 +58,8 @@ use Heiakim\Model\Session;
         <div>
           <p text bold>Image history
           <p>
-          <p text><?= CurrentUser->privacy->image_history ? "Enabled" : "Disabled"; ?>
+          <p text color=company>
+            <?= CurrentUser->privacy->image_history ? "Enabled" : "Disabled"; ?>
           <p>
         </div>
       </div>

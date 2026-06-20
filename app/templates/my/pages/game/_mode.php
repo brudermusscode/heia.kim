@@ -11,14 +11,9 @@ $gumode_text = Gamemode::gumode_text($preferred_gamemode);
 
 ?>
 
-<div fl gap=mid alic>
+<div fl gap alic>
   <?php include TEMPLATE . "/my/_back_button.php"; ?>
-
-  <label size="mid" has-secondary>
-    <div class="label__main">
-      <p bold><?= __("Favorite mode") ?></p>
-    </div>
-  </label>
+  <p text mid bold><?= __("Favorite mode") ?></p>
 </div>
 
 <form request="user:update" delay="200" radio responder=error>
@@ -27,8 +22,6 @@ $gumode_text = Gamemode::gumode_text($preferred_gamemode);
     <setter <?= "mode=" . $gumode_text->mode; ?>>
       <div fl gap=mid fldircol>
         <div fl fldircol gap=smol+>
-          <p text midler bold title-inline>Gamemode</p>
-
           <radio size fl gap=smol justify-content=center mode>
             <div flexone class="r__option" data-value="osu" submit-closest <?php if ($gumode_text->mode == "osu") echo "active"; ?>>
               <div fl fldircol alistart gap=smol+>
@@ -63,8 +56,6 @@ $gumode_text = Gamemode::gumode_text($preferred_gamemode);
         </div>
 
         <div fl fldircol gap=smol+>
-          <p text midler bold title-inline>Mod</p>
-
           <radio size fl gap=smol jucstretch mod>
             <div mod=vanilla flexone class="r__option" data-value="vanilla" submit-closest <?php if ($gumode_text->mod == "vanilla") echo "active"; ?>>
               <p text std>Vanilla</p>
