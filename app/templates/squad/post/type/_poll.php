@@ -3,12 +3,14 @@
 use Heiakim\Time\Time;
 use Heiakim\Model\User;
 use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadFeedItem;
 use Heiakim\Model\Squad\SquadPost;
 use Heiakim\Model\Squad\SquadPostPollAnswer;
 
 /**
- * @var Squad $Squad
  * @var User $User
+ * @var Squad $Squad
+ * @var SquadFeedItem $Item
  */
 
 /**
@@ -21,44 +23,16 @@ $Post ??= $Item->post;
  */
 $User ??= $Post->user;
 
-/**
- * @var int
- */
 $is_new ??= false;
-
-?>
-
-<?php
-
-/**
- * @var object
-
- */
 $options = (object) json_decode($Post->comment_string, true);
-
-/**
- * @var string
- */
 $comment_string = $options->comment_string;
 
-/**
- * Unset the comment string, so we are left with only the
- * poll options!
- */
+# Only want the poll options.
 unset($options->comment_string);
 
-/**
- * Poll answers.
- */
-
-/**
- * @var int
- */
 $answers_given = 0;
 
-/**
- * Add up the poll vote count.
- */
+# Sum up the poll vote count.
 foreach ($options as $count)
   $answers_given += $count;
 
@@ -66,14 +40,23 @@ foreach ($options as $count)
 
 <div fl fldircol gap=smol+>
   <div fl fldircol gap=smol>
-    <div fl alic gap=smol>
-      <mi slight>ballot</mi>
-      <p text bold slighter mid style=margin-top:-.2em;>&middot;</p>
-      <p text slight>Poll</p>
-      <p text bold slighter mid style=margin-top:-.2em;>&middot;</p>
+    <div fl alic gap=smol slight>
+      <mi>ballot</mi>
+      <p text bold mid style=margin-top:-6px;>&middot;</p>
+      <p text>Poll</p>
+      <p text bold mid style=margin-top:-6px;>&middot;</p>
       <p text color=company><?= number_format($answers_given); ?> votes</p>
     </div>
-    <p text pblock10 <?= $comment_string_length < 30 ? "wide style=line-height:1.1;" : ($comment_string_length < 70 ? "mid style=line-height:1.2;" : "midler") ?>><?= $comment_string; ?></p>
+
+    <p text pblock10
+      <?= $comment_string_length < 30
+        ? "wide style=line-height:1.1;"
+        : (
+          $comment_string_length < 70
+          ? "mid style=line-height:1.2;"
+          : "midler"
+        ) ?>>
+      <?= $comment_string; ?></p>
   </div>
 
   <div fl fldircol>
@@ -84,9 +67,6 @@ foreach ($options as $count)
      */
     $Answers = $Post->poll_answers;
 
-    /**
-     * @var int
-     */
     $iota = 0;
 
     /**
@@ -94,14 +74,7 @@ foreach ($options as $count)
      */
     $CurrentUserAnswer = CurrentUser->has_answered_poll($Post);
 
-    foreach ($options as $option => $count) {
-
-      /**
-       * @var bool
-       */
-      $has_answered_this = $CurrentUserAnswer !== null
-        ? (int) $CurrentUserAnswer?->answer_key === $iota
-        : null;
+    foreach ($options as $option => $count) :
 
       /**
        * @var SquadPostPollAnswer
@@ -111,27 +84,32 @@ foreach ($options as $count)
       })
         ->values();
 
-      /**
-       * @var int
-       */
+      $has_answered_this = $CurrentUserAnswer !== null
+        ? (int) $CurrentUserAnswer?->answer_key === $iota
+        : null;
+
       $percent = $count ? number_format($count / $answers_given * 100, 1) : 0;
 
     ?>
 
-      <div poll-answer p18 rounded=mid hoverable
+      <div poll-answer pblock8 pl8 pr18 rounded=mid hoverable
+        shadow-submit reload-object="Post" responder=error
+        <?= $has_answered_this ?
+          'request="squad:post:poll-answer:delete" animation=fade-in active'
+          : 'request="squad:post:poll-answer:create"'; ?>
         data-answer-key="<?= $has_answered_this ? $CurrentUserAnswer->id : $iota; ?>"
-        <?= $has_answered_this ? 'active data-action="squad:post:poll-answer:delete" animation=fade-in' : 'data-action="squad:post:poll-answer:create"'; ?>>
+        data-id="<?= $has_answered_this ? $CurrentUserAnswer->id : $Post->id ?>">
         <div fl alic gap>
-          <mi checked rounded=mid></mi>
+          <mi checked rounded></mi>
 
           <div posrel fl fldircol gap=smol rounded=wide flexone w100>
             <div fl alic jucsb gap w100>
               <div fl alic jucsb flexone>
                 <div>
                   <p text midler bold><?= $option; ?></p>
-                  <?php if ($has_answered_this) { ?>
+                  <?php if ($has_answered_this) : ?>
                     <p text smol>You voted &middot; <span color=company><?= Time::ago($CurrentUserAnswer->created_at, true); ?></span></p>
-                  <?php } ?>
+                  <?php endif; ?>
                 </div>
                 <div fl alic gap=smol>
                   <p text color=company><?= number_format($count); ?></p>
@@ -143,25 +121,22 @@ foreach ($options as $count)
 
             <div fl alic>
               <!-- <div style="height:12px;min-width:32px;width:calc(<?= $percent; ?>%);background:url(/assets/images/curly-line.png) left center repeat-x;" rounded=wide posrel> -->
-              <div posrel rounded=wide background=company rounded=wide style="height:24px;min-width:24px;width:calc(<?= $percent; ?>%);">
-                <div style="position:absolute;right:0;top:50%;translate:0 -50%;height:.6em;width:.6em;margin-right:8px;border:3px solid white;" circled></div>
+              <div posrel rounded=wide background=company rounded=wide style="height:18px;min-width:24px;width:calc(<?= $percent; ?>%);">
+                <div style="position:absolute;right:0;top:50%;translate:0 -50%;height:.6em;width:.6em;margin-right:8px;border:3px solid white;" circled dno></div>
               </div>
-              <div flexone background=slight rounded=wide style=height:12px;margin-left:.4em;></div>
+              <?php if ($percent < 100) : ?>
+                <div flexone background=slight rounded=wide
+                  style=height:18px;margin-left:.4em;></div>
+              <?php endif; ?>
             </div>
           </div>
         </div>
       </div>
 
-    <?php
+    <?php $iota++;
+    endforeach;
 
-      $iota++;
-    }
-
-    ?>
+    unset($iota); ?>
 
   </div>
 </div>
-
-<?php
-
-unset($iota);

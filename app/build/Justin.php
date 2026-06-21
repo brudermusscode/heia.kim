@@ -8,6 +8,7 @@ use Heiakim\File\JSON;
 use Heiakim\Trait\Translation as TraitTranslation;
 use Heiakim\Trait\ProcessesRequests;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\Translation\StaticMessage;
 
 class Justin extends Model
 {
@@ -114,7 +115,9 @@ class Justin extends Model
   }
 
   /**
-   * @return
+   * @return static
+   *
+   * NOTE: Will die on error.
    */
   // TODO: Make this static & non-static
   public static function findOrReturn(mixed $id = null, ?string $die_message = null)

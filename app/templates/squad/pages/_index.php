@@ -13,13 +13,7 @@ use Heiakim\Model\Squad\SquadFeedItem;
 ?>
 
 <div page-structure="squad">
-
-  <?php
-
-  /**
-   * Include feed tabs.
-   */
-  include dirname(__DIR__) . "/_tabs.php"; ?>
+  <?php include dirname(__DIR__) . "/_tabs.php"; ?>
 
   <div column-wrapper>
 
@@ -38,8 +32,7 @@ use Heiakim\Model\Squad\SquadFeedItem;
           /**
            * @var SquadFeedItem
            */
-          $FeedItems = $Squad
-            ->feed_items
+          $FeedItems = $Squad->feed_items
             ->sortByDesc("created_at");
 
           /**
@@ -54,35 +47,25 @@ use Heiakim\Model\Squad\SquadFeedItem;
              */
             $User = $Item->user;
 
-            /**
-             * ? POST
-             */
-            if (in_array($Item->type, ["__post__", "__squad__/created", "__squad__/edit/image+logo", "__squad__/edit/image+headline"])) :
+            if (in_array($Item->type, [
+              "__post__",
+              "__squad__/created",
+              "__squad__/edit/image+logo",
+              "__squad__/edit/image+headline"
+            ])) :
 
-              /**
-               * Should not happen, but if there is no post
-               * attached on a non-system-post, continue to
-               * prevent any errors.
-               */
+              # Should not happen, but if there is no post attached on a non-system-
+              # post, continue to prevent any errors.
               if (!$Item->is_system_post() && !$Item->post)
                 continue;
 
-              /**
-               * Include the post partial. This will include the
-               * correct type and all comments and other
-               * belongings of it. This should also be included when
-               * posting a new post.
-               */
               include dirname(__DIR__) . "/post/_post.php";
 
-              /**
-               * Set the last Item to the current one.
-               */
               $LastItem = $Item;
-            endif;
-          endforeach;
 
-          ?>
+              unset($Post);
+            endif;
+          endforeach; ?>
 
         </timeline>
       </div>

@@ -6,6 +6,8 @@ use Heiakim\Model\Squad;
 use Heiakim\Model\Beatmap;
 use Heiakim\Model\Score;
 
+authorize(resource: CurrentUser, respect_social_exclusion: true);
+
 $type            = filter_input(INPUT_GET, "type", FILTER_SANITIZE_SPECIAL_CHARS);
 $sub_type        = filter_input(INPUT_GET, "sub_type", FILTER_SANITIZE_SPECIAL_CHARS);
 $attachment_id   = filter_input(INPUT_GET, "attachment_id", FILTER_VALIDATE_INT);
@@ -26,10 +28,7 @@ if (
 )
   exit($Request->error());
 
-authorize(resource: CurrentUser, respect_social_exclusion: true);
-
 if ($type === "squad:post") {
-
   if (!$sub_type)
     exit($Request->error());
 
@@ -38,12 +37,12 @@ if ($type === "squad:post") {
    */
   $Squad = CurrentUser->squad;
 } else
-  exit($Request->error());
+  die(error());
 
 /**
  * @var ?Beatmap\Set
  */
-$BeatmapSet = $attachment_id && $attachment_type === "beatmap:set"
+$Set = $attachment_id && $attachment_type === "beatmap:set"
   ? Beatmap\Set::find($attachment_id)
   : null;
 
@@ -54,13 +53,16 @@ $Score = $attachment_id && $attachment_type === "score"
   ? Score::find($attachment_id)
   : null;
 
+$has_attachment = $Set || $Score;
+
 ob_start();
 
 include SNOW; ?>
 
-<div posting-machine-overlay active rounded=wider animation=fade-in>
-  <pm-inr post-type="<?= $sub_type; ?>" filled=lighter rounded=wider animation=open style=height:auto;>
-    <form data-form="squad:post:create" responder=always>
+<form request="squad:post:create" responder=always close-overlay>
+  <div posting-machine-overlay active rounded=wider animation=fade-in>
+    <pm-inr post-type="<?= $sub_type; ?>" filled=lighter rounded=wider animation=open style=height:auto;>
+
       <input type=hidden name=type value=<?= $sub_type ?> />
 
       <?php if ($attachment_id && $attachment_type) : ?>
@@ -98,12 +100,12 @@ include SNOW; ?>
 
         <div post-type-content>
 
-          <!--- POST: TEXT --->
+          <!--- Text --->
           <div post-type-input=text>
             <textarea autofocus filled=none w100 auto-resize material name=comment_string[text] placeholder="What's on your mind?"></textarea>
           </div>
 
-          <!--- POST: POLL --->
+          <!--- Poll --->
           <div post-type-input=poll fl fldircol gap=smol>
             <textarea autofocus auto-resize name=comment_string[poll] placeholder="Should we go for #1?"></textarea>
 
@@ -132,62 +134,30 @@ include SNOW; ?>
             </div>
           </div>
 
-
-          <?php
-
-          # Include attachments.
-
-          if ($Score) :
-            $clean_appearance = true;
-
-            include TEMPLATE . "/score/_score.php";
-          endif;
-
-          if ($BeatmapSet) :
-
-            /**
-             * @var Beatmap
-             */
-            $Beatmap = $BeatmapSet->beatmaps()
-              ->first();
-
-            /**
-             * @var int
-             */
-            $beatmaps_count = $BeatmapSet->beatmaps->count();
-
-          ?>
+          <!--- Attachment --->
+          <?php if ($has_attachment) : ?>
             <div fl fldircol gap=smol>
-              <p text bold smol ttup slight>Attachment</p>
+              <p text smol bold ttup slight>Attachment</p>
+              <?php
 
-              <div fl fldircol gap=smol>
-                <a href="/beatmap-set/<?= $BeatmapSet->id ?>/<?= $Beatmap->id ?>">
-                  <div class=notif__score clickable rounded>
-                    <div class="cover">
-                      <picture>
-                        <?php $BeatmapSet->cover(); ?>
-                      </picture>
-                    </div>
-                    <div class="notif__score_inr tac" p18>
-                      <p text bold mid trimt><?= $Beatmap->stripped_title(); ?></p>
-                      <p text trimt><?= $BeatmapSet->artists->first()->name; ?></p>
+              # Include attachments.
+              if ($Score) :
+                $clean_appearance = true;
 
-                      <div fl jucend>
-                        <div pinline12 pblock6 background=company rounded fl alic gap=smol>
-                          <mi pt4>page_control</mi>
-                          <p text bold><?= $beatmaps_count ?> difficult<?= $beatmaps_count > 1 ? "ies" : "y" ?></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
+                include TEMPLATE . "/score/_score.php";
+              endif;
+
+              if (($Set)) :
+                include TEMPLATE . "/beatmap/_beatmap-row.php";
+              endif;
+
+              # Add more.
+
+              ?>
             </div>
           <?php endif; ?>
 
-
-
-
+          <!--- Actions --->
           <div fl aliend jucsb w100>
             <mbutton tag filled=darker has-icon=left has-tooltip=bottom>
               <mi>vpn_lock</mi>
@@ -196,15 +166,15 @@ include SNOW; ?>
                 <p text bold>Only visible to squad members</p>
               </div>
             </mbutton>
-            <mbutton mid background=company color=company-text icon-only submit-closest>
-              <mi>prompt_suggestion</mi>
+            <mbutton mid background=invert color=invert icon-only submit-closest>
+              <mi>send</mi>
             </mbutton>
           </div>
         </div>
       </pm-content>
-    </form>
-  </pm-inr>
-</div>
+    </pm-inr>
+  </div>
+</form>
 
 <?php
 

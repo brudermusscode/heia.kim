@@ -60,13 +60,11 @@ use Heiakim\Model\Gamemode;
     </div>
   </jump-menu>
 
-  <mbutton wide mm-open has-icon=left elevated=mid background=company color=light>
+  <mbutton wide mm-open has-icon=left elevated=mid background=company color=company-text>
     <div mm-open-loading>
       <?php include COMPONENT . "/dot-loader.html"; ?>
     </div>
     <mi class="osu-icon osu-<?= Gamemode::mode_icon($mode) ?>"></mi>
-    <div>
-      <p text bold><?= Gamemode::mode_full($mode) ?></p>
-    </div>
+    <p text bold><?= Gamemode::mode_full($mode) ?></p>
   </mbutton>
 </mode-menu>

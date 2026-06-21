@@ -1,9 +1,5 @@
 <?php
 
-/**
- * General routes like the home and error pages.
- */
-
 use Heiakim\Application\Router;
 
 /**
@@ -47,12 +43,3 @@ $Router->post("/connection/reconnect", "connection/reconnect", return: "JSON");
 $Router->get("/connect/:provider", "connection/index", title: function ($params) {
   return "Connect your " . $params["provider"] . " to " . APP_NAME . "!";
 });
-
-# ? Unlock & Orders
-$Router->get("/unlock/premium", "unlock/premium", title: "Unlock Premium+");
-$Router->get("/order/success", "order/success", title: "Success");
-$Router->get("/order/cancel", "order/cancel", title: "Canceled");
-$Router->get("/order/capture", "order/capture", return: "JSON");
-$Router->post("/order/create", "order/create", return: "JSON");
-$Router->post("/order/update", "order/update", return: "JSON");
-$Router->post("/order/delete", "order/delete", return: "JSON");

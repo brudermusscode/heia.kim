@@ -111,7 +111,7 @@ $can_interact_with_squad =
 
     <?php if (CurrentUser->squad && CurrentUser->sqcan_take_action_in(CurrentUser->squad) && !$is_post) { ?>
       <div overlay has-tooltip=top
-        request-get="ui:squad:posting-machine"
+        request-get="ui:posting-machine"
         data-type=squad:post
         data-sub-type=text
         data-attachment-id=<?= $Score->id; ?>

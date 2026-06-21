@@ -3,51 +3,49 @@
 use Heiakim\Model\Gamemode;
 use Heiakim\Utils\Utils;
 use Heiakim\Model\Squad;
+use Heiakim\Model\Squad\SquadUser;
 
 /**
  * @var Squad $Squad
- * @var string $base_url
- * @var string $mode
+ * @var string $id
+ * @var string $sub
  * @var string $page
+ * @var string $base_url
  */
 
-/**
- * Validate the mod to the mode.
- */
-$sub = $mod =
-  $mode === "osu" && !in_array($sub, ["vanilla", "relax", "autopilot"])
+$mode = $sub;
+
+if (!in_array($mode, Gamemode::$modes_text))
+  $mode = "osu";
+
+$mod = in_array($sub, Gamemode::$mods_text) ? $sub : Gamemode::$mods_text[0];
+$gumode = Gamemode::find_gumode($mode, $mod);
+
+# Serialize mod.
+$mod = $mode === "osu" && !in_array($sub, ["vanilla", "relax", "autopilot"])
   || $mode === "taiko" && !in_array($sub, ["vanilla", "relax"])
   || $mode === "ctb" && !in_array($sub, ["vanilla", "relax"])
   || $mode === "mania" && !in_array($sub, ["vanilla"])
-  ? null
+  ? "vanilla"
   : $sub;
 
 /**
- * @var array[int]
+ * @var int[]
  */
 $modes = $mod
   ? [Gamemode::find_gumode($mode, $mod)]
   : Gamemode::$mods_int_per_mode[$mode];
 
-/**
- * Set a fallback for the gumode, if the page for all mods
- * included is shown. We will just show the first mode.
- */
+# Fallback to the first gumode inside the given mode.
 $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
 
 ?>
 
 <div page-structure="squad">
 
-  <?php
-
-  /**
-   * Include feed tabs.
-   */
-  include dirname(__DIR__) . "/_tabs.php"; ?>
+  <?php include dirname(__DIR__) . "/_tabs.php"; ?>
 
   <div column-wrapper>
-
     <div column=small fl fldircol gap=mid>
 
       <?php
@@ -62,12 +60,8 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
       <div fl fldircol gap=smol>
         <box-model user-stats outlined expand-more expand-more-show hoverable rounded=wide>
           <bm-inr size=std rounded=mid>
-
-            <?php
-
-            foreach ($Stats as $stat => $value) {
-
-              if ($stat === "performance") { ?>
+            <?php foreach ($Stats as $stat => $value) :
+              if ($stat === "performance") : ?>
                 <div fl jucsb alic>
                   <div>
                     <p text wide bold><?= number_format($value); ?></p>
@@ -77,36 +71,33 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
                     <mi size="midler">keyboard_arrow_down</mi>
                   </mbutton>
                 </div>
-              <?php } else { ?>
-                <div fl expand-more-hidden <?php if ($stat === "accuracy") echo "mt"; ?>>
-                  <p text style="width:50%;"><?= ucwords(str_replace("_", " ", $stat)); ?></p>
+              <?php else : ?>
+                <div fl expand-more-hidden
+                  <?php if ($stat === "accuracy") echo "mt"; ?>>
+                  <p text style="width:50%;">
+                    <?= ucwords(str_replace("_", " ", $stat)); ?></p>
                   <p text bold color=active-text>
-                    <?php
-
-                    if (in_array($stat, ["ranked_score", "total_score"]))
+                    <?php if (in_array($stat, ["ranked_score", "total_score"]))
                       echo Utils::round_with_ending($value);
                     else if ($stat === "accuracy")
                       echo number_format($value, 2) . " %";
                     else
-                      echo number_format($value);
-
-                    ?>
+                      echo number_format($value); ?>
                   </p>
                 </div>
-            <?php
-              } // end if performance
-            } // end foreach stats
-            ?>
+            <?php endif;
+            endforeach; ?>
           </bm-inr>
         </box-model>
 
         <inline-navigator fl fldircol gap=smoler>
-          <a href="<?= "$base_url/$mode"; ?>" sub fl alic jucsb <?php display_active($sub); ?>>
+          <a href="<?= "$base_url/$mode"; ?>" sub fl alic jucsb
+            <?php display_active($sub); ?>>
             <div>
               <p text bold>All mods</p>
-              <?php if (!$sub) { ?>
+              <?php if (!$sub) : ?>
                 <p text smol slight><?= $mode === "mania" ? "Showing <strong>Standard</strong>" : ($mode === "osu" ? "Showing <strong>Standard, Relax & Autopilot</strong>" : "Showing <strong>Standard & Relax</strong>"); ?></p>
-              <?php } ?>
+              <?php endif; ?>
             </div>
             <in-o-icon>
               <mi>all_inclusive</mi>
@@ -116,21 +107,21 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
             </in-o-icon>
           </a>
 
-          <?php if (in_array($mode, ["osu", "taiko", "ctb"])) { ?>
+          <?php if (in_array($mode, ["osu", "taiko", "ctb"])) : ?>
             <a href="<?= "$base_url/$mode/vanilla"; ?>" sub fl alic jucsb <?php display_active($sub, "vanilla"); ?>>
               <p text bold>Standard</p>
             </a>
-          <?php } ?>
-          <?php if (in_array($mode, ["osu", "taiko", "ctb"])) { ?>
+          <?php endif; ?>
+          <?php if (in_array($mode, ["osu", "taiko", "ctb"])) : ?>
             <a href="<?= "$base_url/$mode/relax"; ?>" sub fl alic jucsb <?php display_active($sub, "relax"); ?>>
               <p text bold>Relax</p>
             </a>
-          <?php } ?>
-          <?php if (in_array($mode, ["osu"])) { ?>
+          <?php endif; ?>
+          <?php if (in_array($mode, ["osu"])) : ?>
             <a href="<?= "$base_url/$mode/autopilot"; ?>" sub fl alic jucsb <?php display_active($sub, "autopilot"); ?>>
               <p text bold>Autopilot</p>
             </a>
-          <?php } ?>
+          <?php endif; ?>
         </inline-navigator>
       </div>
     </div>
@@ -138,13 +129,15 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
     <div column=large fl fldircol flexone w100>
       <?php
 
-      $Squad = $Squad->load(['members.user.scores' => function ($query) use ($Squad, $modes) {
-        $query
-          ->whereIn("scores.mode", $modes)
-          ->where('scores.play_time', '>', $Squad->created_at)
-          ->whereIn("scores.status", [2])
-          ->limit(20);
-      }]);
+      $Squad = $Squad->load(
+        ['members.user.scores' => function ($query) use ($Squad, $modes) {
+          $query
+            ->whereIn("scores.mode", $modes)
+            ->where('scores.play_time', '>', $Squad->created_at)
+            ->whereIn("scores.status", [2])
+            ->limit(20);
+        }]
+      );
 
       $Scores = collect();
 
@@ -154,8 +147,7 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
       ?>
 
       <timeline>
-        <?php if (!$Scores->count()) { ?>
-
+        <?php if (!$Scores->count()) : ?>
           <div fl fldircol gap=smol style=flex:1;>
             <box-model rounded=wide filled=lighter p62 fl fldircol alic gap style=flex:1;>
               <div style="height:4.2em
@@ -179,29 +171,15 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
               <?php } ?>
             </box-model>
           </div>
-
-        <?php } else { ?>
-
-          <t-line></t-line>
-
-          <?php
-
-          foreach ($Scores as $Score)
-            include dirname(__DIR__) . "/_score_post.php";
-
-          ?>
-
+        <?php else : ?>
+          <t-object>
+            <t-line></t-line>
+            <?php foreach ($Scores as $Score)
+              include dirname(__DIR__) . "/_score_post.php"; ?>
           </t-object>
-
-        <?php
-
-        } // end else !Scores count
-
-        ?>
-
+        <?php endif; ?>
       </timeline>
     </div>
-
 
     <div column=small fl fldircol gap=mid hide-tablet>
       <?php
@@ -212,7 +190,6 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
       $HighestRankingMembers = $Squad->highest_ranking_members(gumode: $gumode, count: 4);
 
       if (!$HighestRankingMembers->count()) : ?>
-
         <box-model rounded="mid" outlined p32 fl fldircol alic gap>
           <div style="height:3.2em;width:3.2em;" fl alic jucc circled filled>
             <mi mid>social_leaderboard</mi>
@@ -222,9 +199,7 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
             <p text color=company>Nothing to show</p>
           </div>
         </box-model>
-
       <?php else : ?>
-
         <div fl fldircol gap=smol+>
           <div fl alic gap=smol title-inline=smol>
             <p text midler bold>Top Performer</p>
@@ -233,16 +208,9 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
           <div fl fldircol gap=smoler>
             <?php
 
-            /**
-             * @var bool
-             */
             $is_first = true;
 
             foreach ($HighestRankingMembers as $key => $Member) :
-
-              /**
-               * @var object
-               */
               $performance = (object) json_decode($Member->performance, true)[$gumode];
 
             ?>
@@ -271,16 +239,14 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
                * @var int
                */
               $last_member_performance = $performance->performance;
-            endforeach;
+            endforeach; ?>
 
-            ?>
-
-            <?php if ($Squad->members_count() > 5) { ?>
+            <?php if ($Squad->members_count() > 5) : ?>
               <mbutton smol hoverable has-icon=right dno>
                 <p text smol bold>+<?= $Squad->members_count() - 5; ?></p>
                 <mi>east</mi>
               </mbutton>
-            <?php } ?>
+            <?php endif; ?>
           </div>
         </div>
 

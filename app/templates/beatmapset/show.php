@@ -139,7 +139,8 @@ else {
 
           <?php if (LOGGED) { ?>
             <div posrel menu-outer>
-              <mbutton mid outlined icon-only ripple-effect open-more-menu has-tooltip=bottom>
+              <mbutton open-more-menu
+                mid outlined icon-only ripple-effect has-tooltip=bottom>
                 <div notification-dot></div>
                 <mi>more_vert</mi>
                 <div ttooltip>
@@ -147,7 +148,7 @@ else {
                 </div>
               </mbutton>
 
-              <jump-menu menu-more filled=lighter elevated color=dynamic>
+              <jump-menu menu-more filled=lighter elevated>
                 <!--- REQUEST --->
                 <?php
 
@@ -199,15 +200,14 @@ else {
                 // TODO: Create squad post for beatmaps.
                 ?>
 
-                <div
-                  request-get="ui:squad:posting-machine"
+                <div ripple-effect class=jm__option hoverable
+                  request-get="ui:posting-machine"
                   data-type="squad:post"
                   data-sub-type="text"
-                  data-attachment-id=<?= $Set->id; ?>
-                  data-attachment-type="beatmap:set"
-                  ripple-effect class=jm__option hoverable>
+                  data-attachment-id="<?= $Set->id; ?>"
+                  data-attachment-type="beatmap:set">
                   <mi>post_add</mi>
-                  <p text std>Post to Squad</p>
+                  <p text>Post to Squad</p>
                 </div>
               </jump-menu>
             </div>
@@ -318,7 +318,11 @@ else {
           $artist_str = __("More from") . " " . $Artists->first()->name;
 
           if ($featured_artist_count > 1)
-            foreach ($Artists as $kkey => $Artist) {
+            foreach ($Artists as $kkey => $Artist) :
+              /**
+               * @var int $kkey
+               */
+
               if ($kkey == 0)
                 continue;
 
@@ -326,11 +330,9 @@ else {
                 $artist_str .= " and $Artist->name";
               else
                 $artist_str .= ", $Artist->name";
-            }
+            endforeach;
 
-          echo $artist_str;
-
-          ?>
+          echo $artist_str; ?>
         </p>
 
         <div grid-repeat gap="smol">

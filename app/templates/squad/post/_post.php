@@ -8,21 +8,24 @@ use Heiakim\Model\Squad;
 use Heiakim\Model\Squad\SquadFeedItem;
 use Heiakim\Model\Squad\SquadPost;
 use Heiakim\Model\Squad\SquadPostAttachment;
+use Heiakim\Model\Squad\SquadPostComment;
+use Heiakim\Model\Squad\SquadPostVote;
 
 /**
  * @var User $User
  * @var SquadFeedItem $Item
+ * @var SquadPost $Post
  */
-
-/**
- * @var User
- */
-$User ??= $Post->user;
 
 /**
  * @var SquadPost
  */
 $Post ??= $Item->post;
+
+/**
+ * @var User
+ */
+$User ??= $Post->user;
 
 /**
  * @var SquadFeedItem
@@ -96,10 +99,10 @@ $Attachment = $Post?->attachment?->reference();
   $file_path = $Item->is_system_post()
     ? (
       isset($system_sub_type[2])
-      ? dirname(__DIR__) . "/post/system/$system_sub_type[1]/_$system_sub_type[2].php"
-      : dirname(__DIR__) . "/post/system/_$system_sub_type[1].php"
+      ? __DIR__ . "/type/system/$system_sub_type[1]/_$system_sub_type[2].php"
+      : __DIR__ . "/type/system/_$system_sub_type[1].php"
     )
-    : dirname(__DIR__) . "/post/_" . $Post?->type . ".php";
+    : __DIR__ . "/type/_" . $Post?->type . ".php";
 
   ?>
 
@@ -108,21 +111,16 @@ $Attachment = $Post?->attachment?->reference();
 
       <?php
 
-      /**
-       * Include the corresponding partial.
-       */
-      include file_exists($file_path) ? $file_path : dirname(__DIR__) . "/post/_unavailable.php"; ?>
+      include file_exists($file_path)
+        ? $file_path
+        : dirname(__DIR__) . "/post/_unavailable.php"; ?>
 
-      <?php
-
-      if ($Attachment) : ?>
+      <?php if ($Attachment) : ?>
         <div fl fldircol gap=smol>
 
           <?php
 
-          /**
-           * ? Score
-           */
+          # + Attachment: Score
           if ($Attachment instanceof Score) :
 
             /**
@@ -149,9 +147,7 @@ $Attachment = $Post?->attachment?->reference();
           <?php include TEMPLATE . "/score/_score.php";
           endif;
 
-          /**
-           * ? Beatmap\Set
-           */
+          # + Attachment: Beatmap\Set
           if ($Attachment instanceof Beatmap\Set) :
 
             /**
@@ -166,18 +162,15 @@ $Attachment = $Post?->attachment?->reference();
               <p text>Beatmap</p>
             </div>
 
-          <?php include TEMPLATE . "/beatmapset/_set-card.php";
+          <?php include TEMPLATE . "/beatmap/_beatmap-row.php";
           endif; ?>
-
         </div>
       <?php endif; ?>
 
-      <?php
-
-      if (
+      <?php if (
         CurrentUser->sqcan_take_action_in($Squad)
         && !$Item->is_system_post()
-      ) {
+      ) :
 
         /**
          * @var ?SquadPostVote
@@ -253,29 +246,18 @@ $Attachment = $Post?->attachment?->reference();
           </div>
         </div>
 
-      <?php
-
-      } else if ($Item->is_system_post()) { // end if item is system post
-
-      ?>
+      <?php elseif ($Item->is_system_post()) : ?>
         <div fl jucend mt=smolest alic gap=smol slighter>
           <mi size=smol>nights_stay</mi>
           <p text smol>Voting for system posts soon</p>
         </div>
-      <?php } else { ?>
-
-      <?php } ?>
+      <?php else : ?>
+        Hello?
+      <?php endif; ?>
     </div>
   </box-model>
 
-  <?php
-
-  if (
-    !$Item->is_system_post()
-    && $Post->enable_comments
-  ) {
-
-  ?>
+  <?php if (!$Item->is_system_post() && $Post->enable_comments) : ?>
     <div comments fl fldircol gap=smoler hide-empty>
       <?php
 
@@ -335,14 +317,10 @@ $Attachment = $Post?->attachment?->reference();
 
       <div c-line background=slighter></div>
     </div>
-  <?php } // end if Post->comments_enabled
-  ?>
-
+  <?php endif; ?>
 </t-object>
 
 <?php
 
-/**
- * Clean up all variables.
- */
-unset($Post, $User, $Comments, $is_new);
+# Clean up some variables.
+// unset($Post, $User, $Comments, $is_new);

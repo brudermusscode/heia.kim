@@ -14,4 +14,4 @@ $Router->get("/ui/page-navigator",  "components/page-navigator",  return: "JSON"
 $Router->get("/ui/user-menu",  "components/user-menu",  return: "JSON");
 $Router->get("/ui/user-manager",  "components/user-manager",  return: "JSON");
 $Router->get("/ui/reactions",  "components/reactions",  return: "JSON");
-$Router->get("/ui/squad/posting-machine",  "components/squad/posting-machine",  return: "JSON");
+$Router->get("/ui/posting-machine",  "components/posting-machine",  return: "JSON");

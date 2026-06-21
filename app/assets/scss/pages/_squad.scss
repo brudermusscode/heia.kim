@@ -468,8 +468,6 @@ timeline {
 }
 
 [poll-answer] {
-  min-height: 106px;
-
   @include themed() {
     [checked] {
       font-size: 2.4em;
@@ -484,10 +482,10 @@ timeline {
     }
 
     &[active] {
-      background: t(box);
+      background: t(box2);
 
       &:hover {
-        background: t(btn-unfollow) !important;
+        background: t(box) !important;
       }
 
       [checked] {

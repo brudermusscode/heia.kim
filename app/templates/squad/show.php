@@ -1,34 +1,21 @@
 <?php
 
 use Heiakim\Model\Squad;
-use Heiakim\Model\Gamemode;
 
-/**
- * @var int
- */
-$id = filter_var($GLOBALS["route_param_id"], FILTER_VALIDATE_INT);
+$id = aglobal("id");
+$page = aglobal("page");
+$sub = aglobal("mode_o_sub") ?? "osu";
 
 /**
  * @var ?Squad
  */
 $Squad = Squad::find($id);
 
-/**
- * @var string
- */
-$page = $mode = filter_var(GET->feed ?? "index", FILTER_SANITIZE_SPECIAL_CHARS);
-
-/**
- * @var ?string
- */
-$sub  = filter_var(GET->sub ?? null, FILTER_SANITIZE_SPECIAL_CHARS);
+redirect_unauthorized(resource: $Squad);
 
 $pages = [
   "index",
-  "osu",
-  "ctb",
-  "taiko",
-  "mania",
+  "scores",
   "community",
   "threads",
   "thread",
@@ -39,45 +26,14 @@ $only_member_pages = [
   "thread",
 ];
 
-if (!$Squad)
-  include UNAVAILABLE;
-else {
+if (!in_array($page, $pages))
+  $page = "index";
 
-  if (!in_array($page, $pages))
-    $page = "index";
+$base_url = "/squad/$Squad->id";
 
-  /**
-   * Set the page to `scores` if it is set to any mode. The page
-   * partial will handle the rest. Love!
-   */
-  if (in_array($page, Gamemode::$modes_text)) {
-    $mode = $page;
-    $mod = in_array($sub, Gamemode::$mods_text) ? $sub : Gamemode::$mods_text[0];
-    $gumode = Gamemode::find_gumode($mode, $mod);
+include __DIR__ . "/_page-navigator.php";
+include __DIR__ . "/_mode-menu.php";
+include __DIR__ . "/_header.php";
+include __DIR__ . "/pages/_$page.php";
 
-    /**
-     * @var string
-     */
-    $page = "scores";
-  }
-
-  /**
-   * @var string
-   */
-  $base_url = "/squad/$Squad->id";
-
-  /**
-   * Include the header.
-   */
-  include __DIR__ . "/_header.php";
-
-  /**
-   * Include the corresponding page partial.
-   */
-  include __DIR__ . "/squad/pages/_$page.php";
-}
-
-/**
- * Include the footer.
- */
 include TEMPLATE . "/global/_scroll_end_logo.php";

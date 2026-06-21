@@ -7,8 +7,12 @@ use Heiakim\Model\Beatmap;
 use Illuminate\Support\Collection;
 
 /**
- * @var Beatmap $Beatmap
+ * @var ?Beatmap $Beatmap
+ * @var ?Beatmap\Set $Set
  */
+
+$Set ??= $Beatmap?->set;
+$Beatmap ??= $Set->beatmaps->first();
 
 $beatmap_status_text = $Beatmap->turn_status_to_text();
 $beatmap_id = $Beatmap->id;

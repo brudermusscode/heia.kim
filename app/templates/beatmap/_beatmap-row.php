@@ -53,9 +53,9 @@ if (!$Set) : ?>
     $mode_text = "osu";
 
   # These variables will fetermine how to show the card in the end.
-  $include_all_diffs ??= false;
-  $include_time_ago ??= false;
+  $include_all_diffs ??= true;
   $include_status ??= true;
+  $include_time_ago ??= false;
 
 ?>
 

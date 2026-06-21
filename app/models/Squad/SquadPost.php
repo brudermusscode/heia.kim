@@ -3,13 +3,15 @@
 namespace Heiakim\Model\Squad;
 
 use Heiakim\Justin;
-use Heiakim\Application\Exception;
 use Heiakim\Application\Logger;
 use Heiakim\Model\Beatmap;
 use Heiakim\Model\Squad;
 use Heiakim\Model\User;
 use Heiakim\Utils\Arr;
 use Heiakim\Utils\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class SquadPost extends Justin
 {
@@ -38,84 +40,63 @@ class SquadPost extends Justin
 
   /**
    * @param object $params
-   * @return object
+   * @return static
+   *
+   * NOTE: Will die one error.
    */
   public function new(object $params)
   {
 
-    /**
-     * @var User
-     */
-    $CurrentUser = $params->CurrentUser;
-
-    /**
-     * Type valid?
-     */
     if (!in_array($params->type, $this->types))
-      return request_error();
+      return die(error());
 
-    /**
-     * ? Poll
-     */
+    # ? Poll
     if ($params->type === "poll") {
 
-      /**
-       * Enough options set?
-       */
-      if (!isset($params->options) || !is_array($params->options) || count($params->options) < 1)
-        return request_error("<strong>Give some options!</strong>");
+      # Make sure atleast 2 options are set.
+      if (
+        empty($params->options)
+        || !is_array($params->options)
+        || count($params->options) < 1
+        || in_array(false, $params->options)
+      )
+        return die(error("Give atleast 2 options!"));
 
-      /**
-       * Too many options?
-       */
-      if (count($params->options) > 30)
-        return request_error("<strong>Please no more than 30 options!</strong> Senpai!");
+      # Validate all options are unique.
+      if (count($params->options) !== count(array_unique($params->options)))
+        return die(error("All options should be unique!"));
 
-      /**
-       * @var array
-       */
+      # No more than 21 options lpelase.
+      if (count($params->options) > 21)
+        return die(error("Please no more than 30 options!"));
+
       $options = [];
 
-      /**
-       * Append each option with a value of zero to an array. The
-       * zero will increase as people vote for this option later.
-       */
+      # Append each option with a value of zero to an array. The zero will increase
+      # as people vote for this option later.
       foreach ($params->options as $option) {
         if (!$option) continue;
 
         $options[$option] = 0;
       }
 
-      /**
-       * Append the comment string.
-       */
       $options["comment_string"] = $params->comment_string["poll"] ?? null;
 
-      /**
-       * Comment string is valid?
-       */
       if (!$options["comment_string"])
-        request_error("<strong>What is your poll about?</strong>");
+        return die(error("<strong>What is your poll about?</strong>"));
 
-      /**
-       * Set the comment_string to the new array and encode it as json.
-       */
-      $params->comment_string = Arr::to_json($options);
+      $params->comment_string = json_encode($options);
     }
 
-    /**
-     * ? Text
-     */
+    # ? Text
     if ($params->type === "text")
       $params->comment_string = $params->comment_string["text"] ?? null;
 
-    /**
-     * ? Attachment
-     */
+    # ? Attachment
     if (isset($params->attachment_type, $params->attachment_id)) {
 
       /**
-       * @var ?Beatmap\Set|
+       * @var ?Beatmap\Set
        */
       match ($params->attachment_type) {
         SquadPostAttachment::$types[0] => Beatmap\Set::findOrReturn($params->attachment_id, "<strong>This attachment doesn't exist fren!</strong>"),
@@ -123,41 +104,28 @@ class SquadPost extends Justin
       };
 
       /**
-       * @var PostAttachment
+       * @var SquadPostAttachment
        */
       $PostAttachment = SquadPostAttachment::make([
-        "user_id" => $CurrentUser->id,
+        "user_id" => CurrentUser->id,
         "attachment_id" => $params->attachment_id,
         "type" => $params->attachment_type,
       ]);
     }
 
-    /**
-     * Comment string set?
-     */
     if (!$params->comment_string)
-      return request_error("<strong>Nothing to say?</strong> 🤭");
+      return die(error("Nothing to say? 🤭"));
 
-    /**
-     * @var int
-     */
     $params->enable_comments = isset($params->enable_comments) && $params->enable_comments === 0 ? 0 : 1;
 
-    /**
-     * Begin new database transaction.
-     */
     $this->db_transaction();
 
     try {
 
-      /**
-       * Create it!
-       */
-      $Post = $CurrentUser
-        ->squad
+      $Post = CurrentUser->squad
         ->posts()
         ->create([
-          "user_id" => $CurrentUser->id,
+          "user_id" => CurrentUser->id,
           "comment_string" => $params->comment_string,
           "type" => $params->type,
           "feedback" => Arr::to_json([
@@ -169,22 +137,15 @@ class SquadPost extends Justin
           "updated_at" => null,
         ]);
 
-      /**
-       * Attach the attachment to the post, if one exists.
-       */
       if (isset($PostAttachment) && $PostAttachment instanceof SquadPostAttachment) {
         $PostAttachment->post_id = $Post->id;
         $PostAttachment->save();
       }
 
-      /**
-       * Create a SquadFeedItem.
-       */
-      $CurrentUser
-        ->squad
+      CurrentUser->squad
         ->feed_items()
         ->create([
-          "user_id" => $CurrentUser->id,
+          "user_id" => CurrentUser->id,
           "type" => "__post__",
           "reference_id" => $Post->id,
           "updated_at" => null,
@@ -192,71 +153,41 @@ class SquadPost extends Justin
 
       $this->db_commit();
 
-      $return_msg = "<strong>Posted!</strong> <a href=\"/squad/" . $CurrentUser->squad->id . "#squad-post-$Post->id\">See it here &nbsp; <mi smol>open_in_new</mi>";
-
-      ob_start();
-
-      $is_new = true;
-      $CurrentUser;
-
-      include $this->template("/squad/squad/post/_post.php");
-
-      return request_success($return_msg, data: ob_get_clean());
+      return $Post;
     } catch (\Exception $e) {
-
       Logger::to_file($e);
       $this->db_rollback();
 
-      return request_error($e->getMessage());
+      return die(error());
     }
   }
 
   /**
    * @param object $params
-   * @return object
+   * @return static
+   *
+   * NOTE: Will die on error.
    */
   public function edit(object $params)
   {
 
-    /**
-     * @var User
-     */
-    $CurrentUser = $params->CurrentUser;
-
-    /**
-     * ? Enable Comments
-     */
+    # ? Enable Comments
     $this->enable_comments = isset($params->enable_comments) && $params->enable_comments < 1 ? 0 : 1;
 
-    /**
-     * ? Comment String
-     */
+    # ? Comment String
     if (isset($params->comment_string) && Str::length($params->comment_string, 0, 1))
-      return request_error("<strong>Nothing to say?</strong> 😗");
+      return die(error("<strong>Nothing to say?</strong> 😗"));
 
-    /**
-     * Begin new database transaction.
-     */
-    $this->db_transaction();
+    $this->save();
+    $this->db_commit();
 
-    try {
-
-      $this->save();
-      $this->db_commit();
-
-      return request_success("<strong>Updated!</strong>");
-    } catch (\Exception $e) {
-
-      Logger::to_file($e);
-      $this->db_rollback();
-
-      return request_error();
-    }
+    return $this;
   }
 
   /**
-   * @param object $params
-   * @return object
+   * @return null
+   *
+   * NOTE: Will die one error.
    */
   public function remove()
   {
@@ -265,35 +196,32 @@ class SquadPost extends Justin
 
     try {
 
-      $this->squad
-        ->feed_items()
-        ->where("reference_id", $this->id)
-        ->where("type", "__member__/post")
+      $this->squad->feed_items()
+        ->where([
+          "reference_id" => $this->id,
+          "type" => "__member__/post"
+        ])
         ->get()
         ->each(fn($F) => $F->delete());
 
-      $this->comments()
-        ->each(fn($C) => $C->delete());
-      $this->votes()
-        ->each(fn($V) => $V->delete());
-      $this->poll_answers()
-        ->each(fn($P) => $P->delete());
+      $this->comments()->delete();
+      $this->votes()->delete();
+      $this->poll_answers()->delete();
 
       $this->delete();
       $this->db_commit();
 
-      return $this->success("<strong>Deleted!</strong>");
-    } catch (\Exception $e) {
-
+      return null;
+    } catch (\Throwable $e) {
       Logger::to_file($e);
       $this->db_rollback();
 
-      return $this->error();
+      die(error());
     }
   }
 
   /**
-   * @return User
+   * @return BelongsTo<User>
    */
   public function user()
   {
@@ -301,7 +229,7 @@ class SquadPost extends Justin
   }
 
   /**
-   * @return ?Squad
+   * @return BelongsTo<Squad>
    */
   public function squad()
   {
@@ -309,7 +237,7 @@ class SquadPost extends Justin
   }
 
   /**
-   * @return SquadFeedItem
+   * @return HasOne<SquadFeedItem>
    */
   public function feed_item()
   {
@@ -318,7 +246,7 @@ class SquadPost extends Justin
   }
 
   /**
-   * @return ?SquadPostVote
+   * @return HasMany<SquadPostVote>
    */
   public function votes()
   {
@@ -326,7 +254,7 @@ class SquadPost extends Justin
   }
 
   /**
-   * @return ?SquadPostComment
+   * @return HasMany<SquadPostComment>
    */
   public function comments()
   {
@@ -334,7 +262,7 @@ class SquadPost extends Justin
   }
 
   /**
-   * @return SquadPostPollAnswer
+   * @return HasMany<SquadPostPollAnswer>
    */
   public function poll_answers()
   {
@@ -342,7 +270,7 @@ class SquadPost extends Justin
   }
 
   /**
-   * @return SquadPostAttachment
+   * @return HasOne<SquadPostAttachment>
    */
   public function attachment()
   {
@@ -365,7 +293,7 @@ class SquadPost extends Justin
     $PostFeedback[$key] += ($count < 0 ? -abs($count) : abs($count));
 
     return $this->update([
-      "feedback" => Arr::to_json($PostFeedback),
+      "feedback" => json_encode($PostFeedback),
     ]);
   }
 

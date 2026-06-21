@@ -776,6 +776,8 @@ $(function () {
       return e.target.tagName.toLowerCase() === tag;
     };
 
+    let target_is_input = tag("input") || tag("textarea");
+
     // Lovely click sounds.
     if (__page.is_sounds_enabled) {
       Audio.stop("[click-audio]");
@@ -807,13 +809,13 @@ $(function () {
     }
 
     if (key("e")) {
-      if (!__current_user.id || __page.component) return;
+      if (!__current_user.id || __page.component || target_is_input) return;
 
       Page.get(`/editor`);
     }
 
     if (key("p")) {
-      if (!__current_user.id || __page.component) return;
+      if (!__current_user.id || __page.component || target_is_input) return;
 
       Page.get(`/u/${__current_user.id}`);
     }
@@ -1123,7 +1125,7 @@ $(function () {
    */
   $(document).on("click", "[close-overlay]", function (e) {
     if (this.closest("exception-container")) return close_exception_overlay();
-
+    if (this.tagName.toLowerCase() === "form") return;
     __page.overlay?.delete();
   });
 

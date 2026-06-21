@@ -171,6 +171,16 @@ export const url = (string) => {
 };
 
 /**
+ * Transforms a snake-case string to kebab-case.
+ *
+ * @param {object} dataset
+ * @return {string}
+ */
+const kebab_case = (str) => {
+  return str.replace(/[A-Z]/g, (letter) => "_" + letter.toLowerCase());
+};
+
+/**
  * Any attribute that can be attached to a form to manipulate the
  * behaviour of submitting a form.
  *
@@ -195,6 +205,8 @@ const SUBMIT_FORM_ATTRIBUTES = [
   "update-library",
   "update-current-track",
   "interchange-action",
+  "delete-object",
+  "reload-object",
 ];
 
 $(function () {
@@ -221,7 +233,7 @@ $(function () {
     for (const [key, value] of Object.entries(this.dataset)) {
       form.insertAdjacentHTML(
         "afterbegin",
-        `<input type=hidden name=${key} value="${value}" />`,
+        `<input type=hidden name=${kebab_case(key)} value="${value}" />`,
       );
     }
 
@@ -268,6 +280,8 @@ $(function () {
       let execute_success = this.getAttribute("on-success");
       let close_overlay = this.getAttribute("close-overlay");
       let update_user_references = this.hasAttribute("update-user-references");
+      let delete_object = this.getAttribute("delete-object");
+      let reload_object = this.getAttribute("reload-object");
 
       request_url = request_url.replaceAll(":", "/");
 
@@ -298,6 +312,23 @@ $(function () {
           Frontend.unload();
 
           if (data.status) {
+            let object = delete_object ?? reload_object ?? null;
+            let element = object
+              ? document.find(
+                  `[${object.toLowerCase()}][data-id="` +
+                    data.data[object]?.id +
+                    `"]`,
+                )
+              : null;
+
+            if (delete_object && element) {
+              element.remove();
+            }
+
+            if (reload_object && element) {
+              element.outerHTML = data.data.HTML;
+            }
+
             if (update_user_references) Frontend.update_user_menu();
 
             if (close_overlay !== null) Frontend.close_current_overlay();
@@ -337,6 +368,8 @@ $(function () {
             Frontend.respond(data);
 
           buttons.forEach((button) => button.enable());
+
+          Frontend.reload_images();
         },
       });
     }, delay);
@@ -360,11 +393,7 @@ $(function () {
      */
     if (dataset_count > 0) {
       for (const key in this.dataset) {
-        query +=
-          key.replace(/[A-Z]/g, (letter) => "_" + letter.toLowerCase()) +
-          "=" +
-          this.dataset[key] +
-          "&";
+        query += kebab_case(key) + "=" + this.dataset[key] + "&";
       }
     }
 

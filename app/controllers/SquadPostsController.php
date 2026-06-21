@@ -1,6 +1,6 @@
 <?php
 
-namespace Heiakim\Controller\Squad;
+namespace Heiakim\Controller;
 
 use Heiakim\Controller\Controller;
 use Heiakim\Model\Squad\SquadPost;
@@ -9,9 +9,7 @@ class SquadPostsController extends Controller
 {
 
   /**
-   * POST
-   *
-   * @return object
+   * @return string
    */
   public function create()
   {
@@ -26,18 +24,23 @@ class SquadPostsController extends Controller
       respect_social_exclusion: true,
     );
 
-    /**
-     * I don't need to check for the user being part of specific
-     * squad here as the post will always be posted to the squad
-     * the current user belongs to!
-     */
+    $Post = (new SquadPost)->new($this->params);
 
-    return (new SquadPost)->new($this->params);
+    ob_start();
+    $Post;
+    $is_new = true;
+    include TEMPLATE . "/squad/post/_post.php";
+
+    return success(
+      "<strong>Posted!</strong> <a href=\"/squad/" . CurrentUser->squad->id . "#squad-post-$Post->id\">See it here &nbsp; <mi smol>open_in_new</mi>",
+      data: [
+        "Post" => $Post->withoutRelations(),
+        "HTML" => ob_get_clean()
+      ]
+    );
   }
 
   /**
-   * UPDATE
-   *
    * @return object
    */
   public function update()
@@ -56,20 +59,24 @@ class SquadPostsController extends Controller
     /**
      * @var ?SquadPost
      */
-    $Post = SquadPost::findOrReturn($this->params->id, "<strong>Ney m8, post not found.</strong> Might have been deleted 🙃");
+    $Post = SquadPost::findOrReturn($this->params->id);
 
-    /**
-     * Authorize the user to touch this Post.
-     */
     CurrentUser->sqauthorize_content_touch($Post);
 
-    return $Post->edit($this->params);
+    $Post->edit($this->params);
+
+    ob_start();
+    $Post;
+    include TEMPLATE . "/squad/post/_post.php";
+
+    return success("Good!", data: [
+      "Post" => $Post->withoutRelations(),
+      "HTML" => ob_get_clean(),
+    ]);
   }
 
   /**
-   * DELETE
-   *
-   * @return object
+   * @return string
    */
   public function delete()
   {
@@ -87,13 +94,14 @@ class SquadPostsController extends Controller
     /**
      * @var ?SquadPost
      */
-    $Post = SquadPost::findOrReturn($this->params->id, "<strong>Ney m8, post not found.</strong> Might have been deleted 🙃");
+    $Post = SquadPost::findOrReturn($this->params->id);
 
-    /**
-     * Authorize the user to touch this Post.
-     */
     CurrentUser->sqauthorize_content_touch($Post);
 
-    return $Post->remove($this->params);
+    $Post->remove();
+
+    return success("Deleted!", data: [
+      "Post" => $Post->withoutRelations(),
+    ]);
   }
 }

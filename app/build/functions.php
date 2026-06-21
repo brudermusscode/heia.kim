@@ -2,6 +2,7 @@
 
 use Heiakim\Exception\ApiException;
 use Heiakim\Http\Request;
+use Heiakim\Model\Squad;
 use Heiakim\Model\User;
 use Heiakim\Model\Squad\SquadUser;
 
@@ -193,14 +194,16 @@ function request_error(?string $message = null, mixed $data = null, bool $return
 }
 
 /**
- * @param User $Resource
+ * Redirect with full page reload when the given Resource does not exist.
+ *
+ * @param User|Squad $resource
  * @return void
  *
  * NOTE: Redirects through header() on error.
  */
-function redirect_unauthorized(User $Resource = CurrentUser)
+function redirect_unauthorized(User|Squad $resource = CurrentUser)
 {
-  if (!$Resource->exists) {
+  if (!$resource->exists) {
     header("location: /not-found");
     exit;
   }

@@ -13,10 +13,10 @@ use Heiakim\Model\Squad\SquadFeedItem;
 ?>
 
 <div fl fldircol gap=smol>
-  <div fl alic gap=smol>
-    <mi slight>draw_abstract</mi>
-    <p text bold slighter mid style=margin-top:-.2em;>&middot;</p>
-    <p text slight>Squad</p>
+  <div fl alic gap=smol slight>
+    <mi>draw_abstract</mi>
+    <p text bold mid style="margin-top:-6px;">&middot;</p>
+    <p text>Squad</p>
   </div>
 
   <p text midler bold mb=smol>Created this squad</p>
@@ -32,8 +32,8 @@ use Heiakim\Model\Squad\SquadFeedItem;
           <?php $Squad->logo(); ?>
         </picture>
         <div fl alic gap=smol>
-          <div tag filled="darker" pblock12 pinline8 rounded="wide" ttup>
-            <p text bold><?= $Squad->tag; ?></p>
+          <div tag filled=darker pblock4 pinline14 rounded=mid ttup>
+            <p text mid bold><?= $Squad->tag; ?></p>
           </div>
           <p text wide bold color=light><?= $Squad->name; ?></p>
         </div>

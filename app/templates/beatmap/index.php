@@ -276,11 +276,6 @@ include __DIR__ . "/_header.php"; ?>
     <div grid-repeat gap="smol" data-react="beatmaps:search" scroll=infinite scroll-type=beatmaps>
       <?php
 
-      /**
-       * Needed to show all difficulties on the beatmap container.
-       * If this is not set, it will fallback to false and only show one
-       * difficulty which might endup in an error
-       */
       $include_all_diffs = true;
 
       if (!$BeatmapSets->count())

@@ -33,29 +33,27 @@ use Heiakim\Model\Squad\SquadFeedItem;
           <p text std>Edit</p>
         </div>
 
-        <form request="squad:post:update" responder=error reload>
-          <input type=hidden name=id value=<?= $Post->id; ?> />
-          <input type=hidden name=enable_comments value=<?= $Post->enable_comments ? "0" : "1"; ?> />
-          <div submit-closest class=jm__option hoverable>
-            <mi><?= $Post->enable_comments ? "comments_disabled" : "comment"; ?></mi>
-            <p text std><?= $Post->enable_comments ? "Disable" : "Enable"; ?> comments</p>
-          </div>
-        </form>
+        <div request="squad:post:update"
+          data-id="<?= $Post->id; ?>"
+          data-enable-comments="<?= $Post->enable_comments ? "0" : "1"; ?>"
+          shadow-submit responder=error reload-object="Post"
+          class=jm__option hoverable>
+          <mi><?= $Post->enable_comments ? "comments_disabled" : "comment"; ?></mi>
+          <p text std><?= $Post->enable_comments ? "Disable" : "Enable"; ?> comments</p>
+        </div>
 
         <div divide=line></div>
 
-        <form request="squad:post:delete" responder=error reload>
-          <input type=hidden name=id value=<?= $Post->id; ?> />
-          <div submit-closest class=jm__option hoverable>
-            <mi>delete</mi>
-            <p text std>Delete</p>
-          </div>
-        </form>
+        <div request="squad:post:delete" data-id="<?= $Post->id; ?>"
+          shadow-submit delete-object="Post" class=jm__option hoverable>
+          <mi>delete</mi>
+          <p text std>Delete</p>
+        </div>
       <?php } else { ?>
         <div class=jm__option hoverable
           request-get="report:new"
-          data-id=<?= $Post->id; ?>
-          data-type=squad:post>
+          data-id="<?= $Post->id; ?>"
+          data-type="squad:post">
           <mi>campaign</mi>
           <p text std>Report to Content Guradian</p>
         </div>
