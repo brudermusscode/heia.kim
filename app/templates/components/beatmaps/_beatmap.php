@@ -1,8 +1,10 @@
 <?php
 
+use Heiakim\Model\Artist;
 use Heiakim\Time\Time;
 use Heiakim\Model\Gamemode;
 use Heiakim\Model\Beatmap;
+use Illuminate\Support\Collection;
 
 /**
  * @var Beatmap $Beatmap
@@ -16,32 +18,22 @@ $beatmap_id = $Beatmap->id;
 $beatmap_set_id = $Beatmap->set_id;
 $beatmap_mode_text = Gamemode::mode_text($Beatmap->mode);
 
-/**
- * Create artist references
- */
 $Beatmap->create_featured_artists();
 
 /**
- * Artists
+ * @var Collection<Artist>
  */
 $Artists = $Beatmap->set->artists;
 
-/**
- * Different views
- */
 $show_play_count ??= false;
 $beatmap_play_count ??= 0;
 $include_status ??= true;
 $include_time_ago ??= false;
-
-/**
- * @var string
- */
 $last_updated = Time::ago($Beatmap->last_update, true);
 
 ?>
 
-<a sub href='<?= "/beatmap-set/$beatmap_set_id/$beatmap_id/$beatmap_mode_text/vanilla"; ?>'>
+<a href='<?= "/beatmap-set/$beatmap_set_id/$beatmap_id/$beatmap_mode_text/vanilla"; ?>'>
   <box-model ripple-effect rounded=wide clickable animation="fade-in" beatmap-card>
     <div class="beatmap">
       <div class="beatmap__image">

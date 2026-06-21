@@ -2,55 +2,32 @@
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
 
-use Heiakim\Application\Server;
-use Heiakim\Enum\SquadPrivilege;
-use Heiakim\Http\Request;
-use Heiakim\Model\User;
 use Heiakim\Model\Squad;
 use Heiakim\Model\Beatmap;
 use Heiakim\Model\Score;
 
-/**
- * @var Request $Request
- */
-
-/**
- * @var string
- */
 $type            = filter_input(INPUT_GET, "type", FILTER_SANITIZE_SPECIAL_CHARS);
 $sub_type        = filter_input(INPUT_GET, "sub_type", FILTER_SANITIZE_SPECIAL_CHARS);
 $attachment_id   = filter_input(INPUT_GET, "attachment_id", FILTER_VALIDATE_INT);
 $attachment_type = filter_input(INPUT_GET, "attachment_type", FILTER_SANITIZE_SPECIAL_CHARS);
 
-/**
- * @var array
- */
 $types = [
   "squad:post",
 ];
 
-/**
- * @var array
- */
 $attachment_types = [
   "beatmap:set",
   "score",
 ];
 
-/**
- * Validate all types.
- */
-if (!in_array($type, $types) || $attachment_id && !in_array($attachment_type, $attachment_types))
+if (
+  !in_array($type, $types)
+  || $attachment_id && !in_array($attachment_type, $attachment_types)
+)
   exit($Request->error());
 
-/**
- * User verified?
- */
 authorize(resource: CurrentUser, respect_social_exclusion: true);
 
-/**
- * ? squad:post
- */
 if ($type === "squad:post") {
 
   if (!$sub_type)
@@ -77,9 +54,9 @@ $Score = $attachment_id && $attachment_type === "score"
   ? Score::find($attachment_id)
   : null;
 
-ob_start(); ?>
+ob_start();
 
-<?php include SNOW; ?>
+include SNOW; ?>
 
 <div posting-machine-overlay active rounded=wider animation=fade-in>
   <pm-inr post-type="<?= $sub_type; ?>" filled=lighter rounded=wider animation=open style=height:auto;>
@@ -158,20 +135,14 @@ ob_start(); ?>
 
           <?php
 
-          /**
-           * ? Score
-           */
+          # Include attachments.
+
           if ($Score) :
             $clean_appearance = true;
 
             include TEMPLATE . "/score/_score.php";
-          endif; ?>
+          endif;
 
-          <?php
-
-          /**
-           * ? Beatmap\Set
-           */
           if ($BeatmapSet) :
 
             /**

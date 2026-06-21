@@ -9,6 +9,7 @@ use Heiakim\Enum\BeatmapStatus;
 use Heiakim\Model\Beatmap\BeatmapRequest;
 use Heiakim\Model\Beatmap\SetArtist;
 use Heiakim\Utils\Arr;
+use Illuminate\Support\Collection;
 
 class Beatmap extends Justin
 {
@@ -153,7 +154,7 @@ class Beatmap extends Justin
 
   /**
    * @param int $gumode
-   * @return ?Score
+   * @return Collection<Score>
    */
   public function score_leaderboard(int $gumode, int $limit)
   {

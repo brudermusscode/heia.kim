@@ -79,7 +79,7 @@ ui-component {
     left: calc($main-distance / 2);
   }
 
-  @media screen and (max-height: 750px) {
+  @media screen and (max-height: 900px) {
     max-height: calc(100vh - $main-distance) !important;
   }
 
@@ -393,7 +393,7 @@ ui-component {
 ui-component[type="user-manager"] {
   $border-radius: 24px;
   bottom: calc($main-distance / 2);
-  max-height: 720px;
+  max-height: 800px;
   width: 600px;
 
   @include themed() {
@@ -414,7 +414,7 @@ ui-component[type="user-manager"] {
 ui-component[type="notifications"] {
   $border-radius: 24px;
   bottom: calc($main-distance / 2);
-  max-height: 724px;
+  max-height: 800px;
   width: 420px;
   padding-block: 10px;
 

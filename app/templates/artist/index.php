@@ -97,7 +97,6 @@ include __DIR__ . "/_header.php"; ?>
     <mi>tips_and_updates</mi>
     <p text std>This is a test view of the artists page. A senseful structure is still being determined and will soon be implemented.</p>
   </div>
+</content>
 
-  <?php
-
-  include TEMPLATE . "/global/_scroll_end_logo.php";
+<?php include TEMPLATE . "/global/_scroll_end_logo.php";

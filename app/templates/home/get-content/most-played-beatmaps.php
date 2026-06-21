@@ -14,4 +14,4 @@ $MostPlayedBeatmaps = Beatmap::orderBy("plays", "DESC")
   ->get();
 
 foreach ($MostPlayedBeatmaps as $Beatmap)
-  include COMPONENT . "/beatmaps/_beatmap-column.php";
+  include TEMPLATE . "/beatmap/_beatmap-column.php";

@@ -130,6 +130,14 @@
 [rounded] {
   border-radius: 18px;
 
+  &[rounded="smolest"] {
+    border-radius: 2px;
+  }
+
+  &[rounded="smoler"] {
+    border-radius: 4px;
+  }
+
   &[rounded="smol"] {
     border-radius: 6px;
   }

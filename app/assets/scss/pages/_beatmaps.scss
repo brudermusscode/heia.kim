@@ -8,7 +8,132 @@ beatmap {
   display: block;
   position: relative;
   border-radius: 24px;
-  overflow: hidden;
+
+  &[row] {
+    position: relative;
+
+    [cover] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 24px;
+      z-index: 0;
+
+      &:before {
+        background: rgba(0, 0, 0, 0.32);
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+      }
+    }
+
+    inr {
+      display: block;
+      position: relative;
+      z-index: 2;
+      color: white;
+    }
+
+    .beatmaps__info {
+      .duration {
+        padding: 0.2em 0.8em;
+        border-radius: 22px;
+
+        @include themed() {
+          background: t(box);
+          color: t(text);
+        }
+      }
+    }
+
+    .beatmaps__extras {
+      margin-top: 1.8em;
+
+      .beatmaps__extras_status {
+        padding-inline: 12px 20px;
+        height: $mbutton-std-size;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .beatmaps__extras_diffs {
+        gap: 0.24em;
+
+        .beatmaps__extras_diffs__diff {
+          height: 0.8em;
+          width: 0.8em;
+          border-radius: 50%;
+          position: relative;
+
+          .beatmaps__extras_diffs__diff_hidden {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+          }
+
+          &:hover {
+            .beatmaps__extras_diffs__diff_hidden {
+              height: calc(100% + 0.4em);
+              top: -0.2em;
+              width: calc(100% + 0.4em);
+              left: -0.2em;
+
+              [tooltip] {
+                visibility: visible;
+                opacity: 1;
+              }
+            }
+          }
+
+          &[more] {
+            margin-left: 0.2em;
+            padding: 0 1em;
+            height: 1.6em;
+            border-radius: 12px;
+
+            @include themed() {
+              background: t(nav2-invert);
+            }
+
+            p {
+              @include themed() {
+                color: t(text-invert);
+              }
+
+              font-size: 0.8em;
+              font-weight: 900;
+            }
+          }
+        }
+      }
+
+      .times-played {
+        @include themed() {
+          background: t(box);
+          color: t(text);
+        }
+
+        padding: 0.4em 0.8em;
+        border-radius: 18px;
+      }
+    }
+
+    &:hover {
+      z-index: 2;
+    }
+  }
 
   &[column] {
     @include themed() {
@@ -16,6 +141,7 @@ beatmap {
     }
     padding-inline: 28px;
     padding-block: 24px;
+    overflow: hidden;
 
     picture {
       position: absolute;
@@ -185,157 +311,6 @@ beatmap {
 
   &[clear-flex] {
     margin: 0;
-  }
-}
-
-[beatmap-card] {
-  position: relative;
-
-  bm-inr {
-    position: relative;
-    z-index: 2;
-  }
-
-  .beatmap {
-    .beatmap__background_color {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      opacity: 0.24;
-
-      @extend [rd18];
-    }
-
-    .beatmap__image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      border-radius: 24px;
-
-      picture {
-        height: 100%;
-      }
-
-      &:before {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        z-index: 2;
-        background: $dark;
-        opacity: 0.62;
-      }
-    }
-  }
-
-  .beatmaps__info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2em;
-
-    p,
-    p i {
-      color: white;
-      line-height: 1.4em;
-    }
-
-    .duration {
-      padding: 0.2em 0.8em;
-      border-radius: 22px;
-
-      @include themed() {
-        background: t(box);
-        color: t(text);
-      }
-    }
-  }
-
-  .beatmaps__extras {
-    margin-top: 1.8em;
-
-    .beatmaps__extras_status {
-      padding-inline: 12px 20px;
-      height: $mbutton-std-size;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .beatmaps__extras_diffs {
-      gap: 0.24em;
-
-      .beatmaps__extras_diffs__diff {
-        height: 0.8em;
-        width: 0.8em;
-        border-radius: 50%;
-        position: relative;
-
-        .beatmaps__extras_diffs__diff_hidden {
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          top: 0;
-          left: 0;
-          border-radius: 50%;
-        }
-
-        &:hover {
-          .beatmaps__extras_diffs__diff_hidden {
-            height: calc(100% + 0.4em);
-            top: -0.2em;
-            width: calc(100% + 0.4em);
-            left: -0.2em;
-
-            [tooltip] {
-              visibility: visible;
-              opacity: 1;
-            }
-          }
-        }
-
-        &[more] {
-          margin-left: 0.2em;
-          padding: 0 1em;
-          height: 1.6em;
-          border-radius: 12px;
-
-          @include themed() {
-            background: t(nav2-invert);
-          }
-
-          p {
-            @include themed() {
-              color: t(text-invert);
-            }
-
-            font-size: 0.8em;
-            font-weight: 900;
-          }
-        }
-      }
-    }
-
-    .times-played {
-      @include themed() {
-        background: t(box);
-        color: t(text);
-      }
-
-      padding: 0.4em 0.8em;
-      border-radius: 18px;
-    }
-  }
-
-  &:hover {
-    z-index: 2;
   }
 }
 

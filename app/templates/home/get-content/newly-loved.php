@@ -15,4 +15,4 @@ $Beatmaps = Beatmap::where("status", 5)
   ->get();
 
 foreach ($Beatmaps as $key => $Beatmap)
-  include COMPONENT . "/beatmaps/_beatmap-column.php";
+  include TEMPLATE . "/beatmap/_beatmap-column.php";

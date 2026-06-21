@@ -272,7 +272,7 @@ include __DIR__ . "/_header.php"; ?>
       <button type=submit name=ass>submit</button>
     </form>
 
-    <!--- BEATMAPS CONTENT --->
+    <!--- Content --->
     <div grid-repeat gap="smol" data-react="beatmaps:search" scroll=infinite scroll-type=beatmaps>
       <?php
 
@@ -287,7 +287,7 @@ include __DIR__ . "/_header.php"; ?>
         include COMPONENT . '/ui/_none.html';
       else
         foreach ($BeatmapSets as $key => $Set)
-          include dirname(__DIR__) . "/beatmapset/_set-card.php";
+          include TEMPLATE . "/beatmap/_beatmap-row.php";
 
       ?>
     </div>

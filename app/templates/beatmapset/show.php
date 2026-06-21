@@ -26,6 +26,7 @@ $Beatmap = $Set?->beatmaps
   ->where("id", $map_id)
   ->first();
 
+
 if (!$Set || !$Beatmap)
   include UNAVAILABLE;
 else {
@@ -227,15 +228,13 @@ else {
     <div class="s__content">
 
       <!--- SCORES --->
-      <div class="s__scores" flexone fl fldircol gap=smol>
-        <?php if ($Scores->count()) { ?>
-          <div title-inline="">
-            <p text mid bold><?= __("Leaderboard") ?></p>
-          </div>
-        <?php } ?>
+      <div class="s__scores" flexone fl fldircol gap=smol+>
+        <p text bold ttup title-inline><?= __("Leaderboard") ?></p>
 
-        <?php if (!$Scores->count()) { ?>
+        <?php
 
+        # When there are no scores.
+        if (!$Scores->count()) { ?>
           <box-model rounded="wide" filled="lighter" p62 fl fldircol alic gap style="flex:1;">
             <div style="height:4.2em;width:4.2em;" fl alic jucc circled filled>
               <i class="mi" size="wide">emoji_events</i>
@@ -284,9 +283,7 @@ else {
 
       <!--- STATS --->
       <div class=s__stats fl fldircol gap=smol+>
-        <div title-inline="">
-          <p text mid bold><?= __("Statistics") ?></p>
-        </div>
+        <p text bold ttup title-inline><?= __("Statistics") ?></p>
         <?php include __DIR__ . "/_stats.php"; ?>
       </div>
     </div>
@@ -313,30 +310,28 @@ else {
     $count = $Sets->count();
 
     if ($Sets->count() && $Artists->count()) : ?>
-      <div class="s__maps" fl fldircol gap>
-        <div pblock12>
-          <p text midler bold>
-            <?php
+      <div class="s__maps" fl fldircol gap=smol+>
+        <p text ttup bold title-inline>
+          <?php
 
-            $featured_artist_count = $Artists->count();
-            $artist_str = __("More from") . " " . $Artists->first()->name;
+          $featured_artist_count = $Artists->count();
+          $artist_str = __("More from") . " " . $Artists->first()->name;
 
-            if ($featured_artist_count > 1)
-              foreach ($Artists as $kkey => $Artist) {
-                if ($kkey == 0)
-                  continue;
+          if ($featured_artist_count > 1)
+            foreach ($Artists as $kkey => $Artist) {
+              if ($kkey == 0)
+                continue;
 
-                if (($featured_artist_count - $kkey) == 1)
-                  $artist_str .= " and $Artist->name";
-                else
-                  $artist_str .= ", $Artist->name";
-              }
+              if (($featured_artist_count - $kkey) == 1)
+                $artist_str .= " and $Artist->name";
+              else
+                $artist_str .= ", $Artist->name";
+            }
 
-            echo $artist_str;
+          echo $artist_str;
 
-            ?>
-          </p>
-        </div>
+          ?>
+        </p>
 
         <div grid-repeat gap="smol">
           <?php
@@ -344,7 +339,7 @@ else {
           $include_all_diffs = true;
 
           foreach ($Sets->take(6) as $key => $Set)
-            include TEMPLATE . "/beatmapset/_set-card.php";
+            include TEMPLATE . "/beatmap/_beatmap-row.php";
 
           ?>
         </div>
