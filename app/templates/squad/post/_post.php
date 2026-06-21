@@ -38,18 +38,17 @@ $Item ??= $Post->feed_item;
 $Squad ??= $Post->squad;
 
 /**
- * @var int
- */
-$is_new ??= false;
-
-/**
  * @var ?SquadPostAttachment
  */
 $Attachment = $Post?->attachment?->reference();
 
+$is_new ??= false;
+$comment_string_length = strlen($Post->comment_string ?? "");
+$system_sub_type = explode("/", $Item->type);
+
 ?>
 
-<t-object fl fldircol gap=smoler post data-id=<?= $Post?->id ?? 0; ?>>
+<t-object post data-id=<?= $Post?->id ?? 0; ?> fl fldircol gap=smoler>
   <t-o-toolbar background=bg>
     <div fl alic gap=smol+>
       <t-o-icon>
@@ -69,52 +68,29 @@ $Attachment = $Post?->attachment?->reference();
       </t-o-creator>
     </div>
 
-    <?php
-
-    /**
-     * Show the dropdown only for squad members.
-     */
-    if (CurrentUser->sqcan_take_action_in($Squad))
+    <?php if (CurrentUser->sqcan_take_action_in($Squad))
       include __DIR__ . "/_dropdown.php"; ?>
   </t-o-toolbar>
 
-  <?php
-
-  /**
-   * @var int
-   */
-  $comment_string_length = strlen($Post->comment_string ?? "");
-
-  /**
-   * @var array
-   */
-  $system_sub_type = explode("/", $Item->type);
-
-  /**
-   * Constructed file path based on the type of the post with
-   * respect to system posts.
-   *
-   * @var string
-   */
-  $file_path = $Item->is_system_post()
-    ? (
-      isset($system_sub_type[2])
-      ? __DIR__ . "/type/system/$system_sub_type[1]/_$system_sub_type[2].php"
-      : __DIR__ . "/type/system/_$system_sub_type[1].php"
-    )
-    : __DIR__ . "/type/_" . $Post?->type . ".php";
-
-  ?>
-
-  <box-model id="squad-post-<?= ($Post ?? $Item)->id ?>" filled=lighter rounded=wide <?= $is_new ? "new-object" : ""; ?>>
+  <box-model filled=lighter rounded=wide
+    id="squad-post-<?= ($Post ?? $Item)->id ?>"
+    <?= $is_new ? "new-object" : ""; ?>>
     <div pinline28 pblock26 fl fldircol gap=smol+>
-
       <?php
+
+      $file_path = $Item->is_system_post()
+        ? (
+          isset($system_sub_type[2])
+          ? __DIR__ . "/type/system/$system_sub_type[1]/_$system_sub_type[2].php"
+          : __DIR__ . "/type/system/_$system_sub_type[1].php"
+        )
+        : __DIR__ . "/type/_" . $Post?->type . ".php";
 
       include file_exists($file_path)
         ? $file_path
         : dirname(__DIR__) . "/post/_unavailable.php"; ?>
 
+      <!--- Attachment --->
       <?php if ($Attachment) : ?>
         <div fl fldircol gap=smol>
 
@@ -177,9 +153,6 @@ $Attachment = $Post?->attachment?->reference();
          */
         $Vote = CurrentUser->has_voted_for($Post);
 
-        /**
-         * @var object
-         */
         $feedback = (object) json_decode($Post->feedback, true);
 
       ?>
@@ -212,10 +185,12 @@ $Attachment = $Post?->attachment?->reference();
 
           <div fl alic votes>
             <div vote-count-button fl alic gap
-              data-type="1"
+              shadow-submit reload-object="Post" responder=error
               <?= ($Vote && $Vote->type === 1)
-                ? "active data-action=squad:post:vote:delete"
-                : "data-action=squad:post:vote:create"; ?>>
+                ? 'request="squad:post:vote:delete" active'
+                : 'request="squad:post:vote:create"' ?>
+              data-id="<?= $Post->id ?>"
+              data-type="1">
               <mbutton hoverable icon-only>
                 <mi size=mid>keyboard_arrow_up</mi>
               </mbutton>
@@ -223,9 +198,6 @@ $Attachment = $Post?->attachment?->reference();
 
             <?php
 
-            /**
-             * @var int
-             */
             $vote_count = $Post->vote_count();
 
             ?>
@@ -235,10 +207,12 @@ $Attachment = $Post?->attachment?->reference();
             </div>
 
             <div vote-count-button fl alic gap=smol
-              data-type="-1"
+              shadow-submit reload-object="Post" responder=error
               <?= ($Vote && $Vote->type === -1)
-                ? "active data-action=squad:post:vote:delete"
-                : "data-action=squad:post:vote:create"; ?>>
+                ? 'request="squad:post:vote:delete" active '
+                : 'request="squad:post:vote:create"' ?>
+              data-id="<?= $Post->id ?>"
+              data-type="-1">
               <mbutton clean hoverable icon-only>
                 <mi size=mid>keyboard_arrow_down</mi>
               </mbutton>
@@ -247,9 +221,9 @@ $Attachment = $Post?->attachment?->reference();
         </div>
 
       <?php elseif ($Item->is_system_post()) : ?>
-        <div fl jucend mt=smolest alic gap=smol slighter>
+        <div fl jucend mt=smolest alic gap=smol slighter title-inline>
           <mi size=smol>nights_stay</mi>
-          <p text smol>Voting for system posts soon</p>
+          <p text smol>Voting not yet available</p>
         </div>
       <?php else : ?>
         Hello?

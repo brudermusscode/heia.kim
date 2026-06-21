@@ -298,6 +298,54 @@ class SquadPost extends Justin
   }
 
   /**
+   * @return void
+   */
+  public function upvote(User $by)
+  {
+    $type = 1;
+    $Voted = $by->has_voted_for($this);
+
+    if ($Voted?->type === 1) return;
+    if ($Voted) {
+      $this->update_feedback($Voted->type === 1 ? "upvotes" : "downvotes", -1);
+      $Voted->update(["type" => $type]);
+
+      return;
+    }
+
+    $Vote = $this->votes()->make();
+    $Vote->type = $type;
+    $Vote->user()->associate($by);
+    $Vote->save();
+
+    $this->update_feedback("upvotes", 1);
+  }
+
+  /**
+   * @return void
+   */
+  public function downvote(User $by)
+  {
+    $type = -1;
+    $Voted = $by->has_voted_for($this);
+
+    if ($Voted?->type === -1) return;
+    if ($Voted) {
+      $this->update_feedback($Voted->type === 1 ? "upvotes" : "downvotes", -1);
+      $Voted->update(["type" => $type]);
+
+      return;
+    }
+
+    $Vote = $this->votes()->make();
+    $Vote->type = $type;
+    $Vote->user()->associate($by);
+    $Vote->save();
+
+    $this->update_feedback("downvotes", 1);
+  }
+
+  /**
    * @return int Might be negative.
    */
   public function vote_count()
