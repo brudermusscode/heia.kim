@@ -5,13 +5,14 @@ use Heiakim\Model\Squad;
 $id = aglobal("id");
 $page = aglobal("page");
 $sub = aglobal("mode_o_sub") ?? "osu";
+$mod = aglobal("mod");
 
 /**
  * @var ?Squad
  */
 $Squad = Squad::find($id);
 
-redirect_unauthorized(resource: $Squad);
+redirect_unauthorized($Squad);
 
 $pages = [
   "index",

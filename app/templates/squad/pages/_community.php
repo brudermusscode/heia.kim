@@ -121,14 +121,12 @@ use Heiakim\Enum\SquadPrivilege;
     </div>
 
 
-
+    <!--- Middle content --->
     <div column=large fl fldircol flexone>
       <?php
 
-      /**
-       * Sort all members by their grades starting by the highest
-       * privlege and add it to an array so we can iterate through it.
-       */
+      # Sort all members by their grades starting by the highest privlege and add it
+      # to an array so we can iterate through it.
 
       $Grades_w_Members = [];
       $added_ids = [];
@@ -144,9 +142,7 @@ use Heiakim\Enum\SquadPrivilege;
           }
         }
 
-      endforeach;
-
-      ?>
+      endforeach; ?>
 
       <?php foreach ($Grades_w_Members as $grade_name => $Iteration) :
 
@@ -155,20 +151,18 @@ use Heiakim\Enum\SquadPrivilege;
          */
         $Grade = $Iteration["Grade"];
 
-        /**
-         * Continue on Chief, as we show him/her seperately.
-         */
+        # Continue on Chief.
         if ($Grade === SquadPrivilege::CHIEF) continue;
 
-        /**
-         * Member is equal to restricted users. We want to show
-         * them differently than all others.
-         */
+        # Different view for restricted members count.
         if ($Grade === SquadPrivilege::MEMBER) : ?>
 
           <?php if (isset($Iteration["Members"])) : ?>
-            <div background=slighter fl alic jucc pinline24 pblock24>
-              <p text smol><span color=company><?= count($Iteration["Members"]) ?></span> &middot; Member<?= count($Iteration["Members"]) > 1 ? "s are " : " is " ?> restricted and not being shown</p>
+            <div background=slighter rounded fl alic jucc pinline24 pblock24>
+              <p text smol>
+                Restricted members not shown &nbsp;&middot;&nbsp;
+                <strong color=company><?= count($Iteration["Members"]) ?></strong>
+              </p>
             </div>
           <?php endif; ?>
 
@@ -190,13 +184,15 @@ use Heiakim\Enum\SquadPrivilege;
           /**
            * @var SquadUser
            */
-          $LatestMember = collect($Iteration["Members"])->sortByDesc("created_at")->first();
+          $LatestMember = collect($Iteration["Members"])
+            ->sortByDesc("created_at")
+            ->first();
 
         ?>
 
           <div fl fldircol gap=smol+>
-            <div fl alic jucsb gap alic pinline24>
-              <div fl alic gap=smol+>
+            <div fl alic jucsb gap alic title-inline>
+              <div fl alic gap=smol>
                 <div fl alic gap=smol>
                   <mi><?= $Grade->get_display()->icon ?></mi>
                   <p text midler bold><?= $grade_name ?></p>
@@ -205,7 +201,7 @@ use Heiakim\Enum\SquadPrivilege;
                 <p text midler color=company><?= count($Iteration["Members"]) ?></p>
               </div>
 
-              <div fl alic gap=smol hide-600>
+              <div fl alic gap=smol hide-mobile>
                 <a href="<?= $LatestMember->user->link() ?>">
                   <div fl alic gap=smol hoverable p4 rounded=wide pr6>
                     <picture size=smol circled>
@@ -221,7 +217,6 @@ use Heiakim\Enum\SquadPrivilege;
 
 
             <div members fl alistart flex-wrap gap=smol>
-
               <?php foreach ($Iteration["Members"] ?? [] as $Member) :
 
                 /**
@@ -230,7 +225,6 @@ use Heiakim\Enum\SquadPrivilege;
                 $User = $Member->user;
 
               ?>
-
                 <a href="<?= $User->link() ?>">
                   <box-model outlined=darker hoverable rounded>
                     <div pblock24 pinline24 style=padding-right:16px; fl jucsb alic>
@@ -252,9 +246,7 @@ use Heiakim\Enum\SquadPrivilege;
                     </div>
                   </box-model>
                 </a>
-
               <?php endforeach; ?>
-
             </div>
           </div>
 
@@ -262,8 +254,7 @@ use Heiakim\Enum\SquadPrivilege;
       <?php endforeach; ?>
     </div>
 
-
-
+    <!--- Right column --->
     <div column=small fl fldircol hide-tablet>
       <?php
 

@@ -97,6 +97,7 @@ class User extends Justin
     "country" => "xx",
     "email" => "lol@lol.lol",
     "clan_id" => 0,
+    "creation_time" => 1718180531,
   ];
 
   public static array $disallowed_names = ["mumei no"];

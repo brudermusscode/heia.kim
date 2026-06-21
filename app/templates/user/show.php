@@ -39,10 +39,9 @@ $bypass_restricted_screen = $User && (
   $is_my_profile || CurrentUser->priv > 4
 );
 
-if (!$User) :
-  include UNAVAILABLE;
+redirect_unauthorized($User);
 
-elseif ($User->is_restricted() && !$bypass_restricted_screen) :
+if ($User->is_restricted() && !$bypass_restricted_screen) :
   include __DIR__ . "/_restricted.php";
 
 elseif (!$User->privacy->is_public && !$bypass_restricted_screen) :

@@ -7,6 +7,8 @@ $feed-sidebar-width-smol: 6em;
 page-structure[feed] {
   padding-inline: calc($page-navigator-width + $main-distance) $main-distance;
   gap: $gap-mid;
+  max-width: $content-widestest-size;
+  margin-inline: auto;
 
   @media screen and (max-width: $mobile-max-width) {
     padding-inline: 6px;

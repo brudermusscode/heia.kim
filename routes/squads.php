@@ -7,7 +7,19 @@ use Heiakim\Model\Squad;
 /**
  * @var Router $Router
  */
+$Router->get(
+  "/squad/:id/:page/:mode_o_sub/:mod",
+  "squad/show",
+  constraints: [
+    "id" => "\d+",
+  ],
+  title: function ($params) {
+    $Squad = Squad::find($params["id"]);
+    $page = Gamemode::mode_full($params["page"]) ?: $params["page"];
 
+    return ucwords($page) . " 🏆 " . $Squad?->name ?? "Vanished" . " on " . APP_NAME;
+  }
+);
 $Router->get(
   "/squad/:id/:page/:mode_o_sub",
   "squad/show",

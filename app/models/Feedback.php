@@ -3,8 +3,6 @@
 namespace Heiakim\Model;
 
 use Heiakim\Justin;
-use Heiakim\Time\Time;
-use Heiakim\Application\Cookie;
 use Heiakim\Trait\HasDefaultUser;
 
 class Feedback extends Justin
@@ -24,19 +22,9 @@ class Feedback extends Justin
   ];
 
   /**
-   * Feedback last cookie defines when the last feedback was set,
-   * so we can show the card again on new updates.
-   *
-   * @var string
+   * Valid types to set.
    */
-  protected static $cookie = "FEEDBACK_LAST";
-
-  /**
-   * Valid types.
-   *
-   * @var array
-   */
-  private static $types = [
+  private static array $types = [
     "score",
     "beatmap",
     "update",
@@ -45,18 +33,18 @@ class Feedback extends Justin
   ];
 
   /**
-   * Valid actions
-   *
-   * @var array
+   * Valid actions to pass.
    */
-  private static $actions = [
+  private static array $actions = [
     "thumb_up",
     "thumb_down",
   ];
 
   /**
    * @param object $params
-   * @return object
+   * @return static
+   *
+   * NOTE: Will die on error.
    */
   public function new(object $params)
   {
@@ -64,56 +52,35 @@ class Feedback extends Justin
     /**
      * @var User
      */
-    $CurrentUser = $params->CurrentUser;
+    $CurrentUser = CurrentUser;
 
     /**
      * @var ?Notification
      */
     $Notification = null;
 
-    /**
-     * Type valid?
-     */
+    # Validate types.
     if (!in_array($params->type, self::$types))
-      return $this->error();
+      return die(error());
 
-    /**
-     * Action valid?
-     */
+    # Validate actions.
     if (!in_array($params->action, self::$actions))
-      return $this->error();
+      return die(error());
 
-    /**
-     * ? BIRTHDAY CHEERS
-     */
+    # ? Birthday Cheers
     if ($params->type === "birthday_cheer") {
 
-      /**
-       * Reference user as id set?
-       */
       if (empty($params->reference_id))
-        return $this->error();
+        return die(error());
 
       /**
        * @var ?User
        */
-      $User = User::find($params->reference_id);
+      $User = User::findOrReturn($params->reference_id);
 
-      /**
-       * User exists?
-       */
-      if (!$User)
-        return $this->error();
-
-      /**
-       * Is Users birthday?
-       */
       if (!$User->has_birthday())
-        return $this->error();
+        return die(error());
 
-      /**
-       * Feedback already exists?
-       */
       if ($CurrentUser->feedback()
         ->where([
           "reference_id" => $User->id,
@@ -121,130 +88,61 @@ class Feedback extends Justin
         ])
         ->exists()
       )
-        return $this->error("<strong>You have cheered for their birthday already!</strong> Thank you so much!");
+        return die(error(
+          "<strong>You have cheered for their birthday already!</strong> Thank you so much!"
+        ));
 
-      /**
-       * Set the action to always be thumb_up, the user has birthday!
-       */
       $params->action = "thumb_up";
 
-      /**
-       * Prepare notification.
-       */
-      $Notification = $User->notifications()
-        ->make([
-          "type" => "__feedback__/user+birthday",
-          "reference_id" => $CurrentUser->id,
-          "updated_at" => null,
-        ]);
+      # Prepare a notification.
+      $Notification = (new Notification)->new([
+        "user_id" => $User->id,
+        "type" => "__feedback__/user+birthday",
+        "reference_id" => $CurrentUser->id,
+      ]);
     }
 
-    /**
-     * ? SCORES
-     */
+    # ? Scores
     if ($params->type === "score") {
-      $Score = Score::find($params->reference_id ?? 0);
+      $Score = Score::findOrReturn($params->reference_id ?? 0);
 
-      /**
-       * Score exists?
-       */
-      if (!$Score)
-        return $this->error();
-
-      $notification_user_id = $Score->userid;
-      $notification_type = "__feedback__/score";
+      $Notification = (new Notification)->new([
+        "user_id" => $Score->userid,
+        "type" => "__feedback__/score",
+        "reference_id" => $params->reference_id,
+        "reference_2_id" => $params->CurrentUser_id,
+      ]);
     }
 
-    /**
-     * ? BEATMAPS
-     */
+    # ? Beatmaps
     if ($params->type === "beatmap") {
-      $Beatmap = Beatmap::find($params->reference_id);
-
-      if (!$Beatmap)
-        return $this->error();
+      $Beatmap = Beatmap::findOrReturn($params->reference_id);
     }
 
-    /**
-     * ? UPDATES
-     */
-    if ($params->type == "update") {
-      Cookie::set(self::$cookie, date("Y.m.d H:i:s"), "+10 months");
-
-      $Feedback = $params->CurrentUser->feedback()
-        ->where("type", $params->type)
-        ->orderByDesc("id")
-        ->first();
-
-      /**
-       * Last feedback for updates is less than a day ago?
-       */
-      if ($Feedback && !Time::has_passed_since($Feedback->created_at, 1, true))
-        return $this->success("<strong>Thank you so much!</strong> We grow with your feedback.");
-    }
-
-    /**
-     * Already submitted?
-     */
+    # As some feedback will notify Users, let's check if the feedback has already been
+    # given to prevent spam notification 🙂
     $already_submitted = false;
-    $Feedback = $params->CurrentUser->feedback()
+    $Feedback = $CurrentUser
+      ->feedback()
       ->where("reference_id", $params->reference_id)
       ->where("type", $params->type)
       ->where("action", $params->action)
       ->first();
 
-    /**
-     * IF yes, delete Feedback.
-     */
-    if ($Feedback && $params->type !== "update") {
+    if ($Feedback) {
       $already_submitted = true;
       $Feedback->delete();
-
-      /**
-       * Create new Feedback
-       */
     } else
       $Feedback = $CurrentUser->feedback()
         ->create([
           "reference_id" => $params->reference_id ?? null,
           "type" => $params->type ?? null,
           "action" => $params->action ?? null,
-        ])->fresh();
+        ]);
 
-    /**
-     * Set the feedback_last cookie to the current timestamp.
-     */
-    if ($params->type === "update")
-      Cookie::set(self::$cookie, date("Y.m.d H:i:s"), "+10 months");
-
-    /**
-     * Send a notifciation on specific types.
-     */
-    if (in_array($params->type, ["score"]) && !$already_submitted) {
-      (new Notification)->new((object) [
-        "user_id" => $notification_user_id,
-        "type" => $notification_type,
-        "reference_id" => $params->reference_id,
-        "reference_2_id" => $params->CurrentUser_id,
-      ]);
-    }
-
-    /**
-     * Save notification!
-     */
     $Notification?->save();
 
-    return $this->success("<strong>Your feedback has been given!</strong>");
-  }
-
-  /**
-   * @return object
-   */
-  public function remove()
-  {
-    $this->remove();
-
-    return $this->success("<strong>Removed!</strong>");
+    return $Feedback;
   }
 
   /**

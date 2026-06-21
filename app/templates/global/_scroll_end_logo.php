@@ -4,7 +4,7 @@ use Heiakim\Application\Cookie;
 
 ?>
 
-<footer mb100>
+<footer mb124>
   <div class="page-end-logo" mt=wide mb=wide>
     <div data-react="scroll:reached-end" justcontcent mt=wide style=display:none;>
       <?php include_once COMPONENT . "/ui/_circular_loader.html"; ?>

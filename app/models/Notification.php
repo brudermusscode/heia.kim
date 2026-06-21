@@ -90,45 +90,45 @@ class Notification extends Justin
 
   /**
    * @param object $params
-   * @return object
+   * @return static
+   *
+   * NOTE: Will die on error.
+   * NOTE: Will not be saved.
    */
-  public function new(object $params)
+  public function new(object|array $params, bool $grouped = true)
   {
+
+    if (is_array($params)) (object) $params;
+
     $params->reference_id = $params->reference_id ?? null;
     $params->reference_2_id = $params->reference_2_id ?? null;
     $params->message = $params->message ?? null;
 
-    /**
-     * Type valid?
-     */
-    // if (!in_array($params->type, self::$types))
-    //   return $this->error();
+    # Validate type.
+    if (!$grouped && !in_array($params->type, self::$types))
+      return die(error());
 
-    /**
-     * Some notifications should only be shown once, which I call
-     * single types. It's like grouped notifications for comments
-     * on a score or something. Check if there are more comments
-     * of this type for the specific reference and delete all
-     * others except the new one.
-     */
-    if (in_array($params->type, self::$single_types)) {
+    # Validate single type.
+    if ($grouped && !in_array($params->type, self::$single_types))
+      return die(error());
+
+    # Some notifications should only be shown once, which I call single types. It's
+    # like grouped notifications for comments on a score or something. Check if
+    # there are more comments of this type for the specific reference and delete all
+    # others except the new one.
+    if ($grouped && in_array($params->type, self::$single_types)) {
       $Notification = self::where("user_id", $params->user_id)
         ->where("type", $params->type)
         ->where("reference_id", $params->reference_id)
         ->where("reference_2_id", $params->reference_2_id)
         ->first();
 
-      /**
-       * If a single type notification exists, delete it before a
-       * new one is created. This prevents spaming.
-       */
+      # If a single type notification exists, delete it before a new one is created
+      # to prevent spam.
       if ($Notification)
         $Notification->delete();
     }
 
-    /**
-     * Create it!
-     */
     $Notification = self::make([
       "user_id" => $params->user_id,
       "type" => $params->type,
@@ -137,7 +137,11 @@ class Notification extends Justin
       "message" => $params->message,
     ]);
 
-    return $this->success("<strong>Notification created!</strong>");
+    # I do not save here as Notifications most likely will always be sent at the very
+    # end of any method, so we can manually save it later.
+    // $Notification->save();
+
+    return $Notification;
   }
 
   /**

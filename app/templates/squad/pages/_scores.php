@@ -9,6 +9,7 @@ use Heiakim\Model\Squad\SquadUser;
  * @var Squad $Squad
  * @var string $id
  * @var string $sub
+ * @var string $mod
  * @var string $page
  * @var string $base_url
  */
@@ -18,16 +19,7 @@ $mode = $sub;
 if (!in_array($mode, Gamemode::$modes_text))
   $mode = "osu";
 
-$mod = in_array($sub, Gamemode::$mods_text) ? $sub : Gamemode::$mods_text[0];
 $gumode = Gamemode::find_gumode($mode, $mod);
-
-# Serialize mod.
-$mod = $mode === "osu" && !in_array($sub, ["vanilla", "relax", "autopilot"])
-  || $mode === "taiko" && !in_array($sub, ["vanilla", "relax"])
-  || $mode === "ctb" && !in_array($sub, ["vanilla", "relax"])
-  || $mode === "mania" && !in_array($sub, ["vanilla"])
-  ? "vanilla"
-  : $sub;
 
 /**
  * @var int[]
@@ -35,9 +27,6 @@ $mod = $mode === "osu" && !in_array($sub, ["vanilla", "relax", "autopilot"])
 $modes = $mod
   ? [Gamemode::find_gumode($mode, $mod)]
   : Gamemode::$mods_int_per_mode[$mode];
-
-# Fallback to the first gumode inside the given mode.
-$gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
 
 ?>
 
@@ -91,34 +80,34 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
         </box-model>
 
         <inline-navigator fl fldircol gap=smoler>
-          <a href="<?= "$base_url/$mode"; ?>" sub fl alic jucsb
-            <?php display_active($sub); ?>>
+          <a href="<?= "$base_url/scores/$mode"; ?>" sub fl alic jucsb
+            <?php display_active($mod, null); ?>>
             <div>
               <p text bold>All mods</p>
-              <?php if (!$sub) : ?>
+              <?php if (!$mod) : ?>
                 <p text smol slight><?= $mode === "mania" ? "Showing <strong>Standard</strong>" : ($mode === "osu" ? "Showing <strong>Standard, Relax & Autopilot</strong>" : "Showing <strong>Standard & Relax</strong>"); ?></p>
               <?php endif; ?>
             </div>
-            <in-o-icon>
+            <icon>
               <mi>all_inclusive</mi>
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
                 <path d="M.41 12.649C-1.78 5.166 5.166-1.781 12.65.41l4.579 1.342c1.81.53 3.734.53 5.544 0L27.352.41C34.833-1.78 41.781 5.166 39.59 12.65l-1.342 4.579a9.864 9.864 0 0 0 0 5.544l1.342 4.58c2.191 7.482-4.756 14.43-12.239 12.238l-4.578-1.342a9.864 9.864 0 0 0-5.546 0L12.65 39.59C5.166 41.78-1.781 34.834.41 27.35l1.342-4.578c.53-1.81.53-3.735 0-5.546L.41 12.65Z"></path>
               </svg>
-            </in-o-icon>
+            </icon>
           </a>
 
           <?php if (in_array($mode, ["osu", "taiko", "ctb"])) : ?>
-            <a href="<?= "$base_url/$mode/vanilla"; ?>" sub fl alic jucsb <?php display_active($sub, "vanilla"); ?>>
-              <p text bold>Standard</p>
+            <a href="<?= "$base_url/scores/$mode/vanilla"; ?>" sub fl alic jucsb <?php display_active($mod, "vanilla"); ?>>
+              <p text bold>Vanilla</p>
             </a>
           <?php endif; ?>
           <?php if (in_array($mode, ["osu", "taiko", "ctb"])) : ?>
-            <a href="<?= "$base_url/$mode/relax"; ?>" sub fl alic jucsb <?php display_active($sub, "relax"); ?>>
+            <a href="<?= "$base_url/scores/$mode/relax"; ?>" sub fl alic jucsb <?php display_active($mod, "relax"); ?>>
               <p text bold>Relax</p>
             </a>
           <?php endif; ?>
           <?php if (in_array($mode, ["osu"])) : ?>
-            <a href="<?= "$base_url/$mode/autopilot"; ?>" sub fl alic jucsb <?php display_active($sub, "autopilot"); ?>>
+            <a href="<?= "$base_url/scores/$mode/autopilot"; ?>" sub fl alic jucsb <?php display_active($mod, "autopilot"); ?>>
               <p text bold>Autopilot</p>
             </a>
           <?php endif; ?>
@@ -172,11 +161,10 @@ $gumode ??= Gamemode::$mods_int_per_mode[$mode][0];
             </box-model>
           </div>
         <?php else : ?>
-          <t-object>
-            <t-line></t-line>
-            <?php foreach ($Scores as $Score)
-              include dirname(__DIR__) . "/_score_post.php"; ?>
-          </t-object>
+          <t-line></t-line>
+
+          <?php foreach ($Scores as $Score)
+            include dirname(__DIR__) . "/_score_post.php"; ?>
         <?php endif; ?>
       </timeline>
     </div>

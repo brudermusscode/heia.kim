@@ -8,61 +8,47 @@ $artist-width: 1620px;
   padding-top: calc(363px + (2 * 0.4em) + 4.2em);
 }
 
-.artists__banner {
+header[artist] {
   position: fixed;
-  z-index: $endless-z-index;
+  z-index: 400;
   top: 6px;
-  left: $page-navigator-width;
+  left: calc($page-navigator-width);
+  height: $set-header-height;
   width: $full-header-width;
-  height: $artist-header-height;
-  flex: 1;
   transition: $trans-cubic;
-  border-radius: 42px;
-
-  @media screen and (max-width: 1900px) {
-    left: $page-navigator-width;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  padding-inline: $main-distance;
+  left: $page-navigator-width;
 
   @media screen and (max-width: $mobile-max-width) {
-    left: 6px;
-    width: calc(100vw - 12px);
+    left: 0;
+    margin-inline: 6px;
+    height: $set-smallest-header-height;
+    width: calc(100vw - 2 * 6px);
+    padding-inline: 28px;
+    padding-block: 28px;
   }
 
-  .artists__banner_inr {
-    padding: 8.2em 2.4em;
-    width: 100%;
-    max-width: $artist-content-width - 120px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    transition: $trans-cubic;
-  }
-
-  .artists__banner_image {
+  [cover] {
     position: absolute;
     height: 100%;
     width: 100%;
     overflow: hidden;
     border-radius: 42px;
+    top: 0;
+    left: 0;
 
-    picture {
-      position: absolute;
-      top: 0;
-      left: 0;
-      overflow: hidden;
+    img {
       height: 100%;
-      width: 100%;
+      object-fit: cover;
+    }
 
-      img {
-        height: 100%;
-        object-fit: cover;
-      }
-
-      &:nth-of-type(2) {
-        position: relative;
-        z-index: 1;
-      }
+    &:nth-of-type(2) {
+      position: relative;
+      z-index: 1;
     }
 
     &:before {
@@ -78,52 +64,65 @@ $artist-width: 1620px;
     }
   }
 
-  .artists__banner_info {
+  inr {
+    width: 100%;
+    transition: $trans-cubic;
+    z-index: 3;
     position: relative;
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
-    z-index: 3;
-    color: white;
+    justify-content: center;
 
-    .name {
-      line-height: 1.4em;
+    [name] {
       font-size: 3.8em;
-      margin-bottom: 0.2em;
-    }
-
-    .artists__banner_info__bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .played {
-        display: flex;
-        align-items: center;
-        gap: 0.4em;
-        padding: 12px 24px 12px 12px;
-        color: $dark;
-      }
+      font-weight: 800;
+      color: white;
+      text-align: center;
     }
   }
 
   &[scrolled="true"] {
-    height: 141px;
-    box-shadow: var(--mio-theme-elevation-3);
+    height: calc(82px + 2 * 1.8em);
+    padding-block: 1.8em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-    .artists__banner_inr {
-      padding-block: 1.2em 1.8em;
+    @media screen and (max-width: $mobile-max-width) {
+      height: 82px;
+      padding: 18px;
     }
 
-    .name {
-      font-size: 2.4em;
+    [cover] {
+      box-shadow: var(--mio-theme-elevation-3);
     }
 
-    .artists__banner_info__bottom {
-      .played {
-        padding: 6px 16px 6px 6px;
+    inr {
+      [name] {
+        font-size: 2.8em;
+      }
+
+      mbutton {
+        display: none !important;
       }
     }
+  }
+}
+
+.artist {
+  margin-top: 0.4em;
+  padding-top: calc($set-header-height + 2 * $main-distance);
+  max-width: $set-width;
+  margin: 0 auto;
+
+  @media screen and (max-width: $tablet-max-width) {
+    padding-top: calc($set-header-height + 2 * $main-distance);
+  }
+
+  @media screen and (max-width: $mobile-max-width) {
+    padding-top: calc($set-smallest-header-height + 2 * $main-distance);
   }
 }
 
@@ -222,15 +221,6 @@ $artist-width: 1620px;
       }
     }
   }
-}
-
-.artists {
-  max-width: $artist-width;
-  margin-inline: auto;
-  padding-top: calc($artist-header-height + 2.4em);
-  display: flex;
-  flex-direction: column;
-  gap: 1.2em;
 }
 
 .a__actions {

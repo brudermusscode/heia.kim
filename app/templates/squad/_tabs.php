@@ -15,7 +15,7 @@ $active_modes = $Squad->modes();
 
 ?>
 
-<div fl jucc alic gap=smol>
+<div fl alic gap=smol>
   <a href="<?= "$base_url"; ?>">
     <mbutton mid filled has-icon=left show-text-active <?php display_active($page, "index"); ?>>
       <mi>stream</mi>

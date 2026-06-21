@@ -34,6 +34,18 @@ content {
   &[wide] {
     max-width: $content-wide-size;
   }
+
+  &[wider] {
+    max-width: $content-wider-size;
+  }
+
+  &[widerer] {
+    max-width: $content-widerer-size;
+  }
+
+  &[widest] {
+    max-width: $content-widest-size;
+  }
 }
 
 [content-width] {

@@ -5,9 +5,10 @@ use Heiakim\Model\Squad;
 use Heiakim\Model\Squad\SquadPost;
 
 /**
- * @var Squad $Squad
  * @var User $User
+ * @var Squad $Squad
  * @var SquadPost $Post
+ * @var int $comment_string_length
  */
 
 ?>

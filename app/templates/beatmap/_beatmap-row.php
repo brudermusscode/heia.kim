@@ -206,4 +206,8 @@ if (!$Set) : ?>
     </beatmap>
   </a>
 
-<?php endif; ?>
+<?php endif;
+
+unset($Set, $Beatmap);
+
+?>

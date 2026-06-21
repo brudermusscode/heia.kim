@@ -1,6 +1,23 @@
 @use "../abstract" as *;
 @use "mixins" as *;
 
+[image-fade] {
+  position: relative;
+  vertical-align: middle;
+
+  &::before {
+    display: block;
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.32);
+  }
+}
+
 [minlineauto] {
   margin-inline: auto;
 }
@@ -267,7 +284,7 @@
   overflow: hidden;
 }
 
-[veralmid] {
+[vertalmid] {
   vertical-align: middle;
 }
 
@@ -333,9 +350,13 @@
   display: none;
 }
 
+[maxw100] {
+  max-width: 100%;
+}
+
 // * Width, height, margins, paddings, gaps
 $margin-size-classes: 0;
-@while $margin-size-classes <= 102 {
+@while $margin-size-classes <= 200 {
   $margin-size-classes: $margin-size-classes + 2;
 
   [w#{$margin-size-classes}] {

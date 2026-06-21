@@ -1226,7 +1226,7 @@ class Squad extends Justin
    */
 
   /**
-   * @return User
+   * @return SquadUser
    */
   public function chief()
   {

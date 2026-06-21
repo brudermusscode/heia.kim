@@ -10,4 +10,4 @@ $cover = "https://assets.ppy.sh/beatmaps/$beatmap_set_id/covers/cover" . ($big_c
 
 ?>
 
-<img src="<?= $cover; ?>" loading=lazy />
+<img src="<?= $cover; ?>" loading=lazy vertalmid />

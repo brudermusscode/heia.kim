@@ -2,6 +2,9 @@
 
 use Heiakim\Exception\ApiException;
 use Heiakim\Http\Request;
+use Heiakim\Model\Artist;
+use Heiakim\Model\Beatmap;
+use Heiakim\Model\Beatmap\Set;
 use Heiakim\Model\Squad;
 use Heiakim\Model\User;
 use Heiakim\Model\Squad\SquadUser;
@@ -196,17 +199,19 @@ function request_error(?string $message = null, mixed $data = null, bool $return
 /**
  * Redirect with full page reload when the given Resource does not exist.
  *
- * @param User|Squad $resource
+ * @param User|Squad|Beatmap|Set|Artist $resources
  * @return void
  *
  * NOTE: Redirects through header() on error.
  */
-function redirect_unauthorized(User|Squad $resource = CurrentUser)
-{
-  if (!$resource->exists) {
-    header("location: /not-found");
-    exit;
-  }
+function redirect_unauthorized(
+  null|User|Squad|Beatmap|Set|Artist ...$resources,
+) {
+  foreach ($resources as $Resource)
+    if (!$Resource?->exists) {
+      header("location: /not-found");
+      exit;
+    }
 }
 
 /**

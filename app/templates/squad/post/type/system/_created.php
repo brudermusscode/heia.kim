@@ -12,14 +12,12 @@ use Heiakim\Model\Squad\SquadFeedItem;
 
 ?>
 
-<div fl fldircol gap=smol>
+<div fl fldircol gap=smol+>
   <div fl alic gap=smol slight>
     <mi>draw_abstract</mi>
     <p text bold mid style="margin-top:-6px;">&middot;</p>
     <p text>Squad</p>
   </div>
-
-  <p text midler bold mb=smol>Created this squad</p>
 
   <div outlined ovhid rounded=midler>
     <picture style="padding-top:0%;width:100%;" posrel>

@@ -31,8 +31,7 @@ class SquadFeedItem extends Justin
   /**
    * @var array
    */
-  protected static $types = [
-
+  public static $types = [
     // Logs created through setting updates.
     "__squad__/created",
     "__squad__/edit/name",
@@ -84,12 +83,6 @@ class SquadFeedItem extends Justin
   }
 
   /**
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,, POSTS ,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   */
-
-  /**
    * @return ?SquadPost
    */
   public function post()
@@ -102,18 +95,16 @@ class SquadFeedItem extends Justin
    */
   public function is_system_post()
   {
-    return in_array(
-      $this->type,
-      [
-        "__squad__/created",
-        "__squad__/edit/image+logo",
-        "__squad__/edit/image+headline",
-        "__squad__/edit/publicity"
-      ]
-    );
+    return !str_starts_with("__post__", $this->type);
   }
 
-  // * >>>>>>>>>>>>>>>>>>>>> DISPLAY >>>>>>>>>>>>>>>>>>>>>>>>>
+  /**
+   * @return bool
+   */
+  public function is_simple_post()
+  {
+    return in_array($this->type, ["__member__/left"]);
+  }
 
   /**
    * @var string
