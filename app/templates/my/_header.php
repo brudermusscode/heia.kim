@@ -43,7 +43,7 @@ $title_w_desc = [
 
 <?php if (!$sub) : ?>
   <div filled=lighter pt42 pb12 style=position:sticky;top:0;margin-bottom:-32px; z fl alic gap=smol+>
-    <div filled=darker color=active-text fl alic jucc style="height:56px;width:56px;" circled>
+    <div filled=darker fl alic jucc style="height:56px;width:56px;" circled>
       <mi><?= $title_w_desc[$category][2] ?></mi>
     </div>
 

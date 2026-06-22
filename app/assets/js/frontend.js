@@ -759,6 +759,56 @@ const scroll_header_toggle = () => {
     });
 };
 
+export const open_ui_component = (component, url) => {
+  let user_menu = document.find("user-menu");
+  let inr = component?.find("nc-inr");
+  let buttons = component?.find_all("[data-category]");
+  let floating_buttons = component?.find_all("nc-tabs-floating nc-tab-option");
+
+  // We need to first close all components so there won't be two open atst.
+  Frontend.close_ui_components(false);
+
+  if (component.hasAttribute("active")) return;
+
+  component.activate();
+  component.set_loading();
+
+  if (!user_menu.hasAttribute("inactive") && window.innerWidth < 1920)
+    Frontend.toggle_user_menu();
+
+  let increasing_delay = 0;
+  floating_buttons.forEach((b, key) => {
+    b.deactivate();
+    setTimeout(() => {
+      b.setAttribute("showing", true);
+    }, increasing_delay);
+    increasing_delay += 60;
+
+    if (floating_buttons.length === key + 1) floating_buttons[0].activate();
+  });
+
+  setTimeout(() => {
+    $.ajax({
+      url: url,
+      method: "GET",
+      success: function (data) {
+        component.unset_loading();
+
+        if (data.status) {
+          inr.innerHTML = data.data;
+          Frontend.reload_images();
+
+          __page.component = component;
+
+          // TODO: Button will activate when immediately pressing ESC.
+        } else {
+          Frontend.create_responder(data);
+        }
+      },
+    });
+  }, 100);
+};
+
 $(function () {
   //
 
@@ -876,77 +926,18 @@ $(function () {
   });
 
   $(document).on("click", "[open-ui-component]", function (e) {
-    let user_menu = document.find("user-menu");
     let component_name = this.getAttribute("open-ui-component");
     let component = document.find("ui-component[type=" + component_name + "]");
-    let inr = component?.find("nc-inr");
-    let buttons = component?.find_all("[data-category]");
-    let floating_buttons = component?.find_all("nc-tabs-floating nc-tab-option");
-    let toggle_user_menu = this.getAttribute("toggle-user-menu");
     let url = this.getAttribute("url");
     let button = this;
 
-    if (!component) {
-      Frontend.create_responder(
-        "<strong>UI component not found 🥲</strong>",
-        "error",
-      );
+    if (!component) return;
 
-      return;
-    }
-
-    // Close the componetn if it is active already.
     if (component.hasAttribute("active")) return Frontend.close_ui_components(true);
 
-    /**
-     * Toggle the user menu if it is not yet toggled.
-     */
-    if (
-      this.hasAttribute("toggle-user-menu") &&
-      !user_menu.hasAttribute("inactive") &&
-      ((is_numeric(toggle_user_menu) &&
-        window.innerWidth < parseInt(toggle_user_menu)) ||
-        !is_numeric(toggle_user_menu))
-    )
-      Frontend.toggle_user_menu();
+    open_ui_component(component, url);
 
-    Frontend.close_ui_components(false);
-    component.activate();
-
-    let increasing_delay = 0;
-    floating_buttons.forEach((b, key) => {
-      b.deactivate();
-      setTimeout(() => {
-        b.setAttribute("showing", true);
-      }, increasing_delay);
-      increasing_delay += 60;
-
-      if (floating_buttons.length === key + 1) floating_buttons[0].activate();
-    });
-
-    component.set_loading();
-
-    setTimeout(() => {
-      $.ajax({
-        url: url,
-        method: "GET",
-        success: function (data) {
-          component.unset_loading();
-
-          if (data.status) {
-            inr.innerHTML = data.data;
-            Frontend.reload_images();
-
-            __page.component = component;
-
-            // TODO: Button will activate when immediately pressing ESC.
-            button.activate();
-          } else {
-            Frontend.create_responder(data);
-          }
-        },
-      });
-    }, 100);
+    button.activate();
   });
 
   $(document).on("click", "user-menu [toggle]", function (e) {

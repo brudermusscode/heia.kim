@@ -1,53 +1,54 @@
-<?php
-
-use Heiakim\Model\User\UserSettingsPremium;
-
-/**
- * @var array
- */
-$benefits = UserSettingsPremium::$benefits_display;
-
-?>
-
 <div expand-more fl fldircol gap=smoler>
-
-  <?php for ($i = 0; $i < 4; $i++) { ?>
-    <div outlined=darker rounded p10>
-      <div fl alic gap=smol+>
-        <mi color=green>
-          <?= isset($benefits[$i]["icon"]) ? $benefits[$i]["icon"] : "check_circle"; ?></mi>
-        <p text bold><?= $benefits[$i]["text"]; ?></p>
-      </div>
+  <div outlined rounded p10>
+    <div fl alic gap=smol+>
+      <mi color=green>check_circle</mi>
+      <p text bold>Custom profile headlines</p>
     </div>
-  <?php unset($benefits[$i]);
-  } ?>
+  </div>
+
+  <div outlined rounded p10>
+    <div fl alic gap=smol+>
+      <mi color=green>check_circle</mi>
+      <p text bold class=premium-txt-peach>Unique Name Designs</p>
+    </div>
+  </div>
+
+  <div outlined rounded p10>
+    <div fl alic gap=smol+>
+      <mi color=green>check_circle</mi>
+      <p text bold><span color=company>+1</span> &nbsp; Name Change</p>
+    </div>
+  </div>
 
   <div expand-more-hidden fl fldircol gap=smoler>
-    <?php foreach ($benefits as $benefit) { ?>
-      <div outlined=darker rounded p10>
-        <div fl alic gap=smol+>
-          <div <?= isset($benefit["tooltip"]) ? "has-tooltip=bottom" : ""; ?>>
-
-            <?php if (isset($benefit["tooltip_link"])) { ?>
-              <a href="<?= $benefit["tooltip_link"]; ?>">
-              <?php } ?>
-              <mi color=<?= isset($benefit["color"]) ? $benefit["color"] : "green"; ?>>
-                <?= isset($benefit["icon"]) ? $benefit["icon"] : "check_circle"; ?>
-              </mi>
-              <?php if (isset($benefit["tooltip_link"])) { ?>
-              </a>
-            <?php } ?>
-
-            <?php if (isset($benefit["tooltip"])) { ?>
-              <div ttooltip>
-                <p text bold><?= $benefit["tooltip_text"] ?? "N/A"; ?></p>
-              </div>
-            <?php } ?>
-          </div>
-          <p text bold><?= $benefit["text"]; ?></p>
-        </div>
+    <div outlined rounded p10>
+      <div fl alic gap=smol+>
+        <mi color=green>check_circle</mi>
+        <p text bold><span color=company>+1</span> &nbsp; Account Restart</p>
       </div>
-    <?php } ?>
+    </div>
+
+    <div outlined rounded p10>
+      <div fl alic gap=smol+>
+        <mi color=green>check_circle</mi>
+        <p text bold>Upload GIFs</p>
+      </div>
+    </div>
+
+    <div outlined rounded p10>
+      <div fl alic gap=smol+>
+        <div posrel has-tooltip=bottom>
+          <mi color=green>check_circle</mi>
+          <div ttooltip>Requires Discord connection.</div>
+        </div>
+        <p text fl alic><strong>Discord Role &nbsp;&nbsp;</strong>
+          <?php if (!CurrentUser->discord) : ?>
+            <a disib pinline8 pblock2 rounded clickable background=slight curpo in-user-manager open="security:discord" close-overlay fl alic color=company>
+              Connect Discord &nbsp; <mi smol>open_in_new</mi></a>
+          <?php endif; ?>
+        </p>
+      </div>
+    </div>
   </div>
 
   <div fl jucc mt=smol>

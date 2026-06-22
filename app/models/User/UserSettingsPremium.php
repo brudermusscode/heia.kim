@@ -58,35 +58,6 @@ class UserSettingsPremium extends Justin
   ];
 
   /**
-   * @var array
-   */
-  public static $benefits_display = [
-    [
-      "text" => "Custom profile headlines",
-    ],
-    [
-      "text" => "Unique Name Designs",
-    ],
-    [
-      "text" => "Added Name Change",
-    ],
-    [
-      "text" => "Added Account Restart",
-    ],
-    [
-      "text" => "Upload GIFs",
-    ],
-    [
-      "text" => "Discord Role",
-      "icon" => "error",
-      "color" => "orange",
-      "tooltip" => true,
-      "tooltip_text" => "Requires Discord connection.<br>See in your settings",
-      "tooltip_link" => "/my/security/discord"
-    ],
-  ];
-
-  /**
    * UPDATE
    *
    * @param object $params

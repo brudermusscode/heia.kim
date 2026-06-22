@@ -7,7 +7,7 @@
     </a>
 
     <mbutton mid request-get="search"
-      pn-option rounded icon-only background=complement color=white>
+      pn-option rounded icon-only background=company color=company-text>
       <mi>explore</mi>
     </mbutton>
   </div>

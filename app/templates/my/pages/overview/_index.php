@@ -6,6 +6,25 @@ $premium_time_left = Time::left(CurrentUser->donor_end);
 
 ?>
 
+<?php if (CurrentUser->donor_end || CurrentUser->donor_end < time()) { ?>
+  <box-model request-get="user:buy-premium" background=premium color=premium
+    clickable>
+    <bm-inr size=mid fl fldircol gap>
+      <div fl gap jucsb alic>
+        <div fl gap alic>
+          <mi wide minline2><?= PREMIUM_ICON; ?></mi>
+          <div fl fldircol gap=smoler>
+            <p text mid bold><?= PREMIUM_NAME; ?></p>
+            <p text std><?= __("Unlock some cool features and enhance the uniqueness of your account!") ?>
+            </p>
+          </div>
+        </div>
+        <mi midler>east</mi>
+      </div>
+    </bm-inr>
+  </box-model>
+<?php } ?>
+
 <?php if (CurrentUser->has_recommended_settings()) : ?>
   <a href="/my/recommendations" sub dno>
     <box-model filled clickable>
@@ -63,26 +82,6 @@ $premium_time_left = Time::left(CurrentUser->donor_end);
     </mbutton>
   </div>
 </box-model>
-
-<?php if (!CurrentUser->donor_end || CurrentUser->donor_end < time()) { ?>
-  <a href="/unlock/premium" grid-keeper>
-    <box-model background=premium color=premium clickable>
-      <bm-inr size=mid fl fldircol gap>
-        <div fl gap jucsb alic>
-          <div fl gap alic>
-            <mi mid><?= PREMIUM_ICON; ?></mi>
-            <div fl fldircol gap=smoler>
-              <p text mid bold><?= PREMIUM_NAME; ?></p>
-              <p text std><?= __("Unlock some cool features and enhance the uniqueness of your account!") ?>
-              </p>
-            </div>
-          </div>
-          <mi midler>east</mi>
-        </div>
-      </bm-inr>
-    </box-model>
-  </a>
-<?php } ?>
 
 <divide horiz></divide>
 

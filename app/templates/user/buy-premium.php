@@ -9,7 +9,6 @@ use Heiakim\Model\User;
  * @var Request $Request
  */
 
-
 authorize(CurrentUser);
 
 /**
@@ -104,4 +103,5 @@ include SNOW; ?>
 
   </content>
 </div>
+
 <?php die(success(data: ob_get_clean()));

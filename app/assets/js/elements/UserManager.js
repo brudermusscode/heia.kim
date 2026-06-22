@@ -21,7 +21,7 @@ export const get = (page) => {
 
   setTimeout(() => {
     $.ajax({
-      url: "/user-manager/" + page,
+      url: page,
       method: "GET",
       success: function (data) {
         Frontend.unload();
@@ -51,14 +51,20 @@ $(function () {
    * Toggle category in windowed User Manager.
    * @event click
    */
-  $(document).on("click", "ui-component[type='user-manager'] [open]", function (e) {
-    e.preventDefault();
+  $(document).on(
+    "click",
+    "ui-component[type='user-manager'] [open], [in-user-manager][open]",
+    function (e) {
+      e.preventDefault();
 
-    let url = this.getAttribute("open")?.replaceAll(":", "/");
+      let component = document.find("ui-component[type='user-manager']");
+      let url = "/user-manager/" + this.getAttribute("open")?.replaceAll(":", "/");
 
-    get(url);
-    this.activate();
-  });
+      Frontend.open_ui_component(component, url);
+      get(url);
+      this.activate();
+    },
+  );
 
   /**
    * Create appeal
