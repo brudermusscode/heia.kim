@@ -12,7 +12,7 @@ use Heiakim\Time\Time;
 <header full=squad scroll-manipulated>
   <div inner>
     <div w100 fl jucend hide-scrolled posrel>
-      <mbutton hide-mobile has-icon=left
+      <mbutton has-icon=left
         <?= $Squad->joinable === 0
           ? "background=unfollow color=dark-red"
           : (
@@ -28,16 +28,6 @@ use Heiakim\Time\Time;
             ); ?>
         </mi>
         <p text bold><?= $Squad->display_publicity(); ?></p>
-      </mbutton>
-      <mbutton show-mobile icon-only
-        <?= $Squad->joinable === 0
-          ? "background=unfollow color=dark-red"
-          : (
-            $Squad->joinable === 1
-            ? "background=besure color=dark-orange"
-            : "background=follow color=dark-green"
-          ); ?>>
-        <mi><?= $Squad->joinable === 0 ? "public_off" : ($Squad->joinable === 1 ? "vpn_lock" : "globe_asia"); ?></mi>
       </mbutton>
     </div>
 

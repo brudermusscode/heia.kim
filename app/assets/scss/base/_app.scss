@@ -581,37 +581,6 @@ exception-container {
   }
 }
 
-main {
-  display: block;
-  width: 100vw;
-  padding-left: calc($page-navigator-width + $main-distance);
-  padding-right: calc($main-distance + $page-navigator-width);
-  padding-bottom: 42px;
-  transition: none;
-
-  @media screen and (max-width: $full-hd-max-width) {
-    padding-left: calc($page-navigator-width);
-    padding-right: $main-distance;
-  }
-
-  @media screen and (max-width: $mobile-max-width) {
-    width: 100vw;
-    padding-bottom: 8em;
-    padding-inline: $main-distance-mobile !important;
-
-    &[sub] {
-      // margin-left: 1.6em;
-      width: calc(100vw - 2 * 2em);
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    &[sub] {
-      width: calc(100vw - 0.4em);
-    }
-  }
-}
-
 *,
 *::before,
 *::after {
@@ -1788,6 +1757,36 @@ input[type="range"] {
   }
 }
 
+main {
+  display: block;
+  width: 100vw;
+  padding-inline: $main-padding;
+  padding-bottom: 42px;
+  transition: none;
+
+  @media screen and (max-width: $full-hd-max-width) {
+    padding-left: $main-padding;
+    padding-right: $main-distance;
+  }
+
+  @media screen and (max-width: $mobile-max-width) {
+    width: 100vw;
+    padding-bottom: 8em;
+    padding-inline: $main-distance-mobile !important;
+
+    &[sub] {
+      // margin-left: 1.6em;
+      width: calc(100vw - 2 * 2em);
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    &[sub] {
+      width: calc(100vw - 0.4em);
+    }
+  }
+}
+
 [page-structure] {
   display: flex;
   flex-direction: column;
@@ -1795,11 +1794,6 @@ input[type="range"] {
   margin-top: 382px;
   margin-inline: auto;
   max-width: 2100px;
-  padding-left: 1.2em;
-
-  @media screen and (max-width: $mobile-max-width) {
-    padding-left: 0;
-  }
 
   [column-wrapper] {
     display: flex;

@@ -14,20 +14,13 @@ header {
       width: 100svw;
       left: 0;
       top: 0;
-      padding-block: 0;
-      padding-right: calc($main-distance + $page-navigator-width);
       transition: $trans-cubic;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-start;
 
-      @media screen and (max-width: $full-hd-max-width) {
-        padding-right: $main-distance;
-      }
-
       @media screen and (max-width: $mobile-max-width) {
-        padding-left: $main-distance;
         align-items: center;
 
         [privileges] {
@@ -40,7 +33,7 @@ header {
       }
 
       [user-new-inner] {
-        max-width: 2100px;
+        max-width: $content-widestest-size;
         margin-inline: auto;
         width: 100%;
         display: flex;
@@ -195,13 +188,9 @@ header {
 }
 
 [page-structure="user"] {
-  max-width: 2100px;
+  max-width: $content-widestest-size;
   margin-inline: auto;
   margin-top: calc($header-user-height + 2 * $main-distance);
-
-  @media screen and (max-width: $mobile-max-width) {
-    padding-left: 0;
-  }
 }
 
 [floating-action] {

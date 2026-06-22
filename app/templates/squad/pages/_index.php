@@ -27,7 +27,7 @@ use Heiakim\Model\Squad\SquadFeedItem;
         <div outlined w100 style=height:100px; rounded></div>
       </div>
 
-      <div column=large fl fldircol gap=wide flexone w100>
+      <div column=large fl fldircol gap=wide flexone flex-truncate w100>
         <timeline posts>
           <t-line></t-line>
 

@@ -39,9 +39,8 @@ $Scores = $User->scores()
 
 ?>
 
-<div style=margin-top:22em; content-width=wider fl fldircol gap=smol+>
-
-  <div fl gap alic title-inline>
+<div page-structure=user fl fldircol gap=smol+>
+  <div fl gap alic>
     <div fl alic gap=smol+>
       <p text bold ttup><?= __("Highest performances") ?></p>
       <p text smol bold filled=darker pinline12 pblock6 rounded=wide>🏅 Ranked</p>
@@ -49,14 +48,9 @@ $Scores = $User->scores()
   </div>
 
   <div grid-repeat gap=smol>
-    <?php
-
-    foreach ($Scores ?? [] as $key => $Score)
-      include TEMPLATE . "/score/_score.php";
-
-    ?>
+    <?php foreach ($Scores ?? [] as $key => $Score)
+      include TEMPLATE . "/score/_score.php"; ?>
   </div>
-
 </div>
 
 <?php include TEMPLATE . "/user/_not_implemented.html"; ?>

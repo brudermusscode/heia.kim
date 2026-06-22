@@ -120,7 +120,15 @@ header {
   }
 
   &[full] {
-    padding-left: calc($page-navigator-width + 1.2em);
+    padding-inline: $main-padding;
+
+    @media screen and (max-width: $full-hd-max-width) {
+      padding-right: $main-distance;
+    }
+
+    @media screen and (max-width: $mobile-max-width) {
+      padding-inline: $main-distance;
+    }
   }
 
   &[top] {

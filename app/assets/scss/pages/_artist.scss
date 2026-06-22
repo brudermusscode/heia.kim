@@ -111,11 +111,8 @@ header[artist] {
   }
 }
 
-.artist {
-  margin-top: 0.4em;
+content[artist] {
   padding-top: calc($set-header-height + 2 * $main-distance);
-  max-width: $set-width;
-  margin: 0 auto;
 
   @media screen and (max-width: $tablet-max-width) {
     padding-top: calc($set-header-height + 2 * $main-distance);

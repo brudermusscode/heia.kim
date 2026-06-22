@@ -32,6 +32,11 @@ if (!in_array($page, $pages))
 
 $base_url = "/squad/$Squad->id";
 
+/**
+ * @var object
+ */
+$placements = $Squad->placement();
+
 include __DIR__ . "/_page-navigator.php";
 include __DIR__ . "/_mode-menu.php";
 include __DIR__ . "/_header.php";

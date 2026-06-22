@@ -17,6 +17,16 @@
   padding-inline: 62px;
   left: $page-navigator-width;
 
+  inr {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    max-width: $content-widestest-size;
+    width: 100%;
+    margin: 0 auto;
+  }
+
   @media screen and (max-width: $mobile-max-width) {
     left: 0;
     margin-inline: 6px;
@@ -274,10 +284,9 @@
   }
 }
 
-.set__main {
-  margin-top: 0.4em;
+content[beatmapset] {
   padding-top: calc($set-header-height + 2 * $main-distance);
-  max-width: $set-width;
+  max-width: $content-widestest-size;
   margin: 0 auto;
 
   @media screen and (max-width: $tablet-max-width) {

@@ -24,7 +24,12 @@ use Heiakim\Model\Squad;
 ?>
 
 <div page-structure=user>
-  <div column=small fl fldircol gap=mid>
-    Nothing yet, my friend!
+  <div w100 fl fldircol alic jucc gap tac pblock68 filled=lighter rounded=wide>
+    <mi wide background=company color=company-text circled
+      style="height:64px;width:64px;" fl alic jucc>healing</mi>
+    <div>
+      <p text mid bold slight>This page is being build</p>
+      <p text slight>I will see you then, my friend!</p>
+    </div>
   </div>
 </div>

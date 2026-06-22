@@ -64,7 +64,7 @@ include __DIR__ . "/_header.php";
 include __DIR__ . "/_mode-menu.php";
 include __DIR__ . "/_mobile-menu.php"; ?>
 
-<div class=set__main content-width=wide fl fldircol gap=std+>
+<content beatmapset widest minlineauto fl fldircol gap=std+>
   <div class="s__">
 
     <?php include __DIR__ . "/_difficulties.php"; ?>
@@ -367,6 +367,6 @@ include __DIR__ . "/_mobile-menu.php"; ?>
       <?php } ?>
     </div>
   <?php endif; ?>
-</div>
+  </div>
 
-<?php include TEMPLATE . "/global/_scroll_end_logo.php";
+  <?php include TEMPLATE . "/global/_scroll_end_logo.php";

@@ -10,49 +10,22 @@ header {
       height: 320px;
       left: 0;
       top: 0;
-      padding-right: calc($main-distance + $page-navigator-width);
-      padding-block: 0;
       transition: $trans-cubic;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-
-      @media screen and (max-width: $full-hd-max-width) {
-        gap: $gap-smol-plus;
-        padding-right: $main-distance;
-      }
-
-      @media screen and (max-width: 1100px) {
-        height: 300px;
-      }
-
-      @media screen and (max-width: $mobile-max-width) {
-        padding-left: 1.2em;
-        padding-right: 1.2em;
-        height: 340px;
-      }
-
-      @media screen and (max-width: 600px) {
-        height: 320px;
-      }
-
-      [show-mobile] {
-        display: none;
-
-        @media screen and (max-width: $mobile-max-width) {
-          display: flex;
-        }
-      }
+      justify-content: stretch;
+      padding-top: $main-distance;
 
       [inner] {
-        max-width: $squad-content-width !important;
+        max-width: $content-widestest-size;
         margin-inline: auto;
         width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: flex-start;
         gap: 12px;
+        flex: 1;
 
         @media screen and (max-width: $mobile-max-width) {
           align-items: center;
@@ -165,6 +138,7 @@ header {
         z-index: 2000;
         flex-direction: row;
         align-items: center;
+        padding-top: 0;
 
         [image] {
           height: 3.2em;
@@ -212,9 +186,9 @@ header {
 }
 
 [page-structure="squad"] {
-  max-width: $squad-content-width;
-  gap: $gap-mid;
+  max-width: $content-widestest-size;
   justify-content: stretch;
+  gap: $gap-mid;
 
   [column-wrapper] {
     @media screen and (max-width: $mobile-max-width) {

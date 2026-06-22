@@ -46,6 +46,10 @@ content {
   &[widest] {
     max-width: $content-widest-size;
   }
+
+  &[widestest] {
+    max-width: $content-widestest-size;
+  }
 }
 
 [content-width] {

@@ -29,7 +29,7 @@ use Heiakim\Model\Manager\ManagerUser;
 use Heiakim\Model\Osu\OsuFavorite;
 use Heiakim\Model\Osu\OsuIngameLogin;
 use Heiakim\Model\Osu\OsuRating;
-use Heiakim\Model\Beatmap\BeatmapRequest;
+use Heiakim\Model\BeatmapRequest;
 use Heiakim\Model\Relationship;
 use Heiakim\Model\Restriction\Restriction;
 use Heiakim\Model\Restriction\RestrictionAppeal;

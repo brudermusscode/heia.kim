@@ -293,6 +293,8 @@
   overflow: hidden;
   white-space: nowrap;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   line-height: 1.4;
 }
 

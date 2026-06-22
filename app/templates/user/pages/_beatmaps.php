@@ -25,19 +25,14 @@ $Beatmaps = $User->most_played_beatmaps($gumode, 18);
 
 ?>
 
-<div style=margin-top:22em; content-width=wider fl fldircol gap=smol+>
+<div page-structure=user fl fldircol gap=smol+>
+  <p text bold ttup>Beatmaps</p>
 
-  <div fl gap alic title-inline>
-    <p text bold ttup>Beatmaps</p>
-  </div>
-
-  <div class="beatmaps" grid-repeat gap=smol clear-flex style=padding-top:0;>
+  <div grid-repeat gap=smol>
     <?php
 
     foreach ($Beatmaps ?? [] as $key => $Beatmap) {
-      echo "<div grid-keeper>";
-      include COMPONENT . "/beatmaps/_beatmap.php";
-      echo "</div>";
+      include TEMPLATE . "/beatmap/_beatmap-row.php";
     }
 
     ?>

@@ -35,7 +35,7 @@ include __DIR__ . "/_top-banner.php"; ?>
   <button type=submit name=ass>submit</button>
 </form>
 
-<div class=artist fl fldircol gap=std+>
+<content artist widest minlineauto fl fldircol gap=std+>
   <div class=a__actions title-inline>
     <div fl justify-content=space-between gap=smol>
       <mbutton mid has-icon=left active>
@@ -101,6 +101,6 @@ include __DIR__ . "/_top-banner.php"; ?>
       endforeach;
     endif; ?>
   </div>
-</div>
+  </div>
 
-<?php include TEMPLATE . "/global/_scroll_end_logo.php";
+  <?php include TEMPLATE . "/global/_scroll_end_logo.php";

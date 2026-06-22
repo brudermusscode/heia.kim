@@ -34,8 +34,8 @@ $Scores = $User->first_place_scores(
 
 ?>
 
-<div style=margin-top:22em; content-width=wider fl fldircol gap=smol+>
-  <div fl gap alic title-inline>
+<div page-structure=user fl fldircol gap=smol+>
+  <div fl gap alic>
     <div fl alic gap=smol+>
       <p text bold ttup><?= __("First places") ?></p>
       <div fl gap=smoler>

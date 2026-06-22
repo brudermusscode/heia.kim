@@ -90,6 +90,8 @@ $home-header-height: 6.2em;
 $page-navigator-width: 100px;
 $page-navigator-padding-left: calc($page-navigator-width + $main-distance);
 
+$main-padding: calc($page-navigator-width + $main-distance);
+
 $sub-container-width: 28em;
 
 $mobile-nav-height: 80px;

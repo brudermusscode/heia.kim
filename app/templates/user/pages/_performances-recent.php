@@ -35,21 +35,13 @@ $Scores = $User->scores()
 
 ?>
 
-<div style=margin-top:22em; content-width=wider fl fldircol gap=smol+>
-
-  <div fl gap=smol+ alic title-inline>
-    <p text bold ttup><?= __("Recently played") ?></p>
-  </div>
+<div page-structure=user fl fldircol gap=smol+>
+  <p text bold ttup><?= __("Recently played") ?></p>
 
   <div grid-repeat gap=smol>
-    <?php
-
-    foreach ($Scores ?? [] as $key => $Score)
-      include TEMPLATE . "/score/_score.php";
-
-    ?>
+    <?php foreach ($Scores ?? [] as $key => $Score)
+      include TEMPLATE . "/score/_score.php"; ?>
   </div>
-
 </div>
 
 <?php include TEMPLATE . "/user/_not_implemented.html"; ?>

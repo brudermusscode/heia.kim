@@ -32,7 +32,23 @@ $modes = $mod
 
 <div page-structure="squad">
 
-  <?php include dirname(__DIR__) . "/_tabs.php"; ?>
+  <div fl alic jucsb>
+    <?php include dirname(__DIR__) . "/_tabs.php"; ?>
+
+    <div fl alic gap=smol+>
+      <p ttup slight text bold hide-mobile>Placement</p>
+      <div fl alic jucc filled rounded=wide pl16 pr20 style=height:51px; clickable>
+        <a href="/leaderboard/squads/<?= $mode ?>/<?= $mod ?? "vanilla" ?>/performance">
+          <div fl alic jucc gap=smol>
+            <mi>globe</mi>
+            &middot
+            <p text midler bold color=company>
+              <?= $placements[$gumode]->performance; ?></p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <div column-wrapper>
     <div column=small fl fldircol gap=mid>

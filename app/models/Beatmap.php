@@ -2,11 +2,10 @@
 
 namespace Heiakim\Model;
 
-use Heiakim\Application\Application;
 use Heiakim\Model\Gamemode;
 use Heiakim\Justin;
 use Heiakim\Enum\BeatmapStatus;
-use Heiakim\Model\Beatmap\BeatmapRequest;
+use Heiakim\Model\BeatmapRequest;
 use Heiakim\Model\Beatmap\SetArtist;
 use Heiakim\Utils\Arr;
 use Illuminate\Support\Collection;
@@ -81,7 +80,10 @@ class Beatmap extends Justin
    */
   public function ranking_requestable()
   {
-    return !in_array($this->status, [BeatmapStatus::RANKED->value, BeatmapStatus::LOVED->value]);
+    return !in_array($this->status, [
+      BeatmapStatus::RANKED->value,
+      BeatmapStatus::LOVED->value
+    ]);
   }
 
   /*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,*/
