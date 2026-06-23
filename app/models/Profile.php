@@ -57,6 +57,7 @@ class Profile extends Justin
    */
   public static $sections_visibility = [
     0 => [
+      "",
       "squad" => 1,
       "followers" => 1,
       "followings" => 1,
