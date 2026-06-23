@@ -4,6 +4,14 @@ use Heiakim\Model\Profile;
 use Heiakim\Model\User;
 
 /**
+ * @var string $sub
+ * @var string $mode
+ * @var string $mod
+ * @var string $current_mod
+ * @var string $base_url
+ */
+
+/**
  * @var ?User
  */
 $User = User::find($id ?? 0);
@@ -12,8 +20,7 @@ if (!$User) :
   include __DIR__ . "/_none.php";
 else :
 
-  $sub ??= "overview";
-  $base_url = "/u/$User->id";
+  $base_url_append = ($mode ? $mode : "") . ($mode && $mod ? "/$mod" : "");
   $is_my_profile = $User->is(CurrentUser);
   $both_sides_can_interact_socially =
     !$User->is_socially_excluded() && !CurrentUser->is_socially_excluded();
@@ -112,7 +119,7 @@ else :
         <div pn-option pn-o-divider></div>
       <?php endif; ?>
 
-      <a pn-option href="<?= $base_url; ?>">
+      <a pn-option href="<?= "$base_url/overview/$base_url_append" ?>">
         <mbutton mid icon-only background=clean has-tooltip=right
           <?php display_active($sub, "overview") ?>>
           <mi>face</mi>
@@ -123,7 +130,7 @@ else :
       </a>
 
       <?php if ($Profile->bool_value("tabs_visibility", "statistics")) { ?>
-        <a pn-option href="<?= "$base_url/statistics"; ?>">
+        <a pn-option href="<?= "$base_url/statistics/$base_url_append" ?>">
           <mbutton mid icon-only background=clean has-tooltip=right
             <?php display_active($sub, "statistics") ?>>
             <mi>data_exploration</mi>

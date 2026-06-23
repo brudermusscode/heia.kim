@@ -37,6 +37,11 @@ if (!in_array($mode, Gamemode::$modes_text))
 if (!in_array($mod, Gamemode::$mods_text))
   $mod = $current_mod = Gamemode::$mods_text[0];
 
+# Ensure the modification is valid for the current ruleset.
+$mod = Gamemode::validate_mod($mod, $mode);
+
+$valid_mods = Gamemode::valid_mods($mode);
+
 $gumode = Gamemode::find_gumode($mode, $mod, array: false);
 
 /**
@@ -61,7 +66,7 @@ $base_url = "/beatmap-set/$Set->id/$Beatmap->id";
 # Partial inclusion.
 include TEMPLATE . "/home/_page-navigator.php";
 include __DIR__ . "/_header.php";
-include __DIR__ . "/_mode-menu.php";
+include COMPONENT . "/_mode-menu.php";
 include __DIR__ . "/_mobile-menu.php"; ?>
 
 <content beatmapset widest minlineauto fl fldircol gap=std+>

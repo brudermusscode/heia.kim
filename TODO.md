@@ -4,7 +4,6 @@
 + Make discord client credentials grant work (general api interactions)
 + Add new users to discord server automatically when using oauth2
 + Implement no-script tag in yield.php
-+ Make sub pages in settings available through easy link
 + Overlay might be null when changing pages and opening one
 
 Routing:

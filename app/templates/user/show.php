@@ -5,25 +5,10 @@ use Heiakim\Model\Profile;
 use Heiakim\Model\Stat;
 use Heiakim\Model\User;
 
-/**
- * @var int
- */
-$id = filter_var($GLOBALS["route_param_id"] ?? 0, FILTER_VALIDATE_INT);
-
-/**
- * @var string
- */
-$sub = $GLOBALS["route_param_sub"] ?? null;
-
-/**
- * @var string
- */
-$mode = $GLOBALS["route_param_mode"] ?? null;
-
-/**
- * @var string
- */
-$mod = $GLOBALS["route_param_mod"] ?? null;
+$id = aglobal("id");
+$sub = aglobal("sub");
+$mode = aglobal("mode") ?? "osu";
+$mod = aglobal("mod") ?? "vanilla";
 
 # Declaring this variable so early will make profile loads for the CurrentUser faster,
 # as the User doesn't have to be fetched.
@@ -34,12 +19,12 @@ $is_my_profile = $id === CurrentUser->id;
  */
 $User = $is_my_profile ? CurrentUser : User::with("profile")->find($id);
 
+redirect_unauthorized($User);
+
 # Admins and elevated people should be able to access any profile without restriction.
 $bypass_restricted_screen = $User && (
   $is_my_profile || CurrentUser->priv > 4
 );
-
-redirect_unauthorized($User);
 
 if ($User->is_restricted() && !$bypass_restricted_screen) :
   include __DIR__ . "/_restricted.php";
@@ -55,6 +40,8 @@ else :
   $gumode_text = Gamemode::gumode_text($User->preferred_mode);
   $mode ??= $gumode_text->mode;
   $mod ??= $gumode_text->mod;
+  $mod = Gamemode::validate_mod($mod, $mode);
+  $valid_mods = Gamemode::valid_mods($mode);
   $current_mod = $mod;
   $gumode = Gamemode::find_gumode($mode, $mod);
 
@@ -120,19 +107,21 @@ else :
 
     $base_url = "/u/$User->id";
 
+    include __DIR__ . "/_page-navigator.php";
+
+    $base_url .= "/$sub";
+
     # From the actual game.
     // $bancho_status = $User->get_bancho_game_status();
     // $is_online = $bancho_status->player_status->online ?? false;
 
     # + Mode menu should only be shown in sub pages that have scores to show.
     if (!in_array($sub, ["photos"]))
-      include __DIR__ . "/_mode-menu.php";
+      include COMPONENT . "/_mode-menu.php";
 
     # Add scores for our bot Aida. Should just happen once or can be uncommented to
     # redo it.
     // include __DIR__ . "/Aida/_add_scores.php";
-
-    include __DIR__ . "/_page-navigator.php";
     include __DIR__ . "/_header.php";
     include __DIR__ . "/_mobile-menu.php";
 

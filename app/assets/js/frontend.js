@@ -633,6 +633,8 @@ export const hide_floating_action = () => {
 export const page_navigator = (Route, PreviousRoute = null) => {
   let slide = PreviousRoute?.page_navigator !== Route.page_navigator;
 
+  console.log(PreviousRoute, Route);
+
   Frontend.show_page_navigator(slide);
 };
 
@@ -1181,13 +1183,13 @@ $(function () {
 
   $(document).on("click", "mode-menu [mm-menu] a", function (e) {
     let menu = this.closest("jump-menu");
-    let mode_menu = menu.closest("mode-menu");
-    let mode_name = this.find("p").innerHTML;
-    let mod_icon_class = this.find("mi").className;
-    let button = mode_menu.find("[mm-open]");
+    // let mode_menu = menu.closest("mode-menu");
+    // let mode_name = this.find("p").innerHTML;
+    // let mod_icon_class = this.find("mi").className;
+    // let button = mode_menu.find("[mm-open]");
 
-    button.find("mi").className = mod_icon_class;
-    button.find("p").innerHTML = mode_name;
+    // button.find("mi").className = mod_icon_class;
+    // button.find("p").innerHTML = mode_name;
 
     menu.unactivate();
   });

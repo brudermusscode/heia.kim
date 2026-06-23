@@ -1,5 +1,7 @@
 <?php
 
+# lol 💇
+
 namespace Heiakim\Model;
 
 use Locale;

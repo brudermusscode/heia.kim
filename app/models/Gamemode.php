@@ -87,6 +87,47 @@ class Gamemode extends Justin
   }
 
   /**
+   * Some modes can only rank with less or more mods than others, which this function
+   * will validate by returning either the mod if valid or a base mod »vanilla«.
+   *
+   * @param string $mod
+   * @param string $mode
+   * @return string
+   */
+  public static function validate_mod(string $mod, string $mode)
+  {
+    $base_mod = "vanilla";
+
+    return match ($mode) {
+      "standard",
+      "standart",
+      "osu" => in_array($mod, ["vanilla", "relax", "autopilot"]) ? $mod : $base_mod,
+      "taiko",
+      "ctb" => in_array($mod, ["vanilla", "relax"]) ? $mod : $base_mod,
+      "mania" => in_array($mod, ["vanilla"]) ? $mod : $base_mod,
+      default => $base_mod
+    };
+  }
+
+
+  /**
+   * @param string $mode
+   * @return string
+   */
+  public static function valid_mods(string $mode)
+  {
+    return match ($mode) {
+      "standard",
+      "standart",
+      "osu" => ["vanilla", "relax", "autopilot"],
+      "taiko",
+      "ctb" => ["vanilla", "relax"],
+      "mania" => ["vanilla"],
+      default => ["vanilla", "relax", "autopilot"],
+    };
+  }
+
+  /**
    * Find the gumode by given string representations of a mode and a mod. If no mod
    * is given, it will return it's result as an array or the first element of it.
    *
