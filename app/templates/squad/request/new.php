@@ -14,49 +14,18 @@ use Heiakim\Model\Squad\SquadUser;
 
 authorize(resource: CurrentUser);
 
-/**
- * @var int
- */
 $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
 
 /**
- * @var Squad
+ * @var ?Squad
  */
-$Squad = Squad::find($id);
+$Squad = Squad::find($id) ?? die(error());
 
-/**
- * Squad not found?
- * ! Error
- */
-if (!$Squad)
-  exit($Request->error());
+if (CurrentUser->squad) die(error("You are a squad member!"));
 
-/**
- * User is member already?
- * ! Error
- */
-if ($CurrentSquad)
-  exit($Request->error("<strong>This is your squad!</strong>"));
+ob_start();
 
-ob_start(); ?>
-
-<style>
-  .stars {
-    position: fixed;
-    z-index: -1;
-    height: 100vh;
-    width: 100vw;
-  }
-</style>
-
-<?php
-
-if (ANIMATIONS_ENABLED) {
-  echo '<div class="stars">';
-  for ($i = 0; $i < 80; $i++)
-    echo '<div class="snow"></div>';
-  echo '</div>';
-}
+include SNOW;
 
 /**
  * @var string
@@ -67,7 +36,7 @@ $join_action = !$Squad->is_public()
 
 ?>
 
-<div content-width=smoler prompt-height>
+<content std>
   <form request="<?= $join_action ?>" reload responder=always update-user-references>
     <input type=hidden name=id value=<?= $Squad->id; ?> />
 
@@ -240,8 +209,6 @@ $join_action = !$Squad->is_public()
       </div>
     </box-model>
   </form>
-</div>
+</content>
 
-<?php
-
-die($Request->success(data: ob_get_clean()));
+<?php die(success(data: ob_get_clean()));

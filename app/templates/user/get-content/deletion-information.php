@@ -2,62 +2,41 @@
 
 require_once ROOT . "/config/get_requirements.php";
 
-use Heiakim\Http\Request;
-use Heiakim\Model\Comment;
 use Heiakim\Model\Score;
+use Heiakim\Model\Squad;
 use Heiakim\Model\User;
+use Illuminate\Support\Collection;
+
+authorize(CurrentUser);
 
 /**
- * @var Request $Request
- */
-
-/**
- * User is logged in?
- * ! Error
- */
-if (!LOGGED)
-  exit($Request->error("!NOT_LOGGED"));
-
-ob_start();
-
-/**
- * @var ?Score
+ * @var Collection<Score>
  */
 $Scores = CurrentUser->scores;
 
 /**
- * @var ?User
+ * @var ?Squad
  */
 $Squad = CurrentUser->squad;
 
 /**
- * @var int
- */
-$community_activity_count = CurrentUser->threads->count() + CurrentUser->thread_posts->count();
-
-/**
- * @var ?Comment
- */
-$comments_count = CurrentUser->comments->count();
-
-/**
- * @var ?User
+ * @var Collection<User>
  */
 $Followers = CurrentUser->followers;
 
 /**
- * @var ?User
+ * @var Collection<User>
  */
 $Followings = CurrentUser->followings;
 
-/**
- * @var bool
- */
+$community_activity_count =
+  CurrentUser->threads->count() + CurrentUser->thread_posts->count();
+$comments_count = CurrentUser->comments->count();
 $has_any_data = $Scores->count() || $Squad || $community_activity_count || $comments_count || $Followers->count() || $Followings->count();
 
-?>
+ob_start();
 
-<?php if (!$has_any_data) { ?>
+if (!$has_any_data) : ?>
 
   <box-model filled=lighter animation=fade-in>
     <bm-inr fl gap alic>
@@ -71,132 +50,101 @@ $has_any_data = $Scores->count() || $Squad || $community_activity_count || $comm
     </bm-inr>
   </box-model>
 
-  <?php
+  <?php else :
 
-} else {
+  if ($Scores->count()) : ?>
 
-  if ($Scores->count()) { ?>
+    <div p24 rounded filled fl alic gap=smol+ animation=fade-in>
+      <mi midler circled outlined=darker style="height:42px;width:42px;">
+        trending_up</mi>
+      <p text><strong color=company><?= $Scores->count(); ?> scores</strong>
+        you have set</p>
+    </div>
 
-    <box-model filled=lighter animation=fade-in>
-      <bm-inr fl gap alic>
-        <div circled outlined=darker style="height:3.2em;width:3.2em;" fl alic jucc>
-          <mi midler>trending_up</mi>
-        </div>
-        <p text><strong><?= $Scores->count(); ?> scores</strong> you have set</p>
-      </bm-inr>
-    </box-model>
+  <?php endif;
 
-  <?php
-
-  }
-
-  if ($Squad) { ?>
+  if ($Squad) : ?>
 
     <a href="<?= $Squad->link(); ?>">
-      <box-model filled=lighter clickable animation=fade-in>
-        <bm-inr fl alic jucsb>
-          <div fl gap alic>
-            <picture circled outlined=darker style="height:3.2em;width:3.2em;" fl alic jucc>
-              <?php $Squad->logo(); ?>
-            </picture>
-            <div fl fldircol gap=smoler>
-              <div fl alic gap=smol>
-                <div background="invert" rounded="wide" pinline10 pblock4 ttup>
-                  <p text smol bold color="invert"><?= $Squad->tag; ?></p>
-                </div>
-                <p text><strong><?= $Squad->name; ?></strong></p>
-              </div>
-              <p text>Leaving your squad behind</p>
+      <div p24 rounded filled fl alic jucsb clickable gap=smol+ animation=fade-in>
+        <div fl gap alic>
+          <picture circled outlined=darker style="height:3.2em;width:3.2em;" fl alic jucc>
+            <?php $Squad->logo(); ?>
+          </picture>
+          <div fl fldircol gap=smoler>
+            <div fl alic gap=smol>
+              <p text smol bold background="invert" rounded="wide" pinline6 pblock2 ttup color="invert"><?= $Squad->tag; ?></p>
+              <p text><strong color=company><?= $Squad->name; ?></strong></p>
             </div>
+            <p text>Leaving your squad behind</p>
           </div>
-          <mi midler>east</mi>
-        </bm-inr>
-      </box-model>
+        </div>
+        <mi midler>east</mi>
+      </div>
     </a>
 
-  <?php
+  <?php endif;
 
-  }
+  if ($community_activity_count) : ?>
 
-  if ($community_activity_count) { ?>
+    <div p24 rounded filled fl alic gap=smol+ animation=fade-in>
+      <div circled outlined=darker style="height:3.2em;width:3.2em;" fl alic jucc>
+        <mi midler>forum</mi>
+      </div>
+      <div fl fldircol gap=smoler>
+        <p text><strong><?= $community_activity_count; ?> threads & posts</strong></p>
+        <p text>Leaving our wonderful community</p>
+      </div>
+    </div>
 
-    <box-model filled=lighter animation=fade-in>
-      <bm-inr fl alic gap>
-        <div circled outlined=darker style="height:3.2em;width:3.2em;" fl alic jucc>
-          <mi midler>forum</mi>
-        </div>
-        <div fl fldircol gap=smoler>
-          <p text><strong><?= $community_activity_count; ?> threads & posts</strong></p>
-          <p text>Leaving our wonderful community</p>
-        </div>
-      </bm-inr>
-    </box-model>
+  <?php endif;
 
-  <?php
+  if ($comments_count) : ?>
 
-  }
+    <div p24 rounded filled fl alic gap=smol+ animation=fade-in>
+      <div circled outlined=darker style="height:3.2em;min-width:3.2em;" fl alic jucc>
+        <mi midler>comments_disabled</mi>
+      </div>
+      <div fl fldircol gap=smoler>
+        <p text><strong><?= $comments_count; ?> comments</strong> won't be deleted</p>
+        <p text>For comments, we will remove everything that could be connected to your user identity. No image, no name,
+          just the comment itself. Keeping it for the context only!</p>
+      </div>
+    </div>
 
-  if ($comments_count) { ?>
+  <?php endif;
 
-    <box-model filled=lighter slight>
-      <bm-inr fl alic gap>
-        <div circled outlined=darker style="height:3.2em;min-width:3.2em;" fl alic jucc>
-          <mi midler>comments_disabled</mi>
-        </div>
-        <div fl fldircol gap=smoler>
-          <p text><strong><?= $comments_count; ?> comments</strong> won't be deleted</p>
-          <p text>For comments, we will remove everything that could be connected to your user identity. No image, no name,
-            just the comment itself. Keeping it for the context only!</p>
-        </div>
-      </bm-inr>
-    </box-model>
+  if ($Followers->count()) : ?>
 
-  <?php
+    <div p24 rounded filled fl alic gap=smol+ animation=fade-in>
+      <div circled outlined=darker style="height:3.2em;width:3.2em;" fl alic jucc>
+        <mi midler>call_received</mi>
+      </div>
+      <div fl fldircol gap=smoler>
+        <p text><strong><?= $Followers->count(); ?> players</strong> are following you</p>
+        <p text>
+          <?php foreach ($Followers->take(3) as $F) echo "<a normal href='/u/$F->id'>$F->name</a>, "; ?>...
+        </p>
+      </div>
+    </div>
 
-  }
+  <?php endif;
 
-  if ($Followers->count()) { ?>
+  if ($Followings->count()) : ?>
 
-    <box-model filled=lighter animation=fade-in>
-      <bm-inr fl gap alic>
-        <div circled outlined=darker style="height:3.2em;width:3.2em;" fl alic jucc>
-          <mi midler>call_received</mi>
-        </div>
-        <div fl fldircol gap=smoler>
-          <p text><strong><?= $Followers->count(); ?> players</strong> are following you</p>
-          <p text>
-            <?php foreach ($Followers->take(3) as $F) echo "<a normal href='/u/$F->id'>$F->name</a>, "; ?>...
-          </p>
-        </div>
-      </bm-inr>
-    </box-model>
+    <div p24 rounded filled fl alic gap=smol+ animation=fade-in>
+      <div circled outlined=darker style="height:3.2em;width:3.2em;" fl alic jucc>
+        <mi midler>call_made</mi>
+      </div>
+      <div fl fldircol gap=smoler>
+        <p text><strong><?= $Followings->count(); ?> players</strong> are followed by you</p>
+        <p text>
+          <?php foreach ($Followings->take(3) as $F) echo "<a normal href='/u/$F->id'>$F->name</a>, "; ?>...
+        </p>
+      </div>
+    </div>
 
-  <?php
+<?php endif;
+endif;
 
-  }
-
-  if ($Followings->count()) { ?>
-
-    <box-model filled=lighter animation=fade-in>
-      <bm-inr fl gap alic>
-        <div circled outlined=darker style="height:3.2em;width:3.2em;" fl alic jucc>
-          <mi midler>call_made</mi>
-        </div>
-        <div fl fldircol gap=smoler>
-          <p text><strong><?= $Followings->count(); ?> players</strong> are followed by you</p>
-          <p text>
-            <?php foreach ($Followings->take(3) as $F) echo "<a normal href='/u/$F->id'>$F->name</a>, "; ?>...
-          </p>
-        </div>
-      </bm-inr>
-    </box-model>
-
-<?php
-
-  }
-}
-
-/**
- * * Success
- */
-die($Request->success(data: ob_get_clean()));
+die(success(data: ob_get_clean()));

@@ -59,8 +59,8 @@ ob_start();
 
 include SNOW; ?>
 
-<form request="squad:post:create" responder=always close-overlay>
-  <div posting-machine-overlay active rounded=wider animation=fade-in>
+<posting-machine active rounded=wider animation=fade-in>
+  <form request="squad:post:create" responder=always close-overlay>
     <pm-inr post-type="<?= $sub_type; ?>" filled=lighter rounded=wider animation=open style=height:auto;>
 
       <input type=hidden name=type value=<?= $sub_type ?> />
@@ -173,9 +173,7 @@ include SNOW; ?>
         </div>
       </pm-content>
     </pm-inr>
-  </div>
-</form>
+  </form>
+</posting-machine>
 
-<?php
-
-die($Request->success(data: ob_get_clean()));
+<?php die(success(data: ob_get_clean()));

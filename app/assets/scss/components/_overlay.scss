@@ -2,7 +2,6 @@
 @use "../base" as *;
 
 overlay {
-  display: block;
   position: fixed;
   z-index: $endless-z-index + 3;
   height: 100vh;
@@ -13,6 +12,15 @@ overlay {
   overflow: auto;
   overflow-x: hidden;
   background-color: rgba(0, 0, 0, 0.84);
+
+  overlay-inr {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 64px;
+    padding-inline: $main-distance;
+  }
 
   .stars .snow {
     background: white !important;

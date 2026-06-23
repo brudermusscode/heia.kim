@@ -1,5 +1,4 @@
 import * as Frontend from "../frontend";
-import * as Request from "../requests";
 
 export default class Overlay {
   constructor(data = null, to_overlay = false) {
@@ -46,7 +45,10 @@ export default class Overlay {
     // A timeout to show all animations.
     setTimeout(() => {
       this.loader.setAttribute("visible", "false");
-      this.overlay.insertAdjacentHTML("afterbegin", data);
+      this.overlay.insertAdjacentHTML(
+        "afterbegin",
+        `<overlay-inr>${data}</overlay-inr>`,
+      );
       this.overlay.find("[autofocus]")?.focus();
       Frontend.reload_images();
       Frontend.slide_in_prompt(this.overlay.find("[prompt]"));

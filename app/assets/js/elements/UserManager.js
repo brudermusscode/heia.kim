@@ -7,21 +7,20 @@ import * as Page from "../page";
  *
  * @param {string} page
  */
-export const get = (page) => {
+export const get = (url) => {
   let center = document.find("ui-component[type='user-manager']");
   let react = center?.find("nc-inr");
   let buttons = center.find_all("nc-tab-option");
+  let page = url.includes("/user-manager/") ? url.replace("/user-manager/", "") : url;
+  let tab = `nc-tab-option[open="${page?.split("/")[0]}"]`;
+
+  if (!page) return;
 
   center.set_loading();
 
-  buttons.forEach((b) => {
-    b.deactivate();
-    b.setAttribute("showing", true);
-  });
-
   setTimeout(() => {
     $.ajax({
-      url: page,
+      url: url,
       method: "GET",
       success: function (data) {
         Frontend.unload();
@@ -29,11 +28,22 @@ export const get = (page) => {
 
         if (data.status) {
           react.innerHTML = data.data;
-          Frontend.get_content();
-          Frontend.reload_images();
 
-          if (!page.includes("/"))
-            center.find_all(`[open="${page}"]`)?.forEach((btn) => btn.activate());
+          if (!page.includes("/")) {
+            buttons.forEach((b) => {
+              b.deactivate();
+              b.setAttribute("showing", true);
+            });
+          }
+
+          center.find(tab)?.activate();
+
+          // Wait a little before firing these actions. It sometimes didn't load in
+          // content from get_content().
+          setTimeout(() => {
+            Frontend.get_content();
+            Frontend.reload_images();
+          }, 200);
 
           return;
         }
@@ -60,7 +70,9 @@ $(function () {
       let component = document.find("ui-component[type='user-manager']");
       let url = "/user-manager/" + this.getAttribute("open")?.replaceAll(":", "/");
 
-      Frontend.open_ui_component(component, url);
+      if (!component.hasAttribute("active"))
+        Frontend.open_ui_component(component, url);
+
       get(url);
       this.activate();
     },

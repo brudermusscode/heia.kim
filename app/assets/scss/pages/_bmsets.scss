@@ -17,16 +17,6 @@
   padding-inline: 62px;
   left: $page-navigator-width;
 
-  inr {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex: 1;
-    max-width: $content-widestest-size;
-    width: 100%;
-    margin: 0 auto;
-  }
-
   @media screen and (max-width: $mobile-max-width) {
     left: 0;
     margin-inline: 6px;
@@ -61,7 +51,11 @@
         margin-top: 0;
 
         > p {
-          font-size: 1.8em;
+          font-size: 2em;
+
+          @media screen and (max-width: $mobile-max-width) {
+            font-size: 1.2em;
+          }
         }
       }
     }
@@ -81,6 +75,16 @@
         bottom: -18px;
       }
     }
+  }
+
+  inr {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    max-width: $content-widestest-size;
+    width: 100%;
+    margin: 0 auto;
   }
 
   [cover] {
@@ -117,14 +121,14 @@
     display: flex;
     justify-content: flex-start;
 
+    @media screen and (max-width: $mobile-max-width) {
+      justify-content: flex-end;
+    }
+
     .status_option {
       border-radius: 16px;
       padding: 0.6em 1em;
       white-space: nowrap;
-
-      @media screen and (max-width: 600px) {
-        padding: 0.4em 1em;
-      }
     }
   }
 

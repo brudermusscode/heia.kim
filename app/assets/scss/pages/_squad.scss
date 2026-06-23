@@ -32,14 +32,14 @@ header {
         }
 
         [tag] {
-          height: 56px;
-          padding-inline: 18px;
+          height: 50px;
+          padding-inline: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
           transition: $trans-cubic;
-          font-size: 38px;
-          font-weight: 600;
+          font-size: 36px;
+          font-weight: 900;
 
           @media screen and (max-width: $tablet-max-width) {
             height: 48px;
@@ -464,16 +464,16 @@ timeline {
 
 $posting-machine-height: 76px;
 
-[posting-machine-overlay],
 posting-machine {
   display: block;
   content: "";
   position: relative;
   transition: $trans-cubic;
-  height: $posting-machine-height;
   width: 600px;
+  opacity: 0;
 
   pm-inr {
+    z-index: 1;
     content: "";
     display: block;
     position: relative;
@@ -595,53 +595,11 @@ posting-machine {
 
   pm-content {
     content: "";
+    opacity: 0;
     display: flex;
     flex-direction: column;
     gap: $gap-smol-plus;
     transition-delay: 0s;
-  }
-
-  &:not([posting-machine-overlay]) {
-    pm-inr {
-      padding: 18px;
-    }
-
-    &[active] {
-      pm-inr {
-        opacity: 0;
-      }
-    }
-  }
-}
-
-[posting-machine-overlay] {
-  opacity: 0;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: $endless-z-index;
-
-  close {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    height: 100%;
-    width: 100%;
-    cursor: pointer;
-  }
-
-  pm-inr {
-    z-index: 1;
-    margin-top: -8em;
-  }
-
-  pm-content {
-    opacity: 0;
 
     &[active] {
       opacity: 1;
@@ -656,8 +614,6 @@ posting-machine {
       min-width: 375px;
       max-width: 600px;
       width: 100%;
-      z-index: $endless-z-index + 1;
-      position: fixed;
       box-shadow: var(--mio-theme-elevation-2);
 
       [title] {
