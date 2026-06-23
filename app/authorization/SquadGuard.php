@@ -9,8 +9,6 @@ class SquadGuard implements PermissionGuardInterface
 {
 
   /**
-   * Can do all.
-   *
    * @var SquadPrivilege[]
    */
   const GROUP_MANAGE_SQUAD = [
@@ -18,7 +16,7 @@ class SquadGuard implements PermissionGuardInterface
   ];
 
   /**
-   * These can promote users and take any other setting possible.
+   * These can promote members and take any other setting possible related to members.
    *
    * @var SquadPrivilege[]
    */
@@ -28,8 +26,8 @@ class SquadGuard implements PermissionGuardInterface
   ];
 
   /**
-   * These can invite new users to join, process any incoming join
-   * requests and remove users from the squad.
+   * These can invite new users to join, process any incoming join requests and remo-
+   * ve users from the squad.
    *
    * @var SquadPrivilege[]
    */
@@ -40,8 +38,8 @@ class SquadGuard implements PermissionGuardInterface
   ];
 
   /**
-   * These can edit and delete content posted, as well as create
-   * untouchable content like closed threads.
+   * These can edit and delete content posted, as well as create untouchable content
+   * like closed threads.
    *
    * @var SquadPrivilege[]
    */

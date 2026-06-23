@@ -38,7 +38,7 @@ $base_url = "/squad/$Squad->id";
 $placements = $Squad->placement();
 
 include __DIR__ . "/_page-navigator.php";
-include __DIR__ . "/_mode-menu.php";
+include __DIR__ . "/_compose-menu.php";
 include __DIR__ . "/_header.php";
 include __DIR__ . "/pages/_$page.php";
 

@@ -6,23 +6,11 @@ use Heiakim\Model\Artist;
 use Heiakim\Model\Beatmap;
 use Heiakim\Model\Squad;
 use Heiakim\Model\User;
-use Heiakim\Http\Request;
 use Heiakim\Time\Time;
 use Heiakim\Validate\Search;
 use Illuminate\Support\Collection;
 
-/**
- * @var Request $Request
- */
-
-/**
- * @var string
- */
 $query = filter_input(INPUT_GET, "query", FILTER_SANITIZE_SPECIAL_CHARS);
-
-/**
- * @var int
- */
 $fetch_limit = 8;
 
 /**
@@ -63,7 +51,10 @@ $Artists = Artist::where("name", "LIKE", "%$query%")
   ->limit(20)
   ->get();
 
-$all_empty = !$Users->count() && !$Sets->count() && !$Squads->count() && !$Artists->count();
+$all_empty = !$Users->count()
+  && !$Sets->count()
+  && !$Squads->count()
+  && !$Artists->count();
 
 ob_start();
 
@@ -79,7 +70,7 @@ else : ?>
   if ($Users->count()) : ?>
 
     <div fl fldircol gap=smol+>
-      <p pinline12 text mid bold><?= __("Players") ?></p>
+      <p title-inline text midler ttup bold color=company><?= __("Players") ?></p>
 
       <div fl jucstretch flex-wrap gap=smol>
         <?php foreach ($Users as $User) { ?>
@@ -105,13 +96,13 @@ else : ?>
   # + Beatmapsets
   if ($Sets->count()) : ?>
     <div fl fldircol gap=smol+>
-      <p pinline12 text mid bold>Beatmaps</p>
+      <p title-inline text midler ttup bold color=company>Beatmaps</p>
 
       <div grid-repeat gap=smol>
         <?php
 
         foreach ($Sets as $Set)
-          include TEMPLATE . "/beatmapset/_set-card.php";
+          include TEMPLATE . "/beatmap/_beatmap-row.php";
 
         ?>
       </div>
@@ -131,7 +122,7 @@ else : ?>
   # + Squads
   if ($Squads->count()) : ?>
     <div fl fldircol gap=smol+>
-      <p pinline12 text mid bold>Squads</p>
+      <p title-inline text midler ttup bold color=company>Squads</p>
 
       <div grid-repeat gap=smol>
         <?php
@@ -149,27 +140,13 @@ else : ?>
   # + Artists
   if ($Artists->count()) : ?>
     <div fl fldircol gap=smol+>
-      <p pinline12 text mid bold><?= __("Artists") ?></p>
+      <p title-inline text midler ttup bold color=company><?= __("Artists") ?></p>
 
-      <box-model elevated rounded=wide filled>
-        <bm-inr size=mid fl fldircol gap>
-          <div fl fldircol gap=smol+>
-            <div class="results" fl flex-wrap=wrap>
-              <?php foreach ($Artists as $Artist) { ?>
-                <a href="/artist/<?= $Artist->id; ?>">
-                  <div class="option" artist clickme>
-                    <div class="textline" fl gap align-items=center flex-truncate>
-                      <div flex-truncate>
-                        <p text std bold trimt color><?= htmlspecialchars_decode($Artist->name); ?></p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              <?php } ?>
-            </div>
-          </div>
-        </bm-inr>
-      </box-model>
+      <div grid-repeat gap=smol>
+        <?php foreach ($Artists as $Artist) :
+          include TEMPLATE . "/artist/_artist.php";
+        endforeach; ?>
+      </div>
     </div>
   <?php endif; ?>
 

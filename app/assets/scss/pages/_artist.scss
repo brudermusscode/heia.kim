@@ -12,16 +12,28 @@ header[artist] {
   position: fixed;
   z-index: 400;
   top: 6px;
-  left: calc($page-navigator-width);
+  left: $main-padding;
   height: $set-header-height;
-  width: $full-header-width;
+  width: calc(100% - $main-padding - $main-distance);
+  padding-inline: $main-distance;
   transition: $trans-cubic;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
   align-items: stretch;
-  padding-inline: $main-distance;
-  left: $page-navigator-width;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -6px;
+    left: -12px;
+    height: 60px;
+    width: calc(100% + 2 * 12px);
+    @include themed() {
+      background: t(bg);
+    }
+  }
 
   @media screen and (max-width: $mobile-max-width) {
     left: 0;

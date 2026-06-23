@@ -8,8 +8,8 @@ $publicity_text = CurrentUser->squad->joinable === 0
 
 ?>
 
-<content std minlineauto>
-  <div mt=wide mb fl gap=mid align-items="center" mb=std>
+<content std minlineauto fl fldircol gap>
+  <div fl alic gap>
     <?php include TEMPLATE . "/squad/manage/_back-button.php"; ?>
     <p text mid bold>Publicity</p>
   </div>

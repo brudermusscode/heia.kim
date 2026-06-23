@@ -74,10 +74,8 @@ ob_start(); ?>
 
       <a href="/squad/<?= $CurrentSquad->id; ?>">
         <mbutton midler image-only background=clean hoverable has-tooltip=top>
-          <div rounded=smol slight pinline4 pblock1 background=invert color=invert z
-            style="position:absolute;bottom:0;left:50%;translate:-50% 0;">
-            <p text smol semibold><?= $CurrentSquad->tag ?></p>
-          </div>
+          <p text smoler semibold ttup background=company color=company-text rounded z pinline4 pblock2 style="position:absolute;bottom:0;left:50%;translate:-50% 0;">
+            <?= $CurrentSquad->tag ?></p>
           <picture in-menu size=std circled>
             <?php $CurrentSquad->logo(); ?>
           </picture>

@@ -11,19 +11,22 @@ $big_cover = true;
 ?>
 
 <a href="/artist/<?= $Artist->id; ?>">
-  <div artist outlined rounded ovhid hoverable>
-    <picture style="height:80px;">
+  <div artist filled rounded clickable>
+    <picture style="height:140px;" rounded ovhid>
       <?php $Artist->cover(); ?>
     </picture>
 
-    <div p24>
-      <p text bold std trimt><?= $Artist->name; ?></p>
-      <div fl gap=smol alic style=opacity:.6;>
-        <p text smol color=company bold>
-          <?= number_format($Artist->beatmapsets->count()); ?> Sets
+    <div pinline24 pblock18>
+      <p text midler bold trimt><?= $Artist->name; ?></p>
+      <div fl gap=smol+ alic>
+        <p text smol>
+          Beatmaps &middot;
+          <strong color=company>
+            <?= number_format($Artist->beatmapsets->count()); ?></strong>
         </p>
-        <p text smol>&middot;</p>
-        <p text smol><?= number_format($Artist->play_count()); ?> <?= __("Plays") ?></p>
+        <p text smol>
+          <?= __("Plays") ?> &middot; <strong color=company>
+            <?= number_format($Artist->play_count()); ?></strong></p>
       </div>
     </div>
   </div>

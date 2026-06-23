@@ -10,7 +10,7 @@ use Heiakim\Http\Request;
 
 ob_start(); ?>
 
-<global-search animation=fade-in>
+<global-search animation=fade-in flone>
   <search fl alic elevated rounded=mid+>
     <mi pinline42 mid>search</mi>
 

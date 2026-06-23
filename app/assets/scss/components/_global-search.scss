@@ -39,7 +39,7 @@ global-search {
     position: relative;
     z-index: 0;
     width: 100%;
-    max-width: $global-search-width;
+    max-width: $content-widest-size;
     margin-inline: auto;
 
     .results {

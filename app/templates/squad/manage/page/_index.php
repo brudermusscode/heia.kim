@@ -18,178 +18,143 @@ $publicity_text = CurrentUser->squad->joinable === 0
 
 ?>
 
-<div content-width=pre-std>
-
-  <div mb=wide tac>
-    <p text bold wide>Squad</p>
-    <p text std>Customize the uniqueness of your squad</p>
-  </div>
+<content midler fl fldircol gap minlineauto>
 
   <?php if ($SquadUser->can("manage", "squad")) : ?>
-    <div grid-repeat=smol gap=smol mb=smol>
-      <form data-form="squad:update:image" style=flex:1;>
-        <a data-action="squad:imagery" select-choose-file>
-          <box-model ripple-effect clickable filled rounded=mid>
-            <div p40 fl gap alic jucsb>
+    <div fl fldircol gap=smol+>
+      <div grid-repeat=smol gap=smol>
+        <form data-form="squad:update:image" style=flex:1;>
+          <a data-action="squad:imagery" select-choose-file>
+            <div p26 ripple-effect clickable filled=lighter rounded=mid fl gap alic jucsb>
               <div fl gap alic>
-                <picture size=mid circled>
+                <picture midplus circled>
                   <?php $Squad->logo(); ?>
                 </picture>
                 <p text bold midler>Logo</p>
               </div>
-              <mi midler>edit</mi>
+              <mi midler color=company>arrow_selector_tool</mi>
             </div>
-          </box-model>
-        </a>
+          </a>
 
-        <input type=hidden name=image_type value="logo" />
-        <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-        <input trigger="file-input:change,go" type="file" name="image" size="32" accept="image/*" hidden />
-      </form>
+          <input type=hidden name=image_type value="logo" />
+          <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
+          <input trigger="file-input:change,go" type="file" name="image" size="32" accept="image/*" hidden />
+        </form>
 
-      <form data-form="squad:update:image" style=flex:1;>
-        <a data-action="squad:imagery" select-choose-file data-type="headline">
-          <box-model ripple-effect clickable filled rounded=mid>
-            <div p48 z color=white fl alic jucsb>
-              <div fl gap alic>
-                <mi wide>wallpaper</mi>
-                <p text bold midler>Headline</p>
+        <form data-form="squad:update:image" style=flex:1;>
+          <a data-action="squad:imagery" select-choose-file data-type="headline">
+            <box-model p48 ripple-effect clickable filled rounded=mid ovhid>
+              <div z color=white fl alic jucsb>
+                <div fl gap alic>
+                  <mi wide>wallpaper</mi>
+                  <p text bold midler>Headline</p>
+                </div>
+                <mi midler color=company>arrow_selector_tool</mi>
               </div>
-              <mi midler>edit</mi>
-            </div>
-            <div rounded=mid style="position:absolute;top:0;left:0;height:100%;width:100%;z-index:0;overflow:hidden;">
-              <div style="height:100%;width:100%;position:absolute;top:0;left:0;background:rgba(0,0,0,.42);z-index:1;">
+              <div posabs ovhide h100 w100 style="top:0;left:0;z-index:0;">
+                <div h100 w100 posabs z background=hover style="top:0;left:0;"></div>
+                <picture size=full posabs>
+                  <?php $Squad->headline(); ?>
+                </picture>
               </div>
-              <picture size=full style=position:absolute;z-index:0;>
-                <?php $Squad->headline(); ?>
-              </picture>
-            </div>
-          </box-model>
-        </a>
+            </box-model>
+          </a>
 
-        <input type=hidden name=image_type value="headline" />
-        <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-        <input trigger="file-input:change,go" type="file" name="image" size="32" accept="image/*" hidden />
-      </form>
+          <input type=hidden name=image_type value="headline" />
+          <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
+          <input trigger="file-input:change,go" type="file" name="image" size="32" accept="image/*" hidden />
+        </form>
+      </div>
+
+      <div outlined p24 rounded fl alic gap=smol+ slight>
+        <mi std>info</mi>
+        <p text>Choosing an image automatically uploads it, so choose wisely!</p>
+      </div>
     </div>
-
-    <div fl alistart gap=smol slight mb32 mt12 title-inline>
-      <mi std mt2>info</mi>
-      <p text>Choosing an image through the file explorer of your operating system will automatically upload it to your squad.</p>
-    </div>
-
   <?php endif; ?>
 
-  <?php
+  <?php if (
+    $SquadUser->can("manage", "squad")
+    || $SquadUser->can("manage", "users")
+    || $SquadUser->can("coordinate", "users")
+  ) : ?>
+    <div filled=lighter rounded=wide p24>
 
-  /**
-   * This whole section is just shown if the current squad user can
-   * atleast coordinate users.
-   */
-  if ($SquadUser->can("coordinate", "users")) : ?>
-    <box-model filled mb>
-      <bm-inr size=mid>
-
-        <?php
-
-        /**
-         * ? Managing Squad Appearance.
-         */
-        if ($SquadUser->can("manage", "squad")) : ?>
-          <a sub href="/manage/squad/name">
-            <div hoverable p12 style="padding-right:32px;" rounded=mid>
-              <div fl gap align-items=center justify-content=space-between>
-                <div fl gap align-items=center>
-                  <div style="width:3.2em;" fl jucc alic>
-                    <mi mid>format_size</mi>
-                  </div>
-                  <div>
-                    <div fl gap=smol alic>
-                      <p filled=darker pinline8 pblock4 rounded=std text bold smol>
-                        <?= CurrentUser->squad->tag; ?>
-                      </p>
-                      <p rounded=std text bold std>
-                        <?= CurrentUser->squad->name; ?>
-                      </p>
-                    </div>
-                    <p text std>Name & Tag</p>
-                  </div>
+      <?php if ($SquadUser->can("manage", "squad")) : ?>
+        <a sub href="/manage/squad/name">
+          <div hoverable p12 pr18 rounded=mid fl gap alic jucsb>
+            <div fl alic gap>
+              <mi mid style="width:48px;">format_size</mi>
+              <div>
+                <div fl gap=smol alic>
+                  <p filled=darker pinline8 pblock4 rounded=std text bold smol>
+                    <?= CurrentUser->squad->tag; ?>
+                  </p>
+                  <p rounded=std text bold std>
+                    <?= CurrentUser->squad->name; ?>
+                  </p>
                 </div>
-                <mi midler>east</mi>
+                <p text std>Name & Tag</p>
               </div>
             </div>
-          </a>
+            <mi midler>east</mi>
+          </div>
+        </a>
 
-          <div mt=smol mb=smol style="height:1px;width:calc(100% - 2.4em);margin-inline:1.2em;" filled=darker></div>
+        <divide horiz mblock8 minline18></divide>
 
-          <a sub href="/manage/squad/modes">
-            <div hoverable p12 style="padding-right:32px;" rounded=mid>
-              <div fl gap align-items=center justify-content=space-between>
-                <div fl gap align-items=center>
-                  <div style="width:3.2em;" fl jucc alic>
-                    <mi mid>mode_standby</mi>
-                  </div>
-
-                  <div>
-                    <p text std bold>Modes</p>
-                    <p text std>Relevant modes for your squad</p>
-                  </div>
-                </div>
-
-                <mi midler>east</mi>
+        <a sub href="/manage/squad/modes">
+          <div hoverable p12 pr18 rounded=mid fl gap alic jucsb>
+            <div fl alic gap>
+              <mi mid style="width:48px;">mode_standby</mi>
+              <div>
+                <p text std bold>Modes</p>
+                <p text std>Relevant modes for your squad</p>
               </div>
             </div>
-          </a>
+            <mi midler>east</mi>
+          </div>
+        </a>
 
-          <div mt=smol mb=smol style="height:1px;width:calc(100% - 2.4em);margin-inline:1.2em;" filled=darker></div>
-        <?php endif; ?>
+        <divide horiz mblock8 minline18></divide>
+      <?php endif; ?>
 
-        <?php
+      <?php
 
-        /**
-         * ? Coordinating Members.
-         */
-        if ($SquadUser->can("coordinate", "users")) : ?>
-          <a href="/manage/squad/members">
-            <div hoverable p12 style="padding-right:32px;" rounded=mid>
-              <div fl gap align-items=center justify-content=space-between>
-                <div fl gap align-items=center>
-                  <div style="width:3.2em;" fl justify-content=center align-items=center>
-                    <mi mid>groups</mi>
-                  </div>
-                  <div>
-                    <p text std bold>
-                      Members &middot; <span color=company><?= CurrentUser->squad->members_count() ?></span>
-                    </p>
-                    <p text std>Manage members and their status</p>
-                  </div>
-                </div>
-                <div posrel>
-                  <mi midler>east</mi>
-                  <div notification-dot="" style="top:-4px;right:-4px;"></div>
-                </div>
+      # Members that can coordinate other members as well as any rank above this can
+      # enter the members tab. Inside there, the methods to manage the members are li-
+      # mited to what the actual rank can do.
+      if ($SquadUser->can("coordinate", "users")) : ?>
+        <a href="/manage/squad/members">
+          <div hoverable p12 pr18 rounded=mid fl gap alic jucsb>
+            <div fl alic gap>
+              <mi mid style="width:48px;">diversity_3</mi>
+              <div>
+                <p text std bold>
+                  Members &middot;
+                  <span color=company>
+                    <?= CurrentUser->squad->members_count() ?></span>
+                </p>
+                <p text std>Manage members and their status</p>
               </div>
             </div>
-          </a>
-        <?php endif; ?>
-      </bm-inr>
-    </box-model>
+            <div posrel>
+              <mi midler>east</mi>
+              <div notification-dot="" style="top:-4px;right:-4px;"></div>
+            </div>
+          </div>
+        </a>
+      <?php endif; ?>
+    </div>
   <?php endif; ?>
 
 
-  <?php
+  <?php if ($SquadUser->can("manage", "squad")) { ?>
+    <div fl fldircol gap=smol+>
+      <p text mid bold title-inline>Privacy</p>
 
-  /**
-   * ? Squad's Privacy => Chief only.
-   */
-  if ($SquadUser->can("manage", "squad")) { ?>
-    <div title-inline mt=wide mb fl fldircol style="gap:.2em;">
-      <p text midler bold>Privacy</p>
-    </div>
-
-    <div grid-repeat=smol gap=smol>
-      <box-model grid-keeper outlined>
-        <div p24>
+      <div grid-repeat=smol gap=smol>
+        <box-model grid-keeper outlined p18>
           <div p12>
             <p text midler bold>Publicity</p>
             <p text std>Restrict new members to join your squad</p>
@@ -215,11 +180,9 @@ $publicity_text = CurrentUser->squad->joinable === 0
               <mi midler>east</mi>
             </div>
           </a>
-        </div>
-      </box-model>
+        </box-model>
 
-      <box-model grid-keeper outlined>
-        <div p24>
+        <box-model grid-keeper outlined p18>
           <div p12>
             <p text midler bold>Logs</p>
             <p text std>See, what happens in your squad</p>
@@ -230,24 +193,21 @@ $publicity_text = CurrentUser->squad->joinable === 0
           /**
            * @var ?SquadFeedItem
            */
-          $LastLog = $Squad
-            ->logs()
+          $LastLog = $Squad->logs()
             ->whereNot("type", "__post__")
             ->latest()
             ->first();
 
-          if ($LastLog) :
-
-          ?>
+          if ($LastLog) : ?>
 
             <a sub href="<?= "$base_url/logs"; ?>">
               <div hoverable p12 rounded=mid fl gap alic jucsb>
                 <div fl gap=smol+ alic>
-                  <picture size=std circled>
+                  <picture std circled>
                     <?php $LastLog->user->image(); ?>
                   </picture>
                   <div>
-                    <p text std bold trimt><?= $LastLog->user->name(); ?></p>
+                    <p text std bold><?= $LastLog->user->name(); ?></p>
                     <p text smol trimt><?= $LastLog->display_type()->append_text . " " . (!$LastLog->affected_user?->is($LastLog->user) ? $LastLog->affected_user?->name() : ""); ?> &middot; <span color=company><?= Time::ago($LastLog?->created_at, true); ?></p>
                   </div>
                 </div>
@@ -266,37 +226,30 @@ $publicity_text = CurrentUser->squad->joinable === 0
             </div>
 
           <?php endif; ?>
-
-        </div>
-      </box-model>
+        </box-model>
+      </div>
     </div>
   <?php } ?>
 
-  <div title-inline mt=wide mb>
-    <p text midler bold>Advanced options</p>
-  </div>
 
-  <box-model filled mb>
-    <div p24>
+  <div fl fldircol gap=smol+>
+    <p text mid bold title-inline>Others</p>
+
+    <div filled=lighter p24 rounded=wide>
       <a href="/manage/squad/leave">
-        <div hoverable p12 style="padding-right:32px;" rounded=mid>
-          <div fl gap align-items=center justify-content=space-between>
-            <div fl gap align-items=center>
-              <div style="width:3.2em;" fl justify-content=center align-items=center>
-                <mi mid>logout</mi>
-              </div>
-
-              <div>
-                <p text std bold>Leave <?= $Squad->name ?></p>
-                <p text std>Get out of here</p>
-              </div>
+        <div hoverable p12 pr18 rounded=mid fl gap alic jucsb>
+          <div fl gap alic>
+            <mi style="width:48px;" mid>logout</mi>
+            <div>
+              <p text std bold>Leave <?= $Squad->name ?></p>
+              <p text std>Get out of here</p>
             </div>
-
-            <mi midler>east</mi>
           </div>
+
+          <mi midler>east</mi>
         </div>
       </a>
     </div>
-  </box-model>
+  </div>
 
-</div>
+</content>

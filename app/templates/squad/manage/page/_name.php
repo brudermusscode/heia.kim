@@ -14,8 +14,8 @@ $is_disabled = !$Squad->can_change_name();
 
 ?>
 
-<content std minlineauto>
-  <div mt=wide fl gap=mid align-items="center" mb=std>
+<content std minlineauto fl fldircol gap>
+  <div fl alic gap>
     <?php include TEMPLATE . "/squad/manage/_back-button.php"; ?>
     <p text mid bold>Tag & Name</p>
   </div>

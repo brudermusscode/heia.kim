@@ -89,7 +89,7 @@ if (!$Set) : ?>
             <?php if ($FirstBeatmap->is_tv_size()) { ?>
               <div filled color=dynamic rounded=std has-tooltip=bottom>
                 <div style="padding-inline:6px 10px;" pblock4 fl alic gap=smolest>
-                  <mi smol>history_toggle_off</mi>
+                  <mi smol>tv_gen</mi>
                   <p text smol bold ttup><?= __("TV Size") ?></p>
                 </div>
                 <div ttooltip>

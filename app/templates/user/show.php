@@ -6,7 +6,7 @@ use Heiakim\Model\Stat;
 use Heiakim\Model\User;
 
 $id = aglobal("id");
-$sub = aglobal("sub");
+$sub = aglobal("sub") ?? "overview";
 $mode = aglobal("mode") ?? "osu";
 $mod = aglobal("mod") ?? "vanilla";
 

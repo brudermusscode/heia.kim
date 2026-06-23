@@ -15,23 +15,35 @@ use Heiakim\Model\Beatmap;
   </picture>
 
   <inr>
-    <div top fl gap=smol>
+    <div top fl jucsb alistart gap=smol>
       <div class=status_option beatmap-state="<?= $Beatmap->status; ?>">
         <p text std bold ttup><?= htmlspecialchars($Beatmap->status()); ?></p>
       </div>
-      <?php if ($Beatmap->is_tv_size()) { ?>
-        <div class=status_option background=dynamic rounded=std has-tooltip=bottom>
-          <div fl align-items=center gap=smol>
-            <p>
-              <i class="mi" size=smol+ bold>history_toggle_off</i>
-            </p>
-            <p text std bold ttup><?= __("TV Size") ?></p>
+      <div fl alic gap=smoler>
+        <?php if ($Beatmap->is_tv_size()) : ?>
+          <div class=status_option background=dynamic rounded=std has-tooltip=bottom>
+            <div fl align-items=center gap=smol>
+              <mi std bold>tv_gen</mi>
+              <p text std bold ttup><?= __("TV Size") ?></p>
+            </div>
+            <div ttooltip>
+              <p text std bold><?= __("Short version of a longer song") ?></p>
+            </div>
           </div>
-          <div ttooltip>
-            <p text std bold><?= __("Short version of a longer song") ?></p>
+        <?php endif;
+
+        if ($Artists->count() > 1) : ?>
+          <div class=status_option background=dynamic rounded=std has-tooltip=bottom>
+            <div fl align-items=center gap=smol>
+              <mi std bold>diversity_3</mi>
+              <p text std bold ttup><?= __("Feature") ?></p>
+            </div>
+            <div ttooltip>
+              <p text std bold><?= __("Feature between two or more artists") ?></p>
+            </div>
           </div>
-        </div>
-      <?php } ?>
+        <?php endif; ?>
+      </div>
     </div>
 
     <div bottom w100 fl alic>

@@ -5,7 +5,7 @@
   <mode-menu>
     <jump-menu mm-menu filled="lighter" elevated color="dynamic">
       <div jm-inr>
-        <p dno text bold smol pinline4 pblock14 ttup slighter>Compose new</p>
+        <p text smol pinline14 pblock8 ttup slighter>Compose New post</p>
         <div
           request-get="ui:posting-machine"
           data-type=squad:post
@@ -32,12 +32,14 @@
       </div>
     </jump-menu>
 
-    <mbutton wide mm-open has-icon=left elevated=mid background=company color=company-text>
-      <div mm-open-loading>
-        <?php include COMPONENT . "/dot-loader.html"; ?>
-      </div>
-      <mi>add</mi>
-      <p text bold>Compose</p>
-    </mbutton>
+    <div has-tooltip=left>
+      <mbutton wide mm-open icon-only elevated=mid background=green color=light>
+        <div mm-open-loading>
+          <?php include COMPONENT . "/dot-loader.html"; ?>
+        </div>
+        <mi>add_notes</mi>
+      </mbutton>
+      <div ttooltip>Compose</div>
+    </div>
   </mode-menu>
 <?php endif; ?>
