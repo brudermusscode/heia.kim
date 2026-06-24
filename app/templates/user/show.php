@@ -21,6 +21,9 @@ $User = $is_my_profile ? CurrentUser : User::with("profile")->find($id);
 
 redirect_unauthorized($User);
 
+# Every User is missing a profile.
+$User->create_default_profile();
+
 # Admins and elevated people should be able to access any profile without restriction.
 $bypass_restricted_screen = $User && (
   $is_my_profile || CurrentUser->priv > 4

@@ -53,7 +53,7 @@ class Cookie
     /**
      * @var bool
      */
-    $is_https = $_SERVER["REQUEST_SCHEME"] !== "http";
+    $is_https = str_starts_with($_SERVER["HTTP_HOST"], "www.");
 
     /**
      * @var string

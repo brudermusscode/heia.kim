@@ -26,26 +26,8 @@ class Domain
     if (current_env() === "dev")
       return _env("DOMAIN");
 
-    /**
-     * Remove port
-     */
-    $name = preg_replace("/:[0-9]+/", "", $domain);
+    $name = preg_replace('/^[^.]+\./', '', $domain);
 
-    /**
-     * Remove www.
-     */
-    $name = str_replace('www.', '', $name);
-
-    /**
-     * Remove the leading dot if there.
-     */
-    if ($name[0] == '.')
-      $name = substr($name, 1);
-
-
-    /**
-     * Set to localhost
-     */
     if (in_array($name, self::$localhost_domains))
       return "localhost";
 

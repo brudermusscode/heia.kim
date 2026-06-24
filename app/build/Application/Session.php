@@ -134,29 +134,16 @@ class Session
    */
   public static function begin(?string $cacheExpire = null, ?string $cacheLimiter = null)
   {
-    /**
-     * Return, if there is an active session.
-     */
-    if (!self::is_inactive())
+
+    if (session_status() !== PHP_SESSION_NONE)
       return;
 
-    /**
-     * Set cache limiter?
-     */
-    if ($cacheLimiter !== null) {
+    if ($cacheLimiter)
       session_cache_limiter($cacheLimiter);
-    }
 
-    /**
-     * Set cache expiry?
-     */
-    if ($cacheExpire !== null) {
+    if ($cacheExpire)
       session_cache_expire($cacheExpire);
-    }
 
-    /**
-     * PHPSESSID cookie parameter.
-     */
     session_set_cookie_params([
       'lifetime' => 438000 * 60,
       'path' => '/',
@@ -180,24 +167,8 @@ class Session
       'samesite' => "Lax",
     ]);
 
-    /**
-     * Set a custom name for the PHPSESSID cookie.
-     */
     session_name(self::$session_name);
 
-    /**
-     * Start the session.
-     */
     session_start();
-  }
-
-  /**
-   * Checks if a PHP Session is not existing.
-   *
-   * @return bool
-   */
-  public static function is_inactive()
-  {
-    return session_status() === PHP_SESSION_NONE;
   }
 }

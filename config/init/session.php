@@ -16,10 +16,12 @@ define("SESSION", Session::valid(
   token: Cookie::get(Session::$persistent_cookies[1])
 ));
 
+// pdie($_SESSION);
+
 # Repersist the Session's relations so anything is set.
 # Always. And it will refresh all instances inside the
 # PHP session object.
-SESSION?->persist();
+// SESSION?->persist();
 
 # As I have been using LOGGED around the app for always
 # but returning a Session instance, we can define the old

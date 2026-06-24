@@ -585,6 +585,8 @@ class User extends Justin
    */
   public function create_default_profile()
   {
+    if ($this->profile) return;
+
     return $this->profile()
       ->create([
         "sections_visibility" => Arr::to_json(
