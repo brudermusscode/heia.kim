@@ -1,6 +1,5 @@
 <?php
 
-use Heiakim\Model\User;
 use Heiakim\Model\Gamemode;
 use Heiakim\Model\Squad;
 
@@ -8,19 +7,10 @@ use Heiakim\Model\Squad;
  * @var Squad $Squad
  */
 
-/**
- * Temporarily set this to update all squads.
- */
 $Squad->update_performance();
 
-/**
- * @var bool
- */
 $set_appart ??= false;
 
-/**
- * @var bool
- */
 $is_my_clan = CurrentUser->squad?->is($Squad);
 
 if ($is_my_clan) {
@@ -179,12 +169,8 @@ if ($is_my_clan) {
 
               <?php if ($Squad->modes) : ?>
                 <div fl gap=smol filled color=dynamic rounded=wide fl alic jucc gap=smol pinline10>
-                  <?php
-
-                  foreach ((array) $Squad->modes() as $active_mode => $active) :
-                    if (!$active) continue;
-
-                  ?>
+                  <?php foreach ((array) $Squad->modes as $active_mode => $active) :
+                    if (!$active) continue; ?>
                     <div has-tooltip=bottom>
                       <i text midler class="osu-icon osu-<?= $active_mode === "osu" ? "vanilla" : $active_mode; ?>"></i>
                       <div ttooltip>

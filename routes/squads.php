@@ -58,6 +58,7 @@ $Router->get(
     return "🏆 " . $Squad?->name ?? "Vanished" . " on " . APP_NAME;
   }
 );
+$Router->get("/squad/new",  "squad/new",  return: JSON);
 $Router->get("/squad/fetch",  "squad/fetch",  return: JSON);
 $Router->get("/squad/get-content/manage/promote-user",  "squad/get-content/manage/promote-user",  return: JSON);
 $Router->get("/squad/get-content/manage/restrict-user",  "squad/get-content/manage/restrict-user",  return: JSON);

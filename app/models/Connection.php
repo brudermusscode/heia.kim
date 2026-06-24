@@ -184,7 +184,7 @@ class Connection extends Justin
       ->whereNotNull("user_id")
       ->first()
       # If no Connection is found, die and tell the User to register first.
-      ?? die(error("<strong>You have not signed up yet!</strong> <a href='/register'>Do here</a>, my friend."));
+      ?? die(error("<strong>You have not signed up yet!</strong> <a href='/register'>Do here &nbsp; <mi disi smol>open_in_new</mi></a>"));
 
     return $Connection;
   }

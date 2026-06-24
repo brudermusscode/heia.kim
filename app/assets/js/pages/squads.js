@@ -6,6 +6,14 @@ import * as Request from "../requests";
 $(function () {
   //
 
+  $(document).on("change", '[request="squad:update"] input[type=file]', function (e) {
+    e.preventDefault();
+
+    let form = this.closest("form");
+
+    $(form).submit();
+  });
+
   /**
    * Create squad
    *

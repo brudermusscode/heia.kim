@@ -11,5 +11,6 @@ Routing:
 + Use route path if template path is same (/user/create => user/create)
 
 Profiles:
++ Priv 0 will show restricted screen.
 + Headline fade optional
 + Moving parts should not exchange with the part you drop it on

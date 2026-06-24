@@ -67,3 +67,6 @@ global $CurrentSquadUser;
 $CurrentSquadUser = $CurrentSquad && $CurrentSquad->exists
   ? CurrentUser->squad_user
   : null;
+
+# ! Temporary
+CurrentUser?->reload_session();

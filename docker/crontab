@@ -1,3 +1,3 @@
-* * * * * root /usr/bin/php /data/tasks/run-jobs.php >> /data/storage/logs/cron.log 2>&1
-* * * * * root sleep 20; /usr/bin/php /data/tasks/run-jobs.php >> /data/storage/logs/cron.log 2>&1
-* * * * * root sleep 40; /usr/bin/php /data/tasks/run-jobs.php >> /data/storage/logs/cron.log 2>&1
+0 * * * * root /usr/bin/php /data/tasks/run-jobs.php >> /data/storage/logs/cron.log 2>&1
+#* * * * * root sleep 20; /usr/bin/php /data/tasks/run-jobs.php >> /data/storage/logs/cron.log 2>&1
+#* * * * * root sleep 40; /usr/bin/php /data/tasks/run-jobs.php >> /data/storage/logs/cron.log 2>&1

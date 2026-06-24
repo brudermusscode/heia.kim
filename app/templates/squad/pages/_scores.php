@@ -215,7 +215,7 @@ $modes = $mod
             $is_first = true;
 
             foreach ($HighestRankingMembers as $key => $Member) :
-              $performance = (object) json_decode($Member->performance, true)[$gumode];
+              $performance = $Member->performance[$gumode];
 
             ?>
 
@@ -228,7 +228,8 @@ $modes = $mod
                     <div fl alic gap=smoler>
                       <p text bold><?= $Member->user->name(); ?></p>
                       <p text mid bold slighter style="margin-top:-.2em;">·</p>
-                      <p text color=company><?= number_format($performance->performance); ?>pp</p>
+                      <p text color=company>
+                        <?= number_format($performance["performance"]); ?>pp</p>
                     </div>
                   </div>
                   <mi size=std>east</mi>
@@ -238,11 +239,7 @@ $modes = $mod
             <?php
 
               $is_first = false;
-
-              /**
-               * @var int
-               */
-              $last_member_performance = $performance->performance;
+              $last_member_performance = $performance["performance"];
             endforeach; ?>
 
             <?php if ($Squad->members_count() > 5) : ?>

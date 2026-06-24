@@ -23,42 +23,40 @@ $publicity_text = CurrentUser->squad->joinable === 0
   <?php if ($SquadUser->can("manage", "squad")) : ?>
     <div fl fldircol gap=smol+>
       <div grid-repeat=smol gap=smol>
-        <form data-form="squad:update:image" style=flex:1;>
-          <a data-action="squad:imagery" select-choose-file>
-            <div p26 ripple-effect clickable filled=lighter rounded=mid fl gap alic jucsb>
-              <div fl gap alic>
-                <picture midplus circled>
-                  <?php $Squad->logo(); ?>
-                </picture>
-                <p text bold midler>Logo</p>
-              </div>
-              <mi midler color=company>arrow_selector_tool</mi>
+        <form request="squad:update" reload responder=simple flone>
+          <div select-choose-file data-type="logo"
+            p26 ripple-effect clickable filled=lighter rounded=mid fl alic jucsb>
+            <div fl gap alic>
+              <picture midplus circled>
+                <?php $Squad->logo(); ?>
+              </picture>
+              <p text bold midler>Logo</p>
             </div>
-          </a>
+            <mi midler color=company>arrow_selector_tool</mi>
+          </div>
 
           <input type=hidden name=image_type value="logo" />
           <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-          <input trigger="file-input:change,go" type="file" name="image" size="32" accept="image/*" hidden />
+          <input type="file" name="image" size="32" accept="image/*" hidden />
         </form>
 
-        <form data-form="squad:update:image" style=flex:1;>
-          <a data-action="squad:imagery" select-choose-file data-type="headline">
-            <box-model p48 ripple-effect clickable filled rounded=mid ovhid>
-              <div z color=white fl alic jucsb>
-                <div fl gap alic>
-                  <mi wide>wallpaper</mi>
-                  <p text bold midler>Headline</p>
-                </div>
-                <mi midler color=company>arrow_selector_tool</mi>
+        <form data-form="squad:update" style=flex:1;>
+          <box-model select-choose-file data-type="headline"
+            p48 ripple-effect clickable filled rounded=mid ovhid>
+            <div z color=white fl alic jucsb>
+              <div fl gap alic>
+                <mi wide>wallpaper</mi>
+                <p text bold midler>Headline</p>
               </div>
-              <div posabs ovhide h100 w100 style="top:0;left:0;z-index:0;">
-                <div h100 w100 posabs z background=hover style="top:0;left:0;"></div>
-                <picture size=full posabs>
-                  <?php $Squad->headline(); ?>
-                </picture>
-              </div>
-            </box-model>
-          </a>
+              <mi midler color=company>arrow_selector_tool</mi>
+            </div>
+            <div posabs ovhide h100 w100 style="top:0;left:0;z-index:0;">
+              <div h100 w100 posabs z background=hover style="top:0;left:0;"></div>
+              <picture size=full posabs>
+                <?php $Squad->headline(); ?>
+              </picture>
+            </div>
+          </box-model>
 
           <input type=hidden name=image_type value="headline" />
           <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />

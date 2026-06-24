@@ -19,12 +19,12 @@ $mode_string = $mode ? Gamemode::mode_full($mode) : null;
 # Prepare publicity filter.
 $publicity = GET->publicity ?? null;
 $publicity =
-  $publicity !== null && in_array($publicity, Squad::$joinable)
+  $publicity !== null && in_array($publicity, Squad::$joinable_map)
   ? $publicity
   : null;
 
 if ($publicity !== null) {
-  $publicity_array_string = array_search($publicity, Squad::$joinable);
+  $publicity_array_string = array_search($publicity, Squad::$joinable_map);
   $publicity_string = $publicity_array_string == "request" ? "On request only" : $publicity_array_string;
 }
 
@@ -100,7 +100,8 @@ include TEMPLATE . "/home/_page-navigator.php"; ?>
 </header>
 
 <div header-page-content content-width=widest fl fldircol content-gap>
-  <div class="page_filter" filter click-to-add style=z-index:102;>
+  <div class="page_filter" filter click-to-add fl alic jucsb title-inline
+    style=z-index:102;>
 
     <!--- INFINITE SCROLL PARAMETER --->
     <form data-form="infinite-scroll" data-form-type=beatmaps fl jucstart>
@@ -127,7 +128,7 @@ include TEMPLATE . "/home/_page-navigator.php"; ?>
 
                 <?php
 
-                foreach (Squad::$joinable as $joinable => $state) {
+                foreach (Squad::$joinable_map as $joinable => $state) {
                   if ($joinable === "request")
                     $joinable = "On request only";
 
@@ -160,6 +161,12 @@ include TEMPLATE . "/home/_page-navigator.php"; ?>
 
       <button type=submit name=ass>submit</button>
     </form>
+
+    <!--- Other actions --->
+    <mbutton request-get="squad:new" mid outlined has-icon=left>
+      <mi>add</mi>
+      Create Squad
+    </mbutton>
   </div>
 
   <?php

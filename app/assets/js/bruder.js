@@ -217,8 +217,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     let form = this.closest("form");
     let input = form.querySelector("input[type=file]");
 
-    console.log(input);
-
     input.click();
   });
 

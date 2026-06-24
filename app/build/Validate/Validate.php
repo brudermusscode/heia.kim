@@ -64,9 +64,6 @@ class Validate
   public static function string_length(int $min, int $max, string $str)
   {
 
-    /**
-     * Trim any whitespace from the beginning and end of the string.
-     */
     $str = trim($str);
 
     return strlen($str) >= $min && strlen($str) <= $max;

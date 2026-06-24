@@ -5,7 +5,6 @@ namespace Heiakim\Model;
 use Heiakim\Justin;
 use Heiakim\Http\Request;
 use Heiakim\Time\Time;
-use Heiakim\Application\Exception;
 use Heiakim\Application\Logger;
 use Heiakim\Utils\Str;
 use Heiakim\Enum\SquadPrivilege;
@@ -22,14 +21,9 @@ use Intervention\Image\Interfaces\ImageInterface;
 
 class Squad extends Justin
 {
-  /**
-   * @var string
-   */
+
   protected $table = "clans";
 
-  /**
-   * @var array
-   */
   protected $fillable = [
     "name",
     "tag",
@@ -50,53 +44,32 @@ class Squad extends Justin
     "owner" => 3,
   ];
 
-  /**
-   * @var array
-   */
   protected $casts = [
     "performance" => "array",
     "modes" => "array",
   ];
 
-  /**
-   * @var array
-   */
-  public static $privileges = [
+  public static array $privileges = [
     "owner" => 2,
     "member" => 1,
   ];
 
-  /**
-   * @var array
-   */
-  public static $joinable = [
+  public static array $joinable_map = [
     "private" => 0, // private, no one can join
     "request" => 1, // requests, people have to request membership
     "public" => 2, // public, everyone can join
   ];
 
-  /**
-   * @var string
-   */
-  public static $name_constraint = '/^[A-Za-z0-9_#&+$!()?\- öäüÖÄÜß]+$/';
+  public static string $name_constraint = '/^[A-Za-z0-9_#&+$!()?\- öäüÖÄÜß]+$/';
 
-  /**
-   * @var string
-   */
-  public static $tag_constraint = '/^[A-Za-z0-9]+$/';
+  public static string $tag_constraint = '/^[A-Za-z0-9]+$/';
 
-  /**
-   * @var array
-   */
-  protected static $length = [
+  protected static array $length = [
     "name" => [1, 16],
     "tag" => [1, 6],
   ];
 
-  /**
-   * @var array
-   */
-  public static $default_performance = [
+  public static array $default_performance = [
     0 => [
       "performance" => 0,
       "accuracy" => 0.00,
@@ -161,6 +134,7 @@ class Squad extends Justin
   // TODO: Fetch squad intern scores based on join time of members.
   public function view(array $modes, array $status, int $limit, int $offset = 0)
   {
+
     return Score::with("user")
 
       /**
@@ -188,173 +162,6 @@ class Squad extends Justin
       ->offset($offset)
       ->limit($limit)
       ->get();
-  }
-
-  /**
-   * @param object $param
-   * @return object
-   */
-  public function new(object $params)
-  {
-    /**
-     * @var User
-     */
-    $CurrentUser = $params->CurrentUser;
-
-    /**
-     * ? Joinable
-     * If 'Open for all' was set, set the value to
-     * 2 which means open for all.
-     * 1 is join by request and
-     * 0 is private, which will only be setable through the squad
-     * settings in the my page
-     */
-    $params->joinable = $params->joinable ? 2 : 1;
-
-    /**
-     * ? Tag
-     * Strip whitespace from tag.
-     * @var string
-     */
-    $params->tag = Str::strip_whitespace($params->tag);
-
-    /**
-     * @var Request
-     */
-    $tag_is_valid = $this->tag_is_valid($params->tag, return_json_string: false);
-
-    /**
-     * Tag is valid?
-     * ! Error
-     */
-    if (!$tag_is_valid->status)
-      return $tag_is_valid;
-
-    /**
-     * ? Name
-     * Need to htmlspecialchars_decode() the name, because it
-     * has been serialized by the controller validation.
-     * @var string
-     */
-    $params->name = trim(htmlspecialchars_decode($params->name));
-
-    /**
-     * @var Request
-     */
-    $name_is_valid = $this->name_is_valid($params->name, return_json_string: false);
-
-    /**
-     * Name is valid?
-     * ! Error
-     */
-    if (!$name_is_valid->status)
-      return $name_is_valid;
-
-    /**
-     * Begin new database transaction.
-     */
-    $this->db_transaction();
-
-    try {
-
-      /**
-       * Delete pending SquadRequests of current user
-       */
-      $CurrentUser
-        ->squad_requests()
-        ->delete();
-
-      /**
-       * Validate modes.
-       */
-      $modes = [
-        "osu" => $params->osu ? 1 : 0,
-        "taiko" => $params->taiko ? 1 : 0,
-        "mania" => $params->mania ? 1 : 0,
-        "ctb" => $params->ctb ? 1 : 0,
-      ];
-
-      /**
-       * @var Squad
-       */
-      $Squad = self::create([
-        "owner" => $CurrentUser->id,
-        "name" => $params->name,
-        "tag" => $params->tag,
-        "joinable" => $params->joinable,
-        "modes" => $modes,
-        "updated_at" => null,
-      ]);
-
-      /**
-       * @var Squad
-       */
-      $Squad = $Squad->fresh();
-
-      /**
-       * @var SquadUser
-       */
-      $SquadUser = $Squad->members()
-        ->create([
-          "user_id" => $params->CurrentUser->id,
-          "clan_priv" => SquadPrivilege::CHIEF->value
-            + SquadPrivilege::MEMBER->value
-            + SquadPrivilege::UNRESTRICTED->value,
-        ]);
-
-      /**
-       * Set SquadUsers default performance.
-       */
-      $SquadUser->update_performance();
-
-      /**
-       * Add performance.
-       */
-      $Squad->update_performance();
-
-      /**
-       * Create log.
-       */
-      $Squad->logs()
-        ->create([
-          "user_id" => $params->CurrentUser->id,
-          "type" => "__squad__/created",
-        ]);
-
-      /**
-       * Update user.
-       */
-      $CurrentUser->update([
-        "clan_id" => $Squad->id
-      ]);
-
-      /**
-       * Commit all database transaction changes.
-       */
-      $this->db_commit();
-
-      /**
-       * Cache performance.
-       */
-      $Squad->cache_performance();
-    } catch (\Exception $e) {
-      Logger::to_file($e);
-
-      /**
-       * Rollback all database transaction changes.
-       */
-      $this->db_rollback();
-
-      /**
-       * ! Error
-       */
-      return $this->error("!ERROR_TRANSACTION");
-    }
-
-    /**
-     * * Success
-     */
-    return $this->success("<strong>Your squad <a extern target='_blank' href='/squad/$Squad->id' sub>($params->tag) $params->name &nbsp; <i class='ri-link-unlink'></i></a> has been created!</strong>");
   }
 
   /**
@@ -497,7 +304,7 @@ class Squad extends Justin
      * ? Publicity
      */
     if (isset($params->joinable)) {
-      if (!in_array($params->joinable, self::$joinable))
+      if (!in_array($params->joinable, self::$joinable_map))
         return $this->error();
 
       /**
@@ -809,70 +616,131 @@ class Squad extends Justin
     }
   }
 
+
+  /**
+   * @param string $name
+   * @return void
+   *
+   * NOTE: Will die on error.
+   */
+  public function set_name_invalid(string $name)
+  {
+
+    $name = trim($name);
+
+    # ? In use
+    if (self::where("name", $name)->first())
+      return die(error("Tag is in use!"));
+
+    $min = self::$length["name"][0];
+    $max = self::$length["name"][1];
+
+    # ? Valid length
+    if (!Validate::string_length($min, $max, $name))
+      return die(error(
+        "<strong>Name</strong> should be <strong> $min to $max </strong> chars long.",
+      ));
+
+    # ? All chars are valid
+    if (!Validate::string_matches(self::$name_constraint, $name))
+      return die(error(
+        "Only <strong>alphanumeric characters</strong> and <strong>-_#+$&!?()</strong> are allowed in the name!",
+      ));
+
+    $this->name = $name;
+  }
+
+  /**
+   * @param string $tag
+   * @return void
+   *
+   * NOTE: Will die on error.
+   */
+  public function set_tag_invalid(string $tag)
+  {
+
+    $tag = Str::strip_whitespace($tag);
+
+    # ? In use
+    if (self::where("tag", $tag)->first())
+      return die(error("Tag is in use!"));
+
+    $min = self::$length["name"][0];
+    $max = self::$length["name"][1];
+
+    # ? Valid length
+    if (!Validate::string_length($min, $max, $tag))
+      return die(error(
+        "<strong>Tag</strong> should be <strong> $min to $max </strong> chars long.",
+      ));
+
+    # ? All chars are valid
+    if (!Validate::string_matches(self::$tag_constraint, $tag))
+      return die(error(
+        "Only <strong>alphanumeric characters</strong> are allowed in the tag!",
+      ));
+
+    $this->tag = $tag;
+  }
+
+  /**
+   * @return void
+   */
+  public function set_modes()
+  {
+    $this->modes = [
+      "osu" => 1,
+      "taiko" => 1,
+      "mania" => 1,
+      "ctb" => 1,
+    ];
+    $this->save();
+  }
+
   /**
    * @return void
    */
   public function cache_performance()
   {
+
     /**
-     * @var \Predis\Client
+     * @var \Redis
      */
     $Redis = $this->redis();
 
     foreach (Gamemode::$modes as $gumode) {
-
-      /**
-       * Skip, if the mode is disabled.
-       *
-       * @var string
-       */
       $mode = Gamemode::gumode_to_mode($gumode);
+
+      # Set modes in case any mode is not set. All should always be atleast set.
+      if (empty($this->modes[$mode]))
+        $this->set_modes();
+
+      # Continue if the mode is disabled fot his Squad.
       if ($this->modes[$mode] == 0)
         continue;
 
       /**
        * @var array
        */
-      $performance = $this->performance;
+      $performances = $this->performance;
 
-      /**
-       * @var string
-       */
       $rkey = RedisRegistry::$leaderboard_keys["squads"] . ":$mode";
 
-      /**
-       * Add all keys.
-       */
-      $Redis->zadd("$rkey", $performance[$gumode]["performance"], $this->id);
-      $Redis->zadd("$rkey:rscore", $performance[$gumode]["ranked_score"], $this->id);
-      $Redis->zadd("$rkey:tscore", $performance[$gumode]["total_score"], $this->id);
+      $Redis->zadd("$rkey", $performances[$gumode]["performance"], $this->id);
+      $Redis->zadd("$rkey:rscore", $performances[$gumode]["ranked_score"], $this->id);
+      $Redis->zadd("$rkey:tscore", $performances[$gumode]["total_score"], $this->id);
     }
-
-    return;
   }
 
   /**
-   * Calculates the performance for every mode and sets it for the
-   * current Squad.
+   * Calculates the performance for every mode and sets it.
    *
    * @return void
    */
   public function update_performance(?array $skip_members = null)
   {
-    /**
-     * Keeps track of the overall performance of all players
-     * together, exluding the ones that have not played.
-     *
-     * @var array
-     */
-    $stats = [];
 
-    /**
-     * Keeps track of how many members have played a specific
-     * gumode already (pp > 0)
-     *
-     * @var array
-     */
+    $stats = [];
     $members_in_gumodes = [
       0 => 0,
       1 => 0,
@@ -883,196 +751,57 @@ class Squad extends Justin
       6 => 0,
       8 => 0,
     ];
-
-    /**
-     * Keeps track of how many members are taken into account for
-     * performance calculation. Exluding restricted ones.
-     *
-     * @var int
-     */
     $count = 0;
 
-    /**
-     * Iterate through all members.
-     */
     foreach ($this->members as $Member) {
 
       /**
        * @var SquadUser $Member
        */
 
-      /**
-       * Continue if the member doesn't have any stats yet.
-       */
       if (!$Member->performance) continue;
 
-
-      /**
-       * Skip certain members.
-       */
+      # We don't want certain members specified…
       if ($skip_members !== null && in_array($Member->id, $skip_members))
         continue;
 
-      /**
-       * Skip on restricted members.
-       */
+      # …or restricted ones - Excuse me 🙂
       if ($Member->is_restricted() || $Member->user->is_restricted())
         continue;
 
-      /**
-       * @var object
-       */
-      $member_performance = json_decode($Member->performance, true);
-
-      /**
-       * A new member, increase!
-       */
       $count++;
 
-      /**
-       * Iterate through all gumodes.
-       */
       foreach (Gamemode::$modes as $gumode) {
 
-        /**
-         * Continue if there are no performances for this gumode yet.
-         */
-        if (empty($member_performance[$gumode]))
+        if (empty($Member->performance[$gumode]))
           continue;
 
-        /**
-         * The user has played in this gumode, so we increase the
-         * members count in the respective array.
-         */
-        if ($member_performance[$gumode]["performance"] != 0)
+        if ($Member->performance[$gumode]["performance"] != 0)
           $members_in_gumodes[$gumode] += 1;
 
-
         $stats[$gumode] = [
-          "performance"  => ($stats[$gumode]["performance"] ?? 0)  + (int) $member_performance[$gumode]["performance"],
-          "accuracy"     => ($Stats[$gumode]["accuracy"] ?? 0)     + (float) $member_performance[$gumode]["accuracy"],
-          "ranked_score" => ($Stats[$gumode]["ranked_score"] ?? 0) + (int) $member_performance[$gumode]["ranked_score"],
-          "total_score"  => ($Stats[$gumode]["total_score"] ?? 0)  + (int) $member_performance[$gumode]["total_score"],
-          "plays"        => ($Stats[$gumode]["plays"] ?? 0)        + (int) $member_performance[$gumode]["plays"],
+          "performance" => ($stats[$gumode]["performance"] ?? 0)
+            + (int) $Member->performance[$gumode]["performance"],
+          "accuracy" => ($Stats[$gumode]["accuracy"] ?? 0)
+            + (float) $Member->performance[$gumode]["accuracy"],
+          "ranked_score" => ($Stats[$gumode]["ranked_score"] ?? 0)
+            + (int) $Member->performance[$gumode]["ranked_score"],
+          "total_score" => ($Stats[$gumode]["total_score"] ?? 0)
+            + (int) $Member->performance[$gumode]["total_score"],
+          "plays" => ($Stats[$gumode]["plays"] ?? 0)
+            + (int) $Member->performance[$gumode]["plays"],
         ];
       }
     }
 
-    /**
-     * Divide the accuracy of each mode by the members count.
-     */
+    # Divide the accuracy of each mode by the members count.
     foreach ($stats as $gumode => $values) {
       $stats[$gumode]["accuracy"] = $members_in_gumodes[$gumode] < 1 ? 0.000 : $stats[$gumode]["accuracy"] / $members_in_gumodes[$gumode];
     }
 
-    /**
-     * Update it!
-     */
     $this->performance = $stats;
     $this->save();
-
-    return;
   }
-
-  /**
-   * @param string $str
-   * @param bool $return_json_string
-   * @return Request|string
-   */
-  public function name_is_valid(string $str, bool $return_json_string = true)
-  {
-    /**
-     * Name is set?
-     * ! Error
-     */
-    if (!$str)
-      return $this->error("<strong>Fill in a name!</strong>", $return_json_string);
-
-    /**
-     * Name is in use already?
-     * ! Error
-     */
-    if (self::where("name", $str)->first())
-      return $this->error(
-        "This <strong>name</strong> is already in use. Please choose another one!",
-        $return_json_string
-      );
-
-    /**
-     * Name length is valid?
-     * ! Error
-     */
-    if (!Validate::string_length(self::$length["name"][0], self::$length["name"][1], $str))
-      return $this->error(
-        "Your <strong>name</strong> may only be <strong>" . self::$length["name"][0] . " to " . self::$length["name"][1] . " characters in length</strong>.",
-        $return_json_string
-      );
-
-    /**
-     * Name chars are valid?
-     * ! Error
-     */
-    if (!Validate::string_matches(self::$name_constraint, $str))
-      return $this->error(
-        "Only <strong>alphanumeric characters</strong> and <strong>-_#+$&!?()</strong> are allowed in the name!",
-        $return_json_string
-      );
-
-    /**
-     * * Success
-     */
-    return $this->success(return_json_string: $return_json_string);
-  }
-
-  /**
-   * @param string $str
-   * @param bool $return_json_string
-   * @return Request|string
-   */
-  public function tag_is_valid(string $str, bool $return_json_string = true)
-  {
-
-    /**
-     * Tag is set?
-     * ! Error
-     */
-    if (!$str)
-      return $this->error("<strong>Fill in a tag!</strong>", $return_json_string);
-
-    /**
-     * Tag is in use already?
-     * ! Error
-     */
-    if (self::where("tag", $str)->first())
-      return (new Request)->error("<strong>This tag is already in use.</strong> Please choose another one!");
-
-    /**
-     * Tag length is valid?
-     * ! Error
-     */
-    if (!Validate::string_length(self::$length["tag"][0], self::$length["tag"][1], $str))
-      return $this->error(
-        "Your <strong>tag</strong> may only be <strong>" . self::$length["tag"][0] . " to " . self::$length["tag"][1] . " characters in length</strong>.",
-        $return_json_string
-      );
-
-    /**
-     * Tag chars are valid?
-     * ! Error
-     */
-    if (!Validate::string_matches(self::$tag_constraint, $str))
-      return $this->error(
-        "Only <strong>alphanumeric characters</strong> are allowed in the tag!",
-        $return_json_string
-      );
-
-    /**
-     * * Success
-     */
-    return $this->success(return_json_string: $return_json_string);
-  }
-
-  // ? >>>>>>>>>>>>>>>>>> DISPLAY >>>>>>>>>>>>>>>>>>>>
 
   /**
    * @return string
@@ -1114,23 +843,9 @@ class Squad extends Justin
    */
   public function display_publicity()
   {
-    $publicity = array_flip(Squad::$joinable)[$this->joinable];
+    $publicity = array_flip(Squad::$joinable_map)[$this->joinable];
 
     return $publicity === "request" ? "Closed" : ucfirst($publicity);
-  }
-
-  /**
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,, MODES ,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   */
-
-  /**
-   * @return object
-   */
-  public function modes()
-  {
-    return (object) $this->modes;
   }
 
   /**
@@ -1251,20 +966,15 @@ class Squad extends Justin
   public function highest_ranking_members(int $gumode, int $count = 5)
   {
 
-    /**
-     * Mode is valid?
-     */
     if (!array_key_exists($gumode, Gamemode::$modes))
       $gumode = 0;
 
     return $this->members
       ->filter(function ($user) use ($gumode) {
-        $performance = json_decode($user->performance, true);
-        return ((int) ($performance[$gumode]["performance"] ?? 0)) > 0;
+        return ((int) ($user->performance[$gumode]["performance"] ?? 0)) > 0;
       })
       ->sortByDesc(function ($user) use ($gumode) {
-        $performance = json_decode($user->performance, true);
-        return $performance[$gumode]['performance'] ?? 0;
+        return $user->performance[$gumode]['performance'] ?? 0;
       })->take($count);
   }
 
@@ -1420,7 +1130,7 @@ class Squad extends Justin
    */
   public function is_private()
   {
-    return $this->joinable === self::$joinable["private"];
+    return $this->joinable === self::$joinable_map["private"];
   }
 
   /**
@@ -1430,7 +1140,7 @@ class Squad extends Justin
    */
   public function is_public()
   {
-    return $this->joinable === self::$joinable["public"];
+    return $this->joinable === self::$joinable_map["public"];
   }
 
   /**

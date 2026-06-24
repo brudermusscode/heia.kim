@@ -12,19 +12,14 @@ use Heiakim\Enum\SquadPrivilege;
 use Heiakim\Model\Comment;
 use Heiakim\Model\Gamemode;
 use Heiakim\Model\Image;
+use Heiakim\Model\Stat;
 use Heiakim\Utils\Arr;
 
 class SquadUser extends Justin
 {
 
-  /**
-   * @var string
-   */
   protected $table = "clan_users";
 
-  /**
-   * @var array
-   */
   protected $fillable = [
     "user_id",
     "clan_id",
@@ -33,9 +28,6 @@ class SquadUser extends Justin
     "updated_at",
   ];
 
-  /**
-   * @var array
-   */
   protected $attributes = [
     "id" => 0,
     "user_id" => 0,
@@ -45,10 +37,11 @@ class SquadUser extends Justin
     "updated_at" => null,
   ];
 
-  /**
-   * @var array
-   */
-  protected static $performance_parts = [
+  protected $casts = [
+    "performance" => "array",
+  ];
+
+  protected static array $performance_parts = [
     "performance" => 0,
     "accuracy" => 0.00,
     "total_score" => 0,
@@ -526,16 +519,14 @@ class SquadUser extends Justin
   }
 
   /**
-   * Calculates the base performances for each active game mode
-   * from the user attached to the squad user and saves it to the database.
+   * Calculates the base performances for each active game mode from the user atta-
+   * ched to the squad user and saves it to the database.
    *
    * @return void
    */
   public function update_performance()
   {
-    /**
-     * @var array
-     */
+
     $stats = [
       0 => [],
       1 => [],
@@ -550,31 +541,23 @@ class SquadUser extends Justin
     /**
      * @var Stat
      */
-    $Stats = $this->user
-      ->stats;
+    $Stats = $this->user->stats;
 
-    /**
-     * Calculate the performance which will be contributet to
-     * the squads bank account.
-     */
     foreach (Gamemode::$mods_int_per_mode as $mode => $gumodes) {
+
+      /**
+       * @var string $mode
+       * @var array $gumodes
+       */
 
       /**
        * @var object
        */
       $squad_modes = $this->squad->modes;
 
-      /**
-       * Skip if the mode is disabled.
-       */
       if ($squad_modes[$mode] == 0)
         continue;
 
-      /**
-       * Iterate through all the gumodes inside the mode array
-       * and calculate their performances and add them together
-       * for each mode.
-       */
       foreach ($gumodes as $gumode) {
 
         /**
@@ -586,9 +569,6 @@ class SquadUser extends Justin
           ->values()
           ->first();
 
-        /**
-         * Append the calculated stats.
-         */
         $stats[$gumode] = [
           "performance" => $StatMode->pp * self::$contribution_factor,
           "accuracy" => $StatMode->acc,
@@ -599,13 +579,8 @@ class SquadUser extends Justin
       }
     }
 
-    /**
-     * Set it!
-     */
-    $this->performance = Arr::to_json($stats);
+    $this->performance = $stats;
     $this->save();
-
-    return;
   }
 
   /**

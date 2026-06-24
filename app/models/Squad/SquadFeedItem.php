@@ -134,10 +134,10 @@ class SquadFeedItem extends Justin
       ],
       "__squad__/edit/publicity" => [
         "append_text" => "publicity updated",
-        "icon" => $this->reference_id === Squad::$joinable["public"]
+        "icon" => $this->reference_id === Squad::$joinable_map["public"]
           ? "globe"
           : (
-            $this->reference_id === Squad::$joinable["private"]
+            $this->reference_id === Squad::$joinable_map["private"]
             ? "public_off"
             : "vpn_lock"
           ),
@@ -207,7 +207,7 @@ class SquadFeedItem extends Justin
       "__squad__/created" => "{triggered} created the squad",
       "__squad__/edit/image+logo" => "{triggered} updated the logo",
       "__squad__/edit/image+headline" => "{triggered} updated the headline image",
-      "__squad__/edit/publicity" => "{triggered} set the squad to " . array_flip(Squad::$joinable)[$this->reference_id],
+      "__squad__/edit/publicity" => "{triggered} set the squad to " . array_flip(Squad::$joinable_map)[$this->reference_id],
       "__member__/restricted" => "{triggered} restricted {affected}",
       "__member__/setfree" => "{triggered} set {affected} free",
       "__member__/promoted" => "{triggered} promoted {affected}",

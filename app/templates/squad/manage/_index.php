@@ -30,8 +30,7 @@ $file_exists = file_exists($path);
 ?>
 
 <content wide minlineauto fl fldircol gap=mid>
-  <div filled=darker rounded=wide fl fldircol jucc alic tac pinline24
-    style="height:164px;margin-top:-40px;">
+  <div fl fldircol jucc alic tac pinline24>
     <p text bold wide>Squad-Manager</p>
     <p text std>Customize the uniqueness of your squad</p>
   </div>

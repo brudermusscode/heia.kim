@@ -63,7 +63,7 @@ ob_start(); ?>
 
     <?php
 
-    if (CurrentUser->has_squad()) :
+    if (CurrentUser->squad) :
 
       /**
        * @var Squad CurrentUser->squad
@@ -72,14 +72,14 @@ ob_start(); ?>
     ?>
       <div dot-divider></div>
 
-      <a href="/squad/<?= $CurrentSquad->id; ?>">
+      <a href="/squad/<?= CurrentUser->squad->id; ?>">
         <mbutton midler image-only background=clean hoverable has-tooltip=top>
           <p text smoler semibold ttup background=company color=company-text rounded z pinline4 pblock2 style="position:absolute;bottom:0;left:50%;translate:-50% 0;">
-            <?= $CurrentSquad->tag ?></p>
+            <?= CurrentUser->squad->tag ?></p>
           <picture in-menu size=std circled>
-            <?php $CurrentSquad->logo(); ?>
+            <?php CurrentUser->squad->logo(); ?>
           </picture>
-          <div ttooltip><?= $CurrentSquad->name ?></div>
+          <div ttooltip><?= CurrentUser->squad->name ?></div>
         </mbutton>
       </a>
     <?php endif; ?>
@@ -94,7 +94,6 @@ ob_start(); ?>
       </mbutton>
     </form>
   </user-menu>
-
 
   <ui-component type=notifications>
     <div loading-overlay>

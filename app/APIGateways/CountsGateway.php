@@ -59,9 +59,9 @@ class CountsGateway extends Gateway
      */
     $return_data->squads = (object) [
       "total" => Squad::count(),
-      "public" => Squad::where("joinable", Squad::$joinable["public"])->count(),
-      "requestable" => Squad::where("joinable", Squad::$joinable["request"])->count(),
-      "private" => Squad::where("joinable", Squad::$joinable["private"])->count(),
+      "public" => Squad::where("joinable", Squad::$joinable_map["public"])->count(),
+      "requestable" => Squad::where("joinable", Squad::$joinable_map["request"])->count(),
+      "private" => Squad::where("joinable", Squad::$joinable_map["private"])->count(),
     ];
 
     /**

@@ -296,7 +296,6 @@ class User extends Justin
   }
 
   /**
-   * @param object $params
    * @return ?string
    *
    * NOTE: Will die on error.
@@ -447,6 +446,16 @@ class User extends Justin
         "Something is wrong, definetely."
       ));
     }
+  }
+
+  /**
+   * Just sets the current instance to the global session object.
+   *
+   * @return void
+   */
+  public function reload_session()
+  {
+    if (LOGGED) $_SESSION["User"] = $this->fresh();
   }
 
   /**

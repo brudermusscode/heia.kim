@@ -311,15 +311,19 @@ export const slide_out_prompt = (prompt) => {
   }, 110);
 };
 
+/**
+ * @param {HTMLElement} prompt Element with attribute [prompt]
+ */
 export const slide_in_prompt = (prompt) => {
   if (__prompt_animation_playing || !prompt) return;
 
   let prompt_padding = parseFloat(window.getComputedStyle(prompt).padding);
   let prompt_header = prompt.find("[prompt-header]");
   let prompt_content = prompt.find("[prompt-content]");
-  let prompt_content_margin = parseFloat(
-    window.getComputedStyle(prompt_content).marginBottom,
-  );
+  let prompt_bottom = prompt.find("[prompt-actions]");
+  let prompt_content_margin =
+    parseFloat(window.getComputedStyle(prompt_content).marginBottom) +
+    parseFloat(window.getComputedStyle(prompt_content).marginTop);
 
   // Outer box exists, it's an inner prompt.
   let outer_box = prompt.closest("box-model");
@@ -333,7 +337,11 @@ export const slide_in_prompt = (prompt) => {
     }
   }
 
-  let prompt_elements = [prompt_header, prompt.find("[prompt-inner-content]")];
+  let prompt_elements = [
+    prompt_header,
+    prompt.find("[prompt-inner-content]"),
+    prompt_bottom,
+  ];
 
   /**
    * Show the prompt and adjust it's height depending on the
@@ -342,7 +350,11 @@ export const slide_in_prompt = (prompt) => {
   __prompt_animation_playing = true;
   prompt.activate();
   prompt.style.height =
-    prompt_content.clientHeight + prompt_padding * 2 + prompt_content_margin + "px";
+    prompt_content.clientHeight +
+    prompt_padding * 2 +
+    prompt_content_margin +
+    prompt_bottom.clientHeight +
+    "px";
 
   outer_box?.activate();
   prompt.closest("[has-inner-prompt]")?.activate();
@@ -836,9 +848,10 @@ $(function () {
 
     if (key("enter")) e.preventDefault();
     if (
-      key("enter") &&
-      (tag("input") || tag("textarea")) &&
-      e.target.hasAttribute("enter-submitable")
+      (key("enter") &&
+        (tag("input") ||
+          (tag("textarea") && e.target.hasAttribute("enter-submitable")))) ||
+      (tag("mbutton") && e.target.hasAttribute("submit-closest"))
     ) {
       let form = e.target.closest("form");
       let button = form.querySelector("[submit-closest]");

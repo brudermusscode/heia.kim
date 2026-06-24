@@ -11,7 +11,6 @@ use Heiakim\Model\Squad;
  */
 
 $mode ??= null;
-$active_modes = $Squad->modes();
 
 ?>
 
@@ -23,7 +22,7 @@ $active_modes = $Squad->modes();
     </mbutton>
   </a>
 
-  <?php if ($active_modes->osu === 1) : ?>
+  <?php if ($Squad->modes["osu"] === 1) : ?>
     <a href="<?= "$base_url/scores/osu"; ?>">
       <mbutton mid filled has-icon=left show-text-active
         <?php display_active($mode, "osu"); ?>>
@@ -33,7 +32,7 @@ $active_modes = $Squad->modes();
     </a>
   <?php endif; ?>
 
-  <?php if ($active_modes->ctb === 1) : ?>
+  <?php if ($Squad->modes["ctb"] === 1) : ?>
     <a href="<?= "$base_url/scores/ctb"; ?>">
       <mbutton mid filled has-icon=left show-text-active
         <?php display_active($mode, "ctb"); ?>>
@@ -43,7 +42,7 @@ $active_modes = $Squad->modes();
     </a>
   <?php endif; ?>
 
-  <?php if ($active_modes->taiko === 1) : ?>
+  <?php if ($Squad->modes["taiko"] === 1) : ?>
     <a href="<?= "$base_url/scores/taiko"; ?>">
       <mbutton mid filled has-icon=left show-text-active
         <?php display_active($mode, "taiko"); ?>>
@@ -53,7 +52,7 @@ $active_modes = $Squad->modes();
     </a>
   <?php endif; ?>
 
-  <?php if ($active_modes->mania === 1) : ?>
+  <?php if ($Squad->modes["mania"] === 1) : ?>
     <a href="<?= "$base_url/scores/mania"; ?>">
       <mbutton mid filled has-icon=left show-text-active
         <?php display_active($mode, "mania"); ?>>

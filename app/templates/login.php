@@ -89,38 +89,39 @@ include SNOW; ?>
         <?php if (Feature::enabled("login")) { ?>
 
           <form data-form="session:create" fl fldircol gap>
+            <button type=submit></button>
             <div fl fldircol gap>
               <div fl fldircol gap=smol+>
                 <div fl fldircol gap=smol>
                   <div input material has-icon>
                     <mi midler>sticker</mi>
-                    <input required autofocus enter-submitable type="text" name="login"
+                    <input required autofocus enter-submittable type="text" name="login" tabindex=1
                       placeholder="Username/E-Mail" />
                   </div>
 
                   <div input material has-icon>
                     <mi midler>key_vertical</mi>
                     <input required enter-submitable type="password" name="password"
-                      placeholder="<?= __("Password") ?>" />
+                      tabindex=2 placeholder="<?= __("Password") ?>" />
                   </div>
                 </div>
 
                 <div fl jucstart>
-                  <a href="/password-reset" color=company>
+                  <a tabindex=4 href="/password-reset" color=company>
                     <p text><?= __("Reset Password") ?></p>
                   </a>
                 </div>
               </div>
 
               <div fl jucsb mt>
-                <a href="/register">
+                <a href="/register" tabindex=5>
                   <mbutton mid outlined ripple-effect>
                     Create account
                   </mbutton>
                 </a>
 
                 <mbutton mid ripple-effect submit-closest icon-only rounded=smol
-                  background=green color=light>
+                  tabindex=3 background=green color=light>
                   <mi>arrow_forward</mi>
                 </mbutton>
               </div>
