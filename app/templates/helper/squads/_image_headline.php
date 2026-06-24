@@ -6,8 +6,8 @@ $headline =
   ? CLAN_DEFAULT_HEADLINE_URL
   : (CLAN_IMAGE_URL . "/headline-images/$squad_headline");
 
-if (DEV)
-  $headline = "/squad-headline-image.webp";
+// if (DEV)
+//   $headline = "/squad-headline-image.webp";
 
 ?>
 

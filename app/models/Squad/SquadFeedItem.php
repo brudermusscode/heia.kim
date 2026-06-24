@@ -12,14 +12,8 @@ class SquadFeedItem extends Justin
 {
   use HasDefaultUser;
 
-  /**
-   * @var string
-   */
   protected $table = "clan_feed_items";
 
-  /**
-   * @var array
-   */
   public $fillable = [
     "user_id",
     "type",
@@ -28,10 +22,7 @@ class SquadFeedItem extends Justin
     "updated_at",
   ];
 
-  /**
-   * @var array
-   */
-  public static $types = [
+  public static array $types = [
     // Logs created through setting updates.
     "__squad__/created",
     "__squad__/edit/name",

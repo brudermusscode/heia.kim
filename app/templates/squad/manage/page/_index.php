@@ -40,7 +40,7 @@ $publicity_text = CurrentUser->squad->joinable === 0
           <input type="file" name="image" size="32" accept="image/*" hidden />
         </form>
 
-        <form data-form="squad:update" style=flex:1;>
+        <form request="squad:update" reload responder=simple flone>
           <box-model select-choose-file data-type="headline"
             p48 ripple-effect clickable filled rounded=mid ovhid>
             <div z color=white fl alic jucsb>
@@ -180,7 +180,7 @@ $publicity_text = CurrentUser->squad->joinable === 0
           </a>
         </box-model>
 
-        <box-model grid-keeper outlined p18>
+        <box-model grid-keeper outlined p18 fl fldircol jucsb>
           <div p12>
             <p text midler bold>Logs</p>
             <p text std>See, what happens in your squad</p>
@@ -192,7 +192,6 @@ $publicity_text = CurrentUser->squad->joinable === 0
            * @var ?SquadFeedItem
            */
           $LastLog = $Squad->logs()
-            ->whereNot("type", "__post__")
             ->latest()
             ->first();
 
@@ -206,7 +205,16 @@ $publicity_text = CurrentUser->squad->joinable === 0
                   </picture>
                   <div>
                     <p text std bold><?= $LastLog->user->name(); ?></p>
-                    <p text smol trimt><?= $LastLog->display_type()->append_text . " " . (!$LastLog->affected_user?->is($LastLog->user) ? $LastLog->affected_user?->name() : ""); ?> &middot; <span color=company><?= Time::ago($LastLog?->created_at, true); ?></p>
+                    <p text smol trimt>
+                      <?= $LastLog->display_type()->append_text
+                        . " "
+                        . (
+                          !$LastLog->affected_user?->is($LastLog->user)
+                          ? $LastLog->affected_user?->name()
+                          : ""
+                        ); ?> &middot;
+                      <span color=company><?= Time::ago($LastLog?->created_at); ?>
+                    </p>
                   </div>
                 </div>
                 <div posrel>
@@ -239,8 +247,8 @@ $publicity_text = CurrentUser->squad->joinable === 0
           <div fl gap alic>
             <mi style="width:48px;" mid>logout</mi>
             <div>
-              <p text std bold>Leave <?= $Squad->name ?></p>
-              <p text std>Get out of here</p>
+              <p text bold>
+                <?= $Squad->members->count() < 2 ? "Delete" : "Leave" ?> &nbsp;&middot;&nbsp; <strong color=company><?= $Squad->name ?></strong></p>
             </div>
           </div>
 

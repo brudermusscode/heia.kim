@@ -17,17 +17,22 @@ use Heiakim\Model\Squad\SquadFeedItem;
 
   <jump-menu menu-more filled=lighter elevated color=dynamic>
 
-    <?php if ($Item->is_system_post()) { ?>
-      <form request="squad:feed-item:delete" responder reload>
+    <?php
+
+    # These are shown in case of a SquadFeedItem without a Post associated to it.
+    if ($Item->is_system_post()) : ?>
+
+      <form request="squad:feed-item:delete" shadow-submit delete-object="FeedItem" responder=simple>
         <input type=hidden name=id value=<?= $Item->id; ?> />
         <div submit-closest class=jm__option hoverable>
           <mi>delete</mi>
           <p text std>Delete</p>
         </div>
       </form>
-    <?php } else { ?>
 
-      <?php if (CurrentUser->sqcan_touch($Post ?? $Item)) { ?>
+    <?php else : ?>
+
+      <?php if (CurrentUser->sqcan_touch($Post ?? $Item)) : ?>
         <div class=jm__option hoverable disabled>
           <mi>edit</mi>
           <p text std>Edit</p>
@@ -45,11 +50,11 @@ use Heiakim\Model\Squad\SquadFeedItem;
         <div divide=line></div>
 
         <div request="squad:post:delete" data-id="<?= $Post->id; ?>"
-          shadow-submit delete-object="Post" class=jm__option hoverable>
+          shadow-submit delete-object="Post" responder=simple class=jm__option hoverable>
           <mi>delete</mi>
           <p text std>Delete</p>
         </div>
-      <?php } else { ?>
+      <?php else : ?>
         <div class=jm__option hoverable
           request-get="report:new"
           data-id="<?= $Post->id; ?>"
@@ -57,7 +62,7 @@ use Heiakim\Model\Squad\SquadFeedItem;
           <mi>campaign</mi>
           <p text std>Report to Content Guradian</p>
         </div>
-      <?php } ?>
-    <?php } ?>
+      <?php endif; ?>
+    <?php endif; ?>
   </jump-menu>
 </div>

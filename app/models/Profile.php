@@ -10,9 +10,6 @@ class Profile extends Justin
 {
   use HasDefaultUser;
 
-  /**
-   * @var array
-   */
   protected $fillable = [
     "tabs_visibility",
     "sections_visibility",
@@ -35,27 +32,18 @@ class Profile extends Justin
    * |   |--- ...
    */
 
-  /**
-   * @var array
-   */
-  public static $wrapper = [
+  public static array $wrapper = [
     "tabs_visibility",
     "sections_visibility",
   ];
 
-  /**
-   * @var array
-   */
-  public static $tabs_visibility = [
+  public static array $tabs_visibility = [
     "premium" => 1,
     "statistics" => 1,
     "photos" => 1,
   ];
 
-  /**
-   * @var array
-   */
-  public static $sections_visibility = [
+  public static array $sections_visibility = [
     0 => [
       "",
       "squad" => 1,
@@ -76,19 +64,13 @@ class Profile extends Justin
     ],
   ];
 
-  /**
-   * @var array
-   */
-  public static $columns = [
+  public static array $columns = [
     "0" => "small",
     "1" => "large",
     "2" => "small",
   ];
 
-  /**
-   * @var array
-   */
-  protected static $large_columns = [
+  protected static array $large_columns = [
     "graph",
     "scores_pinned",
     "scores_top",
@@ -97,10 +79,7 @@ class Profile extends Justin
     "beatmaps_played",
   ];
 
-  /**
-   * @var array
-   */
-  protected static $small_columns = [
+  protected static array $small_columns = [
     "squad",
     "followers",
     "followings",

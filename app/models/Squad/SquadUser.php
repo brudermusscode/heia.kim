@@ -494,7 +494,8 @@ class SquadUser extends Justin
    */
   public function performance_per_mode()
   {
-    $performance = $this->performance();
+
+    $performance = $this->performance;
     $new_performance = [
       "osu" => self::$performance_parts,
       "ctb" => self::$performance_parts,
@@ -549,14 +550,6 @@ class SquadUser extends Justin
        * @var string $mode
        * @var array $gumodes
        */
-
-      /**
-       * @var object
-       */
-      $squad_modes = $this->squad->modes;
-
-      if ($squad_modes[$mode] == 0)
-        continue;
 
       foreach ($gumodes as $gumode) {
 
@@ -1182,7 +1175,7 @@ class SquadUser extends Justin
   public function can_leave()
   {
     // TODO: Make it so it can be used in what_prevents_leaving().
-    return !$this->is_chief();
+    return $this->squad->members->count() < 2 || !$this->is_chief();
   }
 
   /**

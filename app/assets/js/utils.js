@@ -9,7 +9,7 @@ export const removeAttributes = (element, ...attrs) => {
  * even applications on the internet :)
  */
 export const sleep = async (ms) => {
-  console.log("%cSleeping a little...", "color:#c5cae9;");
+  // console.log("%cSleeping a little...", "color:#c5cae9;");
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
@@ -18,9 +18,7 @@ export const sleep = async (ms) => {
  * and returns it's value
  */
 export const get_csrf_token = () => {
-  return document
-    .querySelector("meta[name=csrf_token]")
-    .getAttribute("content");
+  return document.querySelector("meta[name=csrf_token]").getAttribute("content");
 };
 
 export const serialize_cookie_domain = () => {
@@ -54,10 +52,7 @@ export const shift_text = async (elem, timeout) => {
 };
 
 export const clear_all_intervals = () => {
-  const interval_id = window.setInterval(
-    function () {},
-    Number.MAX_SAFE_INTEGER
-  );
+  const interval_id = window.setInterval(function () {}, Number.MAX_SAFE_INTEGER);
 
   for (let i = 1; i < interval_id; i++) {
     window.clearInterval(i);

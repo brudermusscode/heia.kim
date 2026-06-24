@@ -36,6 +36,7 @@ class Authentication extends Justin
     "user:delete",
     "user:update:email",
     "user:wipe",
+    "squad:delete",
     "squad:user:delete",
   ];
 

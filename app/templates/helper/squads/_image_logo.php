@@ -6,8 +6,8 @@ $logo =
   ? CLAN_DEFAULT_LOGO_URL
   : (CLAN_IMAGE_URL . "/logo-images/$squad_logo");
 
-if (DEV)
-  $logo = "/squad-profile-image.webp";
+// if (DEV)
+//   $logo = "/squad-profile-image.webp";
 
 ?>
 

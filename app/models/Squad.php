@@ -3,11 +3,11 @@
 namespace Heiakim\Model;
 
 use Heiakim\Justin;
-use Heiakim\Http\Request;
 use Heiakim\Time\Time;
 use Heiakim\Application\Logger;
 use Heiakim\Utils\Str;
 use Heiakim\Enum\SquadPrivilege;
+use Heiakim\File\Upload;
 use Heiakim\Model\Squad\SquadUser;
 use Heiakim\Model\Squad\SquadFeedItem;
 use Heiakim\Utils\Utils;
@@ -16,8 +16,11 @@ use Heiakim\Model\Squad\SquadRequest;
 use Heiakim\Model\Thread\Thread;
 use Heiakim\Registry\RedisRegistry;
 use Heiakim\Validate\Validate;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Intervention\Image\ImageManager;
-use Intervention\Image\Interfaces\ImageInterface;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Format;
+use Intervention\Image\Interfaces\ImageManagerInterface;
 
 class Squad extends Justin
 {
@@ -166,15 +169,12 @@ class Squad extends Justin
 
   /**
    * @param object $params
-   * @return object
+   * @return static
+   *
+   * NOTE: Will die on error.
    */
   public function edit(object $params)
   {
-
-    /**
-     * @var User
-     */
-    $CurrentUser = $params->CurrentUser;
 
     /**
      * @var SquadFeedItem[]
@@ -182,200 +182,126 @@ class Squad extends Justin
     $Logs = [];
 
     /**
+     * @var SquadFeedItem[]
+     */
+    $FeedItems = [];
+
+    /**
      * @var Notification[]
      */
     $Notifications = [];
 
-    /**
-     * ? Image
-     * If an image is sent with the form, return the upload image function.
-     */
-    if (isset($params->files, $params->image_type))
-      return $this->upload_image($params);
-
-    /**
-     * ? Name
-     */
-    if (!empty($params->name) && $params->name !== $this->name) {
-
-      /**
-       * @var string
-       */
-      $params->name = htmlspecialchars_decode($params->name);
-
-      /**
-       * Does the squad have changed their name in the past 30 days?
-       */
-      if (!$this->can_change_name())
-        return $this->error("<strong>Your last name change is less than 30 days ago!</strong>");
-
-      /**
-       * Name is available?
-       */
-      if (self::where("name", $params->name)->whereNot("id", $this->id)->first())
-        return $this->error("<strong>This name is already in use.</strong> Please choose another one!");
-
-      /**
-       * Name length is valid?
-       */
-      if (strlen($params->name) > self::$length["name"][1])
-        return $this->error("The <strong>name</strong> may only be <strong>" . self::$length["name"][1] . " characters</strong> at max. in length.");
-
-      /**
-       * Add SquadFeedItem.
-       */
-      $Logs[] = $this->logs()
-        ->make([
-          "type" => "__squad__/edit/name",
-          "user_id" => $CurrentUser->id,
-          "updated_at" => null,
-        ]);
-
-      /**
-       * Set the new name and update the last name change timestamp.
-       */
-      $this->name = $params->name;
-      $name_updated = true;
-    }
-
-    /**
-     * ? Tag
-     */
-    if (!empty($params->tag) && $params->tag !== $this->tag) {
-
-      /**
-       * @var string
-       */
-      $params->tag = htmlspecialchars_decode($params->tag);
-
-      /**
-       * Does the squad have changed their name in the past 30 days?
-       */
-      if (!$this->can_change_name())
-        return $this->error("<strong>Your last name change is less than 30 days ago!</strong>");
-
-      /**
-       * Name is available?
-       */
-      if (self::where("tag", $params->tag)->whereNot("id", $this->id)->first())
-        return $this->error("<strong>This name is already in use.</strong> Please choose another one!");
-
-      /**
-       * Name length is valid?
-       */
-      if (strlen($params->tag) > self::$length["tag"][1])
-        return $this->error("The <strong>tag</strong> may only be <strong>" . self::$length["tag"][1] . " characters</strong> at max. in length.");
-
-      /**
-       * Add SquadFeedItem.
-       */
-      $Logs[] = $this->logs()
-        ->make([
-          "type" => "__squad__/edit/tag",
-          "user_id" => $CurrentUser->id,
-          "updated_at" => null,
-        ]);
-
-      /**
-       * Set the new name and update the last name change timestamp.
-       */
-      $this->tag = $params->tag;
-      $name_updated = true;
-    }
-
-    /**
-     * Set name updated at to the current timestamp, if name or
-     * tag have been modified.
-     */
-    if (isset($name_updated)) {
-      $this->name_updated_at = date("Y-m-d H:i:s", time());
-
-      /**
-       * Create global notification.
-       */
-      if (!empty($params->notification))
-        $Notifications[] = Notification::make([
-          "type" => "__clan__/edit/name",
-          "reference_id" => $this->id,
-        ]);
-    }
-
-    /**
-     * ? Publicity
-     */
-    if (isset($params->joinable)) {
-      if (!in_array($params->joinable, self::$joinable_map))
-        return $this->error();
-
-      /**
-       * Add SquadFeedItem.
-       */
-      $Logs[] = $this->logs()
-        ->make([
-          "type" => "__squad__/edit/publicity",
-          "user_id" => $CurrentUser->id,
-          "reference_id" => $params->joinable,
-          "updated_at" => null,
-        ]);
-
-      /**
-       * Set the new publicity.
-       */
-      $this->joinable = $params->joinable;
-    }
-
-    /**
-     * ? Modes
-     */
-    if (isset($params->osu) || isset($params->mania) || isset($params->taiko) || isset($params->ctb)) {
-
-      /**
-       * @var array
-       */
-      $modes = $this->modes;
-
-      /**
-       * Set the new mode.
-       */
-      foreach (Gamemode::$modes_text as $mode) {
-        $modes[$mode] = !isset($params->$mode)
-          ? $modes[$mode]
-          : ($params->$mode > 0 ? 1 : 0);
-      }
-
-      $this->modes = $modes;
-    }
-
-    /**
-     * Begin new database transaction.
-     */
     $this->db_transaction();
 
     try {
 
-      /**
-       * Save all & commit!
-       */
+      # ? Logo/Headline
+      if (!empty($params->files["image"]["tmp_name"]) && !empty($params->image_type)) {
+        $this->upload_image($params->files["image"], $params->image_type);
+
+        # Create an image for the image gallery.
+        $Image = CurrentUser->images()->create([
+          "type" => "__squad__/$params->image_type",
+          "reference_id" => $this->id,
+          "url" => $this->{$params->image_type},
+        ]);
+
+        $FeedItems[] = $this->feed_items()->make([
+          "user_id" => CurrentUser->id,
+          "type" => "__squad__/edit/image+$params->image_type",
+          "reference_id" => $Image->id,
+        ]);
+
+        $Logs[] = $this->logs()->make([
+          "user_id" => CurrentUser->id,
+          "reference_id" => $Image->id,
+          "type" => "update:$params->image_type",
+        ]);
+      }
+
+      # ? Name
+      if (!empty($params->name)) {
+        $this->set_name_invalid($params->name);
+        $this->name_updated_at = CURRENT_TIMESTAMP;
+
+        $Logs[] = $this->logs()->make([
+          "user_id" => CurrentUser->id,
+          "type" => "update:name",
+        ]);
+
+        # This will only be sent if the CurrentUser has activated notifying their Mem-
+        # bers about changes.
+        if (!empty($params->notification))
+          $Notifications[] = Notification::make([
+            "reference_id" => $this->id,
+            "type" => "__clan__/edit/name",
+          ]);
+      }
+
+      # ? Tag
+      if (!empty($params->tag)) {
+        $this->set_tag_invalid($params->tag);
+
+        $Logs[] = $this->logs()->make([
+          "user_id" => CurrentUser->id,
+          "type" => "update:tag",
+        ]);
+      }
+
+      # ? Joinable
+      if (!empty($params->joinable)) {
+        if (!in_array($params->joinable, self::$joinable_map))
+          return die(error());
+
+        $this->joinable = $params->joinable;
+
+        $Logs[] = $this->logs()->make([
+          "user_id" => CurrentUser->id,
+          "type" => "update:joinable",
+          "reference_id" => $params->joinable,
+        ]);
+      }
+
+      # ? Modes
+      if (
+        isset($params->osu)
+        || isset($params->mania)
+        || isset($params->taiko)
+        || isset($params->ctb)
+      ) {
+
+        /**
+         * @var array
+         */
+        $modes = $this->modes;
+
+        foreach (Gamemode::$modes_text as $mode) {
+          $modes[$mode] = !isset($params->$mode)
+            ? $modes[$mode]
+            : ($params->$mode > 0 ? 1 : 0);
+        }
+
+        $this->modes = $modes;
+
+        $Logs[] = $this->logs()->make([
+          "user_id" => CurrentUser->id,
+          "type" => "update:modes",
+        ]);
+      }
+
       $this->save();
 
-      foreach ($Logs as $Log)
-        $Log->save();
-
-      foreach ($Notifications as $Notification)
-        $Notification->save();
+      foreach (array_merge($Logs, $FeedItems, $Notifications) as $Instance)
+        $Instance->save();
 
       $this->db_commit();
 
-      return $this->success("<strong>Updated!</strong>");
-    } catch (\Exception $e) {
-
-      /**
-       * Log & rollback.
-       */
+      return $this;
+    } catch (\Throwable $e) {
       Logger::to_file($e);
       $this->db_rollback();
 
-      return $this->error();
+      return die(error());
     }
   }
 
@@ -385,237 +311,138 @@ class Squad extends Justin
   public function remove()
   {
 
+    /**
+     * @var \Redis
+     */
+    $Redis = $this->redis();
+
     $this->db_transaction();
 
     try {
 
-      /**
-       * ? Threads, Thread Posts, Thread Post Attachments
-       */
-      $this->threads()
-        ->each(function ($Thread) {
-          $Thread->posts()
-            ->each(function ($Post) {
-              $Post->attachments()->delete();
-              $Post->delete();
-            });
+      $this->members()->each(function ($Member) {
+        $Member->user->update([
+          "clan_id" => 0,
+        ]);
+        $Member->delete();
+      });
 
-          $Thread->posts()
-            ->delete();
-
-          $Thread->delete();
+      $this->threads()->each(function ($Thread) {
+        $Thread->posts()->each(function ($Post) {
+          $Post->attachments()->delete();
+          $Post->delete();
         });
+        $Thread->posts()->delete();
+        $Thread->delete();
+      });
 
-
-      /**
-       * ? Members
-       */
-      $this->members()
-        ->each(function ($Member) {
-
-          $Member->user->update([
-            "clan_id" => 0,
-          ]);
-
-          $Member->delete();
-        });
-
-      /**
-       * ? Images
-       */
       $this->images()->delete();
-
-      /**
-       * ? Requests
-       */
       $this->requests()->delete();
-
-      /**
-       * ? Feed Items
-       */
       $this->feed_items()->delete();
-
-      /**
-       * ? Posts
-       */
       $this->posts()->delete();
 
-      /**
-       * ? Notifications
-       */
       Notification::where("type", "LIKE", "%__clan__%")
         ->orWhere("type", "LIKE", "__comment__/squad%")
         ->where("reference_id", $this->id)
         ->delete();
 
-      /**
-       * ? Cache
-       */
+      # Remove any left overs in the cache.
       foreach (Gamemode::$modes as $gumode) {
-        $this->redis()->zrem(RedisRegistry::$leaderboard_keys["squads"] . ":$gumode", $this->id);
-        $this->redis()->zrem(RedisRegistry::$leaderboard_keys["squads"] . ":$gumode:tscore", $this->id);
-        $this->redis()->zrem(RedisRegistry::$leaderboard_keys["squads"] . ":$gumode:rscore", $this->id);
+        $Redis->zrem(
+          RedisRegistry::$leaderboard_keys["squads"] . ":$gumode",
+          $this->id
+        );
+        $Redis->zrem(
+          RedisRegistry::$leaderboard_keys["squads"] . ":$gumode:tscore",
+          $this->id
+        );
+        $this->redis()->zrem(
+          RedisRegistry::$leaderboard_keys["squads"] . ":$gumode:rscore",
+          $this->id
+        );
       }
 
-      /**
-       * Delete & commit!
-       */
       $this->delete();
       $this->db_commit();
-
-      return $this->success("<strong>Your squad has been deleted!</strong> Create a new or join one at any time.");
-    } catch (\Exception $e) {
-
-      /**
-       * Log & rollback.
-       */
+    } catch (\Throwable $e) {
       Logger::to_file($e);
       $this->db_rollback();
 
-      return $this->error();
+      return die(error());
     }
   }
 
   /**
-   * Update images based on the type.
+   * A Squad by now can only be deleted if there are less than 2 members.
    *
-   * @param object The params.
-   * @return object Default return object.
+   * @return bool
    */
-  public function upload_image(object $params)
+  public function deletable()
+  {
+    return $this->members->count() < 2;
+  }
+
+  /**
+   * @param array $files
+   * @param string $type
+   * @return void
+   *
+   * NOTE: Will die on error.
+   */
+  public function upload_image(array $files, string $type)
   {
 
-    /**
-     * Catch any upload error in advance.
-     */
-    if (isset($params->files["error"]) && $params->files["error"] > 0)
-      die($this->error(\Heiakim\File\Upload::error($params->files["error"])));
+    # Die immediately on any upload error.
+    Upload::error($files);
 
-    /**
-     * Temporary image is not available?
-     */
-    if (!isset($params->files["tmp_name"]) || !$params->files["tmp_name"])
-      die($this->error("<strong>No image has been added.</strong>"));
-
-    /**
-     * Check if file exists.
-     */
-    if (!file_exists($params->files["tmp_name"]))
-      die("<strong>Temporary image file doesn't exist.</strong>");
-
-    /**
-     * @var User
-     */
-    $CurrentUser = $params->CurrentUser;
-
-    /**
-     * @var string
-     */
-    $token = Utils::random_alpha_token(18);
-
-    /**
-     * Begin processing.
-     */
-    $this->db_transaction();
     try {
 
       /**
-       * @var ImageInterface
+       * @var ImageManagerInterface
        */
-      $handle = ImageManager::gd()
-        ->read($params->files["tmp_name"]);
+      $ImageManager = ImageManager::usingDriver(GdDriver::class);
+      $Image = $ImageManager->decodePath($files["tmp_name"]);
+      $ClonedImage = clone $Image;
 
-      /**
-       * @var EncodedImageInterface
-       */
-      $encoded_image = $handle->encode();
-      $file_type = $encoded_image->mediaType();
+      # Ensure it's WEBP.
+      $EncodedImage = $Image->encodeUsingFormat(Format::WEBP, quality: 100);
 
-      /**
-       * Final file name with extension attached.
-       * @var string
-       */
-      $file_name = "$token.webp";
+      # TODO: Premium for squads to upload GIFs.
 
-      // TODO: Premium for squads (all users can buy + stack).
+      $file_type = $EncodedImage->mediaType();
 
-      /**
-       * GIF only for Premium+ squads.
-       */
       if (str_contains(strtolower($file_type), "gif"))
-        die($this->error("GIFs can not be uploaded by now, but will be available soon."));
+        return die(error("GIFs available soon."));
 
-      /**
-       * @var ?string
-       */
-      $save_path = match ($params->image_type) {
-        "logo" => CLAN_LOGO . $file_name,
-        "headline" => CLAN_HEADLINE . $file_name,
-        default => null,
+      $file_name = "sq-" . Utils::random_alpha_token(12);
+      $save_path = match ($type) {
+        "logo" => CLAN_LOGO,
+        "headline" => CLAN_HEADLINE,
+        default => die("Uhm…?"),
       };
 
-      /**
-       * Image type is invalid?
-       */
-      if (!$save_path)
-        return $this->error("<strong>Invalid type of image has been submitted.</strong>");
+      # Ensure file name is unique amongst all squad images.
+      while (file_exists("$save_path/$file_name.webp"))
+        $file_name = "sq-" . Utils::random_alpha_token(12);
 
-      /**
-       * Upload the image to the given save path.
-       */
-      $handle
-        ->scale(320)
-        ->toWebp()
-        ->save($save_path);
+      # Save Image!
+      $EncodedImage->save("$save_path/$file_name.webp");
 
-      /**
-       * Update squad's image.
-       */
-      $this->update([
-        $params->image_type => $file_name,
-      ]);
+      # Just set the image here without saving, so we can save or rollback in other
+      # methods.
+      $this->$type = "$file_name.webp";
 
-      /**
-       * Create image
-       */
-      $Image = $CurrentUser
-        ->images()
-        ->create([
-          "type" => "__squad__/$params->image_type",
-          "reference_id" => $this->id,
-          "url" => $file_name,
-        ])
-        ->fresh();
+      # Scale Image to 180px and save it as a thumb.
+      $ClonedImage->scale(height: 180)
+        ->encodeUsingFormat(Format::WEBP, quality: 100)
+        ->save("$save_path/$file_name-180.webp");
 
-      /**
-       * Create a log.
-       */
-      $this->feed_items()
-        ->create([
-          "user_id" => $CurrentUser->id,
-          "type" => "__squad__/edit/image+$params->image_type",
-          "reference_id" => $Image->id,
-          "updated_at" => null,
-        ]);
-
-      /**
-       * Commit!
-       */
-      $this->db_commit();
-
-      return $this->success("<strong>" . ucfirst($params->image_type) . " updated!</strong> It can take some time for the image to show up.");
-    } catch (\Exception $e) {
-
-      /**
-       * Log & rollback.
-       */
+      return $this;
+    } catch (\Throwable $e) {
       Logger::to_file($e);
-      $this->db_rollback();
-
-      die($this->error());
+      die(error());
     }
   }
-
 
   /**
    * @param string $name
@@ -849,12 +676,6 @@ class Squad extends Justin
   }
 
   /**
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,, BANK ,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   */
-
-  /**
    * @return object
    */
   public function statistics(?int $gumode = null)
@@ -933,12 +754,6 @@ class Squad extends Justin
 
     return $mode && $this->modes[$mode] == 1;
   }
-
-  /**
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,, MEMBERS ,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   */
 
   /**
    * @return SquadUser
@@ -1034,12 +849,6 @@ class Squad extends Justin
   }
 
   /**
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,, REQUESTS ,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   */
-
-  /**
    * @return ?SquadRequest
    */
   public function requests()
@@ -1067,12 +876,6 @@ class Squad extends Justin
   }
 
   /**
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,, THREADS ,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   */
-
-  /**
    * @return ?Thread
    */
   public function threads()
@@ -1081,25 +884,12 @@ class Squad extends Justin
   }
 
   /**
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,, LOGS ,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   */
-
-  /**
-   * @return SquadFeedItem
+   * @return HasMany<SquadLog>
    */
   public function logs()
   {
-    return $this->hasMany(SquadFeedItem::class, "clan_id", "id")
-      ->whereNotIn("type", ["__member__/post"]);
+    return $this->hasMany(SquadLog::class);
   }
-
-  /**
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,, CONTENT ,,,,,,,,,,,,,,,,,,,,,,,,,,
-   * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-   */
 
   /**
    * @return ?Squad\SquadPost

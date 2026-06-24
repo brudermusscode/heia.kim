@@ -85,6 +85,7 @@ class AuthenticationsController extends Controller
       ])->update(),
       "user:wipe" => new UsersController()->wipe(),
       "user:delete" => new UsersController()->delete(),
+      "squad:delete" => new SquadsController()->delete(),
     };
   }
 

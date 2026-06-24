@@ -16,19 +16,10 @@ use Heiakim\Validate\Validate;
 class UserSettings extends Justin
 {
 
-  /**
-   * @var string
-   */
   protected $table = "user_settings";
 
-  /**
-   * @var string
-   */
   protected $primaryKey = "user_id";
 
-  /**
-   * @var array
-   */
   protected $fillable = [
     "user_id",
     "is_legit",
@@ -41,9 +32,6 @@ class UserSettings extends Justin
     "updated_at",
   ];
 
-  /**
-   * @var array
-   */
   protected $attributes = [
     "id" => 0,
     "user_id" => 0,

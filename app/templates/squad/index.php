@@ -77,25 +77,6 @@ include TEMPLATE . "/home/_page-navigator.php"; ?>
         <p class="text" hide-mobile>Mania</p>
       </moption>
     </a>
-
-    <?php
-
-    # Button to create a new squad.
-    if (
-      LOGGED
-      && !CurrentUser->squad
-      && !CurrentUser->is_socially_excluded()
-    ) { ?>
-      <moption create ripple-effect has-tooltip=bottom
-        background=slight-green hide-mobile
-        request-get="squad:new">
-        <mi>add</mi>
-        <p class=text><?= __("Create") ?></p>
-        <div ttooltip>
-          <p text bold><?= __("Create new squad") ?></p>
-        </div>
-      </moption>
-    <?php } ?>
   </mode-menu-inline>
 </header>
 
@@ -163,10 +144,28 @@ include TEMPLATE . "/home/_page-navigator.php"; ?>
     </form>
 
     <!--- Other actions --->
-    <mbutton request-get="squad:new" mid outlined has-icon=left>
-      <mi>add</mi>
-      Create Squad
-    </mbutton>
+    <?php if (!CurrentUser->squad) : ?>
+      <mbutton request-get="squad:new" mid outlined has-icon=left>
+        <mi>add</mi>
+        Create Squad
+      </mbutton>
+    <?php else : ?>
+      <a href="<?= CurrentUser->squad->link() ?>">
+        <div clickable filled=lighter p2 pr18 fl alic jucsb gap=smol+ rounded=wide>
+          <div fl alic gap=smol>
+            <picture stdplus circled>
+              <?php CurrentUser->squad->logo() ?>
+            </picture>
+            <div fl alic gap=smoler>
+              <p text smol semibold ttup background="company" color="company-text" rounded pinline6 pblock2>
+                <?= CurrentUser->squad->tag ?></p>
+              <p text bold><?= CurrentUser->squad->name ?></p>
+            </div>
+          </div>
+          <mi std slight>arrow_forward</mi>
+        </div>
+      </a>
+    <?php endif; ?>
   </div>
 
   <?php

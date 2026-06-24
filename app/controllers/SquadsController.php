@@ -5,9 +5,6 @@ namespace Heiakim\Controller;
 use Heiakim\Model\Squad;
 use Heiakim\Controller\Controller;
 use Heiakim\Enum\SquadPrivilege;
-use Heiakim\Model\Squad\SquadUser;
-use Heiakim\Utils\Str;
-use Illuminate\Support\Facades\DB;
 
 class SquadsController extends Controller
 {
@@ -67,7 +64,7 @@ class SquadsController extends Controller
     # Updating performance of Squad after creating the SquadUser, as it will be cal-
     # culated from the SquadUser's performances.
     $Squad->update_performance();
-    // $Squad->cache_performance();
+    $Squad->cache_performance();
 
     # Set the new squad id to the user as the game server requires this field.
     CurrentUser->update([
@@ -83,10 +80,10 @@ class SquadsController extends Controller
 
     $Squad->logs()->create([
       "user_id" => CurrentUser->id,
-      "type" => "__squad__/created",
+      "type" => "create",
     ]);
 
-    return success("Welcome to »<a extern target='_blank' href='/squad/$Squad->id' sub>($Squad->tag) $Squad->name &nbsp; <i class='ri-link-unlink'></i></a>«! 🥰");
+    return success("Welcome to <a href='/squad/$Squad->id'>($Squad->tag) $Squad->name &nbsp; <i class='ri-link-unlink'></i></a> 🥰");
   }
 
   /**
@@ -108,5 +105,33 @@ class SquadsController extends Controller
       resource: CurrentUser?->squad_user,
       can: ["manage", "squad"],
     );
+
+    CurrentUser->squad->edit($this->params);
+
+    return success("Fresh!");
+  }
+
+  /**
+   * @return string
+   */
+  public function delete()
+  {
+
+    /**
+     * @var Squad
+     */
+    $Squad = CurrentUser->squad ?? die(error());
+
+    # Only the chief can delete the Squad…
+    if (!CurrentUser->squad_user->is_chief())
+      return error();
+
+    # …and it can only be deleted, if the Chief is the only member in here.
+    if (!$Squad->deletable())
+      return error("You can not delete this Squad right now. <a href='/manage/squad/leave'>Find out why! &nbsp; <mi disi smol>open_in_new</mi></a>");
+
+    $Squad->remove();
+
+    return success("<strong>Squad deleted!</strong> Create a new or join one at any time.");
   }
 }

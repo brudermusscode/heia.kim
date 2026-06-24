@@ -1929,6 +1929,15 @@ class User extends Justin
   }
 
   /**
+   * @return BelongsTo<Squad>
+   */
+  public function squad_images()
+  {
+    return $this->hasMany(Image::class)
+      ->whereLike("type", "%__squad__%");
+  }
+
+  /**
    * @return ?bool
    */
   public function is_squad_chief()

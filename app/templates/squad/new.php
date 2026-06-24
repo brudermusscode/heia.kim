@@ -12,7 +12,7 @@ include SNOW; ?>
 
 <form request="squad:create" redirect="/manage/squad"
   update-user-references responder posrel>
-  <content stdplus>
+  <content std>
     <box-model prompt elevated rounded=wide filled=lighter>
       <div prompt-content>
         <div prompt-header>
@@ -25,41 +25,34 @@ include SNOW; ?>
             <div style=flex-basis:30%;>
               <div input material has-icon>
                 <mi>label</mi>
-                <input autofocus tabindex=1 type="text" name="tag" placeholder="Tag" enter-submitable maxlength="6" />
+                <input autofocus tabindex=1 type="text" name="tag" placeholder="Tag" enter-submitable maxlength="6" <?= DEV ? "value='JESUS'" : "" ?> />
               </div>
             </div>
 
             <div style=flex:1;>
               <div input material has-icon>
                 <mi>text_fields</mi>
-                <input tabindex=2 type="text" name="name" placeholder="Name" enter-submitable maxlength="16" />
+                <input tabindex=2 type="text" name="name" placeholder="Name" enter-submitable maxlength="16" <?= DEV ? "value='IST COOL'" : "" ?> />
               </div>
             </div>
           </div>
 
-          <div fl fldircol gap=smol>
-            <p text bold std><?= __("Open for all") ?></p>
-            <div fl gap=mid justify-content="space-between" align-items=center>
-              <div fl align-items=center gap=std>
-                <div style=line-height:1.2em;>
-                  <p>
-                    <?= __("If checked, everyone can join. Unchecked, you will receive join requests from people who want to join, which you can accept or deny.") ?>
-                  </p>
+          <div fl alistart jucsb gap>
+            <div>
+              <p text bold std><?= __("Open for all") ?></p>
+              <p>
+                <?= __("Leave unchecked if you want to receive join requests") ?></p>
+            </div>
+            <toggle-switch toggled="false">
+              <div class="toggle_switch__inr">
+                <div class="toggle_switch__switcher"></div>
+                <input type="hidden" name="joinable" value="0" />
+                <div fl fldirrow jucc>
+                  <div fl fldirrow jucsb alic style="width:calc(100% - .8em);">
+                  </div>
                 </div>
               </div>
-
-              <toggle-switch toggled="false">
-                <div class="toggle_switch__inr">
-                  <div class="toggle_switch__switcher">
-                  </div>
-                  <input type="hidden" name="joinable" value="0" />
-                  <div fl fldirrow justify-content="center">
-                    <div fl fldirrow justify-content="space-between" align-items="center" style="width:calc(100% - .8em);">
-                    </div>
-                  </div>
-                </div>
-              </toggle-switch>
-            </div>
+            </toggle-switch>
           </div>
 
           <div fl fldircol gap=smoler>
@@ -181,6 +174,7 @@ include SNOW; ?>
         </mbutton>
       </div>
     </box-model>
+
   </content>
 </form>
 

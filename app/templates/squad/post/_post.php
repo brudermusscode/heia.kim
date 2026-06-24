@@ -59,11 +59,12 @@ $file_path = $Item->is_system_post()
 
 if (file_exists($file_path)) : ?>
 
-  <t-object post data-id=<?= $Post?->id ?? 0; ?> fl fldircol gap=smoler>
+  <t-object post feeditem data-id="<?= $Post?->id ?? $Item->id; ?>"
+    fl fldircol gap=smoler>
     <t-o-toolbar background=bg>
       <div fl alic gap=smol+>
         <t-o-icon>
-          <a href="<?= $User->link(); ?>">
+          <a href=" <?= $User->link(); ?>">
             <picture size=std circled clickable-zoom clickable>
               <?php $User->image(); ?>
             </picture>

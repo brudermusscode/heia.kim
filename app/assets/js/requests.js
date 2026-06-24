@@ -367,6 +367,9 @@ $(function () {
           if (responder !== null && (responder === "always" || !responder))
             Frontend.respond(data);
 
+          if (responder === "simple")
+            Frontend.ajax_response(data.status ? "success" : "error");
+
           buttons.forEach((button) => button.enable());
 
           Frontend.reload_images();
